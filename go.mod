@@ -3,6 +3,7 @@ module github.com/abdfnx/botway
 go 1.18
 
 require (
+	github.com/AlecAivazis/survey/v2 v2.3.4
 	github.com/MakeNowJust/heredoc v1.0.0
 	github.com/abdfnx/looker v0.1.0
 	github.com/briandowns/spinner v1.18.1
@@ -32,4 +33,5 @@ require (
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/sahilm/fuzzy v0.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
+	golang.org/x/text v0.3.3 // indirect
 )
