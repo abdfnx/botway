@@ -1,7 +1,7 @@
 package factory
 
 import (
-	"github.com/abdfnx/botty/ios"
+	"github.com/abdfnx/botway/ios"
 )
 
 type Factory struct {

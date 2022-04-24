@@ -1,3 +1,3 @@
-module github.com/abdfnx/botty-discord
+module github.com/abdfnx/botway-discord
 
 go 1.18
