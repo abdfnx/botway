@@ -56,7 +56,7 @@ func DiscordNodejsPnpm(botName string) {
 			log.Fatal(procFile)
 		}
 
-		pnpmInstall := pnpm + " add " + js.Packages
+		pnpmInstall := pnpm + " add " + nodejs.Packages
 
 		installCmd := exec.Command("bash", "-c", pnpmInstall)
 
