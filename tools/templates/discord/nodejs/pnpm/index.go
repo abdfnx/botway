@@ -1,4 +1,4 @@
-package npm
+package pnpm
 
 import (
 	"log"
@@ -11,18 +11,18 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-func DiscordNodejsNpm(botName string) {
-	npm, err := looker.LookPath("npm")
+func DiscordNodejsPnpm(botName string) {
+	pnpm, err := looker.LookPath("pnpm")
 
 	if err != nil {
-		log.Fatalf("error: %s is not installed", npm)
+		log.Fatalf("error: %s is not installed", pnpm)
 	} else {
-		npmInit := npm + " init -y"
+		pnpmInit := pnpm + " init"
 
-		cmd := exec.Command("bash", "-c", npmInit)
+		cmd := exec.Command("bash", "-c", pnpmInit)
 
 		if runtime.GOOS == "windows" {
-			cmd = exec.Command("powershell.exe", npmInit)
+			cmd = exec.Command("powershell.exe", pnpmInit)
 		}
 
 		cmd.Dir = botName
@@ -56,12 +56,12 @@ func DiscordNodejsNpm(botName string) {
 			log.Fatal(procFile)
 		}
 
-		npmInstall := npm + " install " + js.Packages
+		pnpmInstall := pnpm + " add " + js.Packages
 
-		installCmd := exec.Command("bash", "-c", npmInstall)
+		installCmd := exec.Command("bash", "-c", pnpmInstall)
 
 		if runtime.GOOS == "windows" {
-			installCmd = exec.Command("powershell.exe", npmInstall)
+			installCmd = exec.Command("powershell.exe", pnpmInstall)
 		}
 
 		installCmd.Dir = botName
@@ -75,7 +75,7 @@ func DiscordNodejsNpm(botName string) {
 		}
 
 		if runtime.GOOS == "windows" {
-			installWindowsBuildTools := exec.Command("powershell.exe", npm + " install --global --production --add-python-to-path windows-build-tools")
+			installWindowsBuildTools := exec.Command("powershell.exe", pnpm + " add --global --production --add-python-to-path windows-build-tools")
 
 			installWindowsBuildTools.Dir = botName
 			installWindowsBuildTools.Stdin = os.Stdin
