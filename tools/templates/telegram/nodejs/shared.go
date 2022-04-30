@@ -95,6 +95,8 @@ func Resources() string {
 - [node-telegram-bot-api Docs](https://github.com/yagop/node-telegram-bot-api/tree/master/doc)
 - [node-telegram-bot-api Help Information](https://github.com/yagop/node-telegram-bot-api/blob/master/doc/help.md)
 - [Tutorials](https://github.com/yagop/node-telegram-bot-api/tree/master/doc/tutorials.md)
+- [node-telegram-bot-api Telegram Channel](https://t.me/node_telegram_bot_api)
+- [node-telegram-bot-api Telegram Group](https://t.me/ntbasupport)
 
 ## Examples
 

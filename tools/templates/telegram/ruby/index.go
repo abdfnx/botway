@@ -1,0 +1,76 @@
+package ruby
+
+import (
+	"log"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"runtime"
+
+	"github.com/abdfnx/looker"
+)
+
+func TelegramRuby(botName string) {
+	bundlePath, err := looker.LookPath("bundle")
+
+	if err != nil {
+		log.Fatalf("error: %s is not installed", bundlePath)
+	} else {
+		bundlerInit := bundlePath + " init"
+
+		cmd := exec.Command("bash", "-c", bundlerInit)
+
+		if runtime.GOOS == "windows" {
+			cmd = exec.Command("powershell.exe", bundlerInit)
+		}
+
+		cmd.Dir = botName
+		cmd.Stdin = os.Stdin
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		err = cmd.Run()
+
+		if err != nil {
+			log.Printf("error: %v\n", err)
+		}
+
+		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.rb"), []byte(MainRbContent()), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		procFile := os.WriteFile(filepath.Join(botName, "Procfile"), []byte("process: bundle exec ruby ./src/main.rb"), 0644)
+		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
+
+		if mainFile != nil {
+			log.Fatal(mainFile)
+		}
+
+		if dockerFile != nil {
+			log.Fatal(dockerFile)
+		}
+
+		if procFile != nil {
+			log.Fatal(procFile)
+		}
+
+		if resourcesFile != nil {
+			log.Fatal(resourcesFile)
+		}
+
+		bundleInstall := bundlePath + " add telegram-bot-ruby botwayrb"
+
+		installCmd := exec.Command("bash", "-c", bundleInstall)
+
+		if runtime.GOOS == "windows" {
+			installCmd = exec.Command("powershell.exe", bundleInstall)
+		}
+
+		installCmd.Dir = botName
+		installCmd.Stdin = os.Stdin
+		installCmd.Stdout = os.Stdout
+		installCmd.Stderr = os.Stderr
+		err = installCmd.Run()
+
+		if err != nil {
+			log.Printf("error: %v\n", err)
+		}
+	}
+}
