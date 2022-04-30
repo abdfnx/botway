@@ -1,49 +1,13 @@
 package ruby
 
-import "fmt"
+import "github.com/abdfnx/botway/tools/templates"
 
 func MainRbContent() string {
-	return `# frozen_string_literal: true
-
-require 'telegram-bot-ruby'
-require 'botwayrb'
-
-Telegram::Bot::Client.run(botwayrb.getToken()) do |bot|
-  bot.listen do |message|
-    case message.text
-    when '/start'
-      bot.api.send_message(chat_id: message.chat.id, text: "Hello, #{message.from.first_name}")
-    when '/stop'
-      bot.api.send_message(chat_id: message.chat.id, text: "Bye, #{message.from.first_name}")
-    end
-  end
-end`
+	return templates.Content("telegram", "ruby", "src/main.rb", "")
 }
 
 func DockerfileContent(botName string) string {
-	return fmt.Sprintf(`FROM alpine:latest
-FROM ruby:alpine
-FROM botwayorg/botway:latest
-
-ENV TELEGRAM_BOT_NAME="%s"
-ARG TELEGRAM_TOKEN
-
-COPY . .
-
-RUN apk update && \
-	apk add --no-cache --virtual build-dependencies build-base gcc git libsodium ffmpeg
-
-# Add packages you want
-# RUN apk add PACKAGE_NAME
-
-RUN botway init --docker --name ${TELEGRAM_BOT_NAME}
-RUN gem update --system
-RUN gem install bundler
-RUN bundle install
-
-EXPOSE 8000
-
-ENTRYPOINT ["bundle", "exec", "ruby", "./src/main.rb"]`, botName)
+	return templates.Content("telegram", "ruby", "Dockerfile", botName)
 }
 
 func Resources() string {
