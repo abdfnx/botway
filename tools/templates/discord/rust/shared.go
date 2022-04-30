@@ -8,7 +8,7 @@ use serenity::model::channel::Message;
 use serenity::model::gateway::Ready;
 use serenity::prelude::*;
 
-use botway::get_token;
+use botway_rs::get_token;
 
 struct Handler;
 
@@ -76,6 +76,7 @@ edition = "2021"
 [dependencies]
 serenity = { version = "0.11", default-features = false, features = ["client", "gateway", "rustls_backend", "model", "voice"] }
 tokio = { version = "1.0", features = ["full"] }
+botway-rs = "0.0.1"
 songbird = "0.2.2"`, botName)
 }
 
