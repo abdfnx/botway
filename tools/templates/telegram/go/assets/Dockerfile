@@ -13,12 +13,12 @@ RUN apk update && \
 # Add packages you want
 # RUN apk add PACKAGE_NAME
 
-RUN botway init --docker --name ${DISCORD_BOT_NAME}
+RUN botway init --docker --name ${TELEGRAM_BOT_NAME}
 RUN go mod tidy
-RUN go build src/main.go -o ${DISCORD_BOT_NAME}
+RUN go build src/main.go -o ${TELEGRAM_BOT_NAME}
 
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
 EXPOSE 8000
 
-ENTRYPOINT ["./${DISCORD_BOT_NAME}"]
+ENTRYPOINT ["./${TELEGRAM_BOT_NAME}"]
