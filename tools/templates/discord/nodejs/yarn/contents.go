@@ -1,7 +1,7 @@
 package yarn
 
-import "github.com/abdfnx/botway/tools/templates/discord/nodejs"
+import "github.com/abdfnx/botway/tools/templates"
 
 func DockerfileContent(botName string) string {
-	return nodejs.Content("yarn/Dockerfile", botName)
+	return templates.Content("discord", "nodejs", "yarn/Dockerfile", botName)
 }

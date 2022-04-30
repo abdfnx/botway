@@ -1,35 +1,9 @@
 package python
 
-import (
-	"fmt"
-	"os"
-	"strings"
-
-	"github.com/abdfnx/resto/core/api"
-)
-
-func Content(fileName, botName string) string {
-	url := "https://raw.githubusercontent.com/abdfnx/botway/main/tools/templates/discord/python/assets/" + fileName
-	respone, status, _, err := api.BasicGet(url, "GET", "", "", "", "", false, 0, nil)
-
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	if status == "404" || status == "401" || strings.Contains(respone, "404") {
-		fmt.Println("404")
-		os.Exit(0)
-	}
-
-	if strings.Contains(fileName, "Dockerfile") {
-		return strings.ReplaceAll(respone, "{{.Discord_Bot_name}}", botName)
-	} else {
-		return respone
-	}
-}
+import "github.com/abdfnx/botway/tools/templates"
 
 func MainPyContent() string {
-	return Content("src/main.py", "")
+	return templates.Content("discord", "python", "src/main.py", "")
 }
 
 func Resources() string {

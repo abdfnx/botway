@@ -1,7 +1,7 @@
 package pip
 
-import "github.com/abdfnx/botway/tools/templates/discord/python"
+import "github.com/abdfnx/botway/tools/templates"
 
 func DockerfileContent(botName string) string {
-	return python.Content("pip/Dockerfile", botName)
+	return templates.Content("discord", "python", "pip/Dockerfile", botName)
 }

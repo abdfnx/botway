@@ -1,75 +1,49 @@
 package deno
 
-import (
-	"fmt"
-	"os"
-	"strings"
-
-	"github.com/abdfnx/resto/core/api"
-)
-
-func Content(fileName, botName string) string {
-	url := "https://raw.githubusercontent.com/abdfnx/botway/main/tools/templates/discord/deno/assets/" + fileName
-	respone, status, _, err := api.BasicGet(url, "GET", "", "", "", "", false, 0, nil)
-
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	if status == "404" || status == "401" || strings.Contains(respone, "404") {
-		fmt.Println("404")
-		os.Exit(0)
-	}
-
-	if strings.Contains(fileName, "Dockerfile") {
-		return strings.ReplaceAll(respone, "{{.Discord_Bot_name}}", botName)
-	} else {
-		return respone
-	}
-}
+import "github.com/abdfnx/botway/tools/templates"
 
 func DockerfileContent(botName string) string {
-	return Content("Dockerfile", botName)
+	return templates.Content("discord", "deno", "Dockerfile", botName)
 }
 
 func ModTsContent() string {
-	return Content("mod.ts", "")
+	return templates.Content("discord", "deno", "mod.ts", "")
 }
 
 func DepsTsContent() string {
-	return Content("deps.ts", "")
+	return templates.Content("discord", "deno", "deps.ts", "")
 }
 
 func CommandsModTsContent() string {
-	return Content("src/commands/mod.ts", "")
+	return templates.Content("discord", "deno", "src/commands/mod.ts", "")
 }
 
 func CommandsPingTsContent() string {
-	return Content("src/commands/ping.ts", "")
+	return templates.Content("discord", "deno", "src/commands/ping.ts", "")
 }
 
 func EventsGuildCreateTsContent() string {
-	return Content("src/events/guildCreate.ts", "")
+	return templates.Content("discord", "deno", "src/events/guildCreate.ts", "")
 }
 
 func EventsInteractionCreateTsContent() string {
-	return Content("src/events/interactionCreate.ts", "")
+	return templates.Content("discord", "deno", "src/events/interactionCreate.ts", "")
 }
 
 func EventsModTsContent() string {
-	return Content("src/events/mod.ts", "")
+	return templates.Content("discord", "deno", "src/events/mod.ts", "")
 }
 
 func EventsReadyTsContent() string {
-	return Content("src/events/ready.ts", "")
+	return templates.Content("discord", "deno", "src/events/ready.ts", "")
 }
 
 func UtilsHelpersTsContent() string {
-	return Content("src/utils/helpers.ts", "")
+	return templates.Content("discord", "deno", "src/utils/helpers.ts", "")
 }
 
 func UtilsLoggerTsContent() string {
-	return Content("src/utils/logger.ts", "")
+	return templates.Content("discord", "deno", "src/utils/logger.ts", "")
 }
 
 func Resources() string {

@@ -1,7 +1,7 @@
 package npm
 
-import "github.com/abdfnx/botway/tools/templates/discord/nodejs"
+import "github.com/abdfnx/botway/tools/templates"
 
 func DockerfileContent(botName string) string {
-	return nodejs.Content("npm/Dockerfile", botName)
+	return templates.Content("discord", "nodejs", "npm/Dockerfile", botName)
 }

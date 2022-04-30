@@ -1,47 +1,13 @@
 package ruby
 
-import "fmt"
+import "github.com/abdfnx/botway/tools/templates"
 
 func MainRbContent() string {
-	return `# frozen_string_literal: true
-
-require 'discordrb'
-require 'botwayrb'
-
-bot = Discordrb::Bot.new token: botwayrb.getToken()
-
-bot.message(with_text: 'ping') do |event|
-  event.respond 'pong!'
-end
-
-bot.run`
+	return templates.Content("discord", "ruby", "src/main.rb", "")
 }
 
 func DockerfileContent(botName string) string {
-	return fmt.Sprintf(`FROM alpine:latest
-FROM ruby:alpine
-FROM botwayorg/botway:latest
-
-ENV DISCORD_BOT_NAME="%s"
-ARG DISCORD_TOKEN
-ARG DISCORD_CLIENT_ID
-
-COPY . .
-
-RUN apk update && \
-	apk add --no-cache --virtual build-dependencies build-base gcc git libsodium ffmpeg
-
-# Add packages you want
-# RUN apk add PACKAGE_NAME
-
-RUN botway init --docker --name ${DISCORD_BOT_NAME}
-RUN gem update --system
-RUN gem install bundler
-RUN bundle install
-
-EXPOSE 8000
-
-ENTRYPOINT ["bundle", "exec", "ruby", "./src/main.rb"]`, botName)
+	return templates.Content("discord", "ruby", "Dockerfile", botName)
 }
 
 func Resources() string {

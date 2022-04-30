@@ -1,7 +1,7 @@
 package pipenv
 
-import "github.com/abdfnx/botway/tools/templates/discord/python"
+import "github.com/abdfnx/botway/tools/templates"
 
 func DockerfileContent(botName string) string {
-	return python.Content("pipenv/Dockerfile", botName)
+	return templates.Content("discord", "python", "pipenv/Dockerfile", botName)
 }

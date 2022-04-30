@@ -1,39 +1,13 @@
 package dgo
 
-import (
-	"fmt"
-	"os"
-	"strings"
-
-	"github.com/abdfnx/resto/core/api"
-)
-
-func Content(fileName, botName string) string {
-	url := "https://raw.githubusercontent.com/abdfnx/botway/main/tools/templates/discord/go/assets/" + fileName
-	respone, status, _, err := api.BasicGet(url, "GET", "", "", "", "", false, 0, nil)
-
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	if status == "404" || status == "401" || strings.Contains(respone, "404") {
-		fmt.Println("404")
-		os.Exit(0)
-	}
-
-	if strings.Contains(fileName, "Dockerfile") {
-		return strings.ReplaceAll(respone, "{{.Discord_Bot_name}}", botName)
-	} else {
-		return respone
-	}
-}
+import "github.com/abdfnx/botway/tools/templates"
 
 func DockerfileContent(botName string) string {
-	return Content("Dockerfile", botName)
+	return templates.Content("discord", "go", "Dockerfile", botName)
 }
 
 func MainGoContent() string {
-	return Content("src/main.go", "")
+	return templates.Content("discord", "go", "src/main.go", "")
 }
 
 func Resources() string {

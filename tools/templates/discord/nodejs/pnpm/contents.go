@@ -1,7 +1,7 @@
 package pnpm
 
-import "github.com/abdfnx/botway/tools/templates/discord/nodejs"
+import "github.com/abdfnx/botway/tools/templates"
 
 func DockerfileContent(botName string) string {
-	return nodejs.Content("pnpm/Dockerfile", botName)
+	return templates.Content("discord", "nodejs", "pnpm/Dockerfile", botName)
 }
