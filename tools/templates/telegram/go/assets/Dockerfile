@@ -2,9 +2,8 @@ FROM alpine:latest
 FROM golang:alpine AS builder
 FROM botwayorg/botway:latest
 
-ENV DISCORD_BOT_NAME="{{.BotName}}"
-ARG DISCORD_TOKEN
-ARG DISCORD_CLIENT_ID
+ENV TELEGRAM_BOT_NAME="{{.BotName}}"
+ARG TELEGRAM_TOKEN
 
 COPY . .
 

@@ -22,7 +22,7 @@ func Content(platform, lang, fileName, botName string) string {
 	}
 
 	if strings.Contains(fileName, "Dockerfile") || strings.Contains(fileName, "Cargo.toml") {
-		return strings.ReplaceAll(respone, "{{.Discord_Bot_name}}", botName)
+		return strings.ReplaceAll(respone, "{{.BotName}}", botName)
 	} else {
 		return respone
 	}

@@ -3,7 +3,7 @@ FROM node:alpine
 FROM botwayorg/botway:latest
 
 ENV NODE_ENV=production
-ENV DISCORD_BOT_NAME="{{.Discord_Bot_name}}"
+ENV DISCORD_BOT_NAME="{{.BotName}}"
 ARG DISCORD_TOKEN
 ARG DISCORD_CLIENT_ID
 
