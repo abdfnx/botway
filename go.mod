@@ -23,6 +23,7 @@ require (
 	github.com/muesli/termenv v0.11.1-0.20220212125758-44cd13922739
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/viper v1.11.0
+	github.com/tidwall/sjson v1.2.4
 	golang.org/x/sys v0.0.0-20220412211240-33da011f77ad
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b

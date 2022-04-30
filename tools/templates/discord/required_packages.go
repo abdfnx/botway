@@ -65,15 +65,15 @@ func LinuxPackageManagerRust() string {
 		do
 			if [[ -f $f ]];then
 				if [ "${osInfo[$f]}" == "yum" ]; then
-					sudo yum install -y opus ffmpeg
+					sudo yum update && sudo yum install -y opus ffmpeg
 				elif [ "${osInfo[$f]}" == "pacman" ]; then
-					sudo pacman -S opus base-devel youtube-dl
+					sudo pacman -Syu && sudo pacman -S opus base-devel youtube-dl
 				elif [ "${osInfo[$f]}" == "emerge" ]; then
-					sudo emerge -pv opus ffmpeg
+					sudo emerge --update --deep --with-bdeps=y @world && sudo emerge -pv opus ffmpeg
 				elif [ "${osInfo[$f]}" == "apt-get" ]; then
-					sudo apt-get install -y libopus-dev ffmpeg build-essential autoconf automake libtool m4 youtube-dl
+					sudo apt-get upgrade -y && sudo apt-get install -y libopus-dev ffmpeg build-essential autoconf automake libtool m4 youtube-dl
 				elif [ "${osInfo[$f]}" == "apk" ]; then
-					sudo apk add libsodium ffmpeg opus autoconf automake libtool m4 youtube-dl
+					sudo apk update && sudo apk add libsodium ffmpeg opus autoconf automake libtool m4 youtube-dl
 				fi
 			fi
 		done

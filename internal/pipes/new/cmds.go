@@ -196,9 +196,9 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 
 		dotGitIgnoreFileContent := []byte(respone)
 		herokuFileContent := []byte(`build:
-		docker:
-			web: Dockerfile
-	`)
+	docker:
+		web: Dockerfile
+`)
 
 		dotGitIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".gitignore"), dotGitIgnoreFileContent, 0644)
 		dotDockerIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".dockerignore"), dotGitIgnoreFileContent, 0644)

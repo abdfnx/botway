@@ -1,6 +1,7 @@
 package yarn
 
 import (
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -9,6 +10,7 @@ import (
 
 	"github.com/abdfnx/botway/tools/templates/discord/nodejs"
 	"github.com/abdfnx/looker"
+	"github.com/tidwall/sjson"
 )
 
 func DiscordNodejsYarn(botName string) {
@@ -33,6 +35,26 @@ func DiscordNodejsYarn(botName string) {
 
 		if err != nil {
 			log.Printf("error: %v\n", err)
+		}
+
+		packageJson, err := ioutil.ReadFile(filepath.Join(botName, "package.json"))
+
+		if err != nil {
+			log.Printf("error: %v\n", err)
+		}
+
+		version, _ := sjson.Set(string(packageJson), "version", "0.1.0")
+		description, _ := sjson.Delete(version, "description")
+		keywords, _ := sjson.Delete(description, "keywords")
+		license, _ := sjson.Delete(keywords, "license")
+		main, _ := sjson.Set(string(license), "main", "src/index.js")
+		author, _ := sjson.Delete(string(main), "author")
+		final, _ := sjson.Delete(author, "scripts")
+
+		newPackageJson := ioutil.WriteFile(filepath.Join(botName, "package.json"), []byte(final), 0644)
+
+		if newPackageJson != nil {
+			log.Printf("error: %v\n", newPackageJson)
 		}
 
 		indexFile := os.WriteFile(filepath.Join(botName, "src", "index.js"), []byte(nodejs.IndexJSContent()), 0644)

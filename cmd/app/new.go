@@ -1,4 +1,4 @@
-package cli
+package app
 
 import (
 	"github.com/abdfnx/botway/internal/options"
@@ -13,11 +13,15 @@ func NewCMD() *cobra.Command {
 		Long: "With `botway new` command you can create your botway project.",
 		Aliases: []string{"create"},
 		Run: func(cmd *cobra.Command, args []string) {
-			opts := &options.NewOptions{
-				BotName: args[0],
+			if len(args) > 0 {
+				opts := &options.NewOptions{
+					BotName: args[0],
+				}
+	
+				new.New(opts)
+			} else {
+				cmd.Help()
 			}
-
-			new.New(opts)
 		},
 	}
 
