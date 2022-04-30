@@ -14,10 +14,13 @@ import (
 )
 
 func DiscordRustFleet(botName string) {
-	fleetPath, err := looker.LookPath("fleet")
+	_, err := looker.LookPath("rust")
+	fleetPath, ferr := looker.LookPath("fleet")
 
 	if err != nil {
-		log.Fatalf("error: %s is not installed", fleetPath)
+		log.Fatal("error: rust is not installed")
+	} else if ferr != nil {
+		log.Fatal("error: fleet is not installed")
 	} else {
 		if runtime.GOOS == "linux" {
 			fmt.Println("Installing some required linux packages")

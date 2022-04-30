@@ -12,10 +12,13 @@ import (
 )
 
 func TelegramRustFleet(botName string) {
-	fleetPath, err := looker.LookPath("fleet")
+	_, err := looker.LookPath("rust")
+	fleetPath, ferr := looker.LookPath("fleet")
 
 	if err != nil {
-		log.Fatalf("error: %s is not installed", fleetPath)
+		log.Fatal("error: rust is not installed")
+	} else if ferr != nil {
+		log.Fatal("error: fleet is not installed")
 	} else {
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.rs"), []byte(rust.MainRsContent()), 0644)
 		cargoFile := os.WriteFile(filepath.Join(botName, "Cargo.toml"), []byte(rust.CargoFileContent(botName)), 0644)

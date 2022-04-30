@@ -10,11 +10,10 @@ func platformsView(m model) string {
 	tpl += subtle.Render("j/k, up/down: select") + dot + subtle.Render("enter: choose") + dot + subtle.Render("q, esc: quit")
 
 	choices := fmt.Sprintf(
-		"%s\n%s\n%s\n%s",
+		"%s\n%s\n%s",
 		checkbox("Discord", c == 0),
 		checkbox("Telegram", c == 1),
-		checkbox("Messenger", c == 2),
-		checkbox("Slack", c == 3),
+		checkbox("Slack", c == 2),
 	)
 
 	return fmt.Sprintf(tpl, choices)
@@ -30,8 +29,6 @@ func langsView(m model) string {
 	} else if m.PlatformChoice == 1 {
 		c = "Telegram"
 	} else if m.PlatformChoice == 2 {
-		c = "Messenger"
-	} else if m.PlatformChoice == 3 {
 		c = "Slack"
 	}
 
@@ -47,7 +44,7 @@ func langsView(m model) string {
 		checkbox("Ruby", l == 3),
 	)
 
-	if m.PlatformChoice != 3 {
+	if m.PlatformChoice != 2 {
 		langs += fmt.Sprintf(
 			"\n%s",
 			checkbox("Rust", l == 4),
@@ -146,9 +143,6 @@ func finalView(m model) string {
 			platform = "Telegram"
 
 		case 2:
-			platform = "Messenger"
-
-		case 3:
 			platform = "Slack"
 	}
 

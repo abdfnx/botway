@@ -12,15 +12,20 @@ import (
 
 func TelegramPythonPip(botName string) {
 	pip := "pip3"
+	python := "python3"
 
 	if runtime.GOOS == "windows" {
 		pip = "pip"
+		python = "python"
 	}
 
-	_, err := looker.LookPath(pip)
+	_, err := looker.LookPath(python)
+	_, perr := looker.LookPath(pip)
 
 	if err != nil {
-		log.Fatalf("error: %s is not installed", pip)
+		log.Fatal("error: python is not installed")
+	} else if perr != nil {
+		log.Fatal("error: pip is not installed")
 	} else {
 		requirementsFile := os.WriteFile(filepath.Join(botName, "requirements.txt"), []byte("python-telegram-bot==13.11\nbotway.py==0.0.1\ncryptography==37.0.1\nPySocks==1.7.1\nujson==5.2.0"), 0644)
 

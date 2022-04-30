@@ -17,7 +17,7 @@ func DiscordNodejsPnpm(botName string) {
 	pnpm, err := looker.LookPath("pnpm")
 
 	if err != nil {
-		log.Fatalf("error: %s is not installed", pnpm)
+		log.Fatal("error: pnpm is not installed")
 	} else {
 		pnpmInit := pnpm + " init"
 

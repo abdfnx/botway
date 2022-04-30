@@ -1,8 +1,6 @@
 package new
 
 import (
-	"fmt"
-
 	"github.com/abdfnx/botway/tools/templates/telegram/go"
 	"github.com/abdfnx/botway/tools/templates/telegram/nodejs/npm"
 	"github.com/abdfnx/botway/tools/templates/telegram/nodejs/pnpm"
@@ -24,16 +22,14 @@ func TelegramHandler(m model) {
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMCoice == 0 {
 		npm.TelegramNodejsNpm(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMCoice == 1 {
-		pnpm.TelegramNodejsPnpm(opts.BotName)
-	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMCoice == 2 {
 		yarn.TelegramNodejsYarn(opts.BotName)
+	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMCoice == 2 {
+		pnpm.TelegramNodejsPnpm(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 3 {
 		ruby.TelegramRuby(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 4 && m.PMCoice == 0 {
 		cargo.TelegramRustCargo(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 4 && m.PMCoice == 1 {
 		fleet.TelegramRustFleet(opts.BotName)
-	} else {
-		fmt.Println("Please choose a platform and language")
 	}
 }

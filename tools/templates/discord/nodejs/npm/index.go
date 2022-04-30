@@ -17,7 +17,7 @@ func DiscordNodejsNpm(botName string) {
 	npm, err := looker.LookPath("npm")
 
 	if err != nil {
-		log.Fatalf("error: %s is not installed", npm)
+		log.Fatal("error: npm is not installed")
 	} else {
 		npmInit := npm + " init -y"
 

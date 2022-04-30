@@ -17,7 +17,7 @@ func TelegramNodejsYarn(botName string) {
 	yarn, err := looker.LookPath("yarn")
 
 	if err != nil {
-		log.Fatalf("error: %s is not installed", yarn)
+		log.Fatal("error: yarn is not installed")
 	} else {
 		yarnInit := yarn + " init -y"
 

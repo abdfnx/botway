@@ -1,7 +1,6 @@
 package cargo
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -13,10 +12,13 @@ import (
 )
 
 func TelegramRustCargo(botName string) {
-	cargoPath, err := looker.LookPath("cargo")
+	_, err := looker.LookPath("rust")
+	cargoPath, cerr := looker.LookPath("cargo")
 
 	if err != nil {
-		log.Fatalf("error: %s is not installed", cargoPath)
+		log.Fatal("error: rust is not installed")
+	} else if cerr != nil {
+		log.Fatal("error: cargo is not installed")
 	} else {
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.rs"), []byte(rust.MainRsContent()), 0644)
 		cargoFile := os.WriteFile(filepath.Join(botName, "Cargo.toml"), []byte(rust.CargoFileContent(botName)), 0644)

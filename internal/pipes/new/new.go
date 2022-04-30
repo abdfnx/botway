@@ -52,7 +52,7 @@ func (m model) View() string {
 	var s string
 
 	if m.Quitting {
-		return "\nBye 👋\n"
+		return "\nBye 👋\n\n"
 	}
 
 	if !m.Platform {

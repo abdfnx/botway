@@ -14,7 +14,7 @@ func DiscordGo(botName string) {
 	goPath, err := looker.LookPath("go")
 
 	if err != nil {
-		log.Fatalf("error: %s is not installed", goPath)
+		log.Fatal("error: go is not installed")
 	} else {
 		goInit := goPath + " mod init " + botName
 

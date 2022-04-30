@@ -11,10 +11,13 @@ import (
 )
 
 func TelegramRuby(botName string) {
-	bundlePath, err := looker.LookPath("bundle")
+	_, err := looker.LookPath("ruby")
+	bundlePath, berr := looker.LookPath("bundle")
 
 	if err != nil {
-		log.Fatalf("error: %s is not installed", bundlePath)
+		log.Fatal("error: ruby is not installed")
+	} else if berr != nil {
+		log.Fatal("error: bundler is not installed")
 	} else {
 		bundlerInit := bundlePath + " init"
 

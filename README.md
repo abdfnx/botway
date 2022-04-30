@@ -4,4 +4,4 @@
 
 # botway
 
-🤖 A bot framework to build and handle your own bot, for Discord, or Telegram, or Messenger, or Slack.
+🤖 A bot framework to generate, build, handle and deploy your own bot, for Discord, or Telegram, or Slack.

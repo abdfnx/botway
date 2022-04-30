@@ -14,15 +14,20 @@ import (
 
 func DiscordPythonPip(botName string) {
 	pip := "pip3"
+	python := "python3"
 
 	if runtime.GOOS == "windows" {
 		pip = "pip"
+		python = "python"
 	}
 
-	_, err := looker.LookPath(pip)
+	_, err := looker.LookPath(python)
+	_, perr := looker.LookPath(pip)
 
 	if err != nil {
-		log.Fatalf("error: %s is not installed", pip)
+		log.Fatal("error: python is not installed")
+	} else if perr != nil {
+		log.Fatal("error: pip is not installed")
 	} else {
 		if runtime.GOOS == "linux" {
 			fmt.Println("Installing some required linux packages")

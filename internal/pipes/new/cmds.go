@@ -22,7 +22,7 @@ func updatePlatforms(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 			switch msg.String() {
 				case "j", "down":
 					m.PlatformChoice += 1
-					if m.PlatformChoice > 3 {
+					if m.PlatformChoice > 2 {
 						m.PlatformChoice = 3
 					}
 
@@ -48,7 +48,7 @@ func updateLangs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 				case "j", "down":
 					m.LangChoice += 1
 
-					if m.PlatformChoice == 3 {
+					if m.PlatformChoice == 2 {
 						if m.LangChoice > 3 {
 							m.LangChoice = 3
 						}

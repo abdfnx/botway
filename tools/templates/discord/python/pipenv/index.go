@@ -14,10 +14,19 @@ import (
 )
 
 func DiscordPythonPipenv(botName string) {
-	pipenv, err := looker.LookPath("pipenv")
+	python := "python3"
 
+	if runtime.GOOS == "windows" {
+		python = "python"
+	}
+
+	_, err := looker.LookPath(python)
+	pipenv, perr := looker.LookPath("pipenv")
+	
 	if err != nil {
-		log.Fatalf("error: %s is not installed", pipenv)
+		log.Fatal("error: python is not installed")
+	} else if perr != nil {
+		log.Fatal("error: pipenv is not installed")
 	} else {
 		if runtime.GOOS == "linux" {
 			fmt.Println("Installing some required linux packages")

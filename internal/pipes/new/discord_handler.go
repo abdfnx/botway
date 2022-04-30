@@ -1,8 +1,6 @@
 package new
 
 import (
-	"fmt"
-
 	"github.com/abdfnx/botway/tools/templates/discord/deno"
 	"github.com/abdfnx/botway/tools/templates/discord/go"
 	"github.com/abdfnx/botway/tools/templates/discord/nodejs/npm"
@@ -36,7 +34,5 @@ func DiscordHandler(m model) {
 		fleet.DiscordRustFleet(opts.BotName)
 	} else if m.PlatformChoice == 0 && m.LangChoice == 5 {
 		deno.DiscordDeno(opts.BotName)
-	} else {
-		fmt.Println("Please choose a platform and language")
 	}
 }

@@ -31,8 +31,6 @@ func BotType(m model) string {
 	} else if m.PlatformChoice == 1 {
 		return "telegram"
 	} else if m.PlatformChoice == 2 {
-		return "messenger"
-	} else if m.PlatformChoice == 3 {
 		return "slack"
 	}
 
