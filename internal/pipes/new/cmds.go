@@ -218,6 +218,7 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 
 		DiscordHandler(m)
 		TelegramHandler(m)
+		SlackHandler(m)
 
 		pwd, _ := os.Getwd()
 
