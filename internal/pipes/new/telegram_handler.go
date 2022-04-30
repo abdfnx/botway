@@ -1,6 +1,7 @@
 package new
 
 import (
+	"github.com/abdfnx/botway/tools/templates/telegram/go"
 	"github.com/abdfnx/botway/tools/templates/telegram/python/pip"
 	"github.com/abdfnx/botway/tools/templates/telegram/python/pipenv"
 )
@@ -10,5 +11,7 @@ func TelegramHandler(m model) {
 		pip.TelegramPythonPip(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 0 && m.PMCoice == 1 {
 		pipenv.TelegramPythonPipenv(opts.BotName)
+	} else if m.PlatformChoice == 1 && m.LangChoice == 1 {
+		tgo.TelegramGo(opts.BotName)
 	}
 }

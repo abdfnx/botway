@@ -1,4 +1,4 @@
-package dgo
+package tgo
 
 import "fmt"
 
