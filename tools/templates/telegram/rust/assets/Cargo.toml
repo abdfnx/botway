@@ -1,0 +1,9 @@
+[package]
+name = "{{.BotName}}"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+telegram-bot = "0.7"
+futures = "0.3.21"
+botway-rs = "0.0.1"
