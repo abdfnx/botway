@@ -21,7 +21,7 @@ func Content(fileName, botName string) string {
 		os.Exit(0)
 	}
 
-	if fileName == "Dockerfile" {
+	if strings.Contains(fileName, "Dockerfile") {
 		return strings.ReplaceAll(respone, "{{.Discord_Bot_name}}", botName)
 	} else {
 		return respone

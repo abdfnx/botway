@@ -1,52 +1,37 @@
 package nodejs
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"strings"
+
+	"github.com/abdfnx/resto/core/api"
+)
 
 var Packages = "discord.js @discordjs/rest @discordjs/builders discord-api-types discord-rpc zlib-sync erlpack bufferutil utf-8-validate @discordjs/voice libsodium-wrappers @discordjs/opus sodium botway.js"
 
-func IndexJSContent() string {
-	return fmt.Sprintf(`const { SlashCommandBuilder } = require("@discordjs/builders");
-const { REST } = require("@discordjs/rest");
-const { Routes } = require("discord-api-types/v9");
-const { GetToken, GetClientId, GetGuildId } = require("botway.js");
-const { Client, Intents } = require("discord.js");
+func Content(fileName, botName string) string {
+	url := "https://raw.githubusercontent.com/abdfnx/botway/main/tools/templates/discord/nodejs/assets/" + fileName
+	respone, status, _, err := api.BasicGet(url, "GET", "", "", "", "", false, 0, nil)
 
-const commands = [
-	new SlashCommandBuilder()
-	.setName("ping")
-	.setDescription("Replies with pong!"),
-	new SlashCommandBuilder()
-	.setName("server")
-	.setDescription("Replies with server info!"),
-].map((command) => command.toJSON());
-
-const rest = new REST({ version: "9" }).setToken(GetToken);
-
-rest.put(Routes.applicationGuildCommands(GetClientId, GetGuildId), { body: commands })
-	.then(() => console.log("Successfully registered application commands."))
-	.catch(console.error);
-
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-
-// When the client is ready, run this code (only once)
-client.once("ready", () => {
-	console.log("Ready!");
-});
-
-// Login to Discord with your client's token
-client.login(GetToken);
-
-client.on("interactionCreate", async (interaction) => {
-	if (!interaction.isCommand()) return;
-
-	const { commandName } = interaction;
-
-	if (commandName === "ping") {
-		await interaction.reply("Pong!");
-	} else if (commandName === "server") {
-		await interaction.reply(%s);
+	if err != nil {
+		fmt.Println(err.Error())
 	}
-});`, "`Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`")
+
+	if status == "404" || status == "401" || strings.Contains(respone, "404") {
+		fmt.Println("404")
+		os.Exit(0)
+	}
+
+	if strings.Contains(fileName, "Dockerfile") {
+		return strings.ReplaceAll(respone, "{{.Discord_Bot_name}}", botName)
+	} else {
+		return respone
+	}
+}
+
+func IndexJSContent() string {
+	return Content("src/index.js", "")
 }
 
 func Resources() string {
