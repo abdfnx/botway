@@ -7,27 +7,27 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/abdfnx/botway/tools/templates/telegram/python"
 	"github.com/abdfnx/looker"
-	"github.com/abdfnx/botway/tools/templates/telegram/python/pip"
 )
 
 
 func TelegramPythonPipenv(botName string) {
-	python := "python3"
+	pythonPath := "python3"
 
 	if runtime.GOOS == "windows" {
-		python = "python"
+		pythonPath = "python"
 	}
 
-	_, err := looker.LookPath(python)
+	_, err := looker.LookPath(pythonPath)
 	pipenv, perr := looker.LookPath("pipenv")
-	
+
 	if err != nil {
 		log.Fatal("error: python is not installed")
 	} else if perr != nil {
 		log.Fatal("error: pipenv is not installed")
 	} else {
-		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(pip.Resources()), 0644)
+		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(python.Resources()), 0644)
 
 		if resourcesFile != nil {
 			log.Fatal(resourcesFile)
@@ -51,7 +51,7 @@ func TelegramPythonPipenv(botName string) {
 			log.Printf("error: %v\n", err)
 		}
 
-		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(pip.MainPyContent()), 0644)
+		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
 		procFile := os.WriteFile(filepath.Join(botName, "Procfile"), []byte("process: pipenv run python3 ./src/main.py"), 0644)
 
