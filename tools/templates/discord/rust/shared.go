@@ -1,22 +1,13 @@
 package rust
 
-import "fmt"
+import "github.com/abdfnx/botway/tools/templates"
 
 func MainRsContent() string {
-	return ``
+	return templates.Content("discord", "rust", "src/main.rs", "")
 }
 
 func CargoFileContent(botName string) string {
-	return fmt.Sprintf(`[package]
-name = "%s"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-serenity = { version = "0.11", default-features = false, features = ["client", "gateway", "rustls_backend", "model", "voice"] }
-tokio = { version = "1.0", features = ["full"] }
-botway-rs = "0.0.1"
-songbird = "0.2.2"`, botName)
+	return templates.Content("discord", "rust", "Cargo.toml", botName)
 }
 
 func Resources() string {
