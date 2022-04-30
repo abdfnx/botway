@@ -7,7 +7,8 @@ import (
 	"github.com/abdfnx/botway/tools/templates/telegram/nodejs/yarn"
 	"github.com/abdfnx/botway/tools/templates/telegram/python/pip"
 	"github.com/abdfnx/botway/tools/templates/telegram/python/pipenv"
-	"github.com/abdfnx/botway/tools/templates/discord/ruby"
+	"github.com/abdfnx/botway/tools/templates/telegram/ruby"
+	"github.com/abdfnx/botway/tools/templates/telegram/rust/cargo"
 )
 
 func TelegramHandler(m model) {
@@ -25,5 +26,7 @@ func TelegramHandler(m model) {
 		yarn.TelegramNodejsYarn(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 3 {
 		ruby.TelegramRuby(opts.BotName)
+	} else if m.PlatformChoice == 1 && m.LangChoice == 4 && m.PMCoice == 0 {
+		cargo.TelegramRustCargo(opts.BotName)
 	}
 }
