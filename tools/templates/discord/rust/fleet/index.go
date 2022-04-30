@@ -51,6 +51,30 @@ func DiscordRustFleet(botName string) {
 			log.Fatal(procFile)
 		}
 
+		rustUpPath, err := looker.LookPath("rustup")
+
+		if err != nil {
+			log.Printf("error: %v\n", err)
+		}
+
+		rustUpCmd := rustUpPath + " default nightly"
+
+		rustUp := exec.Command("bash", "-c", rustUpCmd)
+
+		if runtime.GOOS == "windows" {
+			rustUp = exec.Command("powershell.exe", rustUpCmd)
+		}
+
+		rustUp.Dir = botName
+		rustUp.Stdin = os.Stdin
+		rustUp.Stdout = os.Stdout
+		rustUp.Stderr = os.Stderr
+		err = rustUp.Run()
+
+		if err != nil {
+			log.Printf("error: %v\n", err)
+		}
+
 		fleetBuild := fleetPath + " build"
 
 		buildCmd := exec.Command("bash", "-c", fleetBuild)
