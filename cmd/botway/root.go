@@ -17,7 +17,7 @@ var opts = options.RootOptions{
 }
 
 func Execute(f *factory.Factory, version string, buildDate string) *cobra.Command {
-	const desc = `🤖 A bot framework to generate, build, handle and deploy your own bot, for Discord, or Telegram, or Slack`
+	const desc = `🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack`
 
 	// Root command
 	var rootCmd = &cobra.Command{
@@ -52,7 +52,7 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 	boa.SelectedItemStyle.Background(constants.PRIMARY_COLOR)
 
 	// Add sub-commands to root command
-	rootCmd.AddCommand(app.InitCMD(), app.NewCMD(), versionCmd)
+	rootCmd.AddCommand(app.InitCMD(), app.NewCMD(), app.TokenCMD(), versionCmd)
 
 	return rootCmd
 }

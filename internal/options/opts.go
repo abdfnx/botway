@@ -11,3 +11,10 @@ type InitOptions struct {
 type NewOptions struct {
 	BotName string
 }
+
+type TokenAddOptions struct {
+	BotName  string
+	Discord  bool
+	Slack    bool
+	Telegram bool
+}
