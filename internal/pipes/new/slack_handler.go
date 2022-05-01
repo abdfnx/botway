@@ -3,10 +3,11 @@ package new
 import (
 	"github.com/abdfnx/botway/tools/templates/slack/go"
 	"github.com/abdfnx/botway/tools/templates/slack/nodejs/npm"
+	"github.com/abdfnx/botway/tools/templates/slack/nodejs/pnpm"
 	"github.com/abdfnx/botway/tools/templates/slack/nodejs/yarn"
 	"github.com/abdfnx/botway/tools/templates/slack/python/pip"
 	"github.com/abdfnx/botway/tools/templates/slack/python/pipenv"
-	"github.com/abdfnx/botway/tools/templates/slack/nodejs/pnpm"
+	"github.com/abdfnx/botway/tools/templates/slack/ruby"
 )
 
 func SlackHandler(m model) {
@@ -22,5 +23,7 @@ func SlackHandler(m model) {
 		yarn.SlackNodejsYarn(opts.BotName)
 	} else if m.PlatformChoice == 2 && m.LangChoice == 2 && m.PMCoice == 2 {
 		pnpm.SlackNodejsPnpm(opts.BotName)
+	} else if m.PlatformChoice == 2 && m.LangChoice == 3 {
+		ruby.SlackRuby(opts.BotName)
 	}
 }
