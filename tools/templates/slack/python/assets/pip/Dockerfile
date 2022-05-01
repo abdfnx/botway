@@ -5,6 +5,7 @@ FROM botwayorg/botway:latest
 ENV PORT="8000"
 ENV SLACK_BOT_NAME="{{.BotName}}"
 ARG SLACK_TOKEN
+ARG SLACK_APP_TOKEN
 
 COPY . .
 
