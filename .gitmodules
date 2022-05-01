@@ -1,60 +1,74 @@
 [submodule "telebot"]
 	path = apis/telebot
 	url = https://github.com/tucnak/telebot
+    branch = v3
 
 [submodule "discordgo"]
 	path = apis/discordgo
 	url = https://github.com/bwmarrin/discordgo
+    branch = master
 
 [submodule "slacker"]
 	path = apis/slacker
 	url = https://github.com/shomali11/slacker
+    branch = master
 
 [submodule "discord.js"]
 	path = apis/discord.js
 	url = https://github.com/discordjs/discord.js
+    branch = main
 
 [submodule "discordeno"]
 	path = apis/discordeno
 	url = https://github.com/discordeno/discordeno
+    branch = main
 
 [submodule "serenity"]
 	path = apis/serenity
 	url = https://github.com/serenity-rs/serenity
+    branch = current
 
 [submodule "discord.py"]
 	path = apis/discord.py
 	url = https://github.com/abdfnx/discord.py
+    branch = master
 
 [submodule "python-telegram-bot"]
 	path = apis/python-telegram-bot
 	url = https://github.com/python-telegram-bot/python-telegram-bot
+    branch = master
 
 [submodule "node-telegram-bot-api"]
 	path = apis/node-telegram-bot-api
 	url = https://github.com/yagop/node-telegram-bot-api
+    branch = master
 
 [submodule "telegram-bot-ruby"]
 	path = apis/telegram-bot-ruby
 	url = https://github.com/atipugin/telegram-bot-ruby
+    branch = master
 
 [submodule "telegram-bot"]
 	path = apis/telegram-bot
 	url = https://github.com/telegram-rs/telegram-bot
+    branch = main
 
 [submodule "slackify"]
 	path = apis/slackify
 	url = https://github.com/Ambro17/slackify
+    branch = master
 
 [submodule "slack-bot-api"]
 	path = apis/slack-bot-api
 	url = https://github.com/mishk0/slack-bot-api
+    branch = master
 
 [submodule "discordrb"]
 	path = apis/discordrb
 	url = https://github.com/shardlab/discordrb
+    branch = main
 
 [submodule "slackrb"]
 	path = apis/slackrb
 	url = https://github.com/abdfnx/slackrb
-
+    branch = master
