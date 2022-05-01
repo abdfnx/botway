@@ -1,4 +1,4 @@
-package discord_token
+package slack_token
 
 import (
 	"crypto/aes"
@@ -82,7 +82,7 @@ func (m model) AddToken() {
 	botType := bc.Get("botway.bots." + m.botName + ".type")
 
 	bc.Set("botway.bots." + m.botName + ".bot_token", token)
-	bc.Set("botway.bots." + m.botName + ".bot_app_id", id)
+	bc.Set("botway.bots." + m.botName + ".bot_app_token", id)
 	bc.Set("botway.bots." + m.botName + ".path", path)
 	bc.Set("botway.bots." + m.botName + ".type", botType)
 
@@ -99,7 +99,7 @@ func (m model) AddToken() {
 	}
 
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
-	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.botName + " Discord tokens're added successfully"))
+	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.botName + " Slack tokens're added successfully"))
 	fmt.Println("Your Secret key -> " + token_shared.BoldStyle.Render(token_shared.UserSecret) + " Keep it in a safe place")
 }
 
@@ -117,15 +117,13 @@ func initialModel(botName string) model {
 
 		switch i {
 			case 0:
-				t.Placeholder = "Discord Bot Token"
+				t.Placeholder = "Slack Token"
 				t.Focus()
 				t.PromptStyle = token_shared.FocusedStyle
 				t.TextStyle = token_shared.FocusedStyle
-				t.CharLimit = 65
 
 			case 1:
-				t.Placeholder = "Discord App (or Client) ID"
-				t.CharLimit = 18
+				t.Placeholder = "Slack App Token"
 		}
 
 		m.inputs[i] = t
@@ -223,7 +221,7 @@ func (m model) View() string {
 	return b.String()
 }
 
-func BotwayDiscordTokenSetup(botName string) {
+func BotwaySlackTokenSetup(botName string) {
 	if err := tea.NewProgram(initialModel(botName)).Start(); err != nil {
 		fmt.Printf("could not start program: %s\n", err)
 		os.Exit(1)

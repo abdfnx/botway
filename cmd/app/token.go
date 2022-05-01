@@ -5,6 +5,7 @@ import (
 
 	"github.com/abdfnx/botway/internal/options"
 	"github.com/abdfnx/botway/internal/pipes/token/discord"
+	"github.com/abdfnx/botway/internal/pipes/token/slack"
 	"github.com/spf13/cobra"
 )
 
@@ -34,6 +35,8 @@ func TokenAddCMD() *cobra.Command {
 			if len(args) > 0 {
 				if opts.Discord {
 					discord_token.BotwayDiscordTokenSetup(args[0])
+				} else if opts.Slack {
+					slack_token.BotwaySlackTokenSetup(args[0])
 				}
 			} else {
 				fmt.Println("Bot Name is required")

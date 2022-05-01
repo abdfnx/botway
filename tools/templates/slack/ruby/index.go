@@ -63,7 +63,7 @@ func SlackRuby(botName string) {
 			log.Fatal(resourcesFile)
 		}
 
-		bundleInstall := bundlePath + " add slack-ruby-bot async-websocket"
+		bundleInstall := bundlePath + " add slack-ruby-bot async-websocket botwayrb"
 
 		installCmd := exec.Command("bash", "-c", bundleInstall)
 
