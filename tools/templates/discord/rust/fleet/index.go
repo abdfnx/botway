@@ -9,6 +9,7 @@ import (
 	"runtime"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools/templates"
 	"github.com/abdfnx/botway/tools/templates/discord"
 	"github.com/abdfnx/botway/tools/templates/discord/rust"
 	"github.com/abdfnx/looker"
@@ -100,5 +101,7 @@ func DiscordRustFleet(botName string) {
 		if err != nil {
 			log.Printf("error: %v\n", err)
 		}
+
+		templates.CheckProject(botName, "discord")
 	}
 }

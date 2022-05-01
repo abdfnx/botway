@@ -111,6 +111,6 @@ func DiscordNodejsNpm(botName string) {
 			}
 		}
 
-		templates.CheckProject(botName)
+		templates.CheckProject(botName, "discord")
 	}
 }

@@ -93,6 +93,6 @@ func DiscordPythonPip(botName string) {
 			log.Fatal(runtimeFile)
 		}
 
-		templates.CheckProject(botName)
+		templates.CheckProject(botName, "discord")
 	}
 }

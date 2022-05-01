@@ -81,6 +81,6 @@ func TelegramRuby(botName string) {
 			log.Printf("error: %v\n", err)
 		}
 
-		templates.CheckProject(botName)
+		templates.CheckProject(botName, "telegram")
 	}
 }

@@ -76,6 +76,6 @@ func SlackPythonPipenv(botName string) {
 			log.Fatal(flake8File)
 		}
 
-		templates.CheckProject(botName)
+		templates.CheckProject(botName, "slack")
 	}
 }

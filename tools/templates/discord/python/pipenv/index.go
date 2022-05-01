@@ -80,6 +80,6 @@ func DiscordPythonPipenv(botName string) {
 			log.Fatal(procFile)
 		}
 
-		templates.CheckProject(botName)
+		templates.CheckProject(botName, "discord")
 	}
 }

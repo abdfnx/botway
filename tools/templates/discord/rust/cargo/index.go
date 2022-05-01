@@ -78,6 +78,6 @@ func DiscordRustCargo(botName string) {
 			log.Printf("error: %v\n", err)
 		}
 
-		templates.CheckProject(botName)
+		templates.CheckProject(botName, "discord")
 	}
 }

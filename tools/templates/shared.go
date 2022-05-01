@@ -7,6 +7,7 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/resto/core/api"
+	"github.com/charmbracelet/lipgloss"
 )
 
 func Content(platform, lang, fileName, botName string) string {
@@ -29,9 +30,10 @@ func Content(platform, lang, fileName, botName string) string {
 	}
 }
 
-func CheckProject(botName string) {
+func CheckProject(botName, botType string) {
 	if _, err := os.Stat(botName); !os.IsNotExist(err) {
 		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + botName + " Created successfully 🎉"))
+		fmt.Println("Now, run " + lipgloss.NewStyle().Foreground(constants.GRAY_COLOR).Render("`botway tokens add --" + botType + " " + botName + "`") + " command to add tokens of your bot 🔑")
 	}
 }

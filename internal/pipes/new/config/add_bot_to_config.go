@@ -43,6 +43,4 @@ func AddBotToConfig(botName, botType, botPath string) {
 	if newBotConfig != nil {
 		panic(newBotConfig)
 	}
-
-	tools.YamlFMT(botwayConfigPath)
 }

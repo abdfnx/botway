@@ -119,6 +119,6 @@ You can add a folder to your '$LOAD_PAT'H either at runtime or via the -I comman
 			log.Printf("error: %v\n", err)
 		}
 
-		templates.CheckProject(botName)
+		templates.CheckProject(botName, "discord")
 	}
 }

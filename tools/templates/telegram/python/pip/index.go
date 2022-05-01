@@ -84,6 +84,6 @@ func TelegramPythonPip(botName string) {
 			log.Fatal(runtimeFile)
 		}
 
-		templates.CheckProject(botName)
+		templates.CheckProject(botName, "telegram")
 	}
 }
