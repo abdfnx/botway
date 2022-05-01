@@ -8,14 +8,18 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools/templates"
 	"github.com/abdfnx/botway/tools/templates/discord"
 	"github.com/abdfnx/botway/tools/templates/discord/python"
 	"github.com/abdfnx/looker"
+	"github.com/charmbracelet/lipgloss"
 )
 
 func DiscordPythonPip(botName string) {
 	pip := "pip3"
 	pythonPath := "python3"
+	messageStyle := lipgloss.NewStyle().Foreground(constants.CYAN_COLOR)
 
 	if runtime.GOOS == "windows" {
 		pip = "pip"
@@ -26,12 +30,14 @@ func DiscordPythonPip(botName string) {
 	_, perr := looker.LookPath(pip)
 
 	if err != nil {
-		log.Fatal("error: python is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" python is not installed"))
 	} else if perr != nil {
-		log.Fatal("error: pip is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		log.Fatalln(constants.FAIL_FOREGROUND.Render(fmt.Sprintf(" %s is not installed", pip)))
 	} else {
 		if runtime.GOOS == "linux" {
-			fmt.Println("Installing some required linux packages")
+			fmt.Println(messageStyle.Render("> Installing some required linux packages"))
 
 			discord.InstallCommandPython()
 		}
@@ -86,5 +92,7 @@ func DiscordPythonPip(botName string) {
 		if runtimeFile != nil {
 			log.Fatal(runtimeFile)
 		}
+
+		templates.CheckProject(botName)
 	}
 }

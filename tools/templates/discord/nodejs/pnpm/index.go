@@ -1,6 +1,7 @@
 package pnpm
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -8,6 +9,8 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools/templates"
 	"github.com/abdfnx/botway/tools/templates/discord/nodejs"
 	"github.com/abdfnx/looker"
 	"github.com/tidwall/sjson"
@@ -17,7 +20,8 @@ func DiscordNodejsPnpm(botName string) {
 	pnpm, err := looker.LookPath("pnpm")
 
 	if err != nil {
-		log.Fatal("error: pnpm is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" pnpm is not installed"))
 	} else {
 		pnpmInit := pnpm + " init"
 
@@ -106,5 +110,7 @@ func DiscordNodejsPnpm(botName string) {
 				log.Printf("error: %v\n", err)
 			}
 		}
+
+		templates.CheckProject(botName)
 	}
 }

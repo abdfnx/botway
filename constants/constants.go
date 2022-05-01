@@ -4,6 +4,7 @@ import "github.com/charmbracelet/lipgloss"
 
 var (
 	PRIMARY_COLOR = lipgloss.Color("#1E90FF")
+	CYAN_COLOR = lipgloss.Color("#00FFFF")
     GREEN_COLOR = "#04B575"
   	RED_COLOR = "#FF4141"
   	SUBTITLE_COLOR = lipgloss.AdaptiveColor{Light: "#9B9B9B", Dark: "#5C5C5C"}

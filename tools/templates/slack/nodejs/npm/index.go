@@ -1,6 +1,7 @@
 package npm
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -8,6 +9,8 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools/templates"
 	"github.com/abdfnx/botway/tools/templates/slack/nodejs"
 	"github.com/abdfnx/looker"
 	"github.com/tidwall/sjson"
@@ -17,7 +20,8 @@ func SlackNodejsNpm(botName string) {
 	npm, err := looker.LookPath("npm")
 
 	if err != nil {
-		log.Fatal("error: npm is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" npm is not installed"))
 	} else {
 		npmInit := npm + " init -y"
 
@@ -92,5 +96,7 @@ func SlackNodejsNpm(botName string) {
 		if err != nil {
 			log.Printf("error: %v\n", err)
 		}
+
+		templates.CheckProject(botName)
 	}
 }

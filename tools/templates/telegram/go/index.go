@@ -1,12 +1,15 @@
 package tgo
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 
+	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools/templates"
 	"github.com/abdfnx/looker"
 )
 
@@ -14,7 +17,8 @@ func TelegramGo(botName string) {
 	goPath, err := looker.LookPath("go")
 
 	if err != nil {
-		log.Fatal("error: go is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" go is not installed"))
 	} else {
 		goInit := goPath + " mod init " + botName
 
@@ -72,5 +76,7 @@ func TelegramGo(botName string) {
 		if err != nil {
 			log.Printf("error: %v\n", err)
 		}
+
+		templates.CheckProject(botName)
 	}
 }

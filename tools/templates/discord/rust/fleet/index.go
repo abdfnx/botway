@@ -8,22 +8,27 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/tools/templates/discord"
 	"github.com/abdfnx/botway/tools/templates/discord/rust"
 	"github.com/abdfnx/looker"
+	"github.com/charmbracelet/lipgloss"
 )
 
 func DiscordRustFleet(botName string) {
 	_, err := looker.LookPath("rust")
 	fleetPath, ferr := looker.LookPath("fleet")
+	messageStyle := lipgloss.NewStyle().Foreground(constants.CYAN_COLOR)
 
 	if err != nil {
-		log.Fatal("error: rust is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" rust is not installed"))
 	} else if ferr != nil {
-		log.Fatal("error: fleet is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" fleet is not installed"))
 	} else {
 		if runtime.GOOS == "linux" {
-			fmt.Println("Installing some required linux packages")
+			fmt.Println(messageStyle.Render("> Installing some required linux packages"))
 
 			discord.InstallCommandRust()
 		}

@@ -1,12 +1,15 @@
 package ruby
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 
+	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools/templates"
 	"github.com/abdfnx/looker"
 )
 
@@ -15,9 +18,11 @@ func TelegramRuby(botName string) {
 	bundlePath, berr := looker.LookPath("bundle")
 
 	if err != nil {
-		log.Fatal("error: ruby is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" ruby is not installed"))
 	} else if berr != nil {
-		log.Fatal("error: bundler is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" bundler is not installed"))
 	} else {
 		bundlerInit := bundlePath + " init"
 
@@ -75,5 +80,7 @@ func TelegramRuby(botName string) {
 		if err != nil {
 			log.Printf("error: %v\n", err)
 		}
+
+		templates.CheckProject(botName)
 	}
 }

@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/resto/core/api"
 )
 
@@ -25,5 +26,12 @@ func Content(platform, lang, fileName, botName string) string {
 		return strings.ReplaceAll(respone, "{{.BotName}}", botName)
 	} else {
 		return respone
+	}
+}
+
+func CheckProject(botName string) {
+	if _, err := os.Stat(botName); !os.IsNotExist(err) {
+		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
+		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + botName + " Created successfully 🎉"))
 	}
 }

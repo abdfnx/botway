@@ -1,12 +1,15 @@
 package pip
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 
+	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools/templates"
 	"github.com/abdfnx/botway/tools/templates/telegram/python"
 	"github.com/abdfnx/looker"
 )
@@ -24,9 +27,11 @@ func TelegramPythonPip(botName string) {
 	_, perr := looker.LookPath(pip)
 
 	if err != nil {
-		log.Fatal("error: python is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" python is not installed"))
 	} else if perr != nil {
-		log.Fatal("error: pip is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		log.Fatalln(constants.FAIL_FOREGROUND.Render(fmt.Sprintf(" %s is not installed", pip)))
 	} else {
 		requirementsFile := os.WriteFile(filepath.Join(botName, "requirements.txt"), []byte(RequirementsContent()), 0644)
 
@@ -78,5 +83,7 @@ func TelegramPythonPip(botName string) {
 		if runtimeFile != nil {
 			log.Fatal(runtimeFile)
 		}
+
+		templates.CheckProject(botName)
 	}
 }

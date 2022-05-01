@@ -18,10 +18,10 @@ import (
 )
 
 var (
-	focusedStyle        = lipgloss.NewStyle().Foreground(constants.PRIMARY_COLOR)
-	blurredStyle        = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
-	cursorStyle         = focusedStyle.Copy()
-	noStyle             = lipgloss.NewStyle()
+	focusedStyle = lipgloss.NewStyle().Foreground(constants.PRIMARY_COLOR)
+	blurredStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
+	cursorStyle  = focusedStyle.Copy()
+	noStyle      = lipgloss.NewStyle()
 
 	focusedButton = focusedStyle.Copy().Render("[ Submit ]")
 	blurredButton = fmt.Sprintf("[ %s ]", blurredStyle.Render("Submit"))

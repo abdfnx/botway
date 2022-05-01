@@ -1,12 +1,15 @@
 package deno
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 
+	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools/templates"
 	"github.com/abdfnx/looker"
 )
 
@@ -26,7 +29,8 @@ func DiscordDeno(botName string) {
 	deno, err := looker.LookPath("deno")
 
 	if err != nil {
-		log.Fatal("error: deno is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" deno is not installed"))
 	} else {
 		modFile := os.WriteFile(filepath.Join(botName, "mod.ts"), []byte(ModTsContent()), 0644)
 		depsFile := os.WriteFile(filepath.Join(botName, "deps.ts"), []byte(DepsTsContent()), 0644)
@@ -130,5 +134,7 @@ func DiscordDeno(botName string) {
 		if err != nil {
 			log.Printf("error: %v\n", err)
 		}
+
+		templates.CheckProject(botName)
 	}
 }

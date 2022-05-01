@@ -1,12 +1,15 @@
 package pipenv
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 
+	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools/templates"
 	"github.com/abdfnx/botway/tools/templates/slack/python"
 	"github.com/abdfnx/looker"
 )
@@ -22,9 +25,11 @@ func SlackPythonPipenv(botName string) {
 	pipenv, perr := looker.LookPath("pipenv")
 
 	if err != nil {
-		log.Fatal("error: python is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" python is not installed"))
 	} else if perr != nil {
-		log.Fatal("error: pipenv is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" pipenv is not installed"))
 	} else {
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(python.Resources()), 0644)
 
@@ -70,5 +75,7 @@ func SlackPythonPipenv(botName string) {
 		if flake8File != nil {
 			log.Fatal(flake8File)
 		}
+
+		templates.CheckProject(botName)
 	}
 }

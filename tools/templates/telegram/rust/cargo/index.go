@@ -1,12 +1,15 @@
 package cargo
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 
+	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools/templates"
 	"github.com/abdfnx/botway/tools/templates/telegram/rust"
 	"github.com/abdfnx/looker"
 )
@@ -16,9 +19,11 @@ func TelegramRustCargo(botName string) {
 	cargoPath, cerr := looker.LookPath("cargo")
 
 	if err != nil {
-		log.Fatal("error: rust is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" rust is not installed"))
 	} else if cerr != nil {
-		log.Fatal("error: cargo is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" cargo is not installed"))
 	} else {
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.rs"), []byte(rust.MainRsContent()), 0644)
 		cargoFile := os.WriteFile(filepath.Join(botName, "Cargo.toml"), []byte(rust.CargoFileContent(botName)), 0644)
@@ -63,5 +68,7 @@ func TelegramRustCargo(botName string) {
 		if err != nil {
 			log.Printf("error: %v\n", err)
 		}
+
+		templates.CheckProject(botName)
 	}
 }

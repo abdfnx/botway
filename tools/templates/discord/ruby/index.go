@@ -8,34 +8,40 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools/templates"
 	"github.com/abdfnx/botway/tools/templates/discord"
 	"github.com/abdfnx/looker"
+	"github.com/charmbracelet/lipgloss"
 )
 
 func DiscordRuby(botName string) {
 	_, err := looker.LookPath("ruby")
 	bundlePath, berr := looker.LookPath("bundle")
+	messageStyle := lipgloss.NewStyle().Foreground(constants.CYAN_COLOR)
 
 	if err != nil {
-		log.Fatal("error: ruby is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" ruby is not installed"))
 	} else if berr != nil {
-		log.Fatal("error: bundler is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" bundler is not installed"))
 	} else {
 		if runtime.GOOS == "linux" {
-			fmt.Println("Installing some required linux packages")
+			fmt.Println(messageStyle.Render("> Installing some required linux packages"))
 
 			discord.InstallCommandRust()
 		} else if runtime.GOOS == "darwin" {
-			fmt.Println("Installing some required macos packages via homebrew")
+			fmt.Println(messageStyle.Render("Installing some required macos packages via homebrew"))
 
 			discord.InstallCommandRuby()
 		} else if runtime.GOOS == "windows" {
-			fmt.Println(`On Windows, follow these steps:
+			fmt.Println(messageStyle.Render(`On Windows, follow these steps:
 
 Download the latest libsodium-X.Y.Z-msvc.zip from https://download.libsodium.org/libsodium/releases.
 From the downloaded zip file, extract the 'x64/Release/v120/dynamic/libsodium.dll' file to somewhere.
 Copy that to any folder within the Ruby '$LOAD_PATH' or 'C:\Windows\System32' and rename it to 'sodium.dll'.
-You can add a folder to your '$LOAD_PAT'H either at runtime or via the -I command line flag (ruby -I ./my_dlls bot.rb).`)
+You can add a folder to your '$LOAD_PAT'H either at runtime or via the -I command line flag (ruby -I ./my_dlls bot.rb).`))
 		}
 
 		bundlerInit := bundlePath + " init"
@@ -112,5 +118,7 @@ You can add a folder to your '$LOAD_PAT'H either at runtime or via the -I comman
 		if err != nil {
 			log.Printf("error: %v\n", err)
 		}
+
+		templates.CheckProject(botName)
 	}
 }

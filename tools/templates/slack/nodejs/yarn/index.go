@@ -1,6 +1,7 @@
 package yarn
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -8,6 +9,8 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools/templates"
 	"github.com/abdfnx/botway/tools/templates/slack/nodejs"
 	"github.com/abdfnx/looker"
 	"github.com/tidwall/sjson"
@@ -17,7 +20,8 @@ func SlackNodejsYarn(botName string) {
 	yarn, err := looker.LookPath("yarn")
 
 	if err != nil {
-		log.Fatal("error: yarn is not installed")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" yarn is not installed"))
 	} else {
 		yarnInit := yarn + " init -y"
 
@@ -95,5 +99,7 @@ func SlackNodejsYarn(botName string) {
 		if err != nil {
 			log.Printf("error: %v\n", err)
 		}
+
+		templates.CheckProject(botName)
 	}
 }
