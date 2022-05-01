@@ -1,0 +1,60 @@
+[submodule "telebot"]
+	path = apis/telebot
+	url = https://github.com/tucnak/telebot
+
+[submodule "discordgo"]
+	path = apis/discordgo
+	url = https://github.com/bwmarrin/discordgo
+
+[submodule "slacker"]
+	path = apis/slacker
+	url = https://github.com/shomali11/slacker
+
+[submodule "discord.js"]
+	path = apis/discord.js
+	url = https://github.com/discordjs/discord.js
+
+[submodule "discordeno"]
+	path = apis/discordeno
+	url = https://github.com/discordeno/discordeno
+
+[submodule "serenity"]
+	path = apis/serenity
+	url = https://github.com/serenity-rs/serenity
+
+[submodule "discord.py"]
+	path = apis/discord.py
+	url = https://github.com/abdfnx/discord.py
+
+[submodule "python-telegram-bot"]
+	path = apis/python-telegram-bot
+	url = https://github.com/python-telegram-bot/python-telegram-bot
+
+[submodule "node-telegram-bot-api"]
+	path = apis/node-telegram-bot-api
+	url = https://github.com/yagop/node-telegram-bot-api
+
+[submodule "telegram-bot-ruby"]
+	path = apis/telegram-bot-ruby
+	url = https://github.com/atipugin/telegram-bot-ruby
+
+[submodule "telegram-bot"]
+	path = apis/telegram-bot
+	url = https://github.com/telegram-rs/telegram-bot
+
+[submodule "slackify"]
+	path = apis/slackify
+	url = https://github.com/Ambro17/slackify
+
+[submodule "slack-bot-api"]
+	path = apis/slack-bot-api
+	url = https://github.com/mishk0/slack-bot-api
+
+[submodule "discordrb"]
+	path = apis/discordrb
+	url = https://github.com/shardlab/discordrb
+
+[submodule "slackrb"]
+	path = apis/slackrb
+	url = https://github.com/abdfnx/slackrb
+
