@@ -32,10 +32,8 @@ func TokenAddCMD() *cobra.Command {
 		Short: "Add new bot tokens.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) > 0 {
-				opts.BotName = args[0]
-
 				if opts.Discord {
-					discord_token.BotwayDiscordTokenSetup()
+					discord_token.BotwayDiscordTokenSetup(args[0])
 				}
 			} else {
 				fmt.Println("Bot Name is required")

@@ -5,24 +5,24 @@ import (
 	"crypto/cipher"
 	crand "crypto/rand"
 	"crypto/sha256"
-	"errors"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"math/rand"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"time"
 
 	"github.com/abdfnx/botway/constants"
-	"github.com/abdfnx/botway/internal/options"
+	"github.com/abdfnx/botway/tools"
 	"github.com/abdfnx/tran/dfs"
+	"github.com/gookit/config/v2"
+	yaml "github.com/gookit/config/v2/yaml"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/spf13/viper"
 )
 
 var (
@@ -32,10 +32,17 @@ var (
 	noStyle       = lipgloss.NewStyle()
 	focusedButton = focusedStyle.Copy().Render("[ Done ]")
 	blurredButton = fmt.Sprintf("[ %s ]", blurredStyle.Render("Done"))
-	opts          = options.TokenAddOptions{
-		BotName: "",
-	}
+
+	homeDir, err     = dfs.GetHomeDirectory()
+	botwayConfigPath = filepath.Join(homeDir, ".botway", "botway.yaml")
 )
+
+type model struct {
+	focusIndex int
+	inputs     []textinput.Model
+	cursorMode textinput.CursorMode
+	botName    string
+}
 
 func Generator() string {
 	rand.Seed(time.Now().Unix())
@@ -43,7 +50,7 @@ func Generator() string {
 
     var output strings.Builder
 
-	for i := 0; i < 33; i++ {
+	for i := 0; i < 32; i++ {
         random := rand.Intn(len(charSet))
         randomChar := charSet[random]
         output.WriteRune(randomChar)
@@ -76,7 +83,7 @@ func EncryptTokens(token, id string) (string, string) {
 			fmt.Println(err)
 		}
 
-		return string(gcm.Seal(nonce, nonce, text, nil))
+		return fmt.Sprintf("%x", gcm.Seal(nonce, nonce, text, nil))
 	}
 
 	var encryptId = func () string {
@@ -89,71 +96,50 @@ func EncryptTokens(token, id string) (string, string) {
 }
 
 func (m model) AddToken() {
-	homeDir, err := dfs.GetHomeDirectory()
+	botwayConfig, err := ioutil.ReadFile(botwayConfigPath)
 	token, id := EncryptTokens(m.inputs[0].Value(), m.inputs[1].Value())
 
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
-	err = dfs.CreateDirectory(filepath.Join(homeDir, ".botway"))
+	bc := config.New(".")
+	bc.AddDriver(yaml.Driver)
+	bcp := bc.LoadSources(config.Yaml, botwayConfig)
 
-	if err != nil {
-		log.Fatal(err)
+	if bcp != nil {
+		panic(bcp)
 	}
 
-	botwayDirPath := ""
+	path := bc.Get("botway.bots." + m.botName + ".path")
+	botType := bc.Get("botway.bots." + m.botName + ".type")
 
-	if runtime.GOOS == "windows" {
-		botwayDirPath = `$HOME\\.botway`
-	} else {
-		botwayDirPath = `$HOME/.botway`
+	bc.Set("botway.bots." + m.botName + ".bot_token", token)
+	bc.Set("botway.bots." + m.botName + ".bot_app_id", id)
+	bc.Set("botway.bots." + m.botName + ".path", path)
+	bc.Set("botway.bots." + m.botName + ".type", botType)
+
+	remove := os.Remove(botwayConfigPath)
+
+	if remove != nil {
+        log.Fatal(remove)
+    }
+
+	newBotConfig := os.WriteFile(botwayConfigPath, []byte(string(tools.ToYaml(bc.Data()))), 0644)
+
+	if newBotConfig != nil {
+		panic(newBotConfig)
 	}
 
-	viper.AddConfigPath(botwayDirPath)
-	viper.SetConfigName("botway")
-	viper.SetConfigType("yaml")
-
-	viper.SetDefault("botway.bots." + opts.BotName + ".bot_token", token)
-	viper.SetDefault("botway.bots." + opts.BotName + ".bot_app_id", id)
-
-	if err := viper.SafeWriteConfig(); err != nil {
-		if os.IsNotExist(err) {
-			err = viper.WriteConfig()
-
-			if err != nil {
-				log.Fatal(err)
-			}
-		}
-	}
-
-	if err := viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			log.Fatal(err)
-		}
-	}
-
-	botwayConfigFile := filepath.Join(homeDir, ".botway", "botway.yaml")
-
-	if _, err := os.Stat(botwayConfigFile); err == nil {
-		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
-		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + opts.BotName + " Discord tokens're added successfully"))
-		fmt.Println("Your Secret key -> " + userSecret)
-	} else if errors.Is(err, os.ErrNotExist) {
-		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
-		fmt.Println(constants.FAIL_FOREGROUND.Render(" Failed, try again"))
-	}
+	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
+	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.botName + " Discord tokens're added successfully"))
+	fmt.Println("Your Secret key -> " + userSecret + " , Save it in save place")
 }
 
-type model struct {
-	focusIndex int
-	inputs     []textinput.Model
-	cursorMode textinput.CursorMode
-}
-
-func initialModel() model {
+func initialModel(botName string) model {
 	m := model{
 		inputs: make([]textinput.Model, 2),
+		botName: botName,
 	}
 
 	var t textinput.Model
@@ -161,7 +147,6 @@ func initialModel() model {
 	for i := range m.inputs {
 		t = textinput.New()
 		t.CursorStyle = cursorStyle
-		t.CharLimit = 32
 
 		switch i {
 			case 0:
@@ -169,10 +154,11 @@ func initialModel() model {
 				t.Focus()
 				t.PromptStyle = focusedStyle
 				t.TextStyle = focusedStyle
+				t.CharLimit = 65
 
 			case 1:
 				t.Placeholder = "Discord App (or Client) ID"
-				t.CharLimit = 64
+				t.CharLimit = 18
 		}
 
 		m.inputs[i] = t
@@ -195,7 +181,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				case "tab", "shift+tab", "enter", "up", "down":
 					s := msg.String()
 
-					if s == "enter" && m.focusIndex == len(m.inputs) {
+					if s == "enter" {
 						m.AddToken()
 
 						return m, tea.Quit
@@ -270,8 +256,8 @@ func (m model) View() string {
 	return b.String()
 }
 
-func BotwayDiscordTokenSetup() {
-	if err := tea.NewProgram(initialModel()).Start(); err != nil {
+func BotwayDiscordTokenSetup(botName string) {
+	if err := tea.NewProgram(initialModel(botName)).Start(); err != nil {
 		fmt.Printf("could not start program: %s\n", err)
 		os.Exit(1)
 	}
