@@ -10,6 +10,10 @@ func Flake8Content() string {
 	return templates.Content("slack", "python", ".flake8", "")
 }
 
+func ProcfileContent() string {
+	return templates.Content("slack", "python", "Procfile", "")
+}
+
 func Resources() string {
 	return `# Botway Slack (Python 🐍) Resources
 

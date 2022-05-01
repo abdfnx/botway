@@ -60,7 +60,7 @@ func SlackPythonPip(botName string) {
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
-		procFile := os.WriteFile(filepath.Join(botName, "Procfile"), []byte("process: python3 ./src/main.py"), 0644)
+		procFile := os.WriteFile(filepath.Join(botName, "Procfile"), []byte(python.ProcfileContent()), 0644)
 		runtimeFile := os.WriteFile(filepath.Join(botName, "runtime.txt"), []byte("python-3.9.6"), 0644)
 		flake8File := os.WriteFile(filepath.Join(botName, ".flake8"), []byte(python.Flake8Content()), 0644)
 
