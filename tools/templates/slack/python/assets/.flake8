@@ -1,0 +1,5 @@
+[flake8]
+ignore=E302 # Expected 2 blank lines
+exclude=venv,__pycache__
+max-line-length=119
+max-complexity=10

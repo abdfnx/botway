@@ -28,7 +28,7 @@ func TelegramPythonPip(botName string) {
 	} else if perr != nil {
 		log.Fatal("error: pip is not installed")
 	} else {
-		requirementsFile := os.WriteFile(filepath.Join(botName, "requirements.txt"), []byte("python-telegram-bot==13.11\nbotway.py==0.0.1\ncryptography==37.0.1\nPySocks==1.7.1\nujson==5.2.0"), 0644)
+		requirementsFile := os.WriteFile(filepath.Join(botName, "requirements.txt"), []byte(RequirementsContent()), 0644)
 
 		if requirementsFile != nil {
 			log.Fatal(requirementsFile)

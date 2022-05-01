@@ -1,19 +1,17 @@
 package pip
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 
-	"github.com/abdfnx/botway/tools/templates/discord"
-	"github.com/abdfnx/botway/tools/templates/discord/python"
+	"github.com/abdfnx/botway/tools/templates/slack/python"
 	"github.com/abdfnx/looker"
 )
 
-func DiscordPythonPip(botName string) {
+func SlackPythonPip(botName string) {
 	pip := "pip3"
 	pythonPath := "python3"
 
@@ -30,12 +28,6 @@ func DiscordPythonPip(botName string) {
 	} else if perr != nil {
 		log.Fatal("error: pip is not installed")
 	} else {
-		if runtime.GOOS == "linux" {
-			fmt.Println("Installing some required linux packages")
-
-			discord.InstallCommandPython()
-		}
-
 		requirementsFile := os.WriteFile(filepath.Join(botName, "requirements.txt"), []byte(RequirementsContent()), 0644)
 
 		if requirementsFile != nil {
@@ -70,6 +62,7 @@ func DiscordPythonPip(botName string) {
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
 		procFile := os.WriteFile(filepath.Join(botName, "Procfile"), []byte("process: python3 ./src/main.py"), 0644)
 		runtimeFile := os.WriteFile(filepath.Join(botName, "runtime.txt"), []byte("python-3.9.6"), 0644)
+		flake8File := os.WriteFile(filepath.Join(botName, ".flake8"), []byte(python.Flake8Content()), 0644)
 
 		if mainFile != nil {
 			log.Fatal(mainFile)
@@ -85,6 +78,10 @@ func DiscordPythonPip(botName string) {
 
 		if runtimeFile != nil {
 			log.Fatal(runtimeFile)
+		}
+
+		if flake8File != nil {
+			log.Fatal(flake8File)
 		}
 	}
 }

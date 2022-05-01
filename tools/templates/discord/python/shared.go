@@ -26,5 +26,5 @@ func Resources() string {
 
 - [A collection of example programs written with Discord.py](https://github.com/Rapptz/discord.py/tree/master/examples)
 
-big thanks to [**@Rapptz**](https://github.com/Rapptz) org`
+big thanks to [**@Rapptz**](https://github.com/Rapptz)`
 }
