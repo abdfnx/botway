@@ -3,7 +3,6 @@ package token
 import (
 	"crypto/aes"
 	"crypto/cipher"
-	"crypto/sha256"
 	crand "crypto/rand"
 	"fmt"
 	"io"
@@ -47,8 +46,8 @@ func Generator() string {
 }
 
 func EncryptTokens(token, id string) (string, string) {
-	var encryptToken = func () string {
-		text := []byte(token)
+	var encryptAES = func (data string) string {
+		text := []byte(data)
 		key := []byte(UserSecret)
 
 		c, err := aes.NewCipher(key)
@@ -71,11 +70,5 @@ func EncryptTokens(token, id string) (string, string) {
 		return fmt.Sprintf("%x", gcm.Seal(nonce, nonce, text, nil))
 	}
 
-	var encryptId = func () string {
-		hash := sha256.Sum256([]byte(id))
-
-		return fmt.Sprintf("%x", hash)
-	}
-
-	return encryptToken(), encryptId()
+	return encryptAES(token), encryptAES(id)
 }
