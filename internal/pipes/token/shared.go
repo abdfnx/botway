@@ -1,7 +1,12 @@
 package token
 
 import (
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/sha256"
+	crand "crypto/rand"
 	"fmt"
+	"io"
 	"math/rand"
 	"path/filepath"
 	"strings"
@@ -21,8 +26,8 @@ var (
 	FocusedButton = FocusedStyle.Copy().Render("[ Done ]")
 	BlurredButton = fmt.Sprintf("[ %s ]", BlurredStyle.Render("Done"))
 
-	HomeDir, err     = dfs.GetHomeDirectory()
-	BotwayConfigPath = filepath.Join(HomeDir, ".botway", "botway.yaml")
+	HomeDir, _       = dfs.GetHomeDirectory()
+	BotwayConfigPath = filepath.Join(HomeDir, ".botway", "botway.json")
 	UserSecret 	     = Generator()
 )
 
@@ -39,4 +44,38 @@ func Generator() string {
     }
 
 	return output.String()
+}
+
+func EncryptTokens(token, id string) (string, string) {
+	var encryptToken = func () string {
+		text := []byte(token)
+		key := []byte(UserSecret)
+
+		c, err := aes.NewCipher(key)
+
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		gcm, err := cipher.NewGCM(c)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		nonce := make([]byte, gcm.NonceSize())
+
+		if _, err = io.ReadFull(crand.Reader, nonce); err != nil {
+			fmt.Println(err)
+		}
+
+		return fmt.Sprintf("%x", gcm.Seal(nonce, nonce, text, nil))
+	}
+
+	var encryptId = func () string {
+		hash := sha256.Sum256([]byte(id))
+
+		return fmt.Sprintf("%x", hash)
+	}
+
+	return encryptToken(), encryptId()
 }

@@ -28,8 +28,6 @@ var (
 )
 
 func (m model) InitCmd() {
-	var err error
-
 	homeDir, err := dfs.GetHomeDirectory()
 
 	if err != nil {
@@ -50,11 +48,13 @@ func (m model) InitCmd() {
 		botwayDirPath = `$HOME/.botway`
 	}
 
+	botwayConfigFile := filepath.Join(homeDir, ".botway", "botway.json")
+
 	viper.AddConfigPath(botwayDirPath)
 	viper.SetConfigName("botway")
-	viper.SetConfigType("yaml")
+	viper.SetConfigType("json")
 
-	viper.SetDefault("botway.bots", "")
+	viper.SetDefault("botway.bots", map[string]string{})
 	viper.SetDefault("user.github_username", m.inputs[0].Value())
 	viper.SetDefault("user.docker_id", m.inputs[1].Value())
 
@@ -74,8 +74,6 @@ func (m model) InitCmd() {
 		}
 	}
 
-	botwayConfigFile := filepath.Join(homeDir, ".botway", "botway.yaml")
-
 	if _, err := os.Stat(botwayConfigFile); err == nil {
 		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" Initialization Successful"))
@@ -88,7 +86,6 @@ func (m model) InitCmd() {
 type model struct {
 	focusIndex int
 	inputs     []textinput.Model
-	cursorMode textinput.CursorMode
 }
 
 func initialModel() model {

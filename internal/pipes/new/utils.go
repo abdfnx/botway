@@ -15,7 +15,7 @@ var (
 	prim   = lipgloss.NewStyle().Foreground(constants.PRIMARY_COLOR)
 	subtle = lipgloss.NewStyle().Foreground(constants.GRAY_COLOR)
 	dot    = lipgloss.NewStyle().Foreground(constants.GRAY_COLOR).SetString(" • ").String()
-	opts   = options.NewOptions{
+	opts   = options.CommonOptions{
 		BotName: "",
 	}
 )

@@ -1,12 +1,7 @@
 package telegram_token
 
 import (
-	"crypto/aes"
-	"crypto/cipher"
-	crand "crypto/rand"
-	"crypto/sha256"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
 	"os"
@@ -14,77 +9,26 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	token_shared "github.com/abdfnx/botway/internal/pipes/token"
-	"github.com/abdfnx/botway/tools"
-	"github.com/gookit/config/v2"
-	yaml "github.com/gookit/config/v2/yaml"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/tidwall/sjson"
 )
 
 type model struct {
 	focusIndex int
 	inputs     []textinput.Model
-	cursorMode textinput.CursorMode
 	botName    string
-}
-
-func EncryptTokens(token, id string) (string, string) {
-	var encryptToken = func () string {
-		text := []byte(token)
-		key := []byte(token_shared.UserSecret)
-
-		c, err := aes.NewCipher(key)
-
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		gcm, err := cipher.NewGCM(c)
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		nonce := make([]byte, gcm.NonceSize())
-
-		if _, err = io.ReadFull(crand.Reader, nonce); err != nil {
-			fmt.Println(err)
-		}
-
-		return fmt.Sprintf("%x", gcm.Seal(nonce, nonce, text, nil))
-	}
-
-	var encryptId = func () string {
-		hash := sha256.Sum256([]byte(id))
-
-		return fmt.Sprintf("%x", hash)
-	}
-
-	return encryptToken(), encryptId()
 }
 
 func (m model) AddToken() {
 	botwayConfig, err := ioutil.ReadFile(token_shared.BotwayConfigPath)
-	token, id := EncryptTokens(m.inputs[0].Value(), m.inputs[1].Value())
+	token, _ := token_shared.EncryptTokens(m.inputs[0].Value(), "")
 
 	if err != nil {
 		panic(err)
 	}
 
-	bc := config.New(".")
-	bc.AddDriver(yaml.Driver)
-	bcp := bc.LoadSources(config.Yaml, botwayConfig)
-
-	if bcp != nil {
-		panic(bcp)
-	}
-
-	path := bc.Get("botway.bots." + m.botName + ".path")
-	botType := bc.Get("botway.bots." + m.botName + ".type")
-
-	bc.Set("botway.bots." + m.botName + ".bot_token", token)
-	bc.Set("botway.bots." + m.botName + ".bot_app_id", id)
-	bc.Set("botway.bots." + m.botName + ".path", path)
-	bc.Set("botway.bots." + m.botName + ".type", botType)
+	tokenContent, _ := sjson.Set(string(botwayConfig), "botway.bots." + m.botName + ".bot_token", token)
 
 	remove := os.Remove(token_shared.BotwayConfigPath)
 
@@ -92,7 +36,7 @@ func (m model) AddToken() {
         log.Fatal(remove)
     }
 
-	newBotConfig := os.WriteFile(token_shared.BotwayConfigPath, []byte(string(tools.ToYaml(bc.Data()))), 0644)
+	newBotConfig := os.WriteFile(token_shared.BotwayConfigPath, []byte(tokenContent), 0644)
 
 	if newBotConfig != nil {
 		panic(newBotConfig)
@@ -105,7 +49,7 @@ func (m model) AddToken() {
 
 func initialModel(botName string) model {
 	m := model{
-		inputs: make([]textinput.Model, 2),
+		inputs: make([]textinput.Model, 1),
 		botName: botName,
 	}
 

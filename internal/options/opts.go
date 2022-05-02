@@ -8,7 +8,7 @@ type InitOptions struct {
 	Docker bool
 }
 
-type NewOptions struct {
+type CommonOptions struct {
 	BotName string
 }
 

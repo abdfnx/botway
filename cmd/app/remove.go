@@ -2,23 +2,22 @@ package app
 
 import (
 	"github.com/abdfnx/botway/internal/options"
-	"github.com/abdfnx/botway/internal/pipes/new"
+	"github.com/abdfnx/botway/internal/pipes/remove"
 	"github.com/spf13/cobra"
 )
 
-func NewCMD() *cobra.Command {
+func RemoveCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "new",
-		Short: "Create a new botway project.",
-		Long: "With `botway new` command you can create your botway project.",
-		Aliases: []string{"create"},
+		Use:   "remove",
+		Short: "Remove a new botway project.",
+		Aliases: []string{"delete"},
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) > 0 {
 				opts := &options.CommonOptions{
 					BotName: args[0],
 				}
-	
-				new.New(opts)
+
+				remove.Remove(opts)
 			} else {
 				cmd.Help()
 			}

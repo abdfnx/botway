@@ -8,7 +8,7 @@ import (
 	"github.com/muesli/reflow/indent"
 )
 
-func New(o *options.NewOptions) {
+func New(o *options.CommonOptions) {
 	m := model{0, false, 10, 0, 0, false, false, 0, false, 0, false}
 	p := tea.NewProgram(m)
 

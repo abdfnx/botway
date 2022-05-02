@@ -52,7 +52,13 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 	boa.SelectedItemStyle.Background(constants.PRIMARY_COLOR)
 
 	// Add sub-commands to root command
-	rootCmd.AddCommand(app.InitCMD(), app.NewCMD(), app.TokenCMD(), versionCmd)
+	rootCmd.AddCommand(
+		app.InitCMD(),
+		app.NewCMD(),
+		app.TokenCMD(),
+		app.RemoveCMD(),
+		versionCmd,
+	)
 
 	return rootCmd
 }

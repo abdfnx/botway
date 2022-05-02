@@ -48,7 +48,7 @@ func DockerInit() {
 
 	viper.AddConfigPath(botwayDirPath)
 	viper.SetConfigName("botway")
-	viper.SetConfigType("yaml")
+	viper.SetConfigType("json")
 
 	viper.SetDefault("botway.bots." + GetBotName() + ".discord_token", os.Getenv("DISCORD_TOKEN"))
 	viper.SetDefault("botway.bots." + GetBotName() + ".discord_client_id", os.Getenv("DISCORD_CLIENT_ID"))

@@ -13,10 +13,10 @@ const commands = [
     .setDescription("Replies with server info!"),
 ].map((command) => command.toJSON());
 
-const rest = new REST({ version: "9" }).setToken(GetToken);
+const rest = new REST({ version: "9" }).setToken(GetToken());
 
 rest
-  .put(Routes.applicationGuildCommands(GetClientId, GetGuildId), {
+  .put(Routes.applicationGuildCommands(GetClientId(), GetGuildId()), {
     body: commands,
   })
   .then(() => console.log("Successfully registered application commands."))

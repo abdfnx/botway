@@ -11,7 +11,7 @@ import (
 	"github.com/abdfnx/tran/dfs"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/knadh/koanf"
-	"github.com/knadh/koanf/parsers/yaml"
+	"github.com/knadh/koanf/parsers/json"
 	"github.com/knadh/koanf/providers/file"
 	"github.com/spf13/viper"
 )
@@ -140,7 +140,7 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		l = "Rust"
 	}
 
-	if err := conf.Load(file.Provider(filepath.Join(homeDir, ".botway", "botway.yaml")), yaml.Parser()); err != nil {
+	if err := conf.Load(file.Provider(filepath.Join(homeDir, ".botway", "botway.json")), json.Parser()); err != nil {
 		log.Fatal(err)
 	} else {
 		if err := os.Mkdir(opts.BotName, os.ModePerm); err != nil {
