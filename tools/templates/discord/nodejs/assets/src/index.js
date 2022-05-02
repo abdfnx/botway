@@ -16,7 +16,8 @@ const commands = [
 const rest = new REST({ version: "9" }).setToken(GetToken());
 
 rest
-  .put(Routes.applicationGuildCommands(GetClientId(), GetGuildId()), {
+  // how to get the id of my server? the answer in this discussion https://github.com/abdfnx/botway/discussions/4#discussioncomment-2653737
+  .put(Routes.applicationGuildCommands(GetClientId(), GetGuildId("YOUR_SERVER_ID")), {
     body: commands,
   })
   .then(() => console.log("Successfully registered application commands."))
