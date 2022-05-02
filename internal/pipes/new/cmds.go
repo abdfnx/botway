@@ -11,7 +11,7 @@ import (
 	"github.com/abdfnx/tran/dfs"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/knadh/koanf"
-	"github.com/knadh/koanf/parsers/json"
+	"github.com/knadh/koanf/parsers/yaml"
 	"github.com/knadh/koanf/providers/file"
 	"github.com/spf13/viper"
 )
@@ -199,6 +199,7 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 
 		dotGitIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".gitignore"), dotGitIgnoreFileContent, 0644)
 		dotDockerIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".dockerignore"), dotGitIgnoreFileContent, 0644)
+		dotRailwayIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".railwayignore"), dotGitIgnoreFileContent, 0644)
 		herokuFile := os.WriteFile(filepath.Join(opts.BotName, "heroku.yaml"), herokuFileContent, 0644)
 
 		if dotGitIgnoreFile != nil {
@@ -207,6 +208,10 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 
 		if dotDockerIgnoreFile != nil {
 			log.Fatal(dotDockerIgnoreFile)
+		}
+
+		if dotRailwayIgnoreFile != nil {
+			log.Fatal(dotRailwayIgnoreFile)
 		}
 
 		if herokuFile != nil {
