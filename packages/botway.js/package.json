@@ -1,12 +1,12 @@
 {
   "name": "botway.js",
-  "version": "0.0.1-beta",
-  "description": "Nodejs client of botway.",
+  "version": "0.0.1-alpha",
+  "description": "Nodejs client for botway.",
   "author": "@abdfnx",
   "homepage": "https://github.com/abdfnx/botway",
   "bugs": "https://github.com/abdfnx/botway/issues",
   "repository": "abdfnx/botway",
-  "main": "lib/index.js",
+  "main": "lib/main.js",
   "license": "MIT",
   "scripts": {
     "build": "tsc"
