@@ -29,7 +29,7 @@ export const GetToken = () => {
 
       const json = JSON.parse(contents);
 
-      console.log(json["botway"]["bots"][getBotInfo("name")]["bot_token"]);
+      return json["botway"]["bots"][getBotInfo("name")]["bot_token"];
     } catch (err: any) {
       console.log(err.stack || String(err));
     }
@@ -41,14 +41,16 @@ export const GetClientId = () => {
     console.log("ERROR: Botway is not running in NodeJS");
   } else {
     if (getBotInfo("type") != "discord") {
-      console.log("ERROR: This function/feature is only for discord bots");
+      console.log(
+        "ERROR: This function/feature is only working with discord bots."
+      );
     } else {
       try {
         const contents = readFileSync(BOTWAY_CONFIG_PATH, "utf8");
 
         const json = JSON.parse(contents);
 
-        console.log(json["botway"]["bots"][getBotInfo("name")]["bot_app_id"]);
+        return json["botway"]["bots"][getBotInfo("name")]["bot_app_id"];
       } catch (err: any) {
         console.log(err.stack || String(err));
       }
@@ -61,18 +63,18 @@ export const GetGuildId = (serverName: string) => {
     console.log("ERROR: Botway is not running in NodeJS");
   } else {
     if (getBotInfo("type") != "discord") {
-      console.log("ERROR: This function/feature is only for discord bots");
+      console.log(
+        "ERROR: This function/feature is only working with discord bots."
+      );
     } else {
       try {
         const contents = readFileSync(BOTWAY_CONFIG_PATH, "utf8");
 
         const json = JSON.parse(contents);
 
-        console.log(
-          json["botway"]["bots"][getBotInfo("name")]["guilds"][serverName][
-            "server_id"
-          ]
-        );
+        return json["botway"]["bots"][getBotInfo("name")]["guilds"][serverName][
+          "server_id"
+        ];
       } catch (err: any) {
         console.log(err.stack || String(err));
       }

@@ -31,7 +31,7 @@ client.once("ready", () => {
 });
 
 // Login to Discord with your client's token
-client.login(GetToken);
+client.login(GetToken());
 
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
