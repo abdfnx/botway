@@ -9,7 +9,8 @@
   "main": "lib/main.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "pnpm build"
   },
   "keywords": [
     "bot",

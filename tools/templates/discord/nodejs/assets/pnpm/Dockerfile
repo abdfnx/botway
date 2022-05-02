@@ -13,7 +13,7 @@ RUN apk update && \
 # RUN apk add PACKAGE_NAME
 
 RUN botway init --docker --name ${DISCORD_BOT_NAME}
-RUN curl -fsSL https://get.pnpm.io/install.sh | PNPM_VERSION=7.0.0-rc.9 sh -
+RUN curl -fsSL https://get.pnpm.io/install.sh | PNPM_VERSION=7.0.0 sh -
 
 RUN pnpm fetch --prod
 ADD . .
