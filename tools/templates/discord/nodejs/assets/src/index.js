@@ -16,7 +16,7 @@ const commands = [
 const rest = new REST({ version: "9" }).setToken(GetToken());
 
 rest
-  // how to get the id of my server? the answer in this discussion https://github.com/abdfnx/botway/discussions/4#discussioncomment-2653737
+  // how I can get the id of my server? the answer in this github discussion https://github.com/abdfnx/botway/discussions/4#discussioncomment-2653737
   .put(Routes.applicationGuildCommands(GetClientId(), GetGuildId("YOUR_SERVER_NAME")), {
     body: commands,
   })
