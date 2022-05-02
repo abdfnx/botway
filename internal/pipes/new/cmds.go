@@ -11,7 +11,7 @@ import (
 	"github.com/abdfnx/tran/dfs"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/knadh/koanf"
-	"github.com/knadh/koanf/parsers/yaml"
+	"github.com/knadh/koanf/parsers/json"
 	"github.com/knadh/koanf/providers/file"
 	"github.com/spf13/viper"
 )
