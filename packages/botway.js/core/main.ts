@@ -36,7 +36,7 @@ export const GetToken = () => {
   }
 };
 
-export const GetClientId = () => {
+export const GetAppId = () => {
   if (getBotInfo("lang") != "nodejs") {
     console.log("ERROR: Botway is not running in NodeJS");
   } else {

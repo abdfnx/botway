@@ -26,13 +26,13 @@ pnpm add botway.js
 
 ```js
 ...
-const { GetToken, GetClientId, GetGuildId } = require("botway.js");
+const { GetToken, GetAppId, GetGuildId } = require("botway.js");
 const { Client, Intents } = require("discord.js");
 
 const rest = new REST({ version: "9" }).setToken(GetToken());
 
 rest
   // how to get the id of my server? the answer in this discussion https://github.com/abdfnx/botway/discussions/4#discussioncomment-2653737
-  .put(Routes.applicationGuildCommands(GetClientId(), GetGuildId("YOUR_SERVER_NAME"))
+  .put(Routes.applicationGuildCommands(GetAppId(), GetGuildId("YOUR_SERVER_NAME"))
 ...
 ```

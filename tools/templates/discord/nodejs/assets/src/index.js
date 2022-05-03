@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
-const { GetToken, GetClientId, GetGuildId } = require("botway.js");
+const { GetToken, GetAppId, GetGuildId } = require("botway.js");
 const { Client, Intents } = require("discord.js");
 
 const commands = [
@@ -17,9 +17,12 @@ const rest = new REST({ version: "9" }).setToken(GetToken());
 
 rest
   // how I can get the id of my server? the answer in this github discussion https://github.com/abdfnx/botway/discussions/4#discussioncomment-2653737
-  .put(Routes.applicationGuildCommands(GetClientId(), GetGuildId("YOUR_SERVER_NAME")), {
-    body: commands,
-  })
+  .put(
+    Routes.applicationGuildCommands(GetAppId(), GetGuildId("YOUR_SERVER_NAME")),
+    {
+      body: commands,
+    }
+  )
   .then(() => console.log("Successfully registered application commands."))
   .catch(console.error);
 

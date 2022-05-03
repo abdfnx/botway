@@ -1,6 +1,6 @@
 {
   "name": "botway.js",
-  "version": "0.0.1",
+  "version": "0.0.11",
   "description": "Nodejs client for botway.",
   "author": "@abdfnx",
   "homepage": "https://github.com/abdfnx/botway",
@@ -35,5 +35,6 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
-  }
+  },
+  "copyRight": "Copyright (c) 2019 @abdfnx"
 }
