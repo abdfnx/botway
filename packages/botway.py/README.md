@@ -27,7 +27,7 @@ pipenv install botway.py
 
 ```python
 ...
-import botway
+from botway import GetToken
 
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
@@ -35,7 +35,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 def main() -> None:
 	"""Start the bot."""
 	# Create the Updater and pass it your bot's token.
-	updater = Updater(botway.GetToken())
+	updater = Updater(GetToken())
 
 	# Get the dispatcher to register handlers
 	dispatcher = updater.dispatcher

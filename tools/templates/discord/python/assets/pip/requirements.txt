@@ -1,3 +1,4 @@
 discord.py==1.7.3
-botway.py==0.0.1
+botway.py==0.0.2
 pynacl==1.5.0
+PyYAML==6.0

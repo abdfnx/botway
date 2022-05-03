@@ -1,6 +1,6 @@
 import random
 import re
-import botway
+from botway import GetToken
 
 from flask import Flask
 from slackify import (
@@ -17,7 +17,7 @@ from slackify import (
 
 app = Flask(__name__)
 slackify = Slackify(app=app)
-cli = Slack(botway.GetToken())
+cli = Slack(GetToken())
 
 @slackify.command
 def hello():

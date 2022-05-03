@@ -1,5 +1,5 @@
 import discord
-import botway
+from botway import GetToken
 
 intents = discord.Intents.default()
 
@@ -17,4 +17,4 @@ async def on_message(message):
 	if message.content.startswith('Hi'):
 		await message.channel.send('Hello!')
 
-client.run(botway.GetToken())
+client.run(GetToken())
