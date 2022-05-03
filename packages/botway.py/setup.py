@@ -24,6 +24,7 @@ setup(
     license="MIT",
     description="Python client package for Botway.",
     long_description=readme,
+    long_description_content_type="text/markdown",
     include_package_data=True,
     python_requires=">=3.6.0",
     classifiers=[
