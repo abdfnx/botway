@@ -40,20 +40,18 @@ export const GetAppId = () => {
   if (getBotInfo("lang") != "nodejs") {
     console.log("ERROR: Botway is not running in NodeJS");
   } else {
-    if (getBotInfo("type") != "discord") {
-      console.log(
-        "ERROR: This function/feature is only working with discord bots."
-      );
-    } else {
-      try {
-        const contents = readFileSync(BOTWAY_CONFIG_PATH, "utf8");
+    try {
+      const contents = readFileSync(BOTWAY_CONFIG_PATH, "utf8");
 
-        const json = JSON.parse(contents);
+      const json = JSON.parse(contents);
 
+      if (getBotInfo("type") == "slack") {
+        return json["botway"]["bots"][getBotInfo("name")]["bot_app_token"];
+      } else {
         return json["botway"]["bots"][getBotInfo("name")]["bot_app_id"];
-      } catch (err: any) {
-        console.log(err.stack || String(err));
       }
+    } catch (err: any) {
+      console.log(err.stack || String(err));
     }
   }
 };
