@@ -38,10 +38,10 @@
 	url = https://github.com/python-telegram-bot/python-telegram-bot
     branch = master
 
-[submodule "node-telegram-bot-api"]
-	path = apis/node-telegram-bot-api
-	url = https://github.com/yagop/node-telegram-bot-api
-    branch = master
+[submodule "telegraf"]
+	path = apis/telegraf
+	url = https://github.com/telegraf/telegraf
+    branch = v4
 
 [submodule "telegram-bot-ruby"]
 	path = apis/telegram-bot-ruby

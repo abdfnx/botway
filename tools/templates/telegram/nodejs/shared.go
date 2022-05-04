@@ -2,7 +2,7 @@ package nodejs
 
 import "github.com/abdfnx/botway/tools/templates"
 
-var Packages = "node-telegram-bot-api botway.js"
+var Packages = "telegraf botway.js"
 
 func IndexJSContent() string {
 	return templates.Content("telegram", "nodejs", "src/index.js", "")
@@ -19,16 +19,13 @@ func Resources() string {
 
 ## API
 
-- [Telegram Bot API for NodeJS](https://github.com/https://github.com/yagop/node-telegram-bot-api)
-- [node-telegram-bot-api Docs](https://github.com/yagop/node-telegram-bot-api/tree/master/doc)
-- [node-telegram-bot-api Help Information](https://github.com/yagop/node-telegram-bot-api/blob/master/doc/help.md)
-- [Tutorials](https://github.com/yagop/node-telegram-bot-api/tree/master/doc/tutorials.md)
-- [node-telegram-bot-api Telegram Channel](https://t.me/node_telegram_bot_api)
-- [node-telegram-bot-api Telegram Group](https://t.me/ntbasupport)
+- [Modern Telegram Bot Framework for Node.js](https://github.com/telegraf/telegraf)
+- [Telegraf Docs](https://github.com/telegraf/telegraf/tree/v4/docs)
+- [Telegraf Telegram Channel](https://t.me/TelegrafJSChat)
 
 ## Examples
 
-[Examples](https://github.com/yagop/node-telegram-bot-api/tree/master/examples)
+[Examples](https://github.com/telegraf/telegraf/tree/v4/docs/examples)
 
-big thanks to [**@yagop**](https://github.com/yagop)`
+big thanks to [**@telegraf**](https://github.com/telegraf/telegraf) org`
 }
