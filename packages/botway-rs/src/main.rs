@@ -86,5 +86,3 @@ pub mod botway {
         }
     }
 }
-
-fn main() {}
