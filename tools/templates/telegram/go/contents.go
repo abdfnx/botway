@@ -9,7 +9,7 @@ func DockerfileContent(botName string) string {
 }
 
 func MainGoContent() string {
-	return templates.Content("telegram", "go", "src/main.go", "")
+	return templates.Content("telegram", "go", "src/main.go.bw", "")
 }
 
 func Resources() string {
