@@ -6,9 +6,9 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/internal/pipes/new/config"
 	"github.com/abdfnx/resto/core/api"
-	"github.com/abdfnx/tran/dfs"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/knadh/koanf"
 	"github.com/knadh/koanf/parsers/json"
@@ -118,12 +118,6 @@ func updatePMs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 	fmt.Println(finalView(m))
 
-	homeDir, err := dfs.GetHomeDirectory()
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	var conf = koanf.New(".")
 
 	l := ""
@@ -140,7 +134,7 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		l = "Rust"
 	}
 
-	if err := conf.Load(file.Provider(filepath.Join(homeDir, ".botway", "botway.json")), json.Parser()); err != nil {
+	if err := conf.Load(file.Provider(constants.BotwayConfigFile), json.Parser()); err != nil {
 		log.Fatal(err)
 	} else {
 		if err := os.Mkdir(opts.BotName, os.ModePerm); err != nil {
@@ -161,7 +155,9 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		viper.SetDefault("bot.type", BotType(m))
 		viper.SetDefault("bot.lang", BotLang(m))
 		viper.SetDefault("bot.package_manager", BotPM(m))
-		viper.SetDefault("docker.image", conf.String("user.docker_id") + "/" + opts.BotName)
+		dockerImage := conf.String("user.docker_id") + "/" + opts.BotName
+		viper.SetDefault("docker.image", dockerImage)
+		viper.SetDefault("docker.build_cmd", "docker build -t " + dockerImage + " # you can edit the build command")
 
 		if err := viper.SafeWriteConfig(); err != nil {
 			if os.IsNotExist(err) {

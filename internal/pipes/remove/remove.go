@@ -3,16 +3,13 @@ package remove
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
 	token_shared "github.com/abdfnx/botway/internal/pipes/token"
 	"github.com/abdfnx/botway/internal/options"
-	"github.com/abdfnx/tran/dfs"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/tidwall/gjson"
@@ -56,48 +53,38 @@ func initialModel(o *options.CommonOptions) model {
 }
 
 func (m model) RemoveCmd() {
-	var err error
-	homeDir, err := dfs.GetHomeDirectory()
-	botwayConfigFile := filepath.Join(homeDir, ".botway", "botway.json")
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	botwayConfig, berr := ioutil.ReadFile(botwayConfigFile)
-
-	if berr != nil {
-		panic(berr)
+	if constants.Berr != nil {
+		panic(constants.Berr)
 	}
 
 	// remove project dir
-	botPath := gjson.Get(string(botwayConfig), "botway.bots." + m.botName + ".path").String()
+	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots." + m.botName + ".path").String()
 
 	if botPath == "" {
 		panic(errors.New("bot path not found"))
 	}
 
-	err = os.RemoveAll(botPath)
+	err := os.RemoveAll(botPath)
 
 	if err != nil {
 		panic(err)
 	}
 
-	deleteBot, _ := sjson.Delete(string(botwayConfig), "botway.bots." + m.botName)
+	deleteBot, _ := sjson.Delete(string(constants.BotwayConfig), "botway.bots." + m.botName)
 
-	remove := os.Remove(botwayConfigFile)
+	remove := os.Remove(constants.BotwayConfigFile)
 
 	if remove != nil {
         log.Fatal(remove)
     }
 
-	newBotConfig := os.WriteFile(botwayConfigFile, []byte(deleteBot), 0644)
+	newBotConfig := os.WriteFile(constants.BotwayConfigFile, []byte(deleteBot), 0644)
 
 	if newBotConfig != nil {
 		panic(newBotConfig)
 	}
 
-	if _, err := os.Stat(botwayConfigFile); err == nil {
+	if _, err := os.Stat(constants.BotwayConfigFile); err == nil {
 		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.botName + " Removed Successfully"))
 	} else if errors.Is(err, os.ErrNotExist) {
@@ -191,7 +178,7 @@ func (m model) View() string {
 		if i == 0 {
 			b.WriteString("Enter the bot name to continue")
 		}
-		
+
 		if i == 1 {
 			b.WriteString("\n")
 			b.WriteString("To verify, type " + token_shared.BoldStyle.Render("delete my bot") + " below")

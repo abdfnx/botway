@@ -6,51 +6,24 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
+	token_shared "github.com/abdfnx/botway/internal/pipes/token"
 	"github.com/abdfnx/tran/dfs"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/viper"
 )
 
-var (
-	focusedStyle = lipgloss.NewStyle().Foreground(constants.PRIMARY_COLOR)
-	blurredStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
-	cursorStyle  = focusedStyle.Copy()
-	noStyle      = lipgloss.NewStyle()
-
-	focusedButton = focusedStyle.Copy().Render("[ Submit ]")
-	blurredButton = fmt.Sprintf("[ %s ]", blurredStyle.Render("Submit"))
-)
-
 func (m model) InitCmd() {
-	homeDir, err := dfs.GetHomeDirectory()
+	err := dfs.CreateDirectory(filepath.Join(constants.HomeDir, ".botway"))
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = dfs.CreateDirectory(filepath.Join(homeDir, ".botway"))
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	botwayDirPath := ""
-
-	if runtime.GOOS == "windows" {
-		botwayDirPath = `$HOME\\.botway`
-	} else {
-		botwayDirPath = `$HOME/.botway`
-	}
-
-	botwayConfigFile := filepath.Join(homeDir, ".botway", "botway.json")
-
-	viper.AddConfigPath(botwayDirPath)
+	viper.AddConfigPath(constants.BotwayDirPath())
 	viper.SetConfigName("botway")
 	viper.SetConfigType("json")
 
@@ -74,7 +47,7 @@ func (m model) InitCmd() {
 		}
 	}
 
-	if _, err := os.Stat(botwayConfigFile); err == nil {
+	if _, err := os.Stat(constants.BotwayConfigFile); err == nil {
 		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" Initialization Successful"))
 	} else if errors.Is(err, os.ErrNotExist) {
@@ -97,15 +70,15 @@ func initialModel() model {
 
 	for i := range m.inputs {
 		t = textinput.New()
-		t.CursorStyle = cursorStyle
+		t.CursorStyle = token_shared.CursorStyle
 		t.CharLimit = 32
 
 		switch i {
 			case 0:
 				t.Placeholder = "GitHub Username"
 				t.Focus()
-				t.PromptStyle = focusedStyle
-				t.TextStyle = focusedStyle
+				t.PromptStyle = token_shared.FocusedStyle
+				t.TextStyle = token_shared.FocusedStyle
 
 			case 1:
 				t.Placeholder = "Docker Hub ID"
@@ -155,14 +128,14 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					for i := 0; i <= len(m.inputs)-1; i++ {
 						if i == m.focusIndex {
 							cmds[i] = m.inputs[i].Focus()
-							m.inputs[i].PromptStyle = focusedStyle
-							m.inputs[i].TextStyle = focusedStyle
+							m.inputs[i].PromptStyle = token_shared.FocusedStyle
+							m.inputs[i].TextStyle = token_shared.FocusedStyle
 							continue
 						}
 
 						m.inputs[i].Blur()
-						m.inputs[i].PromptStyle = noStyle
-						m.inputs[i].TextStyle = noStyle
+						m.inputs[i].PromptStyle = token_shared.NoStyle
+						m.inputs[i].TextStyle = token_shared.NoStyle
 					}
 
 					return m, tea.Batch(cmds...)
@@ -196,10 +169,10 @@ func (m model) View() string {
 		}
 	}
 
-	button := &blurredButton
+	button := &token_shared.BlurredButton
 
 	if m.focusIndex == len(m.inputs) {
-		button = &focusedButton
+		button = &token_shared.FocusedButton
 	}
 
 	fmt.Fprintf(&b, "\n\n%s\n\n", *button)

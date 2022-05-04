@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"runtime"
 
+	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/tran/dfs"
-	"github.com/spf13/viper"
 	"github.com/gookit/config/v2"
 	"github.com/gookit/config/v2/yaml"
+	"github.com/spf13/viper"
 )
 
 func GetBotName() string {
@@ -24,29 +24,13 @@ func GetBotName() string {
 }
 
 func DockerInit() {
-	var err error
-
-	homeDir, err := dfs.GetHomeDirectory()
+	err := dfs.CreateDirectory(filepath.Join(constants.HomeDir, ".botway"))
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = dfs.CreateDirectory(filepath.Join(homeDir, ".botway"))
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	botwayDirPath := ""
-
-	if runtime.GOOS == "windows" {
-		botwayDirPath = `$HOME\\.botway`
-	} else {
-		botwayDirPath = `$HOME/.botway`
-	}
-
-	viper.AddConfigPath(botwayDirPath)
+	viper.AddConfigPath(constants.BotwayDirPath())
 	viper.SetConfigName("botway")
 	viper.SetConfigType("json")
 

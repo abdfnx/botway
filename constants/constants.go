@@ -1,8 +1,16 @@
 package constants
 
-import "github.com/charmbracelet/lipgloss"
+import (
+	"io/ioutil"
+	"path/filepath"
+	"runtime"
+
+	"github.com/abdfnx/tran/dfs"
+	"github.com/charmbracelet/lipgloss"
+)
 
 var (
+	// Styles
 	PRIMARY_COLOR = lipgloss.Color("#1E90FF")
 	CYAN_COLOR = lipgloss.Color("#00FFFF")
     GREEN_COLOR = "#04B575"
@@ -23,4 +31,17 @@ var (
 		PaddingRight(1)
 	SUCCESS_FOREGROUND = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(GREEN_COLOR))
 	FAIL_FOREGROUND = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(RED_COLOR))
+
+	// File Paths
+	HomeDir, _ = dfs.GetHomeDirectory()
+	BotwayConfigFile = filepath.Join(HomeDir, ".botway", "botway.json")
+	BotwayConfig, Berr = ioutil.ReadFile(BotwayConfigFile)
+
+	BotwayDirPath = func () string {
+		if runtime.GOOS == "windows" {
+			return `$HOME\\.botway`
+		} else {
+			return `$HOME/.botway`
+		}
+	}
 )
