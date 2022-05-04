@@ -1,11 +1,10 @@
 use futures::StreamExt;
 use telegram_bot::*;
-
-use botway_rs::get_token;
+use botway_rs::get;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-	let api = Api::new(get_token());
+	let api = Api::new(get("token"));
 
 	// Fetch new updates via long poll method
 	let mut stream = api.stream();

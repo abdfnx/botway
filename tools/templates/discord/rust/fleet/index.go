@@ -17,7 +17,7 @@ import (
 )
 
 func DiscordRustFleet(botName string) {
-	_, err := looker.LookPath("rust")
+	_, err := looker.LookPath("rustc")
 	fleetPath, ferr := looker.LookPath("fleet")
 	messageStyle := lipgloss.NewStyle().Foreground(constants.CYAN_COLOR)
 

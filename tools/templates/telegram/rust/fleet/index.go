@@ -15,7 +15,7 @@ import (
 )
 
 func TelegramRustFleet(botName string) {
-	_, err := looker.LookPath("rust")
+	_, err := looker.LookPath("rustc")
 	fleetPath, ferr := looker.LookPath("fleet")
 
 	if err != nil {

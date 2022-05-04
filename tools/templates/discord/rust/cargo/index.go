@@ -17,7 +17,7 @@ import (
 )
 
 func DiscordRustCargo(botName string) {
-	_, err := looker.LookPath("rust")
+	_, err := looker.LookPath("rustc")
 	cargoPath, cerr := looker.LookPath("cargo")
 	messageStyle := lipgloss.NewStyle().Foreground(constants.CYAN_COLOR)
 

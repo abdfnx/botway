@@ -1,6 +1,6 @@
 [package]
 name = "botway-rs"
-version = "0.1"
+version = "0.1.0"
 authors = ["Abdfn", "David Tomson"]
 edition = "2021"
 description = "Rust client package for Botway."
@@ -14,3 +14,4 @@ include = ["src/**/*", "Cargo.toml", "LICENSE.md", "README.md"]
 yaml-rust = "0.4"
 rustc-serialize = "0.3.24"
 snailquote = "0.3.1"
+dirs = "4.0.0"

@@ -2,8 +2,7 @@ use serenity::async_trait;
 use serenity::model::channel::Message;
 use serenity::model::gateway::Ready;
 use serenity::prelude::*;
-
-use botway_rs::get_token;
+use botway_rs::get;
 
 struct Handler;
 
@@ -40,7 +39,7 @@ impl EventHandler for Handler {
 #[tokio::main]
 async fn main() {
 	// Configure the client with your Discord bot token in the environment.
-	let token = get_token;
+	let token = get("token");
 	// Set gateway intents, which decides what events the bot will be notified about
 	let intents = GatewayIntents::GUILD_MESSAGES
 		| GatewayIntents::DIRECT_MESSAGES
