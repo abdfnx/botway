@@ -83,7 +83,7 @@ You can add a folder to your '$LOAD_PAT'H either at runtime or via the -I comman
 			log.Fatal(resourcesFile)
 		}
 
-		bundleInstall := bundlePath + " add discordrb --github shardlab/discordrb --branch main"
+		bundleInstall := bundlePath + " add discordrb --git https://github.com/shardlab/discordrb --branch main"
 
 		installCmd := exec.Command("bash", "-c", bundleInstall)
 

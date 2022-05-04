@@ -44,12 +44,17 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 	rootCmd.SetErr(f.IOStreams.ErrOut)
 
 	rootCmd.PersistentFlags().Bool("help", false, "Help for botway")
-	rootCmd.SetUsageFunc(boa.UsageFunc)
-	rootCmd.SetHelpFunc(boa.HelpFunc)
 	rootCmd.Flags().BoolVarP(&opts.Version, "version", "v", false, "Print the version of your botway binary.")
 
-	boa.TitleStyle.BorderForeground(constants.PRIMARY_COLOR)
-	boa.SelectedItemStyle.Background(constants.PRIMARY_COLOR)
+	styles := boa.DefaultStyles()
+
+	styles.Title.BorderForeground(constants.PRIMARY_COLOR)
+	styles.SelectedItem.Background(constants.PRIMARY_COLOR)
+
+	b := boa.New(boa.WithAltScreen(false), boa.WithStyles(styles))
+
+	rootCmd.SetUsageFunc(b.UsageFunc)
+	rootCmd.SetHelpFunc(b.HelpFunc)
 
 	// Add sub-commands to root command
 	rootCmd.AddCommand(
