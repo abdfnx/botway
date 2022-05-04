@@ -4,6 +4,7 @@
     "update": "go get -u"
   },
   "modules": [
-    "."
+    ".",
+    "packages/botwaygo"
   ]
 }
