@@ -1,0 +1,50 @@
+# frozen_string_literal: true
+
+require_relative "botwayrb/version"
+require "yaml"
+require "json"
+
+
+module Botwayrb
+  BotwatConfig = JSON.parse(File.read(File.join(File.expand_path("~"), ".botway", "botway.json")))
+
+  class Error < StandardError; end
+
+  class Core
+    def get_bot_info(value)
+      data = YAML.load_file(".botway.yaml")
+  
+      data["bot"][value]
+    end
+
+    def get_token()
+      if get_bot_info("lang") != "ruby"
+        raise Error, "ERROR: Botway is not running in Ruby"
+      else
+        BotwatConfig["botway"]["bots"][get_bot_info("name")]["bot_token"]
+      end
+    end
+
+    def get_app_id()
+      if get_bot_info("lang") != "ruby"
+        raise Error, "ERROR: Botway is not running in Ruby"
+      else
+        if get_bot_info("type") == "slack"
+          BotwatConfig["botway"]["bots"][get_bot_info("name")]["bot_app_token"]
+        else
+          BotwatConfig["botway"]["bots"][get_bot_info("name")]["bot_app_id"]
+        end
+      end
+    end
+
+    def get_guild_id(serverName)
+      if get_bot_info("lang") != "ruby"
+        raise Error, "ERROR: Botway is not running in Ruby"
+      elsif get_bot_info("type") != "discord"
+        raise Error, "ERROR: This function/feature is only working with discord bots."
+      else
+        BotwatConfig["botway"]["bots"][get_bot_info("name")]["guilds"][serverName]["server_id"]
+      end
+    end
+  end
+end

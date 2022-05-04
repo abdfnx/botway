@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gemspec name: "botwayrb"
+
+gem "rake", "~> 13.0"
+gem "rspec", "~> 3.0"
+gem "rubocop", "~> 1.7"
+gem "yaml", "~> 0.2.0"
+gem "json", "~> 2.6", ">= 2.6.1"
