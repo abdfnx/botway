@@ -27,7 +27,6 @@ tasks:
 
   release:
     cmds:
-      - task: node-checks
       - BuildDate="$(cat date.txt)" goreleaser release --rm-dist --timeout 100m
 
   build:
