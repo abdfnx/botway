@@ -46,7 +46,7 @@ func DiscordPythonPipenv(botName string) {
 			log.Fatal(resourcesFile)
 		}
 
-		pipenvInstall := pipenv + " install discord.py botway.py pynacl"
+		pipenvInstall := pipenv + " install discord-py-api botway.py pynacl"
 
 		cmd := exec.Command("bash", "-c", pipenvInstall)
 
