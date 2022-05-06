@@ -1,15 +1,15 @@
 package new
 
 import (
-	"github.com/abdfnx/botway/tools/templates/telegram/go"
-	"github.com/abdfnx/botway/tools/templates/telegram/nodejs/npm"
-	"github.com/abdfnx/botway/tools/templates/telegram/nodejs/pnpm"
-	"github.com/abdfnx/botway/tools/templates/telegram/nodejs/yarn"
-	"github.com/abdfnx/botway/tools/templates/telegram/python/pip"
-	"github.com/abdfnx/botway/tools/templates/telegram/python/pipenv"
-	"github.com/abdfnx/botway/tools/templates/telegram/ruby"
-	"github.com/abdfnx/botway/tools/templates/telegram/rust/cargo"
-	"github.com/abdfnx/botway/tools/templates/telegram/rust/fleet"
+	"github.com/abdfnx/botway/templates/telegram/go"
+	"github.com/abdfnx/botway/templates/telegram/nodejs/npm"
+	"github.com/abdfnx/botway/templates/telegram/nodejs/pnpm"
+	"github.com/abdfnx/botway/templates/telegram/nodejs/yarn"
+	"github.com/abdfnx/botway/templates/telegram/python/pip"
+	"github.com/abdfnx/botway/templates/telegram/python/pipenv"
+	"github.com/abdfnx/botway/templates/telegram/ruby"
+	"github.com/abdfnx/botway/templates/telegram/rust/cargo"
+	"github.com/abdfnx/botway/templates/telegram/rust/fleet"
 )
 
 func TelegramHandler(m model) {

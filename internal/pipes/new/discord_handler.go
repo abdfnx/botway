@@ -1,16 +1,16 @@
 package new
 
 import (
-	"github.com/abdfnx/botway/tools/templates/discord/deno"
-	"github.com/abdfnx/botway/tools/templates/discord/go"
-	"github.com/abdfnx/botway/tools/templates/discord/nodejs/npm"
-	"github.com/abdfnx/botway/tools/templates/discord/nodejs/pnpm"
-	"github.com/abdfnx/botway/tools/templates/discord/nodejs/yarn"
-	"github.com/abdfnx/botway/tools/templates/discord/python/pip"
-	"github.com/abdfnx/botway/tools/templates/discord/python/pipenv"
-	"github.com/abdfnx/botway/tools/templates/discord/ruby"
-	"github.com/abdfnx/botway/tools/templates/discord/rust/cargo"
-	"github.com/abdfnx/botway/tools/templates/discord/rust/fleet"
+	"github.com/abdfnx/botway/templates/discord/deno"
+	"github.com/abdfnx/botway/templates/discord/go"
+	"github.com/abdfnx/botway/templates/discord/nodejs/npm"
+	"github.com/abdfnx/botway/templates/discord/nodejs/pnpm"
+	"github.com/abdfnx/botway/templates/discord/nodejs/yarn"
+	"github.com/abdfnx/botway/templates/discord/python/pip"
+	"github.com/abdfnx/botway/templates/discord/python/pipenv"
+	"github.com/abdfnx/botway/templates/discord/ruby"
+	"github.com/abdfnx/botway/templates/discord/rust/cargo"
+	"github.com/abdfnx/botway/templates/discord/rust/fleet"
 )
 
 func DiscordHandler(m model) {

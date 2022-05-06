@@ -1,13 +1,13 @@
 package new
 
 import (
-	"github.com/abdfnx/botway/tools/templates/slack/go"
-	"github.com/abdfnx/botway/tools/templates/slack/nodejs/npm"
-	"github.com/abdfnx/botway/tools/templates/slack/nodejs/pnpm"
-	"github.com/abdfnx/botway/tools/templates/slack/nodejs/yarn"
-	"github.com/abdfnx/botway/tools/templates/slack/python/pip"
-	"github.com/abdfnx/botway/tools/templates/slack/python/pipenv"
-	"github.com/abdfnx/botway/tools/templates/slack/ruby"
+	"github.com/abdfnx/botway/templates/slack/go"
+	"github.com/abdfnx/botway/templates/slack/nodejs/npm"
+	"github.com/abdfnx/botway/templates/slack/nodejs/pnpm"
+	"github.com/abdfnx/botway/templates/slack/nodejs/yarn"
+	"github.com/abdfnx/botway/templates/slack/python/pip"
+	"github.com/abdfnx/botway/templates/slack/python/pipenv"
+	"github.com/abdfnx/botway/templates/slack/ruby"
 )
 
 func SlackHandler(m model) {
