@@ -44,3 +44,4 @@ MANIFEST
 
 # Rust
 target/
+Cargo.lock
