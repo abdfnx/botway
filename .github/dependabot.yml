@@ -45,3 +45,10 @@ updates:
     reviewers:
       - abdfnx
       - david-tomson
+
+  - package-ecosystem: "cargo"
+    directory: "/installer"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - abdfnx
