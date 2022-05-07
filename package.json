@@ -24,7 +24,7 @@
   ],
   "dependencies": {
     "node-fetch": "^3.2.4",
-    "stream": "^0.0.2",
-    "zip-lib": "^0.7.3"
+    "node-stream-zip": "^1.15.0",
+    "stream": "^0.0.2"
   }
 }

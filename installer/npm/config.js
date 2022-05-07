@@ -10,11 +10,6 @@ export const CONFIG = {
   /**
    * @type {string}
    */
-  path: "./bin",
-
-  /**
-   * @type {string}
-   */
   url: "https://github.com/abdfnx/botway/releases/download/v{{version}}/{{bin_name}}_{{platform}}_v{{version}}_{{arch}}.zip",
 };
 
