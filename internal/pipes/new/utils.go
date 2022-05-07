@@ -3,6 +3,7 @@ package new
 import (
 	"fmt"
 	"os"
+	"runtime"
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
@@ -53,6 +54,34 @@ func BotLang(m model) string {
 		return "rust"
 	} else if m.LangChoice == 5 {
 		return "deno"
+	}
+
+	return ""
+}
+
+func BotStartCmd(m model) string {
+	if m.LangChoice == 0 {
+		if runtime.GOOS == "windows" {
+			return `py .\src\main.py`
+		} else {
+			return `python3 ./src/main.py`
+		}
+	} else if m.LangChoice == 0 && m.PMCoice == 1 {
+		if runtime.GOOS == "windows" {
+			return `pipenv run py .\src\main.py`
+		} else {
+			return `pipenv run python3 ./src/main.py`
+		}
+	} else if m.LangChoice == 1 {
+		return "go run src/main.go"
+	} else if m.LangChoice == 2 {
+		return "node src/main.js"
+	} else if m.LangChoice == 3 {
+		return "bundle exec ruby src/main.rb"
+	} else if m.LangChoice == 4 {
+		return "cargo run src/main.rs"
+	} else if m.LangChoice == 5 {
+		return "deno run --allow-all src/main.ts"
 	}
 
 	return ""

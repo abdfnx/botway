@@ -62,6 +62,11 @@ func TelegramNodejsNpm(botName string) {
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
 		procFile := os.WriteFile(filepath.Join(botName, "Procfile"), []byte("process: node ./src/index.js"), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(nodejs.Resources()), 0644)
+		botGifFile := os.WriteFile(filepath.Join(botName, "src", "bot.gif"), []byte(nodejs.BotGif()), 0644)
+
+		if botGifFile != nil {
+			log.Fatal(botGifFile)
+		}
 
 		if resourcesFile != nil {
 			log.Fatal(resourcesFile)

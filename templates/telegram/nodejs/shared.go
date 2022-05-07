@@ -2,10 +2,14 @@ package nodejs
 
 import "github.com/abdfnx/botway/templates"
 
-var Packages = "telegraf botway.js"
+var Packages = "node-telegram-bot-api botway.js"
 
 func IndexJSContent() string {
 	return templates.Content("telegram", "nodejs", "src/index.js", "")
+}
+
+func BotGif() string {
+	return templates.Content("telegram", "nodejs", "src/bot.gif", "")
 }
 
 func Resources() string {
@@ -19,13 +23,16 @@ func Resources() string {
 
 ## API
 
-- [Modern Telegram Bot Framework for Node.js](https://github.com/telegraf/telegraf)
-- [Telegraf Docs](https://github.com/telegraf/telegraf/tree/v4/docs)
-- [Telegraf Telegram Channel](https://t.me/TelegrafJSChat)
+- [Telegram Bot API for NodeJS](https://github.com/https://github.com/yagop/node-telegram-bot-api)
+- [node-telegram-bot-api Docs](https://github.com/yagop/node-telegram-bot-api/tree/master/doc)
+- [node-telegram-bot-api Help Information](https://github.com/yagop/node-telegram-bot-api/blob/master/doc/help.md)
+- [Tutorials](https://github.com/yagop/node-telegram-bot-api/tree/master/doc/tutorials.md)
+- [node-telegram-bot-api Telegram Channel](https://t.me/node_telegram_bot_api)
+- [node-telegram-bot-api Telegram Group](https://t.me/ntbasupport)
 
 ## Examples
 
-[Examples](https://github.com/telegraf/telegraf/tree/v4/docs/examples)
+[Examples](https://github.com/yagop/node-telegram-bot-api/tree/master/examples)
 
-big thanks to [**@telegraf**](https://github.com/telegraf/telegraf) org`
+big thanks to [**@yagop**](https://github.com/yagop)`
 }

@@ -1,43 +1,87 @@
-import { Telegraf } from "telegraf";
-const { GetToken } = require("botway.js");
+const TelegramBot = require("node-telegram-bot-api");
+const botway = require("botway.js");
+const request = require("request");
 
-const bot = new Telegraf(GetToken());
+const options = {
+  polling: true,
+};
 
-bot.command("quit", (ctx) => {
-  // Explicit usage
-  ctx.telegram.leaveChat(ctx.message.chat.id);
+const bot = new TelegramBot(botway.GetToken(), options);
 
-  // Using context shortcut
-  ctx.leaveChat();
+// Matches /photo
+bot.onText(/\/photo/, function onPhotoText(msg) {
+  // From file path
+  const photo = `${__dirname}/bot.gif`;
+
+  bot.sendPhoto(msg.chat.id, photo, {
+    caption: "I'm a bot!",
+  });
 });
 
-bot.on("text", (ctx) => {
-  // Explicit usage
-  ctx.telegram.sendMessage(ctx.message.chat.id, `Hello ${ctx.state.role}`);
-
-  // Using context shortcut
-  ctx.reply(`Hello ${ctx.state.role}`);
+// Matches /crypto
+bot.onText(/\/crypto/, function onFavoriteCryptoText(msg) {
+  const opts = {
+    reply_to_message_id: msg.message_id,
+    reply_markup: JSON.stringify({
+      keyboard: [
+        ["BTC", "ETH", "LTC"],
+        ["EOS", "XRP", "SOL"],
+      ],
+    }),
+  };
+  bot.sendMessage(msg.chat.id, "What is your favorite crypto currency?", opts);
 });
 
-bot.on("callback_query", (ctx) => {
-  // Explicit usage
-  ctx.telegram.answerCbQuery(ctx.callbackQuery.id);
+// Matches /audio
+bot.onText(/\/audio/, function onAudioText(msg) {
+  // From HTTP request
+  const url = "https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg";
+  const audio = request(url);
 
-  // Using context shortcut
-  ctx.answerCbQuery();
+  bot.sendAudio(msg.chat.id, audio);
 });
 
-bot.on("inline_query", (ctx) => {
-  const result = [];
-  // Explicit usage
-  ctx.telegram.answerInlineQuery(ctx.inlineQuery.id, result);
+// Matches /echo [whatever]
+bot.onText(/\/echo (.+)/, function onEchoText(msg, match) {
+  const resp = match[1];
 
-  // Using context shortcut
-  ctx.answerInlineQuery(result);
+  bot.sendMessage(msg.chat.id, resp);
 });
 
-bot.launch();
+// Matches /editable
+bot.onText(/\/editable/, function onEditableText(msg) {
+  const opts = {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: "Edit Text",
+            // we shall check for this value when we listen
+            // for "callback_query"
+            callback_data: "edit",
+          },
+        ],
+      ],
+    },
+  };
 
-// Enable graceful stop
-process.once("SIGINT", () => bot.stop("SIGINT"));
-process.once("SIGTERM", () => bot.stop("SIGTERM"));
+  bot.sendMessage(msg.from.id, "Original Text", opts);
+});
+
+// Handle callback queries
+bot.on("callback_query", function onCallbackQuery(callbackQuery) {
+  const action = callbackQuery.data;
+  const msg = callbackQuery.message;
+  const opts = {
+    chat_id: msg.chat.id,
+    message_id: msg.message_id,
+  };
+
+  let text;
+
+  if (action === "edit") {
+    text = "Edited Text";
+  }
+
+  bot.editMessageText(text, opts);
+});

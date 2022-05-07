@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -25,5 +26,6 @@ func main() {
 		return c.Send("Hello!")
 	})
 
+	fmt.Println("Bot started")
 	b.Start()
 }

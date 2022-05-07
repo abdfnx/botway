@@ -150,14 +150,16 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		viper.SetConfigType("yaml")
 
 		viper.SetDefault("author", conf.String("user.github_username"))
-		viper.SetDefault("bot.name", opts.BotName)
-		viper.SetDefault("bot.version", "0.1.0")
-		viper.SetDefault("bot.type", BotType(m))
 		viper.SetDefault("bot.lang", BotLang(m))
+		viper.SetDefault("bot.name", opts.BotName)
 		viper.SetDefault("bot.package_manager", BotPM(m))
+		viper.SetDefault("bot.type", BotType(m))
+		viper.SetDefault("bot.start_cmd", BotStartCmd(m))
+		viper.SetDefault("bot.version", "0.1.0")
 		dockerImage := conf.String("user.docker_id") + "/" + opts.BotName
 		viper.SetDefault("docker.image", dockerImage)
-		viper.SetDefault("docker.build_cmd", "docker build -t " + dockerImage + " # you can edit the build command")
+		viper.SetDefault("docker.build_cmd", "docker build -t " + dockerImage + " .")
+		viper.SetDefault("docker.run_cmd", "docker run -it " + dockerImage)
 
 		if err := viper.SafeWriteConfig(); err != nil {
 			if os.IsNotExist(err) {
