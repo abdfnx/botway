@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-require "telegram-bot-ruby"
+require "telegram/bot"
 require "botwayrb"
 
 bw = Botwayrb::Core.new
 
 Telegram::Bot::Client.run(bw.get_token) do |bot|
+  puts "Bot was started"
+
   bot.listen do |message|
     case message.text
     when "/start"
