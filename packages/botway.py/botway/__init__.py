@@ -7,7 +7,7 @@ Python client package for Botway.
 __author__ = 'abdfnx'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2022-now Abdfn'
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 import yaml
 import json
@@ -35,8 +35,6 @@ def getBotInfo(value):
 
 if getBotInfo('lang') != 'python':
     raise RuntimeError('ERROR: Botway is not running in Python')
-elif getBotInfo('type') != 'discord':
-    raise RuntimeError('ERROR: This function/feature is only working with discord bots.')
 
 def GetToken():
     for val in find(botwayConfigData, 'botway'):
@@ -51,5 +49,8 @@ def GetAppId():
             return val['bots'][getBotInfo('name')]['bot_app_id']
 
 def GetGuildId(serverName):
-    for val in find(botwayConfigData, 'botway'):
-        return val['bots'][getBotInfo('name')]['guilds'][serverName]['server_id']
+    if getBotInfo('type') != 'discord':
+        raise RuntimeError('ERROR: This function/feature is only working with discord bots.')
+    else:
+        for val in find(botwayConfigData, 'botway'):
+            return val['bots'][getBotInfo('name')]['guilds'][serverName]['server_id']

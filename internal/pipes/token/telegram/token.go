@@ -22,13 +22,13 @@ type model struct {
 
 func (m model) AddToken() {
 	botwayConfig, err := ioutil.ReadFile(token_shared.BotwayConfigPath)
-	token, _ := token_shared.EncryptTokens(m.inputs[0].Value(), "")
+	// token, _ := token_shared.EncryptTokens(m.inputs[0].Value(), "")
 
 	if err != nil {
 		panic(err)
 	}
 
-	tokenContent, _ := sjson.Set(string(botwayConfig), "botway.bots." + m.botName + ".bot_token", token)
+	tokenContent, _ := sjson.Set(string(botwayConfig), "botway.bots." + m.botName + ".bot_token", m.inputs[0].Value())
 
 	remove := os.Remove(token_shared.BotwayConfigPath)
 
@@ -44,7 +44,7 @@ func (m model) AddToken() {
 
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.botName + " Telegram token is added successfully"))
-	fmt.Println("Your Secret key -> " + token_shared.BoldStyle.Render(token_shared.UserSecret) + " Keep it in a safe place")
+	// fmt.Println("Your Secret key -> " + token_shared.BoldStyle.Render(token_shared.UserSecret) + " Keep it in a safe place")
 }
 
 func initialModel(botName string) model {

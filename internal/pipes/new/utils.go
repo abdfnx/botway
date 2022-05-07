@@ -85,7 +85,7 @@ func BotPM(m model) string {
 }
 
 func HerokuFile() string {
-	respone, status, _, err := api.BasicGet("https://raw.githubusercontent.com/abdfnx/botway/main/tools/templates/assets/heroku.yml", "GET", "", "", "", "", false, 0, nil)
+	respone, status, _, err := api.BasicGet("https://raw.githubusercontent.com/abdfnx/botway/main/templates/assets/heroku.yml", "GET", "", "", "", "", false, 0, nil)
 
 	if err != nil {
 		fmt.Println(err.Error())

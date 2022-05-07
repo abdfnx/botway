@@ -22,14 +22,14 @@ type model struct {
 
 func (m model) AddToken() {
 	botwayConfig, err := ioutil.ReadFile(token_shared.BotwayConfigPath)
-	token, id := token_shared.EncryptTokens(m.inputs[0].Value(), m.inputs[1].Value())
+	// token, id := token_shared.EncryptTokens(m.inputs[0].Value(), m.inputs[1].Value())
 
 	if err != nil {
 		panic(err)
 	}
 
-	tokenContent, _ := sjson.Set(string(botwayConfig), "botway.bots." + m.botName + ".bot_token", token)
-	appTokenContent, _ := sjson.Set(tokenContent, "botway.bots." + m.botName + ".bot_app_token", id)
+	tokenContent, _ := sjson.Set(string(botwayConfig), "botway.bots." + m.botName + ".bot_token", m.inputs[0].Value())
+	appTokenContent, _ := sjson.Set(tokenContent, "botway.bots." + m.botName + ".bot_app_token", m.inputs[1].Value())
 
 	remove := os.Remove(token_shared.BotwayConfigPath)
 
@@ -45,7 +45,7 @@ func (m model) AddToken() {
 
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.botName + " Slack tokens're added successfully"))
-	fmt.Println("Your Secret key -> " + token_shared.BoldStyle.Render(token_shared.UserSecret) + " Keep it in a safe place")
+	// fmt.Println("Your Secret key -> " + token_shared.BoldStyle.Render(token_shared.UserSecret) + " Keep it in a safe place")
 }
 
 func initialModel(botName string) model {
