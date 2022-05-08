@@ -12,5 +12,6 @@ try {
     stdio: "inherit",
   });
 } catch (e) {
+  console.error(e);
   exit(1);
 }

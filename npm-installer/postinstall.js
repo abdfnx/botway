@@ -52,7 +52,6 @@ async function install() {
 
   const zipFile = "botway.zip";
 
-  // await fs.mkdir(binPath, { recursive: true });
   await pipeline(response.body, createWriteStream(zipFile));
   const zip = new StreamZip.async({ file: zipFile });
 
@@ -65,6 +64,9 @@ async function install() {
   await fs.rename(folder("yes"), folder("no"), function (err) {
     if (err) throw err;
   });
+
+  // chmod +x /bin/botway
+  await fs.chmod(path.join("bin", "botway"), 0o755);
 
   await fs.rm(zipFile);
   await fs.rm(folder(), { recursive: true });
