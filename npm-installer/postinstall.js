@@ -17,7 +17,7 @@ async function install() {
   if (version[0] === "v") version = version.slice(1);
 
   // Fetch Static Config
-  let { name: binName, url: url } = CONFIG;
+  let { name: binName, path: binPath, url } = CONFIG;
 
   url = url.replace(/{{arch}}/g, ARCH_MAPPING[process.arch]);
   url = url.replace(/{{platform}}/g, PLATFORM_MAPPING[process.platform]);
@@ -36,9 +36,9 @@ async function install() {
       ARCH_MAPPING[process.arch];
 
     if (old == "yes") {
-      return path.join(f, "bin");
+      return path.join(f, "bin", "botway");
     } else if (old == "no") {
-      return "bbin";
+      return path.join("bin", "botway");
     } else {
       return f;
     }
@@ -46,14 +46,13 @@ async function install() {
 
   const response = await fetch(url);
 
-  console.log(response);
-
   if (!response.ok) {
     throw new Error("Failed fetching the binary: " + response.statusText);
   }
 
   const zipFile = "botway.zip";
 
+  await fs.mkdir(binPath, { recursive: true });
   await pipeline(response.body, createWriteStream(zipFile));
   const zip = new StreamZip.async({ file: zipFile });
 
@@ -67,13 +66,8 @@ async function install() {
     if (err) throw err;
   });
 
-  await fs.rename("bbin/botway", "botwaybin", function (err) {
-    if (err) throw err;
-  });
-
   await fs.rm(zipFile);
   await fs.rm(folder(), { recursive: true });
-  await fs.rm("bbin", { recursive: true });
 }
 
 install()

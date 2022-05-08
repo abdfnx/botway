@@ -14,13 +14,13 @@
     "node": ">=8.0.0"
   },
   "bin": {
-    "botway": "installer/npm/botway.js"
+    "botway": "npm-installer/bin/botway.js"
   },
   "scripts": {
-    "postinstall": "node ./installer/npm/postinstall.js"
+    "postinstall": "node ./npm-installer/postinstall.js"
   },
   "files": [
-    "installer/npm"
+    "npm-installer"
   ],
   "dependencies": {
     "node-fetch": "^3.2.4",
