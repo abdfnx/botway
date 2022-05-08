@@ -38,7 +38,7 @@ async function install() {
     if (old == "yes") {
       return path.join(f, "bin");
     } else if (old == "no") {
-      return "bin";
+      return "bbin";
     } else {
       return f;
     }
@@ -67,8 +67,13 @@ async function install() {
     if (err) throw err;
   });
 
+  await fs.rename("bbin/botway", "botwaybin", function (err) {
+    if (err) throw err;
+  });
+
   await fs.rm(zipFile);
   await fs.rm(folder(), { recursive: true });
+  await fs.rm("bbin", { recursive: true });
 }
 
 install()

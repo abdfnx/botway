@@ -14,7 +14,7 @@
     "node": ">=8.0.0"
   },
   "bin": {
-    "botway": "installer/npm/bin/botway.js"
+    "botway": "installer/npm/botway.js"
   },
   "scripts": {
     "postinstall": "node ./installer/npm/postinstall.js"
