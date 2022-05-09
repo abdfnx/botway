@@ -1,45 +1,24 @@
-FROM debian:11
-FROM botwayorg/botway:debian
+FROM alpine:latest
+FROM botwayorg/botway:alpine
 
 ### variables ###
-ENV UPD="apt-get update"
-ENV UPD_s="sudo $UPD"
-ENV INS="apt-get install"
-ENV INS_s="sudo $INS"
-ENV PKGS="zip unzip multitail curl zsh lsof wget ssl-cert asciidoctor apt-transport-https ca-certificates gnupg-agent bash-completion build-essential htop jq software-properties-common less llvm locales man-db nano vim ruby-full"
-ENV BUILDS="zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev libbz2-dev"
-ENV BOTWAY_DOCKER_TOOLS_URL="https://abdfnx.github.io/botway/docker/tools"
-ENV LANG=en_US.UTF-8
+ENV PKGS="zip unzip git curl npm build-base zsh sudo make go lsof wget gcc asciidoctor ca-certificates bash-completion htop jq less llvm man-db nano vim ruby-full ruby-dev libffi-dev"
 ENV ZSHRC=".zshrc"
 
-RUN $UPD && $INS -y $PKGS && $UPD && \
-    locale-gen en_US.UTF-8 && \
-    mkdir /var/lib/apt/abdcodedoc-marks && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* && \
-    $UPD
+### install packages ###
+RUN apk update && \
+    apk add $PKGS
 
-### git ###
-RUN $INS -y git && \
-    rm -rf /var/lib/apt/lists/* && \
-    $UPD
+### setup user ###
+USER root
+RUN adduser -D bw \
+    && echo "bw ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/bw \
+    && chmod 0440 /etc/sudoers.d/bw
 
-### sudo ###
-RUN $UPD && $INS -y sudo && \
-    adduser --disabled-password --gecos '' bw && \
-    adduser bw sudo && \
-    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
-### nodejs & npm ###
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-### rm old ~/.zshrc ###
-RUN sudo rm -rf $ZSHRC
-
-RUN wget $BOTWAY_DOCKER_TOOLS_URL/zshrc -O $ZSHRC
-
-RUN source $ZSHRC
-
-RUN nvm install 18
-RUN nvm alias default 18
+### nodejs package managers ###
+RUN npm i -g npm@latest
+RUN npm i -g yarn@latest
+RUN npm i -g pnpm@latest
 
 ENV HOME="/home/bw"
 WORKDIR $HOME
@@ -48,10 +27,35 @@ USER bw
 ### zsh ###
 RUN zsh && \
     sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && \
-    $UPD_s && \
+    sudo apk update && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && \
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-RUN source $ZSHRC
+### install rust ###
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+RUN /bin/bash -c "source ~/.cargo/env"
+
+### go ###
+ENV GOROOT /usr/lib/go
+ENV GOPATH /go
+ENV PATH /go/bin:$PATH
+
+RUN sudo mkdir -p ${GOPATH}/src ${GOPATH}/bin
+
+### deno ###
+RUN curl -s https://get-latest.herokuapp.com/denoland/deno >> tag.txt
+RUN curl -fsSL "https://github.com/denoland/deno/releases/download/$(cat tag.txt)/deno-x86_64-unknown-linux-gnu.zip" \
+    --output deno.zip \
+  && unzip deno.zip \
+  && rm deno.zip \
+  && chmod 755 deno \
+  && sudo mv deno /usr/bin
+
+### rm old ~/.zshrc ###
+RUN sudo rm -rf $ZSHRC
+
+COPY ./tools/zshrc $ZSHRC
+
+# RUN sudo chown bw $ZSHRC
 
 CMD /bin/bash -c "zsh"
