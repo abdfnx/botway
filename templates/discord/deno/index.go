@@ -43,7 +43,7 @@ func DiscordDeno(botName string) {
 		utilsHelpersTsFile := os.WriteFile(filepath.Join(botName, "src", "utils", "helpers.ts"), []byte(UtilsHelpersTsContent()), 0644)
 		utilsLoggerTsFile := os.WriteFile(filepath.Join(botName, "src", "utils", "logger.ts"), []byte(UtilsLoggerTsContent()), 0644)
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
-		procFile := os.WriteFile(filepath.Join(botName, "Procfile"), []byte("process: deno run --allow-net --allow-write --allow-read --allow-run mod.ts"), 0644)
+		procFile := os.WriteFile(filepath.Join(botName, "Procfile"), []byte("process: deno run --allow-all mod.ts"), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if modFile != nil {

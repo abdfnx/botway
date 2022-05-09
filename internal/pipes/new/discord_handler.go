@@ -3,14 +3,11 @@ package new
 import (
 	"github.com/abdfnx/botway/templates/discord/deno"
 	"github.com/abdfnx/botway/templates/discord/go"
-	"github.com/abdfnx/botway/templates/discord/nodejs/npm"
-	"github.com/abdfnx/botway/templates/discord/nodejs/pnpm"
-	"github.com/abdfnx/botway/templates/discord/nodejs/yarn"
+	"github.com/abdfnx/botway/templates/discord/nodejs"
 	"github.com/abdfnx/botway/templates/discord/python/pip"
 	"github.com/abdfnx/botway/templates/discord/python/pipenv"
 	"github.com/abdfnx/botway/templates/discord/ruby"
-	"github.com/abdfnx/botway/templates/discord/rust/cargo"
-	"github.com/abdfnx/botway/templates/discord/rust/fleet"
+	"github.com/abdfnx/botway/templates/discord/rust"
 )
 
 func DiscordHandler(m model) {
@@ -21,17 +18,17 @@ func DiscordHandler(m model) {
 	} else if m.PlatformChoice == 0 && m.LangChoice == 1 {
 		dgo.DiscordGo(opts.BotName)
 	} else if m.PlatformChoice == 0 && m.LangChoice == 2 && m.PMCoice == 0 {
-		npm.DiscordNodejsNpm(opts.BotName)
+		nodejs.DiscordNodejs(opts.BotName, "npm")
 	} else if m.PlatformChoice == 0 && m.LangChoice == 2 && m.PMCoice == 1 {
-		yarn.DiscordNodejsYarn(opts.BotName)
+		nodejs.DiscordNodejs(opts.BotName, "yarn")
 	} else if m.PlatformChoice == 0 && m.LangChoice == 2 && m.PMCoice == 2 {
-		pnpm.DiscordNodejsPnpm(opts.BotName)
+		nodejs.DiscordNodejs(opts.BotName, "pnpm")
 	} else if m.PlatformChoice == 0 && m.LangChoice == 3 {
 		ruby.DiscordRuby(opts.BotName)
 	} else if m.PlatformChoice == 0 && m.LangChoice == 4 && m.PMCoice == 0 {
-		cargo.DiscordRustCargo(opts.BotName)
+		rust.DiscordRust(opts.BotName, "cargo")
 	} else if m.PlatformChoice == 0 && m.LangChoice == 4 && m.PMCoice == 1 {
-		fleet.DiscordRustFleet(opts.BotName)
+		rust.DiscordRust(opts.BotName, "fleet")
 	} else if m.PlatformChoice == 0 && m.LangChoice == 5 {
 		deno.DiscordDeno(opts.BotName)
 	}

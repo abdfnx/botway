@@ -158,8 +158,8 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		viper.SetDefault("bot.version", "0.1.0")
 		dockerImage := conf.String("user.docker_id") + "/" + opts.BotName
 		viper.SetDefault("docker.image", dockerImage)
-		viper.SetDefault("docker.build_cmd", "docker build -t " + dockerImage + " .")
-		viper.SetDefault("docker.run_cmd", "docker run -it " + dockerImage)
+		viper.SetDefault("docker.cmds.build", "docker build -t " + dockerImage + " .")
+		viper.SetDefault("docker.cmds.run", "docker run -it " + dockerImage)
 
 		if err := viper.SafeWriteConfig(); err != nil {
 			if os.IsNotExist(err) {

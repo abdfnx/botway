@@ -75,7 +75,7 @@ func BotStartCmd(m model) string {
 	} else if m.LangChoice == 1 {
 		return "go run src/main.go"
 	} else if m.LangChoice == 2 {
-		return "node src/main.js"
+		return "node src/index.js"
 	} else if m.LangChoice == 3 {
 		return "bundle exec ruby src/main.rb"
 	} else if m.LangChoice == 4 {

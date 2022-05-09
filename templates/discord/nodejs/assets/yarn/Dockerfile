@@ -2,9 +2,10 @@ FROM alpine:latest
 FROM node:alpine
 FROM botwayorg/botway:latest
 
-ENV DISCORD_BOT_NAME="{{.BotName}}"
 ARG DISCORD_TOKEN
 ARG DISCORD_CLIENT_ID
+# Uncomment the comment below to add your guild id, like this syntax --> ARG MY_SERVER_GUILD_ID
+# ARG SERVER_GUILD_ID
 
 COPY . .
 
