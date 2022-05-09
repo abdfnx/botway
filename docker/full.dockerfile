@@ -30,12 +30,16 @@ RUN $UPD && $INS -y sudo && \
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 ### nodejs & npm ###
-RUN curl -sL https://deb.nodesource.com/setup_17.x -o nodesource_setup.sh && \
-    sudo bash nodesource_setup.sh && \
-    $INS_s nodejs -y && \
-    sudo rm -rf nodesource_setup.sh && \
-    $UPD_s
-RUN npm i -g npm@latest
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+### rm old ~/.zshrc ###
+RUN sudo rm -rf $ZSHRC
+
+RUN wget $BOTWAY_DOCKER_TOOLS_URL/zshrc -O $ZSHRC
+
+RUN source $ZSHRC
+
+RUN nvm install 18
+RUN nvm alias default 18
 
 ENV HOME="/home/bw"
 WORKDIR $HOME
@@ -48,9 +52,6 @@ RUN zsh && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && \
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-### rm old ~/.zshrc ###
-RUN sudo rm -rf $ZSHRC
-
-RUN wget $BOTWAY_DOCKER_TOOLS_URL/zshrc -O $ZSHRC
+RUN source $ZSHRC
 
 CMD /bin/bash -c "zsh"
