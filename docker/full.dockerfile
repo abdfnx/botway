@@ -1,13 +1,12 @@
-FROM alpine:latest
-FROM botwayorg/botway:alpine
+FROM frolvlad/alpine-glibc:alpine-3.14_glibc-2.33
 
 ### variables ###
-ENV PKGS="zip unzip git curl npm build-base zsh sudo make go lsof wget gcc asciidoctor ca-certificates bash-completion htop jq less llvm man-db nano vim ruby-full ruby-dev libffi-dev"
+ENV PKGS="zip unzip git curl npm build-base neofetch zsh sudo make lsof wget gcc asciidoctor ca-certificates bash-completion htop jq less llvm nano vim ruby-full ruby-dev libffi-dev"
 ENV ZSHRC=".zshrc"
 
 ### install packages ###
-RUN apk update && \
-    apk add $PKGS
+RUN apk upgrade && \
+    apk add --update $PKGS
 
 ### setup user ###
 USER root
@@ -20,6 +19,9 @@ RUN npm i -g npm@latest
 RUN npm i -g yarn@latest
 RUN npm i -g pnpm@latest
 
+### botway ###
+# RUN curl -sL https://botway.web.app/get | bash
+
 ENV HOME="/home/bw"
 WORKDIR $HOME
 USER bw
@@ -31,31 +33,32 @@ RUN zsh && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && \
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-### install rust ###
+### rust ###
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 RUN /bin/bash -c "source ~/.cargo/env"
 
 ### go ###
-ENV GOROOT /usr/lib/go
+RUN wget "https://dl.google.com/go/$(curl https://go.dev/VERSION?m=text).linux-amd64.tar.gz"
+RUN sudo tar -C /usr/local -xzf "$(curl https://go.dev/VERSION?m=text).linux-amd64.tar.gz"
+ENV GOROOT /usr/local/go/bin
 ENV GOPATH /go
 ENV PATH /go/bin:$PATH
+RUN rm "$(curl https://go.dev/VERSION?m=text).linux-amd64.tar.gz"
 
 RUN sudo mkdir -p ${GOPATH}/src ${GOPATH}/bin
 
 ### deno ###
-RUN curl -s https://get-latest.herokuapp.com/denoland/deno >> tag.txt
-RUN curl -fsSL "https://github.com/denoland/deno/releases/download/$(cat tag.txt)/deno-x86_64-unknown-linux-gnu.zip" \
-    --output deno.zip \
-  && unzip deno.zip \
-  && rm deno.zip \
-  && chmod 755 deno \
-  && sudo mv deno /usr/bin
+RUN curl -fsSL https://deno.land/x/install/install.sh | sh
+
+ENV DENO_INSTALL="$HOME/.deno"
+
+ENV PATH="${DENO_INSTALL}/bin:${PATH}"
 
 ### rm old ~/.zshrc ###
 RUN sudo rm -rf $ZSHRC
 
 COPY ./tools/zshrc $ZSHRC
 
-# RUN sudo chown bw $ZSHRC
+RUN sudo chown bw $ZSHRC
 
 CMD /bin/bash -c "zsh"
