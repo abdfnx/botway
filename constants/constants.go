@@ -36,6 +36,7 @@ var (
 	HomeDir, _ = dfs.GetHomeDirectory()
 	BotwayConfigFile = filepath.Join(HomeDir, ".botway", "botway.json")
 	BotwayConfig, Berr = ioutil.ReadFile(BotwayConfigFile)
+	BotConfig, Oerr = ioutil.ReadFile(".botway.yaml")
 
 	BotwayDirPath = func () string {
 		if runtime.GOOS == "windows" {

@@ -1,7 +1,7 @@
 FROM frolvlad/alpine-glibc:alpine-3.14_glibc-2.33
 
 ### variables ###
-ENV PKGS="zip unzip git curl npm build-base neofetch zsh sudo make lsof wget gcc asciidoctor ca-certificates bash-completion htop jq less llvm nano vim ruby-full ruby-dev libffi-dev"
+ENV PKGS="zip unzip git curl npm rust libsodium ffmpeg cargo build-base build-dependencies abuild binutils opus autoconf automake libtool m4 youtube-dl binutils-doc gcc-doc python3-dev neofetch zsh sudo make lsof wget gcc asciidoctor ca-certificates bash-completion htop jq less llvm nano vim ruby-full ruby-dev libffi-dev"
 ENV ZSHRC=".zshrc"
 
 ### install packages ###
@@ -15,9 +15,7 @@ RUN adduser -D bw \
     && chmod 0440 /etc/sudoers.d/bw
 
 ### nodejs package managers ###
-RUN npm i -g npm@latest
-RUN npm i -g yarn@latest
-RUN npm i -g pnpm@latest
+RUN npm i -g npm@latest yarn@latest pnpm@latest
 
 ### botway ###
 # RUN curl -sL https://botway.web.app/get | bash
@@ -33,15 +31,16 @@ RUN zsh && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && \
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-### rust ###
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-RUN /bin/bash -c "source ~/.cargo/env"
+### fleet ###
+RUN curl -L get.fleet.rs | sh
+
+### update bundler ###
+RUN sudo gem update bundler
 
 ### go ###
 RUN wget "https://dl.google.com/go/$(curl https://go.dev/VERSION?m=text).linux-amd64.tar.gz"
 RUN sudo tar -C /usr/local -xzf "$(curl https://go.dev/VERSION?m=text).linux-amd64.tar.gz"
 ENV GOROOT /usr/local/go/bin
-ENV GOPATH /go
 ENV PATH /go/bin:$PATH
 RUN rm "$(curl https://go.dev/VERSION?m=text).linux-amd64.tar.gz"
 

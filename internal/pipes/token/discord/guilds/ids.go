@@ -11,8 +11,8 @@ import (
 	token_shared "github.com/abdfnx/botway/internal/pipes/token"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/tidwall/sjson"
 	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
 )
 
 type model struct {
@@ -41,10 +41,10 @@ func (m model) AddGuildId() {
 			log.Fatal(remove)
 		}
 
-		newBotConfig := os.WriteFile(token_shared.BotwayConfigPath, []byte(newGuild), 0644)
+		newBotwayConfig := os.WriteFile(token_shared.BotwayConfigPath, []byte(newGuild), 0644)
 
-		if newBotConfig != nil {
-			panic(newBotConfig)
+		if newBotwayConfig != nil {
+			panic(newBotwayConfig)
 		}
 
 		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
