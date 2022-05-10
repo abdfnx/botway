@@ -11,6 +11,4 @@ alias n="nano ~/.zshrc"
 alias update="sudo apt-get update"
 alias upgrade="sudo apt-get upgrade"
 alias py="python3"
-
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+alias go="/usr/local/go/bin/go"

@@ -45,20 +45,22 @@ ENV GOPATH /go
 ENV PATH /go/bin:$PATH
 RUN rm "$(curl https://go.dev/VERSION?m=text).linux-amd64.tar.gz"
 
-RUN sudo mkdir -p ${GOPATH}/src ${GOPATH}/bin
-
 ### deno ###
 RUN curl -fsSL https://deno.land/x/install/install.sh | sh
-
 ENV DENO_INSTALL="$HOME/.deno"
-
 ENV PATH="${DENO_INSTALL}/bin:${PATH}"
+
+### gh ###
+RUN wget \
+    https://github.com/cli/cli/releases/download/$(curl https://get-latest.herokuapp.com/cli/cli)/gh_$(curl https://get-latest.herokuapp.com/cli/cli/no-v)_linux_amd64.tar.gz \
+    -O gh.tar.gz
+RUN tar -xzf gh.tar.gz
+RUN sudo mv "gh_$(curl https://get-latest.herokuapp.com/cli/cli/no-v)_linux_amd64/bin/gh" /usr/bin
+RUN rm -rf gh*
 
 ### rm old ~/.zshrc ###
 RUN sudo rm -rf $ZSHRC
-
-COPY ./tools/zshrc $ZSHRC
-
+COPY ./tools/.zshrc .
 RUN sudo chown bw $ZSHRC
 
 CMD /bin/bash -c "zsh"
