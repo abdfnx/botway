@@ -14,7 +14,7 @@ RUN apk update && \
 # Add packages you want
 # RUN apk add PACKAGE_NAME
 
-RUN botway init --docker --name ${SLACK_BOT_NAME}
+RUN botway init --docker 
 RUN go mod tidy
 RUN go build src/main.go -o ${SLACK_BOT_NAME}
 

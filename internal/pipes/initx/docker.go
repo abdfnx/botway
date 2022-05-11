@@ -11,16 +11,25 @@ import (
 	"github.com/gookit/config/v2"
 	"github.com/gookit/config/v2/yaml"
 	"github.com/spf13/viper"
+	"github.com/tidwall/gjson"
+)
+
+var (
+	c = config.New(".")
 )
 
 func GetBotName() string {
-	botwayConfigPath := filepath.Join(".botway.yaml")
-
-	c := config.New(".")
 	c.AddDriver(yaml.Driver)
-	c.LoadFiles(botwayConfigPath)
+	c.LoadFiles(".botway.yaml")
 
 	return c.String("bot.name")
+}
+
+func GetBotType() string {
+	c.AddDriver(yaml.Driver)
+	c.LoadFiles(".botway.yaml")
+
+	return c.String("bot.type")
 }
 
 func DockerInit() {
@@ -34,8 +43,37 @@ func DockerInit() {
 	viper.SetConfigName("botway")
 	viper.SetConfigType("json")
 
-	viper.SetDefault("botway.bots." + GetBotName() + ".discord_token", os.Getenv("DISCORD_TOKEN"))
-	viper.SetDefault("botway.bots." + GetBotName() + ".discord_client_id", os.Getenv("DISCORD_CLIENT_ID"))
+	t := GetBotType()
+	bot_token := ""
+	app_token := ""
+	cid := ""
+
+	if t == "discord" {
+		bot_token = "DISCORD_TOKEN"
+		app_token = "DISCORD_CLIENT_ID"
+		cid = "bot_app_id"
+	} else if t == "slack" {
+		bot_token = "SLACK_TOKEN"
+		app_token = "SLACK_APP_TOKEN"
+		cid = "bot_app_token"
+	} else if t == "telegram" {
+		bot_token = "TELEGRAM_TOKEN"
+	}
+
+	viper.SetDefault("botway.bots." + GetBotName() + ".bot_token", os.Getenv(bot_token))
+
+	if t != "telegram" {
+		viper.SetDefault("botway.bots." + GetBotName() + "." + cid, os.Getenv(app_token))
+	}
+
+	if t == "discord" {
+		// viper.Set("botway.bots." + GetBotName() + ".guilds." + m.inputs[1].Value() + ".server_id", m.inputs[2].Value())
+		guilds := gjson.Get(string(constants.BotConfig), "guilds.#")
+
+		for x := 0; x < int(guilds.Int()); x++ {
+			
+		}
+	}
 
 	if err := viper.SafeWriteConfig(); err != nil {
 		if os.IsNotExist(err) {

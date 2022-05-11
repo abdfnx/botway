@@ -12,7 +12,7 @@ RUN apk update && \
 # Add packages you want
 # RUN apk add PACKAGE_NAME
 
-RUN botway init --docker --name ${SLACK_BOT_NAME}
+RUN botway init --docker 
 RUN curl -fsSL https://get.pnpm.io/install.sh | PNPM_VERSION=7.0.0 sh -
 
 RUN pnpm fetch --prod

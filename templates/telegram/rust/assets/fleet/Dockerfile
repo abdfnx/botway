@@ -13,7 +13,7 @@ RUN apk update && \
 # Add packages you want
 # RUN apk add PACKAGE_NAME
 
-RUN botway init --docker --name ${TELEGRAM_BOT_NAME}
+RUN botway init --docker 
 RUN curl -L get.fleet.rs | sh
 RUN fleet build --release
 RUN cp ./target/release/${TELEGRAM_BOT_NAME} .

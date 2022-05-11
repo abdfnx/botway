@@ -14,7 +14,7 @@ RUN apk update && \
 # Add packages you want
 # RUN apk add PACKAGE_NAME
 
-RUN botway init --docker --name ${SLACK_BOT_NAME}
+RUN botway init --docker 
 RUN yarn
 
 EXPOSE 8000

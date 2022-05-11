@@ -15,7 +15,7 @@ RUN apk update && \
 # Add packages you want
 # RUN apk add PACKAGE_NAME
 
-RUN botway init --docker --name ${SLACK_BOT_NAME}
+RUN botway init --docker 
 RUN npm i --production
 
 EXPOSE 8000

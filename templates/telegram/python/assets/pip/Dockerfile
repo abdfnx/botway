@@ -10,7 +10,7 @@ COPY . .
 RUN apk update && \
 	apk add --no-cache --virtual build-dependencies build-base gcc abuild binutils binutils-doc gcc-doc python3-dev libffi-dev git
 
-RUN botway init --docker --name ${TELEGRAM_BOT_NAME}
+RUN botway init --docker 
 RUN pip3 install -r requirements.txt
 
 # Add packages you want

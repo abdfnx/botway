@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
@@ -45,6 +46,28 @@ func (m model) AddGuildId() {
 
 		if newBotwayConfig != nil {
 			panic(newBotwayConfig)
+		}
+
+		bot_path := gjson.Get(string(botwayConfig), "botway.bots." + m.inputs[0].Value() + ".path").String()
+		guildsPath := filepath.Join(bot_path, "guilds.json")
+		guildsFile, err := ioutil.ReadFile(guildsPath)
+
+		if err != nil {
+			panic(err)
+		}
+
+		addGuild, _ := sjson.Set(string(guildsFile), "guilds.-1", m.inputs[1].Value())
+
+		removeOldGuilds := os.Remove(guildsPath)
+
+		if removeOldGuilds != nil {
+			panic(removeOldGuilds)
+		}
+
+		newGuilds := os.WriteFile(guildsPath, []byte(addGuild), 0644)
+
+		if newGuilds != nil {
+			panic(newGuilds)
 		}
 
 		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))

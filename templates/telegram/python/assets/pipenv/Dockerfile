@@ -13,7 +13,7 @@ RUN apk update && \
 # Add packages you want
 # RUN apk add PACKAGE_NAME
 
-RUN botway init --docker --name ${TELEGRAM_BOT_NAME}
+RUN botway init --docker 
 RUN curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
 RUN pipenv sync --system
 

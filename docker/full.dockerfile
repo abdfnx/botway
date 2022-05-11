@@ -1,7 +1,7 @@
 FROM frolvlad/alpine-glibc:alpine-3.14_glibc-2.33
 
 ### variables ###
-ENV PKGS="zip unzip git curl npm rust libsodium ffmpeg cargo build-base build-dependencies abuild binutils opus autoconf automake libtool m4 youtube-dl binutils-doc gcc-doc python3-dev neofetch zsh sudo make lsof wget gcc asciidoctor ca-certificates bash-completion htop jq less llvm nano vim ruby-full ruby-dev libffi-dev"
+ENV PKGS="zip unzip git curl npm rust libsodium ffmpeg cargo build-base abuild binutils opus autoconf automake libtool m4 youtube-dl binutils-doc gcc-doc python3-dev neofetch zsh sudo make lsof wget gcc asciidoctor ca-certificates bash-completion htop jq less llvm nano vim ruby-full ruby-dev libffi-dev"
 ENV ZSHRC=".zshrc"
 
 ### install packages ###

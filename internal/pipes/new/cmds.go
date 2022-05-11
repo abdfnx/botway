@@ -161,6 +161,14 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		viper.SetDefault("docker.cmds.build", "docker build -t " + dockerImage + " .")
 		viper.SetDefault("docker.cmds.run", "docker run -it " + dockerImage)
 
+		if m.PlatformChoice == 0 {
+			guildsFile := os.WriteFile(filepath.Join(opts.BotName, "guilds.json"), []byte("{}"), 0644)
+
+			if guildsFile != nil {
+				panic(guildsFile)
+			}
+		}
+
 		if err := viper.SafeWriteConfig(); err != nil {
 			if os.IsNotExist(err) {
 				err = viper.WriteConfig()

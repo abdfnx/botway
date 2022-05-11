@@ -45,7 +45,7 @@ func (m model) AddToken() {
 
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.botName + " Discord tokens're added successfully"))
-	fmt.Println(constants.SUCCESS_FOREGROUND.Render("You can add the guild ids of your discord server via the command") + token_shared.BoldStyle.Render(" " + "botway tokens add-guilds"))
+	fmt.Println(constants.SUCCESS_FOREGROUND.Render("You can add the guild ids of your discord server via the command") + token_shared.BoldStyle.Render(" " + "botway tokens add-guilds") + " 📁")
 	// fmt.Println("Your Secret key -> " + token_shared.BoldStyle.Render(token_shared.UserSecret) + " Keep it in a safe place")
 }
 
