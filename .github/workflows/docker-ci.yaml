@@ -21,7 +21,7 @@ jobs:
       - name: Build Core
         run: ./docker/build.sh core
 
-      - name: Build Alpine tag
+      - name: Build Latest and Alpine tag
         run: |
           ./docker/build.sh alpine
           ./docker/build.sh latest
