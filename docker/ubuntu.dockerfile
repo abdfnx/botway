@@ -8,7 +8,7 @@ RUN useradd --uid 1993 --user-group botway \
   && chown botway:botway $BOTWAY_DIR
 
 COPY --from=core /botway /usr/bin/botway
-COPY ./entry.sh /usr/local/bin/docker-entrypoint.sh
+COPY ./docker/entry.sh /usr/local/bin/docker-entrypoint.sh
 
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 

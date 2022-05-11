@@ -11,7 +11,7 @@ RUN addgroup --gid 1000 botway \
   && chown botway:botway $BOTWAY_DIR
 
 COPY --from=core /botway /bin/botway
-COPY ./entry.sh /usr/local/bin/docker-entrypoint.sh
+COPY ./docker/entry.sh /usr/local/bin/docker-entrypoint.sh
 
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 
