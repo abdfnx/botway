@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/tran/dfs"
@@ -67,11 +68,16 @@ func DockerInit() {
 	}
 
 	if t == "discord" {
-		// viper.Set("botway.bots." + GetBotName() + ".guilds." + m.inputs[1].Value() + ".server_id", m.inputs[2].Value())
-		guilds := gjson.Get(string(constants.BotConfig), "guilds.#")
+		if constants.Gerr != nil {
+			panic(constants.Gerr)
+		} else {
+			guilds := gjson.Get(string(constants.Guilds), "guilds.#")
 
-		for x := 0; x < int(guilds.Int()); x++ {
-			
+			for x := 0; x < int(guilds.Int()); x++ {
+				server := gjson.Get(string(constants.Guilds), "guilds." + fmt.Sprint(x)).String()
+
+				viper.Set("botway.bots." + GetBotName() + ".guilds." + server + ".server_id", os.Getenv(strings.ToUpper(server + "_GUILD_ID")))
+			}
 		}
 	}
 
