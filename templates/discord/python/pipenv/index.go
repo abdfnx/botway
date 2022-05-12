@@ -46,7 +46,7 @@ func DiscordPythonPipenv(botName string) {
 			log.Fatal(resourcesFile)
 		}
 
-		pipenvInstall := pipenv + " install discord-py-api botway.py pynacl"
+		pipenvInstall := pipenv + " install discord-py-api botway.py pyyaml pynacl"
 
 		cmd := exec.Command("bash", "-c", pipenvInstall)
 
@@ -82,9 +82,10 @@ func DiscordPythonPipenv(botName string) {
 			log.Printf("error: %v\n", err)
 		}
 
+		dockerFileContent := templates.Content("assets/pipenv.dockerfile", botName)
+
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
-		procFile := os.WriteFile(filepath.Join(botName, "Procfile"), []byte("process: pipenv run python3 ./src/main.py"), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(dockerFileContent), 0644)
 
 		if mainFile != nil {
 			log.Fatal(mainFile)
@@ -92,10 +93,6 @@ func DiscordPythonPipenv(botName string) {
 
 		if dockerFile != nil {
 			log.Fatal(dockerFile)
-		}
-
-		if procFile != nil {
-			log.Fatal(procFile)
 		}
 
 		templates.CheckProject(botName, "discord")

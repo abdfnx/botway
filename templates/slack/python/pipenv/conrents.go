@@ -3,5 +3,5 @@ package pipenv
 import "github.com/abdfnx/botway/templates"
 
 func DockerfileContent(botName string) string {
-	return templates.Content("slack", "python", "pipenv/Dockerfile", botName)
+	return templates.Content("assets/pipenv.dockerfile", botName)
 }

@@ -1,6 +1,7 @@
 package publish
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"os"
@@ -26,15 +27,14 @@ func DockerPublishImage() {
 
 	fmt.Println(messageStyle.Render("\n\n======= Start Publishing Your Bot Docker Image 🐳 ======\n\n"))
 
-
 	if _, err := os.Stat(".botway.yaml"); err != nil {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
-		panic(constants.FAIL_FOREGROUND.Render("You need to run this command in your bot directory"))
+		panic(constants.FAIL_FOREGROUND.Render(" You need to run this command in your bot directory"))
 	}
 
-	viper.AddConfigPath(".")
-	viper.SetConfigName(".botway")
 	viper.SetConfigType("yaml")
+
+	viper.ReadConfig(bytes.NewBuffer(constants.BotConfig))
 
 	botImage := viper.GetString("docker.image")
 	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots." + viper.GetString("bot.name") + ".path").String()

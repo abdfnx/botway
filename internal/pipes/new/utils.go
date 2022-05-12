@@ -60,17 +60,35 @@ func BotLang(m model) string {
 }
 
 func BotStartCmd(m model) string {
-	if m.LangChoice == 0 {
-		if runtime.GOOS == "windows" {
-			return `py .\src\main.py`
+	pythonSlackCmd := " -m flask run --host=0.0.0.0 --port 8000"
+
+	if m.LangChoice == 0 && m.PMCoice == 0 {
+		if m.PlatformChoice == 2 {
+			if runtime.GOOS == "windows" {
+				return "py" + pythonSlackCmd
+			} else {
+				return "python3" + pythonSlackCmd
+			}
 		} else {
-			return `python3 ./src/main.py`
+			if runtime.GOOS == "windows" {
+				return `py .\src\main.py`
+			} else {
+				return `python3 ./src/main.py`
+			}
 		}
 	} else if m.LangChoice == 0 && m.PMCoice == 1 {
-		if runtime.GOOS == "windows" {
-			return `pipenv run py .\src\main.py`
+		if m.PlatformChoice == 2 {
+			if runtime.GOOS == "windows" {
+				return "pipenv run py" + pythonSlackCmd
+			} else {
+				return "pipenv run python3" + pythonSlackCmd
+			}
 		} else {
-			return `pipenv run python3 ./src/main.py`
+			if runtime.GOOS == "windows" {
+				return `pipenv run py .\src\main.py`
+			} else {
+				return `pipenv run python3 ./src/main.py`
+			}
 		}
 	} else if m.LangChoice == 1 {
 		return "go run src/main.go"

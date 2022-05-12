@@ -5,11 +5,11 @@ import (
 )
 
 func DockerfileContent(botName string) string {
-	return templates.Content("slack", "go", "Dockerfile", botName)
+	return templates.Content("assets/go.dockerfile", botName)
 }
 
 func MainGoContent() string {
-	return templates.Content("slack", "go", "src/main.go.bw", "")
+	return templates.Content("slack/go/assets/main.go.bw", "")
 }
 
 func Resources() string {

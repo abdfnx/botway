@@ -64,7 +64,6 @@ You can add a folder to your '$LOAD_PAT'H either at runtime or via the -I comman
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.rb"), []byte(MainRbContent()), 0644)
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
-		procFile := os.WriteFile(filepath.Join(botName, "Procfile"), []byte("process: bundle exec ruby ./src/main.rb"), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if mainFile != nil {
@@ -73,10 +72,6 @@ You can add a folder to your '$LOAD_PAT'H either at runtime or via the -I comman
 
 		if dockerFile != nil {
 			log.Fatal(dockerFile)
-		}
-
-		if procFile != nil {
-			log.Fatal(procFile)
 		}
 
 		if resourcesFile != nil {

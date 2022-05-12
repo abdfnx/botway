@@ -3,7 +3,7 @@ package python
 import "github.com/abdfnx/botway/templates"
 
 func MainPyContent() string {
-	return templates.Content("telegram", "python", "src/main.py", "")
+	return templates.Content("telegram/python/assets/src/main.py", "")
 }
 
 func Resources() string {

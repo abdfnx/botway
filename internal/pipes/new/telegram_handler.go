@@ -2,14 +2,11 @@ package new
 
 import (
 	"github.com/abdfnx/botway/templates/telegram/go"
-	"github.com/abdfnx/botway/templates/telegram/nodejs/npm"
-	"github.com/abdfnx/botway/templates/telegram/nodejs/pnpm"
-	"github.com/abdfnx/botway/templates/telegram/nodejs/yarn"
+	"github.com/abdfnx/botway/templates/telegram/nodejs"
 	"github.com/abdfnx/botway/templates/telegram/python/pip"
 	"github.com/abdfnx/botway/templates/telegram/python/pipenv"
 	"github.com/abdfnx/botway/templates/telegram/ruby"
-	"github.com/abdfnx/botway/templates/telegram/rust/cargo"
-	"github.com/abdfnx/botway/templates/telegram/rust/fleet"
+	"github.com/abdfnx/botway/templates/telegram/rust"
 )
 
 func TelegramHandler(m model) {
@@ -20,16 +17,16 @@ func TelegramHandler(m model) {
 	} else if m.PlatformChoice == 1 && m.LangChoice == 1 {
 		tgo.TelegramGo(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMCoice == 0 {
-		npm.TelegramNodejsNpm(opts.BotName)
+		nodejs.TelegramNodejs(opts.BotName, "npm")
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMCoice == 1 {
-		yarn.TelegramNodejsYarn(opts.BotName)
+		nodejs.TelegramNodejs(opts.BotName, "yarn")
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMCoice == 2 {
-		pnpm.TelegramNodejsPnpm(opts.BotName)
+		nodejs.TelegramNodejs(opts.BotName, "pnpm")
 	} else if m.PlatformChoice == 1 && m.LangChoice == 3 {
 		ruby.TelegramRuby(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 4 && m.PMCoice == 0 {
-		cargo.TelegramRustCargo(opts.BotName)
+		rust.TelegramRust(opts.BotName, "cargo")
 	} else if m.PlatformChoice == 1 && m.LangChoice == 4 && m.PMCoice == 1 {
-		fleet.TelegramRustFleet(opts.BotName)
+		rust.TelegramRust(opts.BotName, "fleet")
 	}
 }

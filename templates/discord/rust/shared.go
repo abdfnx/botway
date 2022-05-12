@@ -16,11 +16,11 @@ import (
 )
 
 func MainRsContent() string {
-	return templates.Content("discord", "rust", "src/main.rs", "")
+	return templates.Content("discord/rust/assets/src/main.rs", "")
 }
 
 func CargoFileContent(botName string) string {
-	return templates.Content("discord", "rust", "Cargo.toml", botName)
+	return templates.Content("discord/rust/assets/Cargo.toml", botName)
 }
 
 func Resources() string {
@@ -65,12 +65,11 @@ func DiscordRust(botName, pm string) {
 			discord.InstallCommandRust()
 		}
 
-		DockerfileContent := templates.Content("discord", "rust", pm + "/Dockerfile", botName)
+		DockerfileContent := templates.Content("assets/" + pm + ".dockerfile", botName)
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.rs"), []byte(MainRsContent()), 0644)
 		cargoFile := os.WriteFile(filepath.Join(botName, "Cargo.toml"), []byte(CargoFileContent(botName)), 0644)
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent), 0644)
-		procFile := os.WriteFile(filepath.Join(botName, "Procfile"), []byte("process: ./" + botName), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if resourcesFile != nil {
@@ -89,10 +88,6 @@ func DiscordRust(botName, pm string) {
 			log.Fatal(dockerFile)
 		}
 
-		if procFile != nil {
-			log.Fatal(procFile)
-		}
-
 		pmBuild := pmPath + " build"
 		buildCmd := exec.Command("bash", "-c", pmBuild)
 
@@ -108,6 +103,32 @@ func DiscordRust(botName, pm string) {
 
 		if err != nil {
 			log.Printf("error: %v\n", err)
+		}
+
+		if pm == "fleet" {
+			rustUpPath, err := looker.LookPath("rustup")
+
+			if err != nil {
+				log.Printf("error: %v\n", err)
+			}
+
+			rustUpCmd := rustUpPath + " default nightly"
+
+			rustUp := exec.Command("bash", "-c", rustUpCmd)
+
+			if runtime.GOOS == "windows" {
+				rustUp = exec.Command("powershell.exe", rustUpCmd)
+			}
+
+			rustUp.Dir = botName
+			rustUp.Stdin = os.Stdin
+			rustUp.Stdout = os.Stdout
+			rustUp.Stderr = os.Stderr
+			err = rustUp.Run()
+
+			if err != nil {
+				log.Printf("error: %v\n", err)
+			}
 		}
 
 		templates.CheckProject(botName, "discord")

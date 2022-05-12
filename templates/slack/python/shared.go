@@ -3,15 +3,11 @@ package python
 import "github.com/abdfnx/botway/templates"
 
 func MainPyContent() string {
-	return templates.Content("slack", "python", "src/main.py", "")
+	return templates.Content("slack/python/assets/src/main.py", "")
 }
 
 func Flake8Content() string {
-	return templates.Content("slack", "python", ".flake8", "")
-}
-
-func ProcfileContent() string {
-	return templates.Content("slack", "python", "Procfile", "")
+	return templates.Content("slack/python/assets/.flake8", "")
 }
 
 func Resources() string {

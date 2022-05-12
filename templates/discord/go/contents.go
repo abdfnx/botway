@@ -3,11 +3,11 @@ package dgo
 import "github.com/abdfnx/botway/templates"
 
 func DockerfileContent(botName string) string {
-	return templates.Content("discord", "go", "Dockerfile", botName)
+	return templates.Content("assets/go.dockerfile", botName)
 }
 
 func MainGoContent() string {
-	return templates.Content("discord", "go", "src/main.go.bw", "")
+	return templates.Content("discord/go/main.go.bw", "")
 }
 
 func Resources() string {

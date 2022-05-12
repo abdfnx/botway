@@ -3,11 +3,11 @@ package ruby
 import "github.com/abdfnx/botway/templates"
 
 func MainRbContent() string {
-	return templates.Content("telegram", "ruby", "src/main.rb", "")
+	return templates.Content("telegram/ruby/assets/main.rb", "")
 }
 
 func DockerfileContent(botName string) string {
-	return templates.Content("telegram", "ruby", "Dockerfile", botName)
+	return templates.Content("assets/ruby.dockerfile", botName)
 }
 
 func Resources() string {

@@ -18,7 +18,7 @@ import (
 var Packages = "discord.js @discordjs/rest @discordjs/builders discord-api-types discord-rpc zlib-sync erlpack bufferutil utf-8-validate @discordjs/voice libsodium-wrappers @discordjs/opus sodium botway.js"
 
 func IndexJSContent() string {
-	return templates.Content("discord", "nodejs", "src/index.js", "")
+	return templates.Content("discord/nodejs/index.js", "")
 }
 
 func Resources() string {
@@ -89,11 +89,10 @@ func DiscordNodejs(botName, pm string) {
 				log.Printf("error: %v\n", newPackageJson)
 			}
 
-			DockerfileContent := templates.Content("discord", "nodejs", pm + "/Dockerfile", botName)
+			DockerfileContent := templates.Content("assets/" + pm + ".dockerfile", botName)
 
 			indexFile := os.WriteFile(filepath.Join(botName, "src", "index.js"), []byte(IndexJSContent()), 0644)
 			dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent), 0644)
-			procFile := os.WriteFile(filepath.Join(botName, "Procfile"), []byte("process: node ./src/index.js"), 0644)
 			resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 			if resourcesFile != nil {
@@ -106,10 +105,6 @@ func DiscordNodejs(botName, pm string) {
 
 			if dockerFile != nil {
 				log.Fatal(dockerFile)
-			}
-
-			if procFile != nil {
-				log.Fatal(procFile)
 			}
 
 			icmd := func () string {

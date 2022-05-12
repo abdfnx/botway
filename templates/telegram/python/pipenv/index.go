@@ -76,7 +76,6 @@ func TelegramPythonPipenv(botName string) {
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
-		procFile := os.WriteFile(filepath.Join(botName, "Procfile"), []byte("process: pipenv run python3 ./src/main.py"), 0644)
 
 		if mainFile != nil {
 			log.Fatal(mainFile)
@@ -84,10 +83,6 @@ func TelegramPythonPipenv(botName string) {
 
 		if dockerFile != nil {
 			log.Fatal(dockerFile)
-		}
-
-		if procFile != nil {
-			log.Fatal(procFile)
 		}
 
 		templates.CheckProject(botName, "telegram")

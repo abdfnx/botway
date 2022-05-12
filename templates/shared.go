@@ -10,8 +10,8 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func Content(platform, lang, fileName, botName string) string {
-	url := fmt.Sprintf("https://raw.githubusercontent.com/abdfnx/botway/main/templates/%s/%s/assets/%s", platform, lang, fileName)
+func Content(arg, botName string) string {
+	url := fmt.Sprintf("https://raw.githubusercontent.com/abdfnx/botway/main/templates/%s", arg)
 	respone, status, _, err := api.BasicGet(url, "GET", "", "", "", "", false, 0, nil)
 
 	if err != nil {
@@ -23,7 +23,7 @@ func Content(platform, lang, fileName, botName string) string {
 		os.Exit(0)
 	}
 
-	if strings.Contains(fileName, "Dockerfile") || strings.Contains(fileName, "Cargo.toml") {
+	if strings.Contains(arg, "Dockerfile") || strings.Contains(arg, "Cargo.toml") {
 		return strings.ReplaceAll(respone, "{{.BotName}}", botName)
 	} else {
 		return respone
