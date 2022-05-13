@@ -11,6 +11,7 @@ func RemoveCMD() *cobra.Command {
 		Use:   "remove",
 		Short: "Remove a botway project.",
 		Aliases: []string{"delete"},
+		Args: cobra.MinimumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) > 0 {
 				opts := &options.CommonOptions{
@@ -22,6 +23,7 @@ func RemoveCMD() *cobra.Command {
 				cmd.Help()
 			}
 		},
+		PostRunE: Contextualize(handler.Delete, handler.Panic),
 	}
 
 	return cmd

@@ -5,11 +5,14 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
 	token_shared "github.com/abdfnx/botway/internal/pipes/token"
+	"github.com/abdfnx/looker"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/tidwall/gjson"
@@ -22,6 +25,13 @@ type model struct {
 }
 
 func (m model) AddGuildId() {
+	bwPath, bwErr := looker.LookPath("botway")
+
+	if bwErr != nil {
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		panic(constants.FAIL_FOREGROUND.Render(" botway is not installed\n"))
+	}
+
 	botwayConfig, err := ioutil.ReadFile(token_shared.BotwayConfigPath)
 
 	if err != nil {
@@ -35,6 +45,7 @@ func (m model) AddGuildId() {
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" this command/feature only works with discord bots"))
 	} else {
 		newGuild, _ := sjson.Set(string(botwayConfig), "botway.bots." + m.inputs[0].Value() + ".guilds." + m.inputs[1].Value() + ".server_id", m.inputs[2].Value())
+		botPath := gjson.Get(newGuild, "botway.bots." + m.inputs[0].Value() + ".path").String()
 
 		remove := os.Remove(token_shared.BotwayConfigPath)
 
@@ -73,6 +84,23 @@ func (m model) AddGuildId() {
 		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.inputs[1].Value() + " server id is added successfully"))
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render("You can add more server ids by running the same command again"))
+
+		set := fmt.Sprintf("%s vars set %s=%s", bwPath, strings.ToUpper(m.inputs[1].Value() + "_GUILD_ID"), m.inputs[2].Value())
+		cmd := exec.Command("bash", "-c", set)
+
+		if runtime.GOOS == "windows" {
+			cmd = exec.Command("powershell.exe", set)
+		}
+
+		cmd.Dir = botPath
+		cmd.Stdin = os.Stdin
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		err = cmd.Run()
+
+		if err != nil {
+			log.Printf("error: %v\n", err)
+		}
 	}
 }
 

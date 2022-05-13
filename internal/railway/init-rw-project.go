@@ -73,7 +73,7 @@ func (h *Handler) Init(ctx context.Context, req *entity.CommandRequest) error {
 	// session was deleted.
 	_, err := h.ctrl.GetUser(ctx)
 	if err != nil {
-		return fmt.Errorf("%s\nRun %s", ui.RedText("Account required to init project"), ui.Bold("railway login"))
+		return fmt.Errorf("%s\nRun %s", constants.FAIL_FOREGROUND.Render("Account required to init project"), ui.Bold("botway login railway"))
 	}
 
 	return h.initNew(ctx, req)

@@ -12,6 +12,7 @@ func NewCMD() *cobra.Command {
 		Short: "Create a new botway project.",
 		Long: "With `botway new` command you can create your botway project.",
 		Aliases: []string{"create"},
+		Args: cobra.MaximumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) > 0 {
 				opts := &options.CommonOptions{

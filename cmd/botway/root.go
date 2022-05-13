@@ -66,6 +66,7 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 		app.StartCMD(),
 		app.LoginCMD(),
 		app.VarsCMD(),
+		app.DeployCMD(),
 		versionCmd,
 	)
 

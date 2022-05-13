@@ -17,7 +17,7 @@ func VarsCMD() *cobra.Command {
 		Short:   "Get the value of a variable",
 		RunE:    Contextualize(handler.VariablesGet, handler.Panic),
 		Args:    cobra.MinimumNArgs(1),
-		Example: "  railway variables get MY_KEY",
+		Example: "  botway variables get DISCORD_TOKEN",
 	}
 
 	cmd.AddCommand(variablesAddCmd)
@@ -28,7 +28,7 @@ func VarsCMD() *cobra.Command {
 		Short:   "Create or update the value of a variable",
 		RunE:    Contextualize(handler.VariablesSet, handler.Panic),
 		Args:    cobra.MinimumNArgs(1),
-		Example: "  railway variables set NODE_ENV=prod NODE_VERSION=12",
+		Example: "  botway variables set TELEGRAM_TOKEN=TOKEN",
 	}
 
 	cmd.AddCommand(variablesSetCmd)
@@ -38,7 +38,7 @@ func VarsCMD() *cobra.Command {
 		Use:     "delete key",
 		Short:   "Delete a variable",
 		RunE:    Contextualize(handler.VariablesDelete, handler.Panic),
-		Example: "  railway variables delete MY_KEY",
+		Example: "  botway variables delete MY_KEY",
 	}
 
 	cmd.AddCommand(variablesDeleteCmd)
