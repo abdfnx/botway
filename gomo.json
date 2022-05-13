@@ -3,7 +3,5 @@
     "download": "go mod download",
     "update": "go get -u"
   },
-  "modules": [
-    "."
-  ]
+  "modules": ["."]
 }
