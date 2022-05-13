@@ -34,6 +34,7 @@ func CheckProject(botName, botType string) {
 	if _, err := os.Stat(botName); !os.IsNotExist(err) {
 		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + botName + " Created successfully 🎉"))
-		fmt.Println("Now, run " + lipgloss.NewStyle().Foreground(constants.GRAY_COLOR).Render("`botway tokens add --" + botType + " " + botName + "`") + " command to add tokens of your bot 🔑")
+		fmt.Print(constants.SUCCESS_BACKGROUND.Render("NEXT"))
+		fmt.Println(" Now, run " + lipgloss.NewStyle().Foreground(constants.GRAY_COLOR).Render("`botway tokens add --" + botType + " " + botName + "`") + " command to add tokens of your bot 🔑")
 	}
 }

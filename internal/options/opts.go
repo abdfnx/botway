@@ -18,3 +18,8 @@ type TokenAddOptions struct {
 	Slack    bool
 	Telegram bool
 }
+
+type LoginOptions struct {
+	Railway bool
+	GitHub bool
+}

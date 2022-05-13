@@ -1,0 +1,55 @@
+package app
+
+import (
+	"context"
+	"fmt"
+	"os"
+	"runtime/debug"
+
+	"github.com/abdfnx/botway/internal/railway"
+	"github.com/railwayapp/cli/constants"
+	"github.com/railwayapp/cli/entity"
+	"github.com/spf13/cobra"
+)
+
+var handler = railway.NewRW()
+
+func Contextualize(fn entity.HandlerFunction, panicFn entity.PanicFunction) entity.CobraFunction {
+	return func(cmd *cobra.Command, args []string) error {
+		ctx := context.Background()
+
+		defer func() {
+			if constants.IsDevVersion() {
+				return
+			}
+
+			if r := recover(); r != nil {
+				err := panicFn(ctx, fmt.Sprint(r), string(debug.Stack()), cmd.Name(), args)
+				if err != nil {
+					fmt.Println("Unable to relay panic to server. Are you connected to the internet?")
+				}
+			}
+		}()
+
+		req := &entity.CommandRequest{
+			Cmd:  cmd,
+			Args: args,
+		}
+
+		err := fn(ctx, req)
+
+		if err != nil {
+			// TODO: Make it *pretty*
+			fmt.Println(err.Error())
+			os.Exit(1) // Set non-success exit code on error
+		}
+
+		return nil
+	}
+}
+
+var addCmd = func (cmd, cmdx *cobra.Command) *cobra.Command {
+	cmd.AddCommand(cmdx)
+
+	return cmd
+}

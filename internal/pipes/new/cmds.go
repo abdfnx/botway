@@ -225,7 +225,7 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		if procFile != nil {
 			log.Fatal(procFile)
 		}
-
+		
 		DiscordHandler(m)
 		TelegramHandler(m)
 		SlackHandler(m)

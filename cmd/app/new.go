@@ -23,6 +23,7 @@ func NewCMD() *cobra.Command {
 				cmd.Help()
 			}
 		},
+		PostRunE: Contextualize(handler.Init, handler.Panic),
 	}
 
 	return cmd
