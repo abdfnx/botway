@@ -34,3 +34,13 @@ tasks:
       - task: setup
       - go mod tidy
       - go build -ldflags "-X main.version=$(cat tag.txt) -X main.buildDate=$(cat date.txt)" -o botway
+
+  docker:
+    cmds:
+      - ./docker/build.sh core
+      - ./docker/build.sh latest
+      - ./docker/build.sh alpine
+      - ./docker/build.sh centos
+      - ./docker/build.sh debian
+      - ./docker/build.sh distroless
+      - ./docker/build.sh ubuntu

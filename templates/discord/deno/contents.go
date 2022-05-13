@@ -7,43 +7,43 @@ func DockerfileContent(botName string) string {
 }
 
 func ModTsContent() string {
-	return templates.Content("discord/deno/mod.ts", "")
+	return templates.Content("discord/deno/assets/mod.ts", "")
 }
 
 func DepsTsContent() string {
-	return templates.Content("discord/deno/deps.ts", "")
+	return templates.Content("discord/deno/assets/deps.ts", "")
 }
 
 func CommandsModTsContent() string {
-	return templates.Content("discord/deno/src/commands/mod.ts", "")
+	return templates.Content("discord/deno/assets/src/commands/mod.ts", "")
 }
 
 func CommandsPingTsContent() string {
-	return templates.Content("discord/deno/src/commands/ping.ts", "")
+	return templates.Content("discord/deno/assets/src/commands/ping.ts", "")
 }
 
 func EventsGuildCreateTsContent() string {
-	return templates.Content("discord/deno/src/events/guildCreate.ts", "")
+	return templates.Content("discord/deno/assets/src/events/guildCreate.ts", "")
 }
 
 func EventsInteractionCreateTsContent() string {
-	return templates.Content("discord/deno/src/events/interactionCreate.ts", "")
+	return templates.Content("discord/deno/assets/src/events/interactionCreate.ts", "")
 }
 
 func EventsModTsContent() string {
-	return templates.Content("discord/deno/src/events/mod.ts", "")
+	return templates.Content("discord/deno/assets/src/events/mod.ts", "")
 }
 
 func EventsReadyTsContent() string {
-	return templates.Content("discord/deno/src/events/ready.ts", "")
+	return templates.Content("discord/deno/assets/src/events/ready.ts", "")
 }
 
 func UtilsHelpersTsContent() string {
-	return templates.Content("discord/deno/src/utils/helpers.ts", "")
+	return templates.Content("discord/deno/assets/src/utils/helpers.ts", "")
 }
 
 func UtilsLoggerTsContent() string {
-	return templates.Content("discord/deno/src/utils/logger.ts", "")
+	return templates.Content("discord/deno/assets/src/utils/logger.ts", "")
 }
 
 func Resources() string {

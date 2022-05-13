@@ -18,4 +18,4 @@ RUN npm i --production
 
 EXPOSE 8000
 
-ENTRYPOINT ["botway", "start"]
+ENTRYPOINT ["node", "./src/main.js"]

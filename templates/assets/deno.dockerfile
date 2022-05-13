@@ -18,4 +18,4 @@ RUN deno cache deps.ts
 
 EXPOSE 8000
 
-ENTRYPOINT ["botway", "start"]
+ENTRYPOINT ["deno", "run", "--allow-all", "./src/main.ts"]

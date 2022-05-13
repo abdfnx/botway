@@ -18,7 +18,7 @@ import (
 var Packages = "discord.js @discordjs/rest @discordjs/builders discord-api-types discord-rpc zlib-sync erlpack bufferutil utf-8-validate @discordjs/voice libsodium-wrappers @discordjs/opus sodium botway.js"
 
 func IndexJSContent() string {
-	return templates.Content("discord/nodejs/index.js", "")
+	return templates.Content("discord/nodejs/assets/index.js", "")
 }
 
 func Resources() string {

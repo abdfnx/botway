@@ -19,4 +19,4 @@ RUN bundle install
 
 EXPOSE 8000
 
-ENTRYPOINT ["botway", "start"]
+ENTRYPOINT ["bundle", "exec", "ruby", "./src/main.rb"]

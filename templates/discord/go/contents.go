@@ -7,7 +7,7 @@ func DockerfileContent(botName string) string {
 }
 
 func MainGoContent() string {
-	return templates.Content("discord/go/main.go.bw", "")
+	return templates.Content("discord/go/assets/main.go.bw", "")
 }
 
 func Resources() string {

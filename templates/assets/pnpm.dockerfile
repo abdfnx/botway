@@ -20,4 +20,4 @@ RUN pnpm install -r --offline --prod
 
 EXPOSE 8000
 
-ENTRYPOINT ["botway", "start"]
+ENTRYPOINT ["node", "./src/main.js"]

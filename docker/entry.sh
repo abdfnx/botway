@@ -7,7 +7,7 @@ if [ "$1" != "${1#-}" ]; then
 fi
 
 case "$1" in
-    docker | help | init | new | remove | tokens | version )
+    deploy | docker | help | init | login | new | remove | start  | tokens | variables | version )
     exec botway "$@";;
 esac
 

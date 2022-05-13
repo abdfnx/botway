@@ -29,4 +29,4 @@ RUN pipenv install
 
 EXPOSE 8000
 
-ENTRYPOINT ["pipenv", "run", "python3", "./src/main.py"]
+ENTRYPOINT ["pipenv", "run", "python3", "-m", "flask", "run", "--host=0.0.0.0", "--port", "8000"]
