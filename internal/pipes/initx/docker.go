@@ -63,6 +63,9 @@ func DockerInit() {
 
 	vos := viper.New()
 
+	vos.AutomaticEnv()
+	viper.AutomaticEnv()
+
 	vos.BindEnv(bot_token)
 	vos.BindEnv(app_token)
 
@@ -85,7 +88,7 @@ func DockerInit() {
 
 				vos.BindEnv(env)
 
-				viper.Set("botway.bots." + GetBotName() + ".guilds." + server + ".server_id", env)
+				viper.Set("botway.bots." + GetBotName() + ".guilds." + server + ".server_id", vos.Get(env))
 			}
 		}
 	}
