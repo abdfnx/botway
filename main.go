@@ -47,15 +47,15 @@ func mainRun() exitCode {
 	} else {
 		surveyCore.TemplateFuncsWithColor["color"] = func(style string) string {
 			switch style {
-			case "white":
-				if cmdFactory.IOStreams.ColorSupport256() {
-					return fmt.Sprintf("\x1b[%d;5;%dm", 38, 242)
-				}
+				case "white":
+					if cmdFactory.IOStreams.ColorSupport256() {
+						return fmt.Sprintf("\x1b[%d;5;%dm", 38, 242)
+					}
 
-				return ansi.ColorCode("default")
+					return ansi.ColorCode("default")
 
-			default:
-				return ansi.ColorCode(style)
+				default:
+					return ansi.ColorCode(style)
 			}
 		}
 	}
