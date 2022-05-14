@@ -5,20 +5,15 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"time"
 
-	"github.com/abdfnx/botway/constants"
 	"github.com/railwayapp/cli/entity"
 	CLIErrors "github.com/railwayapp/cli/errors"
 	"github.com/railwayapp/cli/ui"
 )
 
 func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error {
-	if _, err := os.Stat(".botway.yaml"); err != nil {
-		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
-		panic(constants.FAIL_FOREGROUND.Render(" You need to run this command in your bot directory"))
-	}
-
 	var src string
 
 	if len(req.Args) == 0 {
@@ -146,7 +141,7 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 
 	fmt.Printf("☁️ Deployment live at %s\n", ui.GrayText(h.ctrl.GetFullUrlFromStaticUrl(res.DeploymentDomain)))
 
-	os.Remove("botway-deploy-tokens.env")
+	os.Remove(filepath.Join("config", "botway-deploy-tokens.env"))
 
 	return nil
 }
