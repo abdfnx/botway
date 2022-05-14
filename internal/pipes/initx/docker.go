@@ -63,12 +63,14 @@ func DockerInit() {
 	}
 
 	err, out, errOut := gosh.RunOutput("botway vars get " + bot_token)
+	out = out[:len(out)-1]
 
 	if err != nil {
 		panic(errOut)
 	}
 
 	appErr, appOut, appErrOut := gosh.RunOutput("botway vars get " + app_token)
+	appOut = appOut[:len(appOut)-1]
 
 	if appErr != nil {
 		panic(appErrOut)
@@ -90,6 +92,7 @@ func DockerInit() {
 				server := gjson.Get(string(constants.Guilds), "guilds." + fmt.Sprint(x)).String()
 
 				err, out, errOut := gosh.RunOutput("botway vars get " + strings.ToUpper(server + "_GUILD_ID"))
+				out = out[:len(out)-1]
 
 				if err != nil {
 					panic(errOut)

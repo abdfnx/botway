@@ -44,3 +44,7 @@ tasks:
       - ./docker/build.sh debian
       - ./docker/build.sh distroless
       - ./docker/build.sh ubuntu
+
+  remove-docker-images:
+    cmds:
+      - docker rmi $(docker images -a -q)
