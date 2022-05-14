@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
-	"github.com/abdfnx/gosh"
 	"github.com/abdfnx/tran/dfs"
 	"github.com/gookit/config/v2"
 	"github.com/gookit/config/v2/yaml"
@@ -62,24 +61,15 @@ func DockerInit() {
 		bot_token = "TELEGRAM_TOKEN"
 	}
 
-	err, out, errOut := gosh.RunOutput("botway vars get " + bot_token)
-	out = out[:len(out)-1]
+	vos := viper.New()
 
-	if err != nil {
-		panic(errOut)
-	}
+	vos.BindEnv(bot_token)
+	vos.BindEnv(app_token)
 
-	appErr, appOut, appErrOut := gosh.RunOutput("botway vars get " + app_token)
-	appOut = appOut[:len(appOut)-1]
-
-	if appErr != nil {
-		panic(appErrOut)
-	}
-
-	viper.SetDefault("botway.bots." + GetBotName() + ".bot_token", out)
+	viper.SetDefault("botway.bots." + GetBotName() + ".bot_token", vos.Get(bot_token))
 
 	if t != "telegram" {
-		viper.SetDefault("botway.bots." + GetBotName() + "." + cid, appOut)
+		viper.SetDefault("botway.bots." + GetBotName() + "." + cid, vos.Get(app_token))
 	}
 
 	if t == "discord" {
@@ -91,14 +81,11 @@ func DockerInit() {
 			for x := 0; x < int(guilds.Int()); x++ {
 				server := gjson.Get(string(constants.Guilds), "guilds." + fmt.Sprint(x)).String()
 
-				err, out, errOut := gosh.RunOutput("botway vars get " + strings.ToUpper(server + "_GUILD_ID"))
-				out = out[:len(out)-1]
+				env := strings.ToUpper(server) + "_GUILD_ID"
 
-				if err != nil {
-					panic(errOut)
-				}	
+				vos.BindEnv(env)
 
-				viper.Set("botway.bots." + GetBotName() + ".guilds." + server + ".server_id", out)
+				viper.Set("botway.bots." + GetBotName() + ".guilds." + server + ".server_id", env)
 			}
 		}
 	}
