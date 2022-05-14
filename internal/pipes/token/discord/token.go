@@ -5,15 +5,14 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"os/exec"
-	"runtime"
+	"path/filepath"
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
 	token_shared "github.com/abdfnx/botway/internal/pipes/token"
-	"github.com/abdfnx/looker"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/spf13/viper"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -27,12 +26,6 @@ type model struct {
 func (m model) AddToken() {
 	botwayConfig, err := ioutil.ReadFile(token_shared.BotwayConfigPath)
 	// token, id := token_shared.EncryptTokens(m.inputs[0].Value(), m.inputs[1].Value())
-	bwPath, bwErr := looker.LookPath("botway")
-
-	if bwErr != nil {
-		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
-		panic(constants.FAIL_FOREGROUND.Render(" botway is not installed\n"))
-	}
 
 	if err != nil {
 		panic(err)
@@ -57,23 +50,28 @@ func (m model) AddToken() {
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.botName + " Discord tokens're added successfully"))
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render("You can add the guild ids of your discord server via the command") + token_shared.BoldStyle.Render(" " + "botway tokens add-guilds") + " 📁")
-	// fmt.Println("Your Secret key -> " + token_shared.BoldStyle.Render(token_shared.UserSecret) + " Keep it in a safe place")
 
-	set := fmt.Sprintf("%s vars set DISCORD_TOKEN=%s DISCORD_CLIENT_ID=%s", bwPath, m.inputs[0].Value(), m.inputs[1].Value())
-	cmd := exec.Command("bash", "-c", set)
+	viper.AddConfigPath(filepath.Join(botPath, "config"))
+	viper.SetConfigName("secrets")
+	viper.SetConfigType("env")
 
-	if runtime.GOOS == "windows" {
-		cmd = exec.Command("powershell.exe", set)
+	viper.SetDefault("DISCORD_TOKEN", m.inputs[0].Value())
+	viper.SetDefault("DISCORD_CLIENT_ID", m.inputs[1].Value())
+
+	if err := viper.SafeWriteConfig(); err != nil {
+		if os.IsNotExist(err) {
+			err = viper.WriteConfig()
+
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
 	}
 
-	cmd.Dir = botPath
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
-
-	if err != nil {
-		log.Printf("error: %v\n", err)
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			log.Fatal(err)
+		}
 	}
 }
 

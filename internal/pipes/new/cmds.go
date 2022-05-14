@@ -8,7 +8,6 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/internal/pipes/new/config"
-	"github.com/abdfnx/botway/templates"
 	"github.com/abdfnx/resto/core/api"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/knadh/koanf"
@@ -146,6 +145,10 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 			log.Fatal(err)
 		}
 
+		if err := os.Mkdir(filepath.Join(opts.BotName, "config"), os.ModePerm); err != nil {
+			log.Fatal(err)
+		}
+
 		viper.AddConfigPath(opts.BotName)
 		viper.SetConfigName(".botway")
 		viper.SetConfigType("yaml")
@@ -163,7 +166,7 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		viper.SetDefault("docker.cmds.run", "docker run -it " + dockerImage)
 
 		if m.PlatformChoice == 0 {
-			guildsFile := os.WriteFile(filepath.Join(opts.BotName, "guilds.json"), []byte("{}"), 0644)
+			guildsFile := os.WriteFile(filepath.Join(opts.BotName, "config", "guilds.json"), []byte("{}"), 0644)
 
 			if guildsFile != nil {
 				panic(guildsFile)
@@ -201,29 +204,14 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 			respone += "fileloader.ts"
 		}
 
+		respone += "\nsecrets.env\n"
+
 		dotGitIgnoreFileContent := []byte(respone)
-		herokuFileContent := []byte(HerokuFile())
-		procFileContent := templates.Content("assets/Procfile", "")
 
 		dotGitIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".gitignore"), dotGitIgnoreFileContent, 0644)
-		dotDockerIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".dockerignore"), dotGitIgnoreFileContent, 0644)
-		herokuFile := os.WriteFile(filepath.Join(opts.BotName, "heroku.yaml"), herokuFileContent, 0644)
-		procFile := os.WriteFile(filepath.Join(opts.BotName, "Procfile"), []byte(procFileContent), 0644)
 
 		if dotGitIgnoreFile != nil {
 			log.Fatal(dotGitIgnoreFile)
-		}
-
-		if dotDockerIgnoreFile != nil {
-			log.Fatal(dotDockerIgnoreFile)
-		}
-
-		if herokuFile != nil {
-			log.Fatal(herokuFile)
-		}
-
-		if procFile != nil {
-			log.Fatal(procFile)
 		}
 		
 		DiscordHandler(m)

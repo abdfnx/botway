@@ -1,20 +1,19 @@
 package guilds
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
-	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
 	token_shared "github.com/abdfnx/botway/internal/pipes/token"
-	"github.com/abdfnx/looker"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/spf13/viper"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -25,13 +24,6 @@ type model struct {
 }
 
 func (m model) AddGuildId() {
-	bwPath, bwErr := looker.LookPath("botway")
-
-	if bwErr != nil {
-		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
-		panic(constants.FAIL_FOREGROUND.Render(" botway is not installed\n"))
-	}
-
 	botwayConfig, err := ioutil.ReadFile(token_shared.BotwayConfigPath)
 
 	if err != nil {
@@ -60,7 +52,7 @@ func (m model) AddGuildId() {
 		}
 
 		bot_path := gjson.Get(string(botwayConfig), "botway.bots." + m.inputs[0].Value() + ".path").String()
-		guildsPath := filepath.Join(bot_path, "guilds.json")
+		guildsPath := filepath.Join(bot_path, "config", "guilds.json")
 		guildsFile, err := ioutil.ReadFile(guildsPath)
 
 		if err != nil {
@@ -85,22 +77,17 @@ func (m model) AddGuildId() {
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.inputs[1].Value() + " server id is added successfully"))
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render("You can add more server ids by running the same command again"))
 
-		set := fmt.Sprintf("%s vars set %s=%s", bwPath, strings.ToUpper(m.inputs[1].Value() + "_GUILD_ID"), m.inputs[2].Value())
-		cmd := exec.Command("bash", "-c", set)
+		viper.SetConfigType("env")
 
-		if runtime.GOOS == "windows" {
-			cmd = exec.Command("powershell.exe", set)
+		secretsFile, serr := ioutil.ReadFile(filepath.Join(botPath, "config", "secrets.env"))
+
+		if serr != nil {
+			panic(serr)
 		}
 
-		cmd.Dir = botPath
-		cmd.Stdin = os.Stdin
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-		err = cmd.Run()
+		viper.ReadConfig(bytes.NewBuffer(secretsFile))
 
-		if err != nil {
-			log.Printf("error: %v\n", err)
-		}
+		viper.SetDefault(strings.ToUpper(m.inputs[1].Value() + "_GUILD_ID"), m.inputs[2].Value())
 	}
 }
 

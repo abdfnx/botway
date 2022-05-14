@@ -37,7 +37,7 @@ var (
 	BotwayConfigFile = filepath.Join(HomeDir, ".botway", "botway.json")
 	BotwayConfig, Berr = ioutil.ReadFile(BotwayConfigFile)
 	BotConfig, Oerr = ioutil.ReadFile(".botway.yaml")
-	Guilds, Gerr = ioutil.ReadFile("guilds.json")
+	Guilds, Gerr = ioutil.ReadFile(filepath.Join("config", "guilds.json"))
 
 	BotwayDirPath = func () string {
 		if runtime.GOOS == "windows" {
