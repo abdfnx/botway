@@ -129,6 +129,7 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 		if err == nil {
 			break
 		}
+
 		time.Sleep(time.Duration(i) * 250 * time.Millisecond)
 	}
 
@@ -144,6 +145,8 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 	fmt.Printf("OR run `botway logs` to tail them here\n\n")
 
 	fmt.Printf("☁️ Deployment live at %s\n", ui.GrayText(h.ctrl.GetFullUrlFromStaticUrl(res.DeploymentDomain)))
+
+	os.Remove("botway-deploy-tokens.env")
 
 	return nil
 }

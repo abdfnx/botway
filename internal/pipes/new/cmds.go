@@ -204,8 +204,6 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 			respone += "fileloader.ts"
 		}
 
-		respone += "\nsecrets.env\n"
-
 		dotGitIgnoreFileContent := []byte(respone)
 
 		dotGitIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".gitignore"), dotGitIgnoreFileContent, 0644)

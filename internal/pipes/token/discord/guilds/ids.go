@@ -1,7 +1,6 @@
 package guilds
 
 import (
-	"bytes"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -13,7 +12,6 @@ import (
 	token_shared "github.com/abdfnx/botway/internal/pipes/token"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/spf13/viper"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -37,7 +35,6 @@ func (m model) AddGuildId() {
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" this command/feature only works with discord bots"))
 	} else {
 		newGuild, _ := sjson.Set(string(botwayConfig), "botway.bots." + m.inputs[0].Value() + ".guilds." + m.inputs[1].Value() + ".server_id", m.inputs[2].Value())
-		botPath := gjson.Get(newGuild, "botway.bots." + m.inputs[0].Value() + ".path").String()
 
 		remove := os.Remove(token_shared.BotwayConfigPath)
 
@@ -76,18 +73,6 @@ func (m model) AddGuildId() {
 		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.inputs[1].Value() + " server id is added successfully"))
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render("You can add more server ids by running the same command again"))
-
-		viper.SetConfigType("env")
-
-		secretsFile, serr := ioutil.ReadFile(filepath.Join(botPath, "config", "secrets.env"))
-
-		if serr != nil {
-			panic(serr)
-		}
-
-		viper.ReadConfig(bytes.NewBuffer(secretsFile))
-
-		viper.SetDefault(strings.ToUpper(m.inputs[1].Value() + "_GUILD_ID"), m.inputs[2].Value())
 	}
 }
 

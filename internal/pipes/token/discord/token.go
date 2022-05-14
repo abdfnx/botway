@@ -5,15 +5,12 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
 	token_shared "github.com/abdfnx/botway/internal/pipes/token"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/spf13/viper"
-	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
@@ -33,7 +30,6 @@ func (m model) AddToken() {
 
 	tokenContent, _ := sjson.Set(string(botwayConfig), "botway.bots." + m.botName + ".bot_token", m.inputs[0].Value())
 	appIdContent, _ := sjson.Set(tokenContent, "botway.bots." + m.botName + ".bot_app_id", m.inputs[1].Value())
-	botPath := gjson.Get(tokenContent, "botway.bots." + m.botName + ".path").String()
 
 	remove := os.Remove(token_shared.BotwayConfigPath)
 
@@ -50,29 +46,6 @@ func (m model) AddToken() {
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.botName + " Discord tokens're added successfully"))
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render("You can add the guild ids of your discord server via the command") + token_shared.BoldStyle.Render(" " + "botway tokens add-guilds") + " 📁")
-
-	viper.AddConfigPath(filepath.Join(botPath, "config"))
-	viper.SetConfigName("secrets")
-	viper.SetConfigType("env")
-
-	viper.SetDefault("DISCORD_TOKEN", m.inputs[0].Value())
-	viper.SetDefault("DISCORD_CLIENT_ID", m.inputs[1].Value())
-
-	if err := viper.SafeWriteConfig(); err != nil {
-		if os.IsNotExist(err) {
-			err = viper.WriteConfig()
-
-			if err != nil {
-				log.Fatal(err)
-			}
-		}
-	}
-
-	if err := viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			log.Fatal(err)
-		}
-	}
 }
 
 func initialModel(botName string) model {

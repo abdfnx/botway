@@ -66,7 +66,7 @@ func DockerInit() {
 	env := viper.New()
 	env.SetConfigType("env")
 
-	secretsFile, serr := ioutil.ReadFile("secrets.env")
+	secretsFile, serr := ioutil.ReadFile(filepath.Join("config", "botway-deploy-tokens.env"))
 
 	if serr != nil {
 		panic(serr)
@@ -90,8 +90,6 @@ func DockerInit() {
 				server := gjson.Get(string(constants.Guilds), "guilds." + fmt.Sprint(x)).String()
 
 				sgi := strings.ToUpper(server) + "_GUILD_ID"
-
-				env.BindEnv(sgi)
 
 				viper.Set("botway.bots." + GetBotName() + ".guilds." + server + ".server_id", env.Get(sgi))
 			}
