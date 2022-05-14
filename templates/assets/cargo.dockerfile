@@ -1,4 +1,3 @@
-FROM alpine:latest
 FROM rust:alpine
 FROM botwayorg/botway:latest
 

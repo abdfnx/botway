@@ -1,4 +1,3 @@
-FROM alpine:latest
 FROM denoland/deno:alpine
 FROM botwayorg/botway:latest
 

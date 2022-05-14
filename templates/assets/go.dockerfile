@@ -1,4 +1,3 @@
-FROM alpine:latest
 FROM golang:alpine AS builder
 FROM botwayorg/botway:latest
 

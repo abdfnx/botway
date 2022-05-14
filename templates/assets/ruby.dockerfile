@@ -1,4 +1,3 @@
-FROM alpine:latest
 FROM ruby:alpine
 FROM botwayorg/botway:latest
 
