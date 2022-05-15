@@ -2,13 +2,10 @@ package new
 
 import (
 	"fmt"
-	"os"
 	"runtime"
-	"strings"
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/internal/options"
-	"github.com/abdfnx/resto/core/api"
 	"github.com/charmbracelet/lipgloss"
 )
 
@@ -129,19 +126,4 @@ func BotPM(m model) string {
 	}
 
 	return ""
-}
-
-func HerokuFile() string {
-	respone, status, _, err := api.BasicGet("https://raw.githubusercontent.com/abdfnx/botway/main/templates/assets/heroku.yml", "GET", "", "", "", "", false, 0, nil)
-
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	if status == "404" || status == "401" || strings.Contains(respone, "404") {
-		fmt.Println("404")
-		os.Exit(0)
-	}
-
-	return respone
 }

@@ -10,15 +10,12 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/templates"
-	"github.com/abdfnx/botway/templates/discord"
 	"github.com/abdfnx/botway/templates/discord/python"
 	"github.com/abdfnx/looker"
-	"github.com/charmbracelet/lipgloss"
 )
 
 func DiscordPythonPipenv(botName string) {
 	pythonPath := "python3"
-	messageStyle := lipgloss.NewStyle().Foreground(constants.CYAN_COLOR)
 
 	if runtime.GOOS == "windows" {
 		pythonPath = "python"
@@ -34,12 +31,6 @@ func DiscordPythonPipenv(botName string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" pipenv is not installed"))
 	} else {
-		if runtime.GOOS == "linux" {
-			fmt.Println(messageStyle.Render("> Installing some required linux packages"))
-
-			discord.InstallCommandPython()
-		}
-
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(python.Resources()), 0644)
 
 		if resourcesFile != nil {

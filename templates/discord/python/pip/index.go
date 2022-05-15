@@ -10,16 +10,13 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/templates"
-	"github.com/abdfnx/botway/templates/discord"
 	"github.com/abdfnx/botway/templates/discord/python"
 	"github.com/abdfnx/looker"
-	"github.com/charmbracelet/lipgloss"
 )
 
 func DiscordPythonPip(botName string) {
 	pip := "pip3"
 	pythonPath := "python3"
-	messageStyle := lipgloss.NewStyle().Foreground(constants.CYAN_COLOR)
 
 	if runtime.GOOS == "windows" {
 		pip = "pip"
@@ -36,12 +33,6 @@ func DiscordPythonPip(botName string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		log.Fatalln(constants.FAIL_FOREGROUND.Render(fmt.Sprintf(" %s is not installed", pip)))
 	} else {
-		if runtime.GOOS == "linux" {
-			fmt.Println(messageStyle.Render("> Installing some required linux packages"))
-
-			discord.InstallCommandPython()
-		}
-
 		requirementsFile := os.WriteFile(filepath.Join(botName, "requirements.txt"), []byte(RequirementsContent()), 0644)
 
 		if requirementsFile != nil {

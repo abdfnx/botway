@@ -10,9 +10,7 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/templates"
-	"github.com/abdfnx/botway/templates/discord"
 	"github.com/abdfnx/looker"
-	"github.com/charmbracelet/lipgloss"
 )
 
 func MainRsContent() string {
@@ -50,7 +48,6 @@ big thanks to [**@serenity-rs**](https://github.com/serenity-rs) org`
 func DiscordRust(botName, pm string) {
 	_, err := looker.LookPath("cargo")
 	pmPath, perr := looker.LookPath(pm)
-	messageStyle := lipgloss.NewStyle().Foreground(constants.CYAN_COLOR)
 
 	if err != nil {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
@@ -59,12 +56,6 @@ func DiscordRust(botName, pm string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" " + pm + "  is not installed"))
 	} else {
-		if runtime.GOOS == "linux" {
-			fmt.Println(messageStyle.Render("> Installing some required linux packages"))
-
-			discord.InstallCommandRust()
-		}
-
 		DockerfileContent := templates.Content("assets/" + pm + ".dockerfile", botName)
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.rs"), []byte(MainRsContent()), 0644)

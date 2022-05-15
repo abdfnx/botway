@@ -1,5 +1,5 @@
 slackify==1.0.0
-botway.py==0.0.2
+botway.py==0.0.3
 Flask==2.1.2
 pyee==9.0.4
 slackclient==2.9.4

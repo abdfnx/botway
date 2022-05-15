@@ -10,7 +10,6 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/templates"
-	"github.com/abdfnx/botway/templates/discord"
 	"github.com/abdfnx/looker"
 	"github.com/charmbracelet/lipgloss"
 )
@@ -27,15 +26,7 @@ func DiscordRuby(botName string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" bundler is not installed"))
 	} else {
-		if runtime.GOOS == "linux" {
-			fmt.Println(messageStyle.Render("> Installing some required linux packages"))
-
-			discord.InstallCommandRust()
-		} else if runtime.GOOS == "darwin" {
-			fmt.Println(messageStyle.Render("Installing some required macos packages via homebrew"))
-
-			discord.InstallCommandRuby()
-		} else if runtime.GOOS == "windows" {
+		if runtime.GOOS == "windows" {
 			fmt.Println(messageStyle.Render(`On Windows, follow these steps:
 
 Download the latest libsodium-X.Y.Z-msvc.zip from https://download.libsodium.org/libsodium/releases.
