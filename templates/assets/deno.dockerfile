@@ -1,7 +1,4 @@
-FROM denoland/deno:alpine
-FROM botwayorg/botway:latest
-
-ADD . .
+FROM botwayorg/botway:alpine-glibc
 
 RUN apk update && \
 	apk add --no-cache --virtual build-dependencies build-base gcc git ffmpeg curl
@@ -9,12 +6,12 @@ RUN apk update && \
 # Add packages you want
 # RUN apk add PACKAGE_NAME
 
-RUN botway init --docker
+COPY . .
 
-USER deno
+RUN botway init --docker
 
 RUN deno cache deps.ts
 
 EXPOSE 8000
 
-ENTRYPOINT ["deno", "run", "--allow-all", "./src/main.ts"]
+ENTRYPOINT ["deno", "run", "--allow-all", "mod.ts"]
