@@ -1,11 +1,15 @@
 #!/bin/bash
 
-tag="$1"
-filename=$tag
+tags=( alpine alpine-glibc centos core debian distroless latest ubuntu )
 
-if [ $tag == "latest" ]; then
-    filename="alpine"
-fi
+for t in "${tags[@]}"
+do
+    filename=${t}
 
-docker build -t botwayorg/botway:$tag --file ./docker/$filename.dockerfile .
-docker push botwayorg/botway:$tag
+    if [ "$t" == "latest" ]; then
+        filename="alpine"
+    fi
+
+	docker build -t botwayorg/botway:$t --file ./docker/$filename.dockerfile .
+    docker push botwayorg/botway:$t
+done

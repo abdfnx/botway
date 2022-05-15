@@ -37,13 +37,7 @@ tasks:
 
   docker:
     cmds:
-      - ./docker/build.sh core
-      - ./docker/build.sh latest
-      - ./docker/build.sh alpine
-      - ./docker/build.sh centos
-      - ./docker/build.sh debian
-      - ./docker/build.sh distroless
-      - ./docker/build.sh ubuntu
+      - ./docker/build.sh
 
   remove-docker-images:
     cmds:

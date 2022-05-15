@@ -18,22 +18,8 @@ jobs:
           username: ${{ secrets.DOCKER_ID }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build Core
-        run: ./docker/build.sh core
+      - name: Set up Task
+        uses: arduino/setup-task@v1
 
-      - name: Build Latest and Alpine tag
-        run: |
-          ./docker/build.sh alpine
-          ./docker/build.sh latest
-
-      - name: Build Centos tag
-        run: ./docker/build.sh centos
-
-      - name: Build Debian tag
-        run: ./docker/build.sh debian
-
-      - name: Build Distroless tag
-        run: ./docker/build.sh distroless
-
-      - name: Build Ubuntu tag
-        run: ./docker/build.sh ubuntu
+      - name: Build All Tags
+        run: task docker
