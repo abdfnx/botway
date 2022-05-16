@@ -207,11 +207,16 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		dotGitIgnoreFileContent := []byte(respone)
 
 		dotGitIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".gitignore"), dotGitIgnoreFileContent, 0644)
+		dotDockerIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".dockerignore"), []byte("*.lock"), 0644)
 
 		if dotGitIgnoreFile != nil {
 			log.Fatal(dotGitIgnoreFile)
 		}
 		
+		if dotDockerIgnoreFile != nil {
+			log.Fatal(dotDockerIgnoreFile)
+		}
+
 		DiscordHandler(m)
 		TelegramHandler(m)
 		SlackHandler(m)

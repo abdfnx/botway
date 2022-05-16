@@ -8,3 +8,7 @@ telegram-bot = "0.8"
 tokio = { version = "0.2", features = ["full"]}
 futures = "0.3.21"
 botway-rs = "0.2"
+
+[[bin]]
+name = "bot"
+path = "src/main.rs"
