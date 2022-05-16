@@ -205,9 +205,16 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		}
 
 		dotGitIgnoreFileContent := []byte(respone)
+		dotDockerIgnoreFileContent := "*.lock"
+
+		if BotLang(m) == "rust" {
+			if BotPM(m) == "fleet" {
+				dotDockerIgnoreFileContent += "\n.cargo\nfleet.toml"
+			}
+		}
 
 		dotGitIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".gitignore"), dotGitIgnoreFileContent, 0644)
-		dotDockerIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".dockerignore"), []byte("*.lock"), 0644)
+		dotDockerIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".dockerignore"), []byte(dotDockerIgnoreFileContent), 0644)
 
 		if dotGitIgnoreFile != nil {
 			log.Fatal(dotGitIgnoreFile)

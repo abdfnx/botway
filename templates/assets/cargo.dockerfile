@@ -6,7 +6,7 @@ RUN botway init --docker
 
 FROM rust:alpine
 
-ENV PACKAGES "build-dependencies build-base gcc git libsodium ffmpeg opus autoconf automake libtool m4 youtube-dl"
+ENV PACKAGES "build-dependencies build-base openssl openssl-dev musl-dev libressl-dev gcc git lld clang libsodium ffmpeg opus autoconf automake libtool m4 youtube-dl"
 
 RUN apk update && \
 	apk add --no-cache --virtual ${PACKAGES}
