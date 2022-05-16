@@ -21,7 +21,8 @@ func DeployCMD() *cobra.Command {
 		PreRun: func(cmd *cobra.Command, args []string) {
 			if _, err := os.Stat(".botway.yaml"); err != nil {
 				fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
-				panic(constants.FAIL_FOREGROUND.Render(" You need to run this command in your bot directory"))
+				fmt.Print(" ")
+				panic(constants.FAIL_FOREGROUND.Render("You need to run this command in your bot directory"))
 			}
 		
 			botName := initx.GetBotName()

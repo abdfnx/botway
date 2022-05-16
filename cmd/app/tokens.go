@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
@@ -12,6 +13,7 @@ import (
 	"github.com/abdfnx/botway/internal/pipes/token/telegram"
 	"github.com/spf13/cobra"
 	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
 )
 
 func TokenCMD() *cobra.Command {
@@ -22,6 +24,7 @@ func TokenCMD() *cobra.Command {
 
 	cmd.AddCommand(TokenSetCMD())
 	cmd.AddCommand(TokenGetCMD())
+	cmd.AddCommand(TokenRemoveCMD())
 	cmd.AddCommand(TokenAddGuildsCMD())
 
 	return cmd
@@ -38,6 +41,7 @@ func TokenSetCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "set",
 		Short: "Create or update the value of a bot token.",
+		Args: cobra.MinimumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) > 0 {
 				if opts.Discord {
@@ -66,9 +70,41 @@ func TokenGetCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "get",
 		Short: "Get the value of a bot token.",
+		Args: cobra.MinimumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) > 0 {
 				fmt.Println(messageStyle.Render(strings.ToUpper(args[0]) + " Bot Token ==> ") + gjson.Get(string(constants.BotwayConfig), "botway.bots." + args[0] + ".bot_token").String())
+			} else {
+				fmt.Println("Bot Name is required")
+			}
+		},
+	}
+
+	return cmd
+}
+
+func TokenRemoveCMD() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "remove",
+		Short: "Remove a bot token.",
+		Aliases: []string{"rm", "delete"},
+		Args: cobra.MinimumNArgs(1),
+		Run: func(cmd *cobra.Command, args []string) {
+			if len(args) > 0 {
+				remove, err := sjson.Delete(string(constants.BotwayConfig), "botway.bots." + args[0] + ".bot_token")
+
+				if err != nil {
+					fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+					fmt.Print(" ")
+					panic(constants.FAIL_FOREGROUND.Render(err.Error()))
+				}
+
+				os.Remove(constants.BotwayConfigFile)
+
+				os.WriteFile(constants.BotwayConfigFile, []byte(remove), 0644)
+
+				fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
+				fmt.Println(constants.SUCCESS_FOREGROUND.Render(" Token removed successfully"))
 			} else {
 				fmt.Println("Bot Name is required")
 			}

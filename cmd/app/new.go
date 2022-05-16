@@ -33,7 +33,7 @@ func NewCMD() *cobra.Command {
 		},
 		PostRunE: Contextualize(handler.Init, handler.Panic),
 		PersistentPostRun: func(cmd *cobra.Command, args []string) {
-			fmt.Println(messageStyle.Render(fmt.Sprintf("> Installing some required %s packages", runtime.GOOS)))
+			fmt.Println(messageStyle.Render("> Installing some required packages"))
 
 			installCmd := exec.Command("bash", "-c", tools.Packages())
 
