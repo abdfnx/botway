@@ -4,7 +4,6 @@ require_relative "botwayrb/version"
 require "yaml"
 require "json"
 
-
 module Botwayrb
   BotwatConfig = JSON.parse(File.read(File.join(File.expand_path("~"), ".botway", "botway.json")))
 

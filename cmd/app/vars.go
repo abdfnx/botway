@@ -13,11 +13,11 @@ func VarsCMD() *cobra.Command {
 	cmd.Flags().StringP("service", "s", "", "Fetch variables accessible to a specific service")
 
 	variablesAddCmd := &cobra.Command{
-		Use:     "get key",
+		Use:     "get a variable",
 		Short:   "Get the value of a variable",
 		RunE:    Contextualize(handler.VariablesGet, handler.Panic),
 		Args:    cobra.MinimumNArgs(1),
-		Example: "  botway variables get DISCORD_TOKEN",
+		Example: "  botway variables get PORT",
 	}
 
 	cmd.AddCommand(variablesAddCmd)
@@ -28,21 +28,22 @@ func VarsCMD() *cobra.Command {
 		Short:   "Create or update the value of a variable",
 		RunE:    Contextualize(handler.VariablesSet, handler.Panic),
 		Args:    cobra.MinimumNArgs(1),
-		Example: "  botway variables set TELEGRAM_TOKEN=TOKEN",
+		Example: "  botway variables set KEY=VALUE",
 	}
 
 	cmd.AddCommand(variablesSetCmd)
 	variablesSetCmd.Flags().StringP("service", "s", "", "Fetch variables accessible to a specific service")
 
-	variablesDeleteCmd := &cobra.Command{
-		Use:     "delete key",
+	variablesRemoveCmd := &cobra.Command{
+		Use:     "remove a variable",
+		Aliases: []string{"rm", "delete"},
 		Short:   "Delete a variable",
 		RunE:    Contextualize(handler.VariablesDelete, handler.Panic),
-		Example: "  botway variables delete MY_KEY",
+		Example: "  botway variables remove MY_KEY",
 	}
 
-	cmd.AddCommand(variablesDeleteCmd)
-	variablesDeleteCmd.Flags().StringP("service", "s", "", "Fetch variables accessible to a specific service")
+	cmd.AddCommand(variablesRemoveCmd)
+	variablesRemoveCmd.Flags().StringP("service", "s", "", "Fetch variables accessible to a specific service")
 
 	return cmd
 }

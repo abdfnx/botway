@@ -6,12 +6,10 @@ import (
 	"os/exec"
 	"runtime"
 
-	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/internal/options"
 	"github.com/abdfnx/botway/internal/pipes/new"
 	"github.com/abdfnx/botway/tools"
 	"github.com/abdfnx/looker"
-	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
 )
 
@@ -35,8 +33,6 @@ func NewCMD() *cobra.Command {
 		},
 		PostRunE: Contextualize(handler.Init, handler.Panic),
 		PersistentPostRun: func(cmd *cobra.Command, args []string) {
-			messageStyle := lipgloss.NewStyle().Foreground(constants.CYAN_COLOR)
-
 			fmt.Println(messageStyle.Render(fmt.Sprintf("> Installing some required %s packages", runtime.GOOS)))
 
 			installCmd := exec.Command("bash", "-c", tools.Packages())

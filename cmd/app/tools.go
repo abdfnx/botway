@@ -6,20 +6,25 @@ import (
 	"os"
 	"runtime/debug"
 
+	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/internal/railway"
-	"github.com/railwayapp/cli/constants"
+	"github.com/charmbracelet/lipgloss"
+	rw_constants "github.com/railwayapp/cli/constants"
 	"github.com/railwayapp/cli/entity"
 	"github.com/spf13/cobra"
 )
 
-var handler = railway.NewRW()
+var (
+	handler = railway.NewRW()
+	messageStyle = lipgloss.NewStyle().Foreground(constants.CYAN_COLOR)
+)
 
 func Contextualize(fn entity.HandlerFunction, panicFn entity.PanicFunction) entity.CobraFunction {
 	return func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
 
 		defer func() {
-			if constants.IsDevVersion() {
+			if rw_constants.IsDevVersion() {
 				return
 			}
 

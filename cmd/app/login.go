@@ -1,27 +1,23 @@
 package app
 
 import (
-	"github.com/abdfnx/botway/internal/options"
 	"github.com/spf13/cobra"
 )
-
-var loginOpts = options.LoginOptions{
-	Railway: false,
-}
 
 func LoginCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "login",
-		Short: "Authenticate with Railway or GitHub.",
+		Short: "Authenticate with Railway.",
 		Aliases: []string{"auth"},
+		RunE:  Contextualize(handler.Login, handler.Panic),
 	}
 
-
-	addCmd(cmd, &cobra.Command{
-		Use:   "railway",
-		Short: "Login to your Railway account",
-		RunE:  Contextualize(handler.Login, handler.Panic),
-	})
+	// addCmd(cmd, &cobra.Command{
+	// 	Use:   "github",
+	// 	Short: "Login to your GitHub account",
+	// 	Aliases: []string{"gh"},
+	// 	Run: func(cmd *cobra.Command, args []string) {},
+	// })
 
 	return cmd
 }
