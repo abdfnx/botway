@@ -30,6 +30,7 @@ func (m model) AddToken() {
 
 	tokenContent, _ := sjson.Set(string(botwayConfig), "botway.bots." + m.botName + ".bot_token", m.inputs[0].Value())
 	appTokenContent, _ := sjson.Set(tokenContent, "botway.bots." + m.botName + ".bot_app_token", m.inputs[1].Value())
+	signingSecretContent, _ := sjson.Set(appTokenContent, "botway.bots." + m.botName + ".signing_secret", m.inputs[1].Value())
 
 	remove := os.Remove(token_shared.BotwayConfigPath)
 
@@ -37,7 +38,7 @@ func (m model) AddToken() {
         log.Fatal(remove)
     }
 
-	newBotConfig := os.WriteFile(token_shared.BotwayConfigPath, []byte(appTokenContent), 0644)
+	newBotConfig := os.WriteFile(token_shared.BotwayConfigPath, []byte(signingSecretContent), 0644)
 
 	if newBotConfig != nil {
 		panic(newBotConfig)
@@ -50,7 +51,7 @@ func (m model) AddToken() {
 
 func initialModel(botName string) model {
 	m := model{
-		inputs: make([]textinput.Model, 2),
+		inputs: make([]textinput.Model, 3),
 		botName: botName,
 	}
 
@@ -69,6 +70,9 @@ func initialModel(botName string) model {
 
 			case 1:
 				t.Placeholder = "Slack App Token"
+			
+			case 2:
+				t.Placeholder = "Slack Signing Secret"
 		}
 
 		m.inputs[i] = t

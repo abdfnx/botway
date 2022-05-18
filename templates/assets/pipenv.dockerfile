@@ -23,6 +23,7 @@ RUN /bin/bash -c "bash"
 # Install pipenv and deps
 RUN botway init --docker
 RUN curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python3
+RUN pipenv lock
 RUN pipenv sync --system
 RUN pipenv install
 

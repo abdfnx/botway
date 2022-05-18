@@ -38,27 +38,9 @@ func TelegramPythonPipenv(botName string) {
 			log.Fatal(resourcesFile)
 		}
 
-		pipenvInstall := pipenv + " install python-telegram-bot botway.py cryptography PySocks ujson"
+		pipenvInstall := pipenv + " install python-telegram-bot botway.py pyyaml cryptography PySocks ujson"
 
 		cmd := exec.Command("bash", "-c", pipenvInstall)
-
-		if runtime.GOOS == "windows" {
-			cmd = exec.Command("powershell.exe", pipenvInstall)
-		}
-
-		cmd.Dir = botName
-		cmd.Stdin = os.Stdin
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-		err = cmd.Run()
-
-		if err != nil {
-			log.Printf("error: %v\n", err)
-		}
-
-		pipenvInstall = pipenv + " install -d pyyaml"
-
-		cmd = exec.Command("bash", "-c", pipenvInstall)
 
 		if runtime.GOOS == "windows" {
 			cmd = exec.Command("powershell.exe", pipenvInstall)

@@ -37,7 +37,7 @@ func SlackPythonPipenv(botName string) {
 			log.Fatal(resourcesFile)
 		}
 
-		pipenvInstall := pipenv + " install slackify botway.py Flask pyee slackclient requests"
+		pipenvInstall := pipenv + " install slack-bolt botway.py pyyaml"
 
 		cmd := exec.Command("bash", "-c", pipenvInstall)
 
@@ -55,27 +55,8 @@ func SlackPythonPipenv(botName string) {
 			log.Printf("error: %v\n", err)
 		}
 
-		pipenvInstall = pipenv + " install -d pyyaml"
-
-		cmd = exec.Command("bash", "-c", pipenvInstall)
-
-		if runtime.GOOS == "windows" {
-			cmd = exec.Command("powershell.exe", pipenvInstall)
-		}
-
-		cmd.Dir = botName
-		cmd.Stdin = os.Stdin
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-		err = cmd.Run()
-
-		if err != nil {
-			log.Printf("error: %v\n", err)
-		}
-
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
-		flake8File := os.WriteFile(filepath.Join(botName, ".flake8"), []byte(python.Flake8Content()), 0644)
 
 		if mainFile != nil {
 			log.Fatal(mainFile)
@@ -83,10 +64,6 @@ func SlackPythonPipenv(botName string) {
 
 		if dockerFile != nil {
 			log.Fatal(dockerFile)
-		}
-
-		if flake8File != nil {
-			log.Fatal(flake8File)
 		}
 
 		templates.CheckProject(botName, "slack")

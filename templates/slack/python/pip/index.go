@@ -66,7 +66,6 @@ func SlackPythonPip(botName string) {
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
 		runtimeFile := os.WriteFile(filepath.Join(botName, "runtime.txt"), []byte("python-3.9.6"), 0644)
-		flake8File := os.WriteFile(filepath.Join(botName, ".flake8"), []byte(python.Flake8Content()), 0644)
 
 		if mainFile != nil {
 			log.Fatal(mainFile)
@@ -78,10 +77,6 @@ func SlackPythonPip(botName string) {
 
 		if runtimeFile != nil {
 			log.Fatal(runtimeFile)
-		}
-
-		if flake8File != nil {
-			log.Fatal(flake8File)
 		}
 
 		templates.CheckProject(botName, "slack")

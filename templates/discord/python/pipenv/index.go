@@ -55,24 +55,6 @@ func DiscordPythonPipenv(botName string) {
 			log.Printf("error: %v\n", err)
 		}
 
-		pipenvInstall = pipenv + " install -d pyyaml"
-
-		cmd = exec.Command("bash", "-c", pipenvInstall)
-
-		if runtime.GOOS == "windows" {
-			cmd = exec.Command("powershell.exe", pipenvInstall)
-		}
-
-		cmd.Dir = botName
-		cmd.Stdin = os.Stdin
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-		err = cmd.Run()
-
-		if err != nil {
-			log.Printf("error: %v\n", err)
-		}
-
 		dockerFileContent := templates.Content("assets/pipenv.dockerfile", botName)
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)

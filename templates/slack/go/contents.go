@@ -19,7 +19,7 @@ func Resources() string {
 
 ## Setup
 
-- [Setup Slack bot](https://github.com/abdfnx/botway/discussions/5)
+- [Setup Slack bot](https://github.com/abdfnx/botway/discussions/31)
 
 ## API
 

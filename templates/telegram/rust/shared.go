@@ -118,6 +118,6 @@ func TelegramRust(botName, pm string) {
 			}
 		}
 
-		templates.CheckProject(botName, "discord")
+		templates.CheckProject(botName, "telegram")
 	}
 }

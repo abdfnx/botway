@@ -6,10 +6,6 @@ func MainPyContent() string {
 	return templates.Content("slack/python/assets/src/main.py", "")
 }
 
-func Flake8Content() string {
-	return templates.Content("slack/python/assets/.flake8", "")
-}
-
 func Resources() string {
 	return `# Botway Slack (Python 🐍) Resources
 
@@ -17,16 +13,16 @@ func Resources() string {
 
 ## Setup
 
-- [Setup Slack bot](https://github.com/abdfnx/botway/discussions/6)
+- [Setup Slack bot](https://github.com/abdfnx/botway/discussions/31)
 
 ## API
 
-- [A lightweight framework to quickly develop modern Slack bots](https://github.com/Ambro17/slackify)
-- [Slackify Website](https://ambro17.github.io/slackify)
+- [A framework to build Slack apps using Python](https://github.com/slackapi/bolt-python)
+- [Website](https://slack.dev/bolt-python)
 
 ## Examples
 
-- [A collection of examples written with Slackify](https://github.com/Ambro17/slackify/tree/master/examples)
+- [A collection of examples written with Slackify](https://github.com/slackapi/bolt-python/tree/main/examples)
 
-big thanks to [**@Ambro17**](https://github.com/Ambro17)`
+big thanks to [**@slackapi**](https://github.com/slackapi) org`
 }

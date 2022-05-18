@@ -15,14 +15,10 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-var Packages = "node-telegram-bot-api botway.js"
+var Packages = "node-telegram-bot-api botway.js request"
 
 func IndexJSContent() string {
 	return templates.Content("telegram/nodejs/assets/index.js", "")
-}
-
-func BotGif() string {
-	return templates.Content("telegram/nodejs/assets/bot.gif", "")
 }
 
 func Resources() string {
@@ -102,11 +98,6 @@ func TelegramNodejs(botName, pm string) {
 			indexFile := os.WriteFile(filepath.Join(botName, "src", "index.js"), []byte(IndexJSContent()), 0644)
 			dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent), 0644)
 			resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
-			botGifFile := os.WriteFile(filepath.Join(botName, "src", "bot.gif"), []byte(BotGif()), 0644)
-
-			if botGifFile != nil {
-				log.Fatal(botGifFile)
-			}
 
 			if resourcesFile != nil {
 				log.Fatal(resourcesFile)

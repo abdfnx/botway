@@ -11,7 +11,7 @@ const bot = new TelegramBot(botway.GetToken(), options);
 // Matches /photo
 bot.onText(/\/photo/, function onPhotoText(msg) {
   // From file path
-  const photo = `${__dirname}/bot.gif`;
+  const photo = request("https://raw.githubusercontent.com/abdfnx/botway/main/templates/telegram/nodejs/assets/bot.gif");
 
   bot.sendPhoto(msg.chat.id, photo, {
     caption: "I'm a bot!",
