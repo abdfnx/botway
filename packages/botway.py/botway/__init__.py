@@ -7,7 +7,7 @@ Python client package for Botway.
 __author__ = 'abdfnx'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2022-now Abdfn'
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 import yaml
 import json
@@ -54,3 +54,10 @@ def GetGuildId(serverName):
     else:
         for val in find(botwayConfigData, 'botway'):
             return val['bots'][getBotInfo('name')]['guilds'][serverName]['server_id']
+
+def GetSigningSecret():
+    if getBotInfo('type') != 'slack':
+        raise RuntimeError('ERROR: This function/feature is only working with slack bots.')
+    else:
+        for val in find(botwayConfigData, 'botway'):
+            return val['bots'][getBotInfo('name')]['guilds'][getBotInfo('guild')]['signing_secret']
