@@ -60,4 +60,4 @@ def GetSigningSecret():
         raise RuntimeError('ERROR: This function/feature is only working with slack bots.')
     else:
         for val in find(botwayConfigData, 'botway'):
-            return val['bots'][getBotInfo('name')]['guilds'][getBotInfo('guild')]['signing_secret']
+            return val['bots'][getBotInfo('name')]['signing_secret']
