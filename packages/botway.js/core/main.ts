@@ -79,3 +79,25 @@ export const GetGuildId = (serverName: string) => {
     }
   }
 };
+
+export const GetSigningSecret = () => {
+  if (getBotInfo("lang") != "nodejs") {
+    console.log("ERROR: Botway is not running in NodeJS");
+  } else {
+    if (getBotInfo("type") != "slack") {
+      console.log(
+        "ERROR: This function/feature is only working with slack bots."
+      );
+    } else {
+      try {
+        const contents = readFileSync(BOTWAY_CONFIG_PATH, "utf8");
+
+        const json = JSON.parse(contents);
+
+        return json["botway"]["bots"][getBotInfo("name")]["signing_secret"];
+      } catch (err: any) {
+        console.log(err.stack || String(err));
+      }
+    }
+  }
+};
