@@ -45,5 +45,14 @@ module Botwayrb
         BotwatConfig["botway"]["bots"][get_bot_info("name")]["guilds"][serverName]["server_id"]
       end
     end
+
+    def get_signing_secret()
+      if get_bot_info("lang") != "ruby"
+        raise Error, "ERROR: Botway is not running in Ruby"
+      elsif get_bot_info("type") != "slack"
+        raise Error, "ERROR: This function/feature is only working with slack bots."
+      else
+        BotwatConfig["botway"]["bots"][get_bot_info("name")]["signing_secret"]
+      end
   end
 end
