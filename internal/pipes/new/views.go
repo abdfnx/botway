@@ -37,16 +37,16 @@ func langsView(m model) string {
 	tpl += subtle.Render("j/k, up/down: select") + dot + subtle.Render("enter: choose") + dot + subtle.Render("q, esc: quit")
 
 	langs := fmt.Sprintf(
-		"%s\n%s\n%s\n%s",
+		"%s\n%s\n%s",
 		checkbox("Python", l == 0),
-		checkbox("Golang", l == 1),
-		checkbox("Node.js", l == 2),
-		checkbox("Ruby", l == 3),
+		checkbox("Node.js", l == 1),
+		checkbox("Ruby", l == 2),
 	)
-
+	
 	if m.PlatformChoice != 2 {
 		langs += fmt.Sprintf(
-			"\n%s",
+			"\n%s\n%s",
+			checkbox("Golang", l == 3),
 			checkbox("Rust", l == 4),
 		)
 	}

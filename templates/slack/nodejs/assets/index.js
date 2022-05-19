@@ -1,31 +1,48 @@
-const SlackBot = require("slackbots");
+const { App } = require("@slack/bolt");
 const botway = require("botway.js");
 
-// create a bot
-var bot = new SlackBot({
-  token: botway.GetToken(), // Add a bot https://my.slack.com/services/new/bot and put the token
-  name: "My Bot",
+const app = new App({
+  token: botway.GetToken(),
+  signingSecret: botway.GetSigningSecret(),
 });
 
-bot.on("start", function () {
-  // more information about additional params https://api.slack.com/methods/chat.postMessage
-  var params = {
-    icon_emoji: ":cat:",
-  };
-
-  // define channel, where bot exist. You can adjust it there https://my.slack.com/services
-  bot.postMessageToChannel("general", "meow!", params);
-
-  // define existing username instead of 'user_name'
-  bot.postMessageToUser("user_name", "meow!", params);
-
-  // If you add a 'slackbot' property,
-  // you will post to another user's slackbot channel instead of a direct message
-  bot.postMessageToUser("user_name", "meow!", {
-    slackbot: true,
-    icon_emoji: ":cat:",
+app.message("hello", async ({ message, say }) => {
+  await say({
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `Hey there <@${message.user}>!`,
+        },
+        accessory: {
+          type: "button",
+          text: {
+            type: "plain_text",
+            text: "Click Me",
+          },
+          action_id: "button_click",
+        },
+      },
+    ],
+    text: `Hey there <@${message.user}>!`,
   });
-
-  // define private group instead of 'private_group', where bot exist
-  bot.postMessageToGroup("private_group", "meow!", params);
 });
+
+app.action("button_click", async ({ body, ack, say }) => {
+  // Acknowledge the action
+  await ack();
+  await say(`<@${body.user.id}> clicked the button`);
+});
+
+// Listens to incoming messages that contain "goodbye"
+app.message("goodbye", async ({ message, say }) => {
+  // say() sends a message to the channel where the event was triggered
+  await say(`See ya later, <@${message.user}> :wave:`);
+});
+
+(async () => {
+  await app.start(process.env.PORT || 3000);
+
+  console.log("⚡️ Bolt app is running!");
+})();

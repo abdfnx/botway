@@ -15,7 +15,7 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-var Packages = "slackbots botway.js"
+var Packages = "@slack/bolt botway.js"
 
 func IndexJSContent() string {
 	return templates.Content("slack/nodejs/assets/index.js", "")
@@ -32,13 +32,14 @@ func Resources() string {
 
 ## API
 
-- [Simple way to control your Slack Bot](https://github.com/mishk0/slack-bot-api)
+- [A framework to build Slack apps using JavaScript](https://github.com/slackapi/bolt-js)
+- [Website](https://slack.dev/bolt-js)
 
 ## Examples
 
-[Examples](https://github.com/mishk0/slack-bot-api/tree/master/test)
+[Examples](https://github.com/slackapi/bolt-js/tree/main/examples)
 
-big thanks to [**@mishk0**](https://github.com/mishk0)`
+big thanks to [**@slackapi**](https://github.com/slackapi) org`
 }
 
 func SlackNodejs(botName, pm string) {

@@ -49,8 +49,8 @@ func updateLangs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 					m.LangChoice += 1
 
 					if m.PlatformChoice == 2 {
-						if m.LangChoice > 3 {
-							m.LangChoice = 3
+						if m.LangChoice > 2 {
+							m.LangChoice = 2
 						}
 					} else if m.PlatformChoice == 0 {
 						if m.LangChoice > 5 {

@@ -1,6 +1,7 @@
 import logging
 from slack_bolt import App
-from botway import GetToken, GetSigningSecret
+from slack_bolt.adapter.socket_mode import SocketModeHandler
+from botway import GetToken, GetAppId, GetSigningSecret
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -12,7 +13,7 @@ def log_request(logger, body, next):
 
     return next()
 
-@app.command("/hello-bolt-python")
+@app.command("/hello")
 def hello_command(ack, body):
     user_id = body["user_id"]
 
@@ -29,4 +30,5 @@ def global_error_handler(error, body, logger):
     logger.info(body)
 
 if __name__ == "__main__":
-    app.start(3000)
+    handler = SocketModeHandler(app, GetAppId())
+    handler.start()
