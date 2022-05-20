@@ -58,19 +58,37 @@ func SlackRuby(botName string) {
 			log.Fatal(resourcesFile)
 		}
 
-		bundleInstall := bundlePath + " add slack-ruby-bot async-websocket botwayrb"
+		bundleConfig := bundlePath + " config set --local path '~/.gem'"
 
-		installCmd := exec.Command("bash", "-c", bundleInstall)
+		configCmd := exec.Command("bash", "-c", bundleConfig)
 
 		if runtime.GOOS == "windows" {
-			installCmd = exec.Command("powershell.exe", bundleInstall)
+			configCmd = exec.Command("powershell.exe", bundleConfig)
 		}
 
-		installCmd.Dir = botName
-		installCmd.Stdin = os.Stdin
-		installCmd.Stdout = os.Stdout
-		installCmd.Stderr = os.Stderr
-		err = installCmd.Run()
+		configCmd.Dir = botName
+		configCmd.Stdin = os.Stdin
+		configCmd.Stdout = os.Stdout
+		configCmd.Stderr = os.Stderr
+		err = configCmd.Run()
+
+		if err != nil {
+			log.Printf("error: %v\n", err)
+		}
+
+		bundleAdd := bundlePath + " add slackrb async-websocket botwayrb"
+
+		addCmd := exec.Command("bash", "-c", bundleAdd)
+
+		if runtime.GOOS == "windows" {
+			addCmd = exec.Command("powershell.exe", bundleAdd)
+		}
+
+		addCmd.Dir = botName
+		addCmd.Stdin = os.Stdin
+		addCmd.Stdout = os.Stdout
+		addCmd.Stderr = os.Stderr
+		err = addCmd.Run()
 
 		if err != nil {
 			log.Printf("error: %v\n", err)

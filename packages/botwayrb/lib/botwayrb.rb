@@ -54,5 +54,6 @@ module Botwayrb
       else
         BotwatConfig["botway"]["bots"][get_bot_info("name")]["signing_secret"]
       end
+    end
   end
 end
