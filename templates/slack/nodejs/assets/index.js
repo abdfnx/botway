@@ -1,44 +1,22 @@
-const { App } = require("@slack/bolt");
+const { App, LogLevel } = require("@slack/bolt");
 const botway = require("botway.js");
 
 const app = new App({
+  socketMode: true,
   token: botway.GetToken(),
   signingSecret: botway.GetSigningSecret(),
+  appToken: botway.GetAppId(),
+  logLevel: LogLevel.DEBUG,
 });
 
-app.message("hello", async ({ message, say }) => {
-  await say({
-    blocks: [
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `Hey there <@${message.user}>!`,
-        },
-        accessory: {
-          type: "button",
-          text: {
-            type: "plain_text",
-            text: "Click Me",
-          },
-          action_id: "button_click",
-        },
-      },
-    ],
-    text: `Hey there <@${message.user}>!`,
-  });
-});
-
-app.action("button_click", async ({ body, ack, say }) => {
-  // Acknowledge the action
+app.command("/hello", async ({ body, ack, say }) => {
   await ack();
-  await say(`<@${body.user.id}> clicked the button`);
+
+  await say(`Hi ${body.user_name}`);
 });
 
-// Listens to incoming messages that contain "goodbye"
-app.message("goodbye", async ({ message, say }) => {
-  // say() sends a message to the channel where the event was triggered
-  await say(`See ya later, <@${message.user}> :wave:`);
+app.event("app_mention", async ({ event, say }) => {
+  await say("What's up?");
 });
 
 (async () => {

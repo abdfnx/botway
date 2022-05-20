@@ -57,6 +57,8 @@ func BotLang(m model) string {
 }
 
 func BotStartCmd(m model) string {
+	nodeCmd := "node src/index.js"
+
 	if m.LangChoice == 0 && m.PMCoice == 0 {
 		if runtime.GOOS == "windows" {
 			return `py .\src\main.py`
@@ -70,9 +72,13 @@ func BotStartCmd(m model) string {
 			return `pipenv run python3 ./src/main.py`
 		}
 	} else if m.LangChoice == 1 {
-		return "go run src/main.go"
+		if m.PlatformChoice == 2 {
+			return nodeCmd
+		} else {
+			return "go run src/main.go"
+		}
 	} else if m.LangChoice == 2 {
-		return "node src/index.js"
+		return nodeCmd
 	} else if m.LangChoice == 3 {
 		return "bundle exec ruby src/main.rb"
 	} else if m.LangChoice == 4 {

@@ -87,8 +87,14 @@ func updatePMs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 					m.PMCoice += 1
 
 					if m.LangChoice == 1 {
-						if m.PMCoice > 0 {
-							m.PMCoice = 0
+						if m.PlatformChoice == 2 {
+							if m.PMCoice > 2 {
+								m.PMCoice = 2
+							}
+						} else {
+							if m.PMCoice > 0 {
+								m.PMCoice = 0
+							}
 						}
 					} else if m.LangChoice == 2 {
 						if m.PMCoice > 2 {

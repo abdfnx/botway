@@ -36,17 +36,34 @@ func langsView(m model) string {
 	tpl += "%s\n\n"
 	tpl += subtle.Render("j/k, up/down: select") + dot + subtle.Render("enter: choose") + dot + subtle.Render("q, esc: quit")
 
+	ln := 3
+
+	if m.PlatformChoice == 2 {
+		ln -= 1
+	}
+
+	var n = func() string {
+		if m.PlatformChoice == 2 {
+			return checkbox("Node.js", l == 1)
+		} else {
+			return fmt.Sprintf(
+				"%s\n%s",
+				checkbox("Golang", l == 1),
+				checkbox("Node.js", l == 2),
+			)
+		}
+	}
+
 	langs := fmt.Sprintf(
 		"%s\n%s\n%s",
 		checkbox("Python", l == 0),
-		checkbox("Node.js", l == 1),
-		checkbox("Ruby", l == 2),
+		n(),
+		checkbox("Ruby", l == ln),
 	)
 	
 	if m.PlatformChoice != 2 {
 		langs += fmt.Sprintf(
-			"\n%s\n%s",
-			checkbox("Golang", l == 3),
+			"\n%s",
 			checkbox("Rust", l == 4),
 		)
 	}
@@ -85,6 +102,13 @@ func pmsView(m model) string {
 	tpl += subtle.Render("j/k, up/down: select") + dot + subtle.Render("enter: choose") + dot + subtle.Render("q, esc: quit")
 
 	langs := ""
+	nodePms := fmt.Sprintf(
+		"%s\n%s\n%s",
+		checkbox("npm", pm == 0),
+		checkbox("yarn", pm == 1),
+		checkbox("pnpm", pm == 2),
+	)
+	rubyPM := checkbox("bundler", pm == 0)
 
 	if m.LangChoice == 0 {
 		langs += fmt.Sprintf(
@@ -93,16 +117,19 @@ func pmsView(m model) string {
 			checkbox("pipenv", pm == 1),
 		)
 	} else if m.LangChoice == 1 {
-		langs += checkbox("go mod", pm == 0)
+		if m.PlatformChoice == 2 {
+			langs += nodePms
+		} else {
+			langs += checkbox("go mod", pm == 0)
+		}
 	} else if m.LangChoice == 2 {
-		langs += fmt.Sprintf(
-			"%s\n%s\n%s",
-			checkbox("npm", pm == 0),
-			checkbox("yarn", pm == 1),
-			checkbox("pnpm", pm == 2),
-		)
+		if m.PlatformChoice == 2 {
+			langs += rubyPM
+		} else {
+			langs += nodePms
+		}
 	} else if m.LangChoice == 3 {
-		langs += checkbox("bundler", pm == 0)
+		langs += rubyPM
 	} else if m.LangChoice == 4 {
 		langs += fmt.Sprintf(
 			"%s\n%s",
@@ -159,8 +186,23 @@ func finalView(m model) string {
 			}
 
 		case 1:
-			lang = "Golang"
-			pm = "go mod"
+			if m.PlatformChoice == 2 {
+				lang = "Node.js"
+
+				switch m.PMCoice {
+					case 0:
+						pm = "npm"
+
+					case 1:
+						pm = "yarn"
+
+					case 2:
+						pm = "pnpm"
+				}
+			} else {
+				lang = "Golang"
+				pm = "go mod"
+			}
 
 		case 2:
 			lang = "Node.js"
