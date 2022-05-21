@@ -16,8 +16,8 @@ import (
 func NewCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "new",
-		Short: "Create a new botway project.",
-		Long: "With `botway new` command you can create your botway project.",
+		Short: "Create a new botway project",
+		Long: "With `botway new` command you can create your botway project",
 		Aliases: []string{"create"},
 		Args: cobra.MaximumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {

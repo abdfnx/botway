@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/abdfnx/botway/constants"
+	"github.com/briandowns/spinner"
 	"github.com/railwayapp/cli/entity"
 	CLIErrors "github.com/railwayapp/cli/errors"
 	"github.com/railwayapp/cli/ui"
@@ -33,16 +35,26 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 		return err
 	}
 
-	fmt.Print(ui.VerboseInfo(isVerbose, "Using verbose mode"))
+	if isVerbose {
+		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+		fmt.Println(constants.INFO_FOREGROUND.Render(" Using verbose mode"))
+		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+		fmt.Println(constants.INFO_FOREGROUND.Render(" Loading project configuration"))
+	}
 
-	fmt.Print(ui.VerboseInfo(isVerbose, "Loading project configuration"))
 	projectConfig, err := h.ctrl.GetProjectConfigs(ctx)
+
 	if err != nil {
 		return err
 	}
 
-	fmt.Print(ui.VerboseInfo(isVerbose, "Loading environment"))
+	if isVerbose {
+		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+		fmt.Println(constants.INFO_FOREGROUND.Render(" Loading environment"))
+	}
+
 	environmentName, err := req.Cmd.Flags().GetString("environment")
+
 	if err != nil {
 		return err
 	}
@@ -53,15 +65,21 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 		return err
 	}
 
-	fmt.Print(ui.VerboseInfo(isVerbose, fmt.Sprintf("Using environment %s", ui.Bold(environment.Name))))
+	if isVerbose {
+		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+		fmt.Println(constants.INFO_FOREGROUND.Render(" Using environment " + constants.BOLD.Render(environment.Name)))
+		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+		fmt.Println(constants.INFO_FOREGROUND.Render(" Loading project"))
+	}
 
-	fmt.Print(ui.VerboseInfo(isVerbose, "Loading project"))
 	project, err := h.ctrl.GetProject(ctx, projectConfig.Project)
+
 	if err != nil {
 		return err
 	}
 
 	serviceId := ""
+
 	if serviceName != "" {
 		for _, service := range project.Services {
 			if service.Name == serviceName {
@@ -76,8 +94,13 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 
 	// If service has not been provided via flag, prompt for it
 	if serviceId == "" {
-		fmt.Print(ui.VerboseInfo(isVerbose, "Loading services"))
+		if isVerbose {
+			fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+			fmt.Println(constants.INFO_FOREGROUND.Render(" Loading services"))
+		}
+
 		service, err := ui.PromptServices(project.Services)
+
 		if err != nil {
 			return err
 		}
@@ -88,13 +111,17 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 	}
 
 	_, err = ioutil.ReadFile(".railwayignore")
+
 	if err == nil {
-		fmt.Print(ui.VerboseInfo(isVerbose, "Using ignore file .railwayignore"))
+		if isVerbose {
+			fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+			fmt.Println(constants.INFO_FOREGROUND.Render(" Using ignore file .railwayignore"))
+		}
 	}
 
-	ui.StartSpinner(&ui.SpinnerCfg{
-		Message: "Laying tracks in the clouds...",
-	})
+	s := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
+	s.Suffix = " 📡 Laying tracks in the clouds..."
+	s.Start()
 
 	res, err := h.ctrl.Upload(ctx, &entity.UploadRequest{
 		ProjectID:     projectConfig.Project,
@@ -106,7 +133,8 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 	if err != nil {
 		return err
 	} else {
-		ui.StopSpinner(fmt.Sprintf("☁️ Build logs available at %s\n", ui.GrayText(res.URL)))
+		s.Stop()
+		s.FinalMSG = constants.SUCCESS_BACKGROUND.Render("SUCCESS") + " ☁️ Build logs available at " + constants.BOLD.Render(res.URL)
 	}
 
 	detach, err := req.Cmd.Flags().GetBool("detach")
@@ -121,6 +149,7 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 
 	for i := 0; i < 3; i++ {
 		err = h.ctrl.GetActiveBuildLogs(ctx, 0)
+
 		if err == nil {
 			break
 		}
@@ -128,7 +157,7 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 		time.Sleep(time.Duration(i) * 250 * time.Millisecond)
 	}
 
-	fmt.Printf("\n\n======= Build Completed ======\n\n")
+	fmt.Println(constants.SUCCESS_FOREGROUND.Render("\n\n======= Build Completed  ======\n"))
 
 	err = h.ctrl.GetActiveDeploymentLogs(ctx, 1000)
 
@@ -136,10 +165,12 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 		return err
 	}
 
-	fmt.Printf("☁️ Deployment logs available at %s\n", ui.GrayText(res.URL))
-	fmt.Printf("OR run `botway logs` to tail them here\n\n")
+	fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+	fmt.Println(constants.INFO_FOREGROUND.Render(" ☁️ Deployment logs available at " + constants.COMMAND_FOREGROUND.Render(res.URL)))
+	fmt.Println(constants.INFO_FOREGROUND.Render("OR run `botway logs` to tail them here\n"))
 
-	fmt.Printf("☁️ Deployment live at %s\n", ui.GrayText(h.ctrl.GetFullUrlFromStaticUrl(res.DeploymentDomain)))
+	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
+	fmt.Println(constants.SUCCESS_FOREGROUND.Render("☁️ Deployment live at " + constants.COMMAND_FOREGROUND.Render(h.ctrl.GetFullUrlFromStaticUrl(res.DeploymentDomain))))
 
 	os.Remove(filepath.Join("config", "botway-deploy-tokens.env"))
 

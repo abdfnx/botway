@@ -6,7 +6,10 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
+	"github.com/abdfnx/botway/constants"
+	"github.com/briandowns/spinner"
 	"github.com/railwayapp/cli/entity"
 	"github.com/railwayapp/cli/ui"
 )
@@ -17,12 +20,13 @@ func (h *Handler) Variables(ctx context.Context, req *entity.CommandRequest) err
 		return err
 	}
 
-	envs, err := h.ctrl.GetEnvsForService(ctx, &serviceName)
+	envs, err := h.ctrl.GetEnvsForCurrentEnvironment(ctx, &serviceName)
 	if err != nil {
 		return err
 	}
 
 	environment, err := h.ctrl.GetCurrentEnvironment(ctx)
+
 	if err != nil {
 		return err
 	}
@@ -39,7 +43,7 @@ func (h *Handler) VariablesGet(ctx context.Context, req *entity.CommandRequest) 
 		return err
 	}
 
-	envs, err := h.ctrl.GetEnvsForService(ctx, &serviceName)
+	envs, err := h.ctrl.GetEnvsForCurrentEnvironment(ctx, &serviceName)
 
 	if err != nil {
 		return err
@@ -89,6 +93,7 @@ func (h *Handler) VariablesSet(ctx context.Context, req *entity.CommandRequest) 
 	fmt.Print(ui.KeyValues(*variables))
 
 	err = h.redeployAfterVariablesChange(ctx, environment)
+
 	if err != nil {
 		return err
 	}
@@ -180,22 +185,26 @@ func (h *Handler) redeployAfterVariablesChange(ctx context.Context, environment 
 	// Don't redeploy if the latest deploy for environment came from up
 	latestDeploy := deployments[0]
 	if latestDeploy.Meta == nil || latestDeploy.Meta.Repo == "" {
-		fmt.Printf(ui.AlertInfo("Run %s to redeploy your project"), ui.MagentaText("botway deploy").Underline())
+		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+		fmt.Println(constants.INFO_FOREGROUND.Render(fmt.Sprintf(" Run %s to redeploy your project ", constants.COMMAND_FOREGROUND.Render("botway deploy"))))
+
 		return nil
 	}
 
-	ui.StartSpinner(&ui.SpinnerCfg{
-		Message: fmt.Sprintf("Redeploying \"%s\" with new variables", environment.Name),
-	})
+	s := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
+	s.Suffix = fmt.Sprintf(" 📟 Redeploying \"%s\" with new variables", environment.Name)
+	s.Start()
 
 	err = h.ctrl.DeployEnvironmentTriggers(ctx)
 	if err != nil {
 		return err
 	}
 
-	ui.StopSpinner("Deploy triggered")
+	s.Stop()
+	s.FinalMSG = constants.SUCCESS_BACKGROUND.Render("SUCCESS") + " Deploy triggered"
 
-	fmt.Printf("☁️ Deploy Logs available at %s\n", ui.GrayText(h.ctrl.GetProjectDeploymentsURL(ctx, latestDeploy.ProjectID)))
+	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
+	fmt.Println(constants.SUCCESS_FOREGROUND.Render(fmt.Sprintf("☁️ Deploy Logs available at %s\n", constants.COMMAND_FOREGROUND.Render(h.ctrl.GetProjectDeploymentsURL(ctx, latestDeploy.ProjectID)))))
 
 	return nil
 }

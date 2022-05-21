@@ -9,8 +9,8 @@ import (
 func DockerCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "docker",
-		Short: "Manage your bots docker images.",
-		Long: "With `botway docker` command you can manage all your bots docker images.",
+		Short: "Manage your bots docker images",
+		Long: "With `botway docker` command you can manage all your bots docker images",
 	}
 
 	cmd.AddCommand(DockerBuildCMD())

@@ -16,7 +16,7 @@ func (h *Handler) Login(ctx context.Context, req *entity.CommandRequest) error {
 	}
 
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
-	fmt.Printf(" Logged in as %s (%s) 🎉\n", user.Name, user.Email)
+	fmt.Printf(" Logged in as %s (%s) 🎉\n", constants.BOLD.Render(user.Name), user.Email)
 
 	return nil
 }

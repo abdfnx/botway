@@ -43,7 +43,7 @@ func (h *Handler) initNew(ctx context.Context, req *entity.CommandRequest) error
 	}
 
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
-	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + os.Args[2] + " Created succuessfully at Railway"))
+	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + os.Args[2] + " Created succuessfully at Railway Cloud"))
 
 	return nil
 }

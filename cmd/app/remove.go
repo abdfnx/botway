@@ -9,7 +9,7 @@ import (
 func RemoveCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "remove",
-		Short: "Remove a botway project.",
+		Short: "Remove a botway project",
 		Aliases: []string{"rm", "delete"},
 		Args: cobra.MinimumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {

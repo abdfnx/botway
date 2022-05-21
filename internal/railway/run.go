@@ -13,17 +13,17 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/abdfnx/botway/constants"
 	"github.com/railwayapp/cli/entity"
 	"github.com/railwayapp/cli/errors"
 	"github.com/railwayapp/cli/ui"
 )
 
-var RAIL_PORT = 4411
-
 func (h *Handler) getEnvironment(ctx context.Context, environmentName string) (*entity.Environment, error) {
 	if environmentName == "" {
 		return h.ctrl.GetCurrentEnvironment(ctx)
 	}
+
 	return h.ctrl.GetEnvironmentByName(ctx, environmentName)
 }
 
@@ -39,11 +39,13 @@ func (h *Handler) Run(ctx context.Context, req *entity.CommandRequest) error {
 	parsedArgs := make([]string, 0)
 
 	rgxEnvironment, err := regexp.Compile("--environment=(.*)")
+
 	if err != nil {
 		return err
 	}
 
 	rgxService, err := regexp.Compile("--service=(.*)")
+
 	if err != nil {
 		return err
 	}
@@ -57,11 +59,13 @@ func (h *Handler) Run(ctx context.Context, req *entity.CommandRequest) error {
 			if len(matched) < 2 {
 				return goErr.New("missing environment selection! \n(e.g --environment=production)")
 			}
+
 			targetEnvironment = matched[1]
 		} else if matched := rgxService.FindStringSubmatch(arg); matched != nil {
 			if len(matched) < 2 {
 				return goErr.New("missing service selection! \n(e.g --service=serviceName)")
 			}
+
 			targetServiceName = &matched[1]
 		} else {
 			parsedArgs = append(parsedArgs, arg)
@@ -69,36 +73,47 @@ func (h *Handler) Run(ctx context.Context, req *entity.CommandRequest) error {
 	}
 
 	projectCfg, err := h.ctrl.GetProjectConfigs(ctx)
+
 	if err != nil {
 		return err
 	}
 
 	environment, err := h.getEnvironment(ctx, targetEnvironment)
+
 	if err != nil {
 		return err
 	}
+
 	// Add something to the ephemeral env name
 	if isEphemeral {
 		environmentName := fmt.Sprintf("%s-ephemeral", environment.Name)
-		fmt.Printf("Spinning up Ephemeral Environment: %s\n", ui.BlueText(environmentName))
+
+		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+		fmt.Println(constants.INFO_FOREGROUND.Render(" Spinning up Ephemeral Environment " + constants.BOLD.Render(environmentName)))
+
 		// Create new environment for this run
 		environment, err = h.ctrl.CreateEphemeralEnvironment(ctx, &entity.CreateEphemeralEnvironmentRequest{
 			Name:              environmentName,
 			ProjectID:         projectCfg.Project,
 			BaseEnvironmentID: environment.Id,
 		})
+
 		if err != nil {
 			return err
 		}
-		fmt.Println("Done!")
+
+		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
+		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" Done!"))
 	}
-	envs, err := h.ctrl.GetEnvsForService(ctx, targetServiceName)
+
+	envs, err := h.ctrl.GetEnvs(ctx, environment, targetServiceName)
 
 	if err != nil {
 		return err
 	}
 
 	pwd, err := os.Getwd()
+
 	if err != nil {
 		return err
 	}
@@ -132,22 +147,29 @@ func (h *Handler) Run(ctx context.Context, req *entity.CommandRequest) error {
 
 	if isEphemeral {
 		// Teardown Environment
-		fmt.Println("Tearing down ephemeral environment...")
+		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+		fmt.Println(constants.INFO_FOREGROUND.Render(" Tearing down ephemeral environment..."))
+
 		err := h.ctrl.DeleteEnvironment(ctx, &entity.DeleteEnvironmentRequest{
 			EnvironmentId: environment.Id,
 			ProjectID:     projectCfg.Project,
 		})
+
 		if err != nil {
 			return err
 		}
-		fmt.Println("Done!")
+
+		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
+		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" Done!"))
 	}
 
 	if err != nil {
 		fmt.Println(err.Error())
+
 		if exitError, ok := err.(*exec.ExitError); ok {
 			os.Exit(exitError.ExitCode())
 		}
+
 		os.Exit(1)
 	}
 
@@ -164,12 +186,14 @@ func (h *Handler) runInDocker(ctx context.Context, pwd string, envs *entity.Envs
 	}
 
 	project, err := h.ctrl.GetProject(ctx, projectCfg.Project)
+
 	if err != nil {
 		return err
 	}
 
 	// Strip characters not allowed in Docker image names
 	environment, err := h.ctrl.GetCurrentEnvironment(ctx)
+
 	if err != nil {
 		return err
 	}
@@ -186,7 +210,9 @@ func (h *Handler) runInDocker(ctx context.Context, pwd string, envs *entity.Envs
 	}
 
 	buildCmd := exec.CommandContext(ctx, "docker", buildArgs...)
-	fmt.Printf("Building %s from Dockerfile...\n", ui.GreenText(image))
+
+	fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+	fmt.Println(constants.INFO_FOREGROUND.Render(fmt.Sprintf(" Building %s from Dockerfile...", constants.SUCCESS_FOREGROUND.Render(image))))
 
 	buildCmd.Stdout = os.Stdout
 	buildCmd.Stderr = os.Stderr
@@ -195,16 +221,21 @@ func (h *Handler) runInDocker(ctx context.Context, pwd string, envs *entity.Envs
 	if err != nil {
 		return err
 	}
+
 	err = buildCmd.Wait()
+
 	if err != nil {
 		return err
 	}
-	fmt.Printf("🎉 Built %s\n", ui.GreenText(image))
+
+	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
+	fmt.Println(constants.SUCCESS_FOREGROUND.Render(fmt.Sprintf(" 🎉 Built %s", constants.SUCCESS_FOREGROUND.Render(image))))
 
 	// Attempt to use
 	internalPort := envs.Get("PORT")
 
 	externalPort, err := getAvailablePort()
+
 	if err != nil {
 		return err
 	}
@@ -214,17 +245,20 @@ func (h *Handler) runInDocker(ctx context.Context, pwd string, envs *entity.Envs
 	}
 
 	// Start running the image
-	fmt.Printf("🚂 Running at %s\n\n", ui.GreenText(fmt.Sprintf("127.0.0.1:%s", externalPort)))
+	fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+	fmt.Println(constants.INFO_FOREGROUND.Render(" 🚂 Running at " + constants.SUCCESS_FOREGROUND.Render("127.0.0.1:" + externalPort)))
 
 	runArgs := []string{"run", "--init", "--rm", "-p", fmt.Sprintf("127.0.0.1:%s:%s", externalPort, internalPort), "-e", fmt.Sprintf("PORT=%s", internalPort), "-d"}
 	// Build up env
 	for k, v := range *envs {
 		runArgs = append(runArgs, "-e", fmt.Sprintf("%s=%+v", k, v))
 	}
+
 	runArgs = append(runArgs, image)
 
 	// Run the container
 	rawContainerId, err := exec.CommandContext(ctx, "docker", runArgs...).Output()
+
 	if err != nil {
 		return err
 	}
@@ -241,11 +275,14 @@ func (h *Handler) runInDocker(ctx context.Context, pwd string, envs *entity.Envs
 	if err != nil {
 		return err
 	}
+
 	// Listen for cancel to remove the container
 	catchSignals(ctx, logCmd, func() {
 		err = exec.Command("docker", "rm", "-f", string(containerId)).Run()
 	})
+
 	err = logCmd.Wait()
+
 	if err != nil && !strings.Contains(err.Error(), "255") {
 		// 255 is a graceeful exit with ctrl + c
 		return err
@@ -258,33 +295,41 @@ func (h *Handler) runInDocker(ctx context.Context, pwd string, envs *entity.Envs
 
 func getAvailablePort() (string, error) {
 	searchRange := 64
-	for i := RAIL_PORT; i < RAIL_PORT+searchRange; i++ {
+
+	for i := constants.RAIL_PORT; i < constants.RAIL_PORT + searchRange; i++ {
 		if isAvailable(i) {
 			return strconv.Itoa(i), nil
 		}
 	}
-	return "", fmt.Errorf("Couldn't find available port between %d and %d", RAIL_PORT, RAIL_PORT+searchRange)
+
+	return "", fmt.Errorf("Couldn't find available port between %d and %d", constants.RAIL_PORT, constants.RAIL_PORT + searchRange)
 }
 
 func isAvailable(port int) bool {
 	ln, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+
 	if err != nil {
 		return false
 	}
+
 	_ = ln.Close()
+
 	return true
 }
 
-func catchSignals(ctx context.Context, cmd *exec.Cmd, onSignal context.CancelFunc) {
+func catchSignals(_ context.Context, cmd *exec.Cmd, onSignal context.CancelFunc) {
 	sigs := make(chan os.Signal, 1)
 
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+
 	go func() {
 		sig := <-sigs
 		err := cmd.Process.Signal(sig)
+
 		if onSignal != nil {
 			onSignal()
 		}
+
 		if err != nil {
 			fmt.Println("Child process error: \n", err)
 		}
@@ -296,6 +341,6 @@ func printLooksGood() {
 	fmt.Println()
 	fmt.Printf(
 		"🚄 Looks good? Then put it on the train and deploy with `%s`!\n",
-		ui.GreenText("railway up"),
+		ui.GreenText("botway deploy"),
 	)
 }

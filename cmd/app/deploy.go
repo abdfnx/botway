@@ -18,6 +18,7 @@ func DeployCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "deploy [path]",
 		Short: "Deploy and upload project from the current directory",
+		Aliases: []string{"up"},
 		PreRun: func(cmd *cobra.Command, args []string) {
 			if _, err := os.Stat(".botway.yaml"); err != nil {
 				fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))

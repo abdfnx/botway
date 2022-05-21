@@ -19,7 +19,7 @@ import (
 func TokenCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "tokens",
-		Short: "Manage your bots tokens.",
+		Short: "Manage your bots tokens",
 	}
 
 	cmd.AddCommand(TokenSetCMD())

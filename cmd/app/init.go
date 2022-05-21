@@ -13,7 +13,7 @@ var opts = options.InitOptions{
 func InitCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "init",
-		Short: "Initialize ~/.botway .",
+		Short: "Initialize ~/.botway",
 		Aliases: []string{"."},
 		Run: func(cmd *cobra.Command, args []string) {
 			if opts.Docker {
