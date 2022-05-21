@@ -4,7 +4,6 @@ import (
 	"github.com/abdfnx/botway/templates/slack/nodejs"
 	"github.com/abdfnx/botway/templates/slack/python/pip"
 	"github.com/abdfnx/botway/templates/slack/python/pipenv"
-	"github.com/abdfnx/botway/templates/slack/ruby"
 )
 
 func SlackHandler(m model) {
@@ -18,7 +17,5 @@ func SlackHandler(m model) {
 		nodejs.SlackNodejs(opts.BotName, "yarn")
 	} else if m.PlatformChoice == 2 && m.LangChoice == 1 && m.PMCoice == 2 {
 		nodejs.SlackNodejs(opts.BotName, "pnpm")
-	} else if m.PlatformChoice == 2 && m.LangChoice == 2 {
-		ruby.SlackRuby(opts.BotName)
 	}
 }

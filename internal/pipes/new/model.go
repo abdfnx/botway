@@ -20,14 +20,7 @@ type model struct {
 	Quitting       bool
 }
 
-type tickMsg struct{}
 type frameMsg struct{}
-
-func tick() tea.Cmd {
-	return tea.Tick(time.Duration(time.Hour.Seconds()), func(time.Time) tea.Msg {
-		return tickMsg{}
-	})
-}
 
 func frame() tea.Cmd {
 	return tea.Tick(time.Second/60, func(time.Time) tea.Msg {

@@ -42,7 +42,11 @@ func BotLang(m model) string {
 	if m.LangChoice == 0 {
 		return "python"
 	} else if m.LangChoice == 1 {
-		return "go"
+		if m.PlatformChoice == 2 {
+			return "nodejs"
+		} else {
+			return "go"
+		}
 	} else if m.LangChoice == 2 {
 		return "nodejs"
 	} else if m.LangChoice == 3 {

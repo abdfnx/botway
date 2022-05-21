@@ -49,8 +49,8 @@ func updateLangs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 					m.LangChoice += 1
 
 					if m.PlatformChoice == 2 {
-						if m.LangChoice > 2 {
-							m.LangChoice = 2
+						if m.LangChoice > 1 {
+							m.LangChoice = 1
 						}
 					} else if m.PlatformChoice == 0 {
 						if m.LangChoice > 5 {
@@ -131,7 +131,11 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 	if m.LangChoice == 0 {
 		l = "Python"
 	} else if m.LangChoice == 1 {
-		l = "Go"
+		if m.PlatformChoice == 2 {
+			l = "Node"
+		} else {
+			l = "Go"
+		}
 	} else if m.LangChoice == 2 || m.LangChoice == 5 {
 		l = "Node"
 	} else if m.LangChoice == 3 {
@@ -155,21 +159,30 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 			log.Fatal(err)
 		}
 
-		viper.AddConfigPath(opts.BotName)
-		viper.SetConfigName(".botway")
-		viper.SetConfigType("yaml")
+		botwayConfig := viper.New()
+		deployConfig := viper.New()
 
-		viper.SetDefault("author", conf.String("user.github_username"))
-		viper.SetDefault("bot.lang", BotLang(m))
-		viper.SetDefault("bot.name", opts.BotName)
-		viper.SetDefault("bot.package_manager", BotPM(m))
-		viper.SetDefault("bot.type", BotType(m))
-		viper.SetDefault("bot.start_cmd", BotStartCmd(m))
-		viper.SetDefault("bot.version", "0.1.0")
+		botwayConfig.AddConfigPath(opts.BotName)
+		botwayConfig.SetConfigName(".botway")
+		botwayConfig.SetConfigType("yaml")
+
+		deployConfig.AddConfigPath(opts.BotName)
+		deployConfig.SetConfigName("deploy")
+		deployConfig.SetConfigType("hcl")
+
+		botwayConfig.SetDefault("author", conf.String("user.github_username"))
+		botwayConfig.SetDefault("bot.lang", BotLang(m))
+		botwayConfig.SetDefault("bot.name", opts.BotName)
+		botwayConfig.SetDefault("bot.package_manager", BotPM(m))
+		botwayConfig.SetDefault("bot.type", BotType(m))
+		botwayConfig.SetDefault("bot.start_cmd", BotStartCmd(m))
+		botwayConfig.SetDefault("bot.version", "0.1.0")
+
 		dockerImage := conf.String("user.docker_id") + "/" + opts.BotName
-		viper.SetDefault("docker.image", dockerImage)
-		viper.SetDefault("docker.cmds.build", "docker build -t " + dockerImage + " .")
-		viper.SetDefault("docker.cmds.run", "docker run -it " + dockerImage)
+
+		deployConfig.SetDefault("docker.image", dockerImage)
+		deployConfig.SetDefault("docker.cmds.build", "docker build -t " + dockerImage + " .")
+		deployConfig.SetDefault("docker.cmds.run", "docker run -it " + dockerImage)
 
 		if m.PlatformChoice == 0 {
 			guildsFile := os.WriteFile(filepath.Join(opts.BotName, "config", "guilds.json"), []byte("{}"), 0644)
@@ -179,9 +192,9 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 			}
 		}
 
-		if err := viper.SafeWriteConfig(); err != nil {
+		if err := botwayConfig.SafeWriteConfig(); err != nil {
 			if os.IsNotExist(err) {
-				err = viper.WriteConfig()
+				err = botwayConfig.WriteConfig()
 
 				if err != nil {
 					log.Fatal(err)
@@ -189,7 +202,23 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 			}
 		}
 
-		if err := viper.ReadInConfig(); err != nil {
+		if err := deployConfig.SafeWriteConfig(); err != nil {
+			if os.IsNotExist(err) {
+				err = deployConfig.WriteConfig()
+
+				if err != nil {
+					log.Fatal(err)
+				}
+			}
+		}
+
+		if err := botwayConfig.ReadInConfig(); err != nil {
+			if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+				log.Fatal(err)
+			}
+		}
+
+		if err := deployConfig.ReadInConfig(); err != nil {
 			if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 				log.Fatal(err)
 			}
@@ -210,24 +239,16 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 			respone += "fileloader.ts"
 		}
 
-		dotGitIgnoreFileContent := []byte(respone)
-		dotDockerIgnoreFileContent := "*.lock"
+		dotGitIgnoreFileContent := respone + "\n*.lock"
 
-		if BotLang(m) == "rust" {
-			if BotPM(m) == "fleet" {
-				dotDockerIgnoreFileContent += "\n.cargo\nfleet.toml"
-			}
+		if BotLang(m) == "rust" && BotPM(m) == "fleet" {
+			dotGitIgnoreFileContent += "\n.cargo\nfleet.toml"
 		}
 
-		dotGitIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".gitignore"), dotGitIgnoreFileContent, 0644)
-		dotDockerIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".dockerignore"), []byte(dotDockerIgnoreFileContent), 0644)
+		dotGitIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".gitignore"), []byte(dotGitIgnoreFileContent), 0644)
 
 		if dotGitIgnoreFile != nil {
 			log.Fatal(dotGitIgnoreFile)
-		}
-		
-		if dotDockerIgnoreFile != nil {
-			log.Fatal(dotDockerIgnoreFile)
 		}
 
 		DiscordHandler(m)

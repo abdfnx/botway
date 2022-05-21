@@ -37,6 +37,7 @@ var (
 	BotwayConfigFile = filepath.Join(HomeDir, ".botway", "botway.json")
 	BotwayConfig, Berr = ioutil.ReadFile(BotwayConfigFile)
 	BotConfig, Oerr = ioutil.ReadFile(".botway.yaml")
+	DeployConfig, Derr = ioutil.ReadFile("deploy.hcl")
 	Guilds, Gerr = ioutil.ReadFile(filepath.Join("config", "guilds.json"))
 
 	BotwayDirPath = func () string {
