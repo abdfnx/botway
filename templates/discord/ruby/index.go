@@ -69,37 +69,55 @@ You can add a folder to your '$LOAD_PAT'H either at runtime or via the -I comman
 			log.Fatal(resourcesFile)
 		}
 
-		bundleInstall := bundlePath + " add discordrb --git https://github.com/shardlab/discordrb --branch main"
+		bundleConfig := bundlePath + " config set --local path '~/.gem'"
 
-		installCmd := exec.Command("bash", "-c", bundleInstall)
+		configCmd := exec.Command("bash", "-c", bundleConfig)
 
 		if runtime.GOOS == "windows" {
-			installCmd = exec.Command("powershell.exe", bundleInstall)
+			configCmd = exec.Command("powershell.exe", bundleConfig)
 		}
 
-		installCmd.Dir = botName
-		installCmd.Stdin = os.Stdin
-		installCmd.Stdout = os.Stdout
-		installCmd.Stderr = os.Stderr
-		err = installCmd.Run()
+		configCmd.Dir = botName
+		configCmd.Stdin = os.Stdin
+		configCmd.Stdout = os.Stdout
+		configCmd.Stderr = os.Stderr
+		err = configCmd.Run()
 
 		if err != nil {
 			log.Printf("error: %v\n", err)
 		}
 
-		bundleInstall = bundlePath + " add botwayrb"
+		bundleAdd := bundlePath + " add discordrb --git https://github.com/shardlab/discordrb --branch main"
 
-		installCmd = exec.Command("bash", "-c", bundleInstall)
+		addCmd := exec.Command("bash", "-c", bundleAdd)
 
 		if runtime.GOOS == "windows" {
-			installCmd = exec.Command("powershell.exe", bundleInstall)
+			addCmd = exec.Command("powershell.exe", bundleAdd)
 		}
 
-		installCmd.Dir = botName
-		installCmd.Stdin = os.Stdin
-		installCmd.Stdout = os.Stdout
-		installCmd.Stderr = os.Stderr
-		err = installCmd.Run()
+		addCmd.Dir = botName
+		addCmd.Stdin = os.Stdin
+		addCmd.Stdout = os.Stdout
+		addCmd.Stderr = os.Stderr
+		err = addCmd.Run()
+
+		if err != nil {
+			log.Printf("error: %v\n", err)
+		}
+
+		bundleAddBotwayrb := bundlePath + " add botwayrb"
+
+		addBotwayCmd := exec.Command("bash", "-c", bundleAddBotwayrb)
+
+		if runtime.GOOS == "windows" {
+			addBotwayCmd = exec.Command("powershell.exe", bundleAddBotwayrb)
+		}
+
+		addBotwayCmd.Dir = botName
+		addBotwayCmd.Stdin = os.Stdin
+		addBotwayCmd.Stdout = os.Stdout
+		addBotwayCmd.Stderr = os.Stderr
+		err = addBotwayCmd.Run()
 
 		if err != nil {
 			log.Printf("error: %v\n", err)
