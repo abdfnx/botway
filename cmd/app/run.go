@@ -11,7 +11,7 @@ func RunCMD() *cobra.Command {
 	}
 
 	cmd.Flags().Bool("ephemeral", false, "Run the local command in an ephemeral environment")
-	cmd.Flags().String("service", "", "Run the local command in an ephemeral environment")
+	cmd.Flags().String("service", "", "Fetch variables accessible to a specific service")
 
 	return cmd
 }

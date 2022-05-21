@@ -59,6 +59,7 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 	// Add sub-commands to root command
 	rootCmd.AddCommand(
 		app.InitCMD(),
+		app.DBCMD(),
 		app.DockerCMD(),
 		app.NewCMD(),
 		app.TokenCMD(),
