@@ -200,8 +200,8 @@ func (h *Handler) redeployAfterVariablesChange(ctx context.Context, environment 
 		return err
 	}
 
-	s.Stop()
 	s.FinalMSG = constants.SUCCESS_BACKGROUND.Render("SUCCESS") + " Deploy triggered"
+	s.Stop()
 
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render(fmt.Sprintf("☁️ Deploy Logs available at %s\n", constants.COMMAND_FOREGROUND.Render(h.ctrl.GetProjectDeploymentsURL(ctx, latestDeploy.ProjectID)))))

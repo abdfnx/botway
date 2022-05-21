@@ -133,8 +133,8 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 	if err != nil {
 		return err
 	} else {
-		s.Stop()
 		s.FinalMSG = constants.SUCCESS_BACKGROUND.Render("SUCCESS") + " ☁️ Build logs available at " + constants.BOLD.Render(res.URL)
+		s.Stop()
 	}
 
 	detach, err := req.Cmd.Flags().GetBool("detach")
@@ -157,7 +157,7 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 		time.Sleep(time.Duration(i) * 250 * time.Millisecond)
 	}
 
-	fmt.Println(constants.SUCCESS_FOREGROUND.Render("\n\n======= Build Completed  ======\n"))
+	fmt.Println(constants.SUCCESS_FOREGROUND.Render("\n\n======= Build Completed  ======\n\n"))
 
 	err = h.ctrl.GetActiveDeploymentLogs(ctx, 1000)
 
@@ -165,12 +165,13 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 		return err
 	}
 
+	fmt.Println()
 	fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
-	fmt.Println(constants.INFO_FOREGROUND.Render(" ☁️ Deployment logs available at " + constants.COMMAND_FOREGROUND.Render(res.URL)))
+	fmt.Println(constants.INFO_FOREGROUND.Render(" Deployment logs available at " + constants.COMMAND_FOREGROUND.Render(res.URL)))
 	fmt.Println(constants.INFO_FOREGROUND.Render("OR run `botway logs` to tail them here\n"))
 
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
-	fmt.Println(constants.SUCCESS_FOREGROUND.Render("☁️ Deployment live at " + constants.COMMAND_FOREGROUND.Render(h.ctrl.GetFullUrlFromStaticUrl(res.DeploymentDomain))))
+	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" ☁️ Deployment live at " + constants.COMMAND_FOREGROUND.Render(h.ctrl.GetFullUrlFromStaticUrl(res.DeploymentDomain))))
 
 	os.Remove(filepath.Join("config", "botway-deploy-tokens.env"))
 

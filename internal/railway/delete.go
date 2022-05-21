@@ -19,7 +19,9 @@ func (h *Handler) Delete(ctx context.Context, req *entity.CommandRequest) error 
 	}
 
 	if user.Has2FA {
-		fmt.Println("Your account has 2FA enabled, you must delete your project on the Dashboard.")
+		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+		fmt.Println(constants.INFO_FOREGROUND.Render(" Your account has 2FA enabled, you must delete your project on the Railway Dashboard."))
+
 		return nil
 	}
 
@@ -65,7 +67,9 @@ func (h *Handler) deleteFromAccount(ctx context.Context, req *entity.CommandRequ
 	}
 
 	if len(projects) == 0 {
-		fmt.Printf("No Projects found.")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" No Projects found."))
+
 		return nil
 	}
 
@@ -78,11 +82,14 @@ func (h *Handler) deleteFromAccount(ctx context.Context, req *entity.CommandRequ
 	name := os.Args[2]
 
 	if project.Name != name {
-		fmt.Printf("The project name typed doesn't match the selected project to be deleted.")
+		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+		fmt.Println(constants.FAIL_FOREGROUND.Render(" The project name typed doesn't match the selected project to be deleted."))
+
 		return nil
 	}
 
 	fmt.Printf("🔥 Deleting project %s\n", ui.MagentaText(name))
+
 	err = h.deleteById(ctx, project.Id)
 
 	if err != nil {
