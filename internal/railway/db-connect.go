@@ -30,62 +30,62 @@ func (h *Handler) Connect(ctx context.Context, req *entity.CommandRequest) error
 
 	var plugin string
 
-	if len(req.Args) == 0 {
-		names := make([]string, 0)
+	if len(project.Plugins) > 2 {
+		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+		fmt.Println(constants.INFO_FOREGROUND.Render(" You've multiple databases, Please select a database to connect to:\n"))
 
 		for _, plugin := range project.Plugins {
-			// TODO: Better way of handling this
 			if plugin.Name != "env" {
-				names = append(names, plugin.Name)
+				fmt.Println("- " + plugin.Name)
 			}
 		}
 
-		fmt.Println("> Select a database to connect to:")
+		fmt.Println("\nTo connect to a database, run " + constants.COMMAND_FOREGROUND.Render("botway db connect <database>"))
 
-		plugin, err = ui.PromptPlugins(names)
+		return nil
+	} else {
+		if len(project.Plugins) == 2 {
+			plugin = project.Plugins[1].Name
+		} else if len(req.Args) != 0 {
+			plugin = req.Args[0]
+		}
+
+		if !isPluginValid(plugin) {
+			return fmt.Errorf("Invalid plugin: %s", plugin)
+		}
+
+		envs, err := h.ctrl.GetEnvsForCurrentEnvironment(ctx, nil)
 
 		if err != nil {
 			return err
 		}
-	} else {
-		plugin = req.Args[0]
-	}
 
-	if !isPluginValid(plugin) {
-		return fmt.Errorf("Invalid plugin: %s", plugin)
-	}
+		command, connectEnv := buildConnectCommand(plugin, envs)
 
-	envs, err := h.ctrl.GetEnvsForCurrentEnvironment(ctx, nil)
+		if !commandExistsInPath(command[0]) {
+			fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+			fmt.Println(constants.FAIL_FOREGROUND.Render(" " + command[0] + " was not found in $PATH."))
 
-	if err != nil {
-		return err
-	}
+			return nil
+		}
 
-	command, connectEnv := buildConnectCommand(plugin, envs)
+		cmd := exec.CommandContext(ctx, command[0], command[1:]...)
 
-	if !commandExistsInPath(command[0]) {
-		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
-		fmt.Println(constants.FAIL_FOREGROUND.Render("🚨 " + command[0] + " was not found in $PATH."))
+		cmd.Env = os.Environ()
 
-		return nil
-	}
+		for k, v := range connectEnv {
+			cmd.Env = append(cmd.Env, fmt.Sprintf("%s=%+v", k, v))
+		}
 
-	cmd := exec.CommandContext(ctx, command[0], command[1:]...)
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stdout
+		cmd.Stdin = os.Stdin
+		catchSignals(ctx, cmd, nil)
 
-	cmd.Env = os.Environ()
-
-	for k, v := range connectEnv {
-		cmd.Env = append(cmd.Env, fmt.Sprintf("%s=%+v", k, v))
-	}
-
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stdout
-	cmd.Stdin = os.Stdin
-	catchSignals(ctx, cmd, nil)
-
-	err = cmd.Run()
-	if err != nil {
-		return err
+		err = cmd.Run()
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil

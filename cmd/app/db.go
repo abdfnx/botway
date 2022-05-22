@@ -12,6 +12,7 @@ func DBCMD() *cobra.Command {
 	dbAddCmd := &cobra.Command{
 		Use:     "add",
 		Short:   "Add a new database plugin to your bot project",
+		Args:    cobra.ExactArgs(1),
 		RunE:    Contextualize(handler.Add, handler.Panic),
 	}
 

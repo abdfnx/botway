@@ -133,7 +133,7 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 	if err != nil {
 		return err
 	} else {
-		s.FinalMSG = constants.SUCCESS_BACKGROUND.Render("SUCCESS") + " ☁️ Build logs available at " + constants.BOLD.Render(res.URL)
+		s.FinalMSG = constants.SUCCESS_BACKGROUND.Render("SUCCESS") + " ☁️ Build logs available at " + constants.BOLD.Render(res.URL) + "\n"
 		s.Stop()
 	}
 
@@ -157,7 +157,7 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 		time.Sleep(time.Duration(i) * 250 * time.Millisecond)
 	}
 
-	fmt.Println(constants.SUCCESS_FOREGROUND.Render("\n\n======= Build Completed  ======\n\n"))
+	fmt.Println(constants.SUCCESS_FOREGROUND.Render("\n======= Build Completed  ======\n\n"))
 
 	err = h.ctrl.GetActiveDeploymentLogs(ctx, 1000)
 
