@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tags=( alpine alpine-glibc centos core debian distroless latest ubuntu )
+tags=( core alpine alpine-glibc centos debian distroless latest ubuntu )
 
 for t in "${tags[@]}"
 do
