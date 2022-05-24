@@ -13,6 +13,7 @@ require (
 	github.com/charmbracelet/bubbletea v0.20.0
 	github.com/charmbracelet/lipgloss v0.5.0
 	github.com/elewis787/boa v0.1.1
+	github.com/evertras/bubble-table v0.12.0
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
 	github.com/gookit/config/v2 v2.1.0
 	github.com/knadh/koanf v1.4.1
