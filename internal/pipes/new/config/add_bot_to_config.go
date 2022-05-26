@@ -21,6 +21,7 @@ func AddBotToConfig(botName, botType, botPath string) {
 
 	botTypeContent, _ := sjson.Set(string(botwayConfig), "botway.bots." + botName + ".type", botType)
 	botPathContent, _ := sjson.Set(botTypeContent, "botway.bots." + botName + ".path", botPath)
+	addBotToBotsNamesContent, _ := sjson.Set(botPathContent, "botway.bots_names.-1", botName)
 
 	remove := os.Remove(botwayConfigPath)
 
@@ -28,7 +29,7 @@ func AddBotToConfig(botName, botType, botPath string) {
         log.Fatal(remove)
     }
 
-	newBotConfig := os.WriteFile(botwayConfigPath, []byte(botPathContent), 0644)
+	newBotConfig := os.WriteFile(botwayConfigPath, []byte(addBotToBotsNamesContent), 0644)
 
 	if newBotConfig != nil {
 		panic(newBotConfig)

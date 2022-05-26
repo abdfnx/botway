@@ -10,6 +10,12 @@ tasks:
     cmds:
       - task: build
 
+  bfs:
+    cmds:
+      - task: remove
+      - task: build
+      - task: install
+
   setup:
     cmds:
       - if [ -f "date.txt" ]; then rm date.txt; fi

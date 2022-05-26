@@ -75,6 +75,7 @@ func DockerInit() {
 	env.ReadConfig(bytes.NewBuffer(secretsFile))
 
 	viper.SetDefault("botway.bots." + GetBotName() + ".bot_token", env.Get(bot_token))
+	viper.SetDefault("botway.bots_names", []string{GetBotName()})
 
 	if t != "telegram" {
 		viper.SetDefault("botway.bots." + GetBotName() + "." + cid, env.Get(app_token))

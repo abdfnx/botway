@@ -70,7 +70,19 @@ func (m model) RemoveCmd() {
 		panic(err)
 	}
 
-	deleteBot, _ := sjson.Delete(string(constants.BotwayConfig), "botway.bots." + m.botName)
+	botsNamesList := gjson.Get(string(constants.BotwayConfig), "botway.bots_names")
+	i := ""
+
+	botsNamesList.ForEach(func(in, value gjson.Result) bool {
+		if value.String() == m.botName {
+			i = in.String()
+		}
+
+		return true
+	})
+
+	deleteBotFromBotsNamesList, _ := sjson.Delete(string(constants.BotwayConfig), "botway.bots_names." + i)
+	deleteBot, _ := sjson.Delete(deleteBotFromBotsNamesList, "botway.bots." + m.botName)
 
 	remove := os.Remove(constants.BotwayConfigFile)
 
