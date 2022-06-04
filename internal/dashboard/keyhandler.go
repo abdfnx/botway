@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
-	"github.com/abdfnx/botway/internal/dashboard/compoenents"
+	"github.com/abdfnx/botway/internal/dashboard/components"
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/tidwall/gjson"
