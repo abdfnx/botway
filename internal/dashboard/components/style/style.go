@@ -1,8 +1,8 @@
 package style
 
 import (
-	"github.com/abdfnx/botway/internal/components"
-	"github.com/abdfnx/botway/internal/components/theme"
+	"github.com/abdfnx/botway/internal/dashboard/components"
+	"github.com/abdfnx/botway/internal/dashboard/components/theme"
 	"github.com/charmbracelet/lipgloss"
 )
 
