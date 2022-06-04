@@ -51,6 +51,9 @@ var (
 	DeployConfig, Derr = ioutil.ReadFile("deploy.hcl")
 	Guilds, Gerr = ioutil.ReadFile(filepath.Join("config", "guilds.json"))
 
+	RailwayConfigFile = filepath.Join(HomeDir, ".railway", "config.json")
+	RailwayConfig, Rerr = ioutil.ReadFile(RailwayConfigFile)
+
 	BotwayDirPath = func () string {
 		if runtime.GOOS == "windows" {
 			return `$HOME\\.botway`
