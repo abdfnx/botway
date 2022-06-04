@@ -11,7 +11,6 @@ import (
 type ErrorMsg error
 
 type Bubble struct {
-	botIndex       int
 	bubbles        Bubbles
 	keyMap         keymap.KeyMap
 	nav            Nav
