@@ -1,5 +1,5 @@
 // forked from: https://github.com/charmbracelet/bubbles/blob/master/paginator/paginator.go
-package tui
+package dashboard
 
 import (
 	tea "github.com/charmbracelet/bubbletea"
