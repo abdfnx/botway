@@ -1,7 +1,6 @@
 package dashboard
 
 import (
-	"log"
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
@@ -17,7 +16,6 @@ func (b *Bubble) handleKeys(msg tea.KeyMsg) tea.Cmd {
 
 	if b.outOfBounds() {
 		if key.Matches(msg, b.keyMap.Quit) {
-			log.Print("Quitting")
 			return tea.Quit
 		}
 
@@ -27,7 +25,6 @@ func (b *Bubble) handleKeys(msg tea.KeyMsg) tea.Cmd {
 	switch {
 		// Quit
 		case key.Matches(msg, b.keyMap.Quit):
-			log.Print("Quitting")
 			return tea.Quit
 
 		// Down
@@ -53,11 +50,11 @@ func (b *Bubble) handleKeys(msg tea.KeyMsg) tea.Cmd {
 		// Swap view
 		case key.Matches(msg, b.keyMap.SwapView):
 			switch b.activeBox {
-				case compoenents.BotListView:
-					b.switchActiveView(compoenents.BotInfoView)
+				case components.BotListView:
+					b.switchActiveView(components.BotInfoView)
 
 				default:
-					b.switchActiveView(compoenents.BotListView)
+					b.switchActiveView(components.BotListView)
 			}
 
 		// Open bot project at Railway
@@ -74,8 +71,8 @@ func (b *Bubble) resetView() tea.Cmd {
 	b.nav.boolCursor = false
 	b.nav.listCursor = 0
 	b.nav.listCursorHide = true
-	b.switchActiveView(compoenents.BotListView)
-	b.lastActiveBox = compoenents.BotListView
+	b.switchActiveView(components.BotListView)
+	b.lastActiveBox = components.BotListView
 
 	return nil
 }

@@ -2,12 +2,15 @@ package botway
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/MakeNowJust/heredoc"
 	"github.com/abdfnx/botway/cmd/app"
 	"github.com/abdfnx/botway/cmd/factory"
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/internal/dashboard"
 	"github.com/abdfnx/botway/internal/options"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/elewis787/boa"
 	"github.com/spf13/cobra"
 )
@@ -29,6 +32,14 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 			"help:tellus": heredoc.Doc(`
 				Open an issue at https://github.com/abdfnx/botway/issues
 			`),
+		},
+		Run: func(cmd *cobra.Command, args []string) {
+			p := tea.NewProgram(dashboard.InitialModel(), tea.WithAltScreen(), tea.WithMouseCellMotion())
+
+			if err := p.Start(); err != nil {
+				fmt.Printf("Error starting dashboard: %v", err)
+				os.Exit(1)
+			}
 		},
 	}
 

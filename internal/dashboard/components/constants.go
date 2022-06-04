@@ -10,4 +10,6 @@ const (
 
 	StatusBarHeight = 1
 	BoxPadding = 1
+
+	EllipsisStyle = "..."
 )

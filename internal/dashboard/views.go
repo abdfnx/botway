@@ -6,11 +6,11 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
+	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/internal/dashboard/components/style"
 	"github.com/abdfnx/botway/internal/dashboard/components/theme"
 	"github.com/abdfnx/botway/internal/dashboard/icons"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/savioxavier/termlink"
 	"github.com/spf13/viper"
 	"github.com/tidwall/gjson"
 )
@@ -47,11 +47,16 @@ func (b Bubble) botListView() string {
 		Align(lipgloss.Center).Render
 
 	page := ""
+	v := ""
 
 	bots.ForEach(func(i, value gjson.Result) bool {
+		v = value.String()
+
 		line := trunc(value.String(), b.bubbles.primaryPaginator.Width-2)
 
-		icon, color := icons.GetIcon(b.botInfo("lang"))
+		lang := gjson.Get(string(constants.BotwayConfig), "botway.bots." + v + ".lang").String()
+
+		icon, color := icons.GetIcon(lang)
 
 		fileIcon := lipgloss.NewStyle().Width(2).Render(fmt.Sprintf("%s%s\033[0m ", color, icon))
 
@@ -137,8 +142,6 @@ func (b Bubble) botInfoView() string {
 
 
 func (b Bubble) statusBarView() string {
-	width := lipgloss.Width
-
 	count := fmt.Sprintf("Bot: %d/%d", b.bubbles.primaryPaginator.GetCursorIndex() + 1, int(bots_count))
 
 	count = style.StatusBar.Copy().
@@ -148,29 +151,7 @@ func (b Bubble) statusBarView() string {
 		Width(22).
 		Render(count)
 
-	statusWidth := b.width - width(count) - 1
-
-	status := style.StatusBar.Copy().
-		Align(lipgloss.Left).
-		PaddingLeft(6).
-		PaddingRight(2).
-		Width(22).
-		Render(termlink.Link("Discuss with us on Github", "https://github.com/abdfnx/botway/discussions"))
-
-	// format status message
-	status = style.StatusBar.
-		Align(lipgloss.Left).
-		Padding(0, 1).
-		Width(statusWidth).
-		Render(trunc(
-			status,
-			statusWidth-3,
-		))
-
-	return connectHorz(
-		status,
-		count,
-	)
+	return count
 }
 
 func (b Bubble) commandView() string {
