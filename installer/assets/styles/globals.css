@@ -1,0 +1,17 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@font-face {
+  font-family: "Inter";
+  src: url("../public/fonts/Inter.ttf");
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 1rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: #000;
+}

@@ -45,3 +45,4 @@ MANIFEST
 # Rust
 target/
 Cargo.lock
+osxcross
