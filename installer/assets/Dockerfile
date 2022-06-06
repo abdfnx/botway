@@ -20,12 +20,12 @@ ENV DARWIN_TARGET_PATH="./target/x86_64-apple-darwin/release"
 
 RUN rustup target add x86_64-apple-darwin
 COPY --from=crazymax/osxcross:latest-alpine /osxcross /osxcross
-ENV PATH="/osxcross/bin:$PATH"
-ENV LD_LIBRARY_PATH="/osxcross/lib:$LD_LIBRARY_PATH"
+ENV PATH="/osxcross/target/bin:$PATH"
+RUN echo $PATH
+ENV CC="o64-clang"
+ENV CXX="o64-clang++"
+ENV LD_LIBRARY_PATH="/osxcross/target/lib:$LD_LIBRARY_PATH"
 RUN cd ./botway/installer && \
-	PATH="/osxcross/target/bin:$PATH" \
-	CC=o64-clang \
-	CXX=o64-clang++ \
 	cargo build --release --target x86_64-apple-darwin && \
 	cp ${DARWIN_TARGET_PATH}/botway-installer ./installer-macos && \
  	cp ./installer-macos ./assets/public/installers
