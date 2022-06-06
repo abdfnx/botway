@@ -23,7 +23,6 @@ COPY --from=crazymax/osxcross:latest-alpine /osxcross /osxcross
 ENV PATH="/osxcross/bin:$PATH"
 ENV LD_LIBRARY_PATH="/osxcross/lib:$LD_LIBRARY_PATH"
 RUN cd ./botway/installer && \
-	cp ./.cargo/config.toml ~/.cargo && \
 	PATH="/osxcross/target/bin:$PATH" \
 	CC=o64-clang \
 	CXX=o64-clang++ \
