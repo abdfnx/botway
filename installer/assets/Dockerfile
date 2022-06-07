@@ -45,16 +45,12 @@ RUN cd ./botway/installer && \
 
 FROM node:alpine
 
-ENV INSTALLERS_DIR_PATH="./botway/installer/assets/public/installers"
+ENV INSTALLERS_DIR_PATH="./public/installers"
 
 COPY . .
 
 RUN rm -rf ${INSTALLERS_DIR_PATH}
 
-COPY --from=rs ${INSTALLERS_DIR_PATH} ${INSTALLERS_DIR_PATH}
+COPY --from=rs ./botway/installer/assets/${INSTALLERS_DIR_PATH} ${INSTALLERS_DIR_PATH}
 
 RUN yarn
-
-EXPOSE 8080
-
-ENTRYPOINT ["yarn", "dev"]

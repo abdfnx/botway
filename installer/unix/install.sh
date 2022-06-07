@@ -4,17 +4,17 @@ echo Installing Botway installer...
 
 # Download the installer
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-    wget https://cdn-botway.up.railway.app/installers/installer-macos -O installer
+    wget https://cdn-botway.up.railway.app/installers/installer-macos -O bw-installer
 fi
 
 if [[ "$OSTYPE" =~ ^linux ]]; then
-    wget https://cdn-botway.up.railway.app/installers/installer-linux -O installer
+    wget https://cdn-botway.up.railway.app/installers/installer-linux -O bw-installer
 fi
 
 # Make it an executable
-chmod +x installer
+chmod +x bw-installer
 
 # Run the installer
-./installer
+./bw-installer
 
-rm installer
+rm bw-installer
