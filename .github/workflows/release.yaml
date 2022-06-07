@@ -7,6 +7,8 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  GITHUB_ACTIONS_NAME: "github-actions[bot]"
+  GITHUB_ACTIONS_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
 
 permissions: write-all
 
@@ -33,8 +35,24 @@ jobs:
         with:
           install-only: true
 
+      - name: Set up Tag
+        id: ghtag
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+
       - name: Set up Build Info
         run: task setup
 
       - name: Build
-        run: task release
+        run: |
+          task release
+          task upload-scoop-manifest
+          git config --local user.email "${{ env.GITHUB_ACTIONS_EMAIL }}"
+          git config --local user.name "${{ env.GITHUB_ACTIONS_NAME }}"
+          git diff --cached
+          git add .
+          git commit -m "Scoop update for botway version ${TAG}"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.ACCESS_TOKEN }}

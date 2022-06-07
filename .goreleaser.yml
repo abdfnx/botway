@@ -81,6 +81,15 @@ brews:
     description: "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack"
     license: MIT
 
+scoop:
+  url_template: "https://github.com/abdfnx/botway/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+  bucket:
+    owner: abdfnx
+    name: botway
+  homepage: "https://botway.web.app"
+  description: "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack"
+  license: MIT
+
 checksum:
   name_template: "checksums.txt"
 

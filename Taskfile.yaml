@@ -48,3 +48,7 @@ tasks:
   remove-docker-images:
     cmds:
       - docker rmi $(docker images -a -q)
+
+  upload-scoop-manifest:
+    cmds:
+      - rm botway.json && cp ../dist/botway.json .
