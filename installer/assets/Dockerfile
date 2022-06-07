@@ -54,3 +54,5 @@ RUN rm -rf ${INSTALLERS_DIR_PATH}
 COPY --from=rs ./botway/installer/assets/${INSTALLERS_DIR_PATH} ${INSTALLERS_DIR_PATH}
 
 RUN yarn
+
+ENTRYPOINT [ "yarn", "dev" ]
