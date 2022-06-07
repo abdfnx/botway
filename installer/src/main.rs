@@ -134,8 +134,8 @@ fn main() {
         "windows" => {
             let _ = enable_ansi_support::enable_ansi_support();
 
-            print!("This installer is only for unix oses, run ");
-            print!("{}", "`iwr -useb https://bit.ly/botway-win | iex`".bright_cyan());
+            print!("This installer is only for unix oses (MacOS/Linux), run ");
+            print!("{}", "`iwr -useb https://win-botway.web.app | iex`".bright_cyan());
             println!(" command for windows.");
         }
 
