@@ -51,4 +51,5 @@ tasks:
 
   upload-scoop-manifest:
     cmds:
-      - rm botway.json && cp ../dist/botway.json .
+      - if [ -f "botway.json" ]; then rm botway.json; fi
+      - cp ./dist/botway.json .
