@@ -43,15 +43,15 @@ RUN cd ./botway/installer && \
 	cp ${DARWIN_TARGET_PATH}/botway-installer ./installer-macos && \
  	cp ./installer-macos ./assets/public/installers
 
-RUN ls -a ./botway/installer/assets/public/installers
-
 FROM node:alpine
+
+ENV INSTALLERS_DIR_PATH="./botway/installer/assets/public/installers"
 
 COPY . .
 
-RUN rm -rf ./botway/installer/assets/public/installers
+RUN rm -rf ${INSTALLERS_DIR_PATH}
 
-COPY --from=rs ./botway/installer/assets/public/installers ./botway/installer/assets/public
+COPY --from=rs ${INSTALLERS_DIR_PATH} ${INSTALLERS_DIR_PATH}
 
 RUN yarn
 
