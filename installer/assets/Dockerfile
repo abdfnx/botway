@@ -1,6 +1,6 @@
 FROM rust:alpine as rs
 
-ENV PACKAGES "build-dependencies xz libxml2-dev libpq-dev build-base openssl cmake openssl-dev musl-dev libressl-dev bsd-compat-headers gcc g++ git lld clang clang-dev patch fts-dev gmp-dev mpfr-dev mpc1-dev perl libsodium ffmpeg opus autoconf automake libtool"
+ENV PACKAGES "bash build-dependencies xz libxml2-dev libpq-dev build-base openssl cmake openssl-dev musl-dev libressl-dev bsd-compat-headers gcc g++ git lld clang clang-dev patch fts-dev gmp-dev mpfr-dev mpc1-dev perl libsodium ffmpeg opus autoconf automake libtool"
 
 RUN apk update && \
 	apk add --no-cache --virtual ${PACKAGES}
@@ -17,12 +17,6 @@ RUN cd ./botway/installer && \
 
 # Build macos target
 ENV DARWIN_TARGET_PATH="./target/x86_64-apple-darwin/release"
-ENV DARWIN_FILE_NAME="rust-std-1.61.0-x86_64-apple-darwin"
-
-RUN wget https://static.rust-lang.org/dist/${DARWIN_FILE_NAME}.tar.gz && \
-	tar -xvxf ${DARWIN_FILE_NAME}.tar.gz && \
-	cd ${DARWIN_FILE_NAME} && \
-	./install.sh
 
 RUN git clone https://github.com/abdfnx/osxcross-alpine osxcross && \
 	cd osxcross && \
