@@ -1,7 +1,7 @@
 FROM botwayorg/botway:core AS core
 FROM frolvlad/alpine-glibc:alpine-3.14_glibc-2.33
 
-RUN apk update && apk add bash sudo
+RUN apk update && apk add bash sudo curl
 
 ENV BOTWAY_DIR /botway-dir/
 

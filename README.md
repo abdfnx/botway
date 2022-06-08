@@ -16,6 +16,19 @@ Botway uses [Railway][rw] to host your bot code and database.
 
 ## Installation ⬇
 
+### NPM
+
+```bash
+# npm
+npm i -g botway
+
+# yarn
+yarn global add botway
+
+# pnpm
+pnpm add -g botway
+```
+
 ### Using script
 
 - Shell

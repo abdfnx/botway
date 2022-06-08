@@ -45,6 +45,12 @@ tasks:
     cmds:
       - ./docker/build.sh
 
+  build-full-image:
+    dir: ./docker
+    cmds:
+      - docker build -t botwayorg/botway:full --file full.dockerfile .
+      - docker push botwayorg/botway:full
+
   remove-docker-images:
     cmds:
       - docker rmi $(docker images -a -q)

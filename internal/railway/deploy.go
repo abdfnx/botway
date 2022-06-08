@@ -171,7 +171,12 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 	fmt.Println(constants.INFO_FOREGROUND.Render("OR run `botway logs` to tail them here\n"))
 
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
-	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" ☁️ Deployment live at " + constants.COMMAND_FOREGROUND.Render(h.ctrl.GetFullUrlFromStaticUrl(res.DeploymentDomain))))
+
+	if res.DeploymentDomain != "" {
+		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" ☁️ Deployment live at " + constants.COMMAND_FOREGROUND.Render(h.ctrl.GetFullUrlFromStaticUrl(res.DeploymentDomain))))
+	} else {
+		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" ☁️ Deployment is live"))
+	}
 
 	os.Remove(filepath.Join("config", "botway-deploy-tokens.env"))
 
