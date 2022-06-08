@@ -15,9 +15,6 @@ type Theme struct {
 	DefaultTextColor lipgloss.AdaptiveColor
 	ErrorColor       lipgloss.AdaptiveColor
 
-	InstalledColor    lipgloss.AdaptiveColor
-	IncompatibleColor lipgloss.AdaptiveColor
-
 	SelectedListItemColor   lipgloss.AdaptiveColor
 	UnselectedListItemColor lipgloss.AdaptiveColor
 	ActiveBoxBorderColor    lipgloss.AdaptiveColor
@@ -59,9 +56,6 @@ var themeMap = map[string]Theme{
 
 		DefaultTextColor: lipgloss.AdaptiveColor{Dark: Colors.white, Light: Colors.black},
 		ErrorColor:       lipgloss.AdaptiveColor{Dark: Colors.slightlyBrighterRed, Light: Colors.red},
-
-		InstalledColor:    lipgloss.AdaptiveColor{Dark: Colors.green, Light: Colors.green},
-		IncompatibleColor: lipgloss.AdaptiveColor{Dark: Colors.slightlyBrighterOrange, Light: Colors.orange},
 
 		SelectedListItemColor:   lipgloss.AdaptiveColor{Dark: Colors.white, Light: Colors.black},
 		UnselectedListItemColor: lipgloss.AdaptiveColor{Dark: Colors.black, Light: Colors.white},

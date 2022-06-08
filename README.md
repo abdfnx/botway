@@ -4,7 +4,7 @@
   </a>
 </p>
 
-> 🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack.
+> **🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack.**
 
 With botway, you can focus on your bot's logic and don't worry about the infrastructure. and we will take care of the rest.
 

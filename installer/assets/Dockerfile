@@ -1,6 +1,6 @@
 FROM rust:alpine as rs
 
-ENV PACKAGES "bash build-dependencies xz libxml2-dev libpq-dev build-base openssl cmake openssl-dev musl-dev libressl-dev bsd-compat-headers gcc g++ git lld clang clang-dev patch fts-dev gmp-dev mpfr-dev mpc1-dev perl libsodium ffmpeg opus autoconf automake libtool"
+ENV PACKAGES "build-dependencies xz libxml2-dev libpq-dev build-base openssl cmake openssl-dev musl-dev libressl-dev bsd-compat-headers gcc g++ git lld clang clang-dev patch fts-dev gmp-dev mpfr-dev mpc1-dev perl libsodium ffmpeg opus autoconf automake libtool bash"
 
 RUN apk update && \
 	apk add --no-cache --virtual ${PACKAGES}
