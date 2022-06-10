@@ -10,4 +10,8 @@
 <path d="M125 78L25 78L125 78ZM15 58C15 35.9086 32.9086 18 55 18H95C117.091 18 135 35.9086 135 58H115C115 46.9543 106.046 38 95 38H55C43.9543 38 35 46.9543 35 58H15ZM95 18C117.091 18 135 35.9086 135 58V78H115V58C115 46.9543 106.046 38 95 38V18ZM15 78V58C15 35.9086 32.9086 18 55 18L55 38C43.9543 38 35 46.9543 35 58V78H15Z" fill="black" mask="url(#path-4-inside-2_2307_38)"/>
 <rect x="50" y="66" width="11.9565" height="18.1159" rx="5" fill="black"/>
 <rect x="88.043" y="66" width="11.9565" height="18.1159" rx="5" fill="black"/>
+<circle cx="19" cy="18" r="5" fill="#CBCBCB"/>
+<circle cx="19" cy="132" r="5" fill="#CBCBCB"/>
+<circle cx="131" cy="18" r="5" fill="#CBCBCB"/>
+<circle cx="131" cy="132" r="5" fill="#CBCBCB"/>
 </svg>
