@@ -33,27 +33,6 @@ updates:
       - abdfnx
       - david-tomson
 
-  - package-ecosystem: "pip"
-    directory: "/tools/templates/discord/python/assets/pip"
-    schedule:
-      interval: "daily"
-    reviewers:
-      - abdfnx
-
-  - package-ecosystem: "pip"
-    directory: "/tools/templates/slack/python/assets/pip"
-    schedule:
-      interval: "daily"
-    reviewers:
-      - abdfnx
-
-  - package-ecosystem: "pip"
-    directory: "/tools/templates/telegram/python/assets/pip"
-    schedule:
-      interval: "daily"
-    reviewers:
-      - abdfnx
-
   - package-ecosystem: "cargo"
     directory: "/packages/botway-rs"
     schedule:
@@ -68,22 +47,6 @@ updates:
       interval: "daily"
     reviewers:
       - abdfnx
-
-  - package-ecosystem: "cargo"
-    directory: "/tools/templates/discord/rust/assets"
-    schedule:
-      interval: "daily"
-    reviewers:
-      - abdfnx
-      - david-tomson
-
-  - package-ecosystem: "cargo"
-    directory: "/tools/templates/telegram/rust/assets"
-    schedule:
-      interval: "daily"
-    reviewers:
-      - abdfnx
-      - david-tomson
 
   - package-ecosystem: "bundler"
     directory: "/packages/botwayrb"

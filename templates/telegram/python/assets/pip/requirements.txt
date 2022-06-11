@@ -1,6 +1,0 @@
-python-telegram-bot==13.11
-botway.py==0.0.3
-cryptography==37.0.2
-PySocks==1.7.1
-ujson==5.2.0
-PyYAML==6.0
