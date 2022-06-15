@@ -14,31 +14,15 @@ import (
 )
 
 func MainRsContent() string {
-	return templates.Content("telegram/rust/assets/src/main.rs", "")
+	return templates.Content("src/main.rs", "telegram-rust", "")
 }
 
 func CargoFileContent(botName string) string {
-	return templates.Content("telegram/rust/assets/Cargo.toml", botName)
+	return templates.Content("Cargo.toml", "telegram-rust", botName)
 }
 
 func Resources() string {
-	return `# Botway Telegram (Rust 🦀) Resources
-
-> Here is some useful links and resources to help you to build your own bot
-
-## Setup
-
-- [Setup Telegram bot](https://github.com/abdfnx/botway/discussions/5)
-
-## API
-
-- [Rust Library for creating a Telegram Bot](https://github.com/telegram-rs/telegram-bot)
-
-## Examples
-
-- [Telegram-rs examples](https://github.com/telegram-rs/telegram-bot/tree/main/lib/examples)
-
-big thanks to [**@telegram-rs**](https://github.com/telegram-rs) org`
+	return templates.Content("telegram/rust.md", "resources", "")
 }
 
 func TelegramRust(botName, pm string) {
@@ -52,7 +36,7 @@ func TelegramRust(botName, pm string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" " + pm + "  is not installed"))
 	} else {
-		DockerfileContent := templates.Content("assets/" + pm + ".dockerfile", botName)
+		DockerfileContent := templates.Content(pm + ".dockerfile", "dockerfiles", botName)
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.rs"), []byte(MainRsContent()), 0644)
 		cargoFile := os.WriteFile(filepath.Join(botName, "Cargo.toml"), []byte(CargoFileContent(botName)), 0644)

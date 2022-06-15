@@ -18,28 +18,11 @@ import (
 var Packages = "@slack/bolt botway.js"
 
 func IndexJSContent() string {
-	return templates.Content("slack/nodejs/assets/index.js", "")
+	return templates.Content("index.js", "slack-nodejs", "")
 }
 
 func Resources() string {
-	return `# Botway Slack (Node.js) Resources
-
-> Here is some useful links and resources to help you to build your own bot
-
-## Setup
-
-- [Setup Slack bot](https://github.com/abdfnx/botway/discussions/31)
-
-## API
-
-- [A framework to build Slack apps using JavaScript](https://github.com/slackapi/bolt-js)
-- [Website](https://slack.dev/bolt-js)
-
-## Examples
-
-[Examples](https://github.com/slackapi/bolt-js/tree/main/examples)
-
-big thanks to [**@slackapi**](https://github.com/slackapi) org`
+	return templates.Content("slack/nodejs.md", "resources", "")
 }
 
 func SlackNodejs(botName, pm string) {
@@ -89,7 +72,7 @@ func SlackNodejs(botName, pm string) {
 				log.Printf("error: %v\n", newPackageJson)
 			}
 
-			DockerfileContent := templates.Content("assets/" + pm + ".dockerfile", botName)
+			DockerfileContent := templates.Content(pm + ".dockerfile", "dockerfiles", botName)
 
 			indexFile := os.WriteFile(filepath.Join(botName, "src", "index.js"), []byte(IndexJSContent()), 0644)
 			dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent), 0644)

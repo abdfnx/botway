@@ -42,7 +42,7 @@ func (b Bubble) View() string {
 			secondaryTitle := b.styleSecondaryTitle("Botway")
 
 			switch b.activeBox {
-				case components.BotListView:
+				case components.BotListView, components.TemplatesView:
 					primaryBoxBorderColor = theme.AppTheme.ActiveBoxBorderColor
 
 				case components.BotInfoView:

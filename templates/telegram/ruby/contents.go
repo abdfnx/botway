@@ -3,29 +3,13 @@ package ruby
 import "github.com/abdfnx/botway/templates"
 
 func MainRbContent() string {
-	return templates.Content("telegram/ruby/assets/main.rb", "")
+	return templates.Content("main.rb", "telegram-ruby", "")
 }
 
 func DockerfileContent(botName string) string {
-	return templates.Content("assets/ruby.dockerfile", botName)
+	return templates.Content("ruby.dockerfile", "dockerfiles", botName)
 }
 
 func Resources() string {
-	return `# Botway Telegram (Ruby 💎) Resources
-
-> Here is some useful links and resources to help you to build your own bot
-
-## Setup
-
-- [Setup telegram bot](https://github.com/abdfnx/botway/discussions/5)
-
-## API
-
-- [Ruby wrapper for Telegram's Bot API](https://github.com/atipugin/telegram-bot-ruby)
-
-## Examples
-
-- [Example](https://github.com/atipugin/telegram-bot-ruby/tree/master/examples)
-
-big thanks to [**@atipugin**](https://github.com/atipugin)`
+	return templates.Content("telegram/ruby.md", "resources", "")
 }

@@ -13,6 +13,7 @@ type KeyMap struct {
 	OpenAtRailway key.Binding
 	PageDown      key.Binding
 	PageUp        key.Binding
+	New           key.Binding
 }
 
 func New() KeyMap {
@@ -54,6 +55,9 @@ func New() KeyMap {
 		),
 		PageUp: key.NewBinding(
 			key.WithKeys("pgup", "b"),
+		),
+		New: key.NewBinding(
+			key.WithKeys("n"),
 		),
 	}
 }

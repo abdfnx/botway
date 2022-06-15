@@ -57,6 +57,9 @@ func (b *Bubble) handleKeys(msg tea.KeyMsg) tea.Cmd {
 					b.switchActiveView(components.BotListView)
 			}
 
+		case key.Matches(msg, b.keyMap.New):
+			b.switchActiveView(components.TemplatesView)
+
 		// Open bot project at Railway
 		case key.Matches(msg, b.keyMap.OpenAtRailway):
 			bot_project_id := gjson.Get(string(constants.RailwayConfig), "projects." + strings.ToLower(b.botInfo("path")) + ".project").String()

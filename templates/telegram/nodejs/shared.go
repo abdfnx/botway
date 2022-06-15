@@ -18,32 +18,11 @@ import (
 var Packages = "node-telegram-bot-api botway.js request"
 
 func IndexJSContent() string {
-	return templates.Content("telegram/nodejs/assets/index.js", "")
+	return templates.Content("index.js", "telegram-nodejs", "")
 }
 
 func Resources() string {
-	return `# Botway Telegram (Node.js) Resources
-
-> Here is some useful links and resources to help you to build your own bot
-
-## Setup
-
-- [Setup Telegram bot](https://github.com/abdfnx/botway/discussions/5)
-
-## API
-
-- [Telegram Bot API for NodeJS](https://github.com/https://github.com/yagop/node-telegram-bot-api)
-- [node-telegram-bot-api Docs](https://github.com/yagop/node-telegram-bot-api/tree/master/doc)
-- [node-telegram-bot-api Help Information](https://github.com/yagop/node-telegram-bot-api/blob/master/doc/help.md)
-- [Tutorials](https://github.com/yagop/node-telegram-bot-api/tree/master/doc/tutorials.md)
-- [node-telegram-bot-api Telegram Channel](https://t.me/node_telegram_bot_api)
-- [node-telegram-bot-api Telegram Group](https://t.me/ntbasupport)
-
-## Examples
-
-[Examples](https://github.com/yagop/node-telegram-bot-api/tree/master/examples)
-
-big thanks to [**@yagop**](https://github.com/yagop)`
+	return templates.Content("telegram/nodejs.md", "resources", "")
 }
 
 func TelegramNodejs(botName, pm string) {
@@ -93,7 +72,7 @@ func TelegramNodejs(botName, pm string) {
 				log.Printf("error: %v\n", newPackageJson)
 			}
 
-			DockerfileContent := templates.Content("assets/" + pm + ".dockerfile", botName)
+			DockerfileContent := templates.Content(pm + ".dockerfile", "dockerfiles", botName)
 
 			indexFile := os.WriteFile(filepath.Join(botName, "src", "index.js"), []byte(IndexJSContent()), 0644)
 			dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent), 0644)

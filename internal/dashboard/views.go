@@ -4,15 +4,20 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/internal/dashboard/components"
 	"github.com/abdfnx/botway/internal/dashboard/components/style"
 	"github.com/abdfnx/botway/internal/dashboard/components/theme"
 	"github.com/abdfnx/botway/internal/dashboard/icons"
+	"github.com/abdfnx/resto/core/api"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/viper"
 	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
 )
 
 var (
@@ -39,7 +44,7 @@ var (
 	}
 )
 
-func (b Bubble) botListView() string {
+func (b Bubble) botListView(show_temps bool) string {
 	pageStyle := styleWidth(b.bubbles.primaryPaginator.Width).
 		Height(b.bubbles.primaryPaginator.PerPage + 1).Render
 
@@ -49,31 +54,90 @@ func (b Bubble) botListView() string {
 	page := ""
 	v := ""
 
-	bots.ForEach(func(i, value gjson.Result) bool {
-		v = value.String()
-
-		line := trunc(value.String(), b.bubbles.primaryPaginator.Width-2)
-
-		lang := gjson.Get(string(constants.BotwayConfig), "botway.bots." + v + ".lang").String()
-
-		icon, color := icons.GetIcon(lang)
-
-		fileIcon := lipgloss.NewStyle().Width(2).Render(fmt.Sprintf("%s%s\033[0m ", color, icon))
-
-		line = fmt.Sprintf("%s %s", line, fileIcon)
-
-		if b.bubbles.primaryPaginator.Cursor == int(i.Int()) && !b.nav.listCursorHide {
-			page += style.ListSelected.
-				Width(b.bubbles.primaryPaginator.Width).
-				Render(line)
-		} else {
-			page += line
+	if b.activeBox == components.TemplatesView {
+		url := "https://api.github.com/users/botwayorg/repos"
+		respone, status, _, err := api.BasicGet(url, "GET", "", "", "", "", false, 0, nil)
+	
+		if err != nil {
+			fmt.Println(err.Error())
 		}
+	
+		if status == "404" || status == "401" || strings.Contains(respone, "404") {
+			fmt.Println("404")
+			os.Exit(0)
+		}
+	
+		repos := gjson.Get(respone, "#.name")
+		rStr := repos.String()
+	
+		for i := 0; i < 2; i++ {
+			rStr, _ = sjson.Delete(rStr, "6")
+		}
+	
+		rStr, _ = sjson.Delete(rStr, "-1")
+	
+		// for i := 0; i < int(gjson.Get(rStr, "#").Int()); i++ {
+		// 	r := gjson.Get(rStr, fmt.Sprint(i))
+	
+		// 	line := trunc(r.String(), b.bubbles.primaryPaginator.Width-2)
 
-		page += "\n"
+		// 	if b.bubbles.primaryPaginator.Cursor == i && !b.nav.listCursorHide {
+		// 		page += style.ListSelected.
+		// 			Width(b.bubbles.primaryPaginator.Width).
+		// 			Render(line)
+		// 	} else {
+		// 		page += line
+		// 	}
+	
+		// 	page += "\n"
+		// }
 
-		return true
-	})
+		repos_array := gjson.Get(rStr, "#()#")
+
+		repos_array.ForEach(func(i, value gjson.Result) bool {
+			v = value.String()
+
+			line := trunc(value.String(), b.bubbles.primaryPaginator.Width-2)
+
+			if b.bubbles.primaryPaginator.Cursor == int(i.Int()) && !b.nav.listCursorHide {
+				page += style.ListSelected.
+					Width(b.bubbles.primaryPaginator.Width).
+					Render(line)
+			} else {
+				page += line
+			}
+	
+			page += "\n"
+
+			return true
+		})
+	} else {
+		bots.ForEach(func(i, value gjson.Result) bool {
+			v = value.String()
+
+			line := trunc(value.String(), b.bubbles.primaryPaginator.Width-2)
+	
+			lang := gjson.Get(string(constants.BotwayConfig), "botway.bots." + v + ".lang").String()
+	
+			icon, color := icons.GetIcon(lang)
+	
+			fileIcon := lipgloss.NewStyle().Width(2).Render(fmt.Sprintf("%s%s\033[0m ", color, icon))
+	
+			line = fmt.Sprintf("%s %s", line, fileIcon)
+	
+			if b.bubbles.primaryPaginator.Cursor == int(i.Int()) && !b.nav.listCursorHide {
+				page += style.ListSelected.
+					Width(b.bubbles.primaryPaginator.Width).
+					Render(line)
+			} else {
+				page += line
+			}
+	
+			page += "\n"
+	
+			return true
+		})
+	}
 
 	page = connectVert(
 		pageStyle(page),

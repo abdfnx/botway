@@ -14,35 +14,15 @@ import (
 )
 
 func MainRsContent() string {
-	return templates.Content("discord/rust/assets/src/main.rs", "")
+	return templates.Content("src/main.rs", "discord-rust", "")
 }
 
 func CargoFileContent(botName string) string {
-	return templates.Content("discord/rust/assets/Cargo.toml", botName)
+	return templates.Content("Cargo.toml", "discord-rust", botName)
 }
 
 func Resources() string {
-	return `# Botway Discord (Rust 🦀) Resources
-
-> Here is some useful links and resources to help you to build your own bot
-
-## Setup
-
-- [Setup discord bot token](https://github.com/abdfnx/botway/discussions/4)
-- [Get the guild id of your server](https://github.com/abdfnx/botway/discussions/4#discussioncomment-2653737)
-
-## API
-
-- [A Rust library for the Discord API](https://github.com/serenity-rs/serenity)
-- [An async Rust library for the Discord voice API](https://github.com/serenity-rs/songbird)
-- [Discord Server](https://discord.gg/serenity-rs)
-
-## Examples
-
-- [serenity examples](https://github.com/serenity-rs/serenity/tree/current/examples)
-- [songbird examples](https://github.com/serenity-rs/songbird/tree/current/examples)
-
-big thanks to [**@serenity-rs**](https://github.com/serenity-rs) org`
+	return templates.Content("discord/rust.md", "resources", "")
 }
 
 func DiscordRust(botName, pm string) {
@@ -56,7 +36,7 @@ func DiscordRust(botName, pm string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" " + pm + "  is not installed"))
 	} else {
-		DockerfileContent := templates.Content("assets/" + pm + ".dockerfile", botName)
+		DockerfileContent := templates.Content(pm + ".dockerfile", "dockerfiles", botName)
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.rs"), []byte(MainRsContent()), 0644)
 		cargoFile := os.WriteFile(filepath.Join(botName, "Cargo.toml"), []byte(CargoFileContent(botName)), 0644)

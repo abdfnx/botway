@@ -10,8 +10,8 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func Content(arg, botName string) string {
-	url := fmt.Sprintf("https://raw.githubusercontent.com/abdfnx/botway/main/templates/%s", arg)
+func Content(arg, templateName, botName string) string {
+	url := fmt.Sprintf("https://raw.githubusercontent.com/botwayorg/%s/main/%s", templateName, arg)
 	respone, status, _, err := api.BasicGet(url, "GET", "", "", "", "", false, 0, nil)
 
 	if err != nil {
