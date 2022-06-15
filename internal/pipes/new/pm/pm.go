@@ -358,7 +358,7 @@ func (m model) buildBot(botName, platform, lang, pm string) (tea.Model, tea.Cmd)
 
 		pwd = filepath.Join(pwd, botName)
 
-		config.AddBotToConfig(botName, platform, pwd)
+		config.AddBotToConfig(botName, platform, pwd, lang)
 	}
 
 	return m, tea.Quit

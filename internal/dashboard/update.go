@@ -65,15 +65,11 @@ func (b *Bubble) updateActiveView(msg tea.Msg) tea.Cmd {
 
 	switch b.activeBox {
 		case components.BotListView:
-			b.bubbles.primaryPaginator.SetContent(b.botListView(false))
-			b.bubbles.secondaryViewport.SetContent(b.botInfoView())
-
-		case components.TemplatesView:
-			b.bubbles.primaryPaginator.SetContent(b.botListView(true))
+			b.bubbles.primaryPaginator.SetContent(b.botListView())
 			b.bubbles.secondaryViewport.SetContent(b.botInfoView())
 
 		case components.BotInfoView:
-			b.bubbles.primaryPaginator.SetContent(b.botListView(false))
+			b.bubbles.primaryPaginator.SetContent(b.botListView())
 			b.bubbles.secondaryViewport, cmd = b.bubbles.secondaryViewport.Update(msg)
 			b.bubbles.secondaryViewport.SetContent(b.botInfoView())
 	}
@@ -112,13 +108,6 @@ func (b *Bubble) scrollView(dir string) {
 						b.bubbles.primaryPaginator.LineUp()
 					}
 
-				case components.TemplatesView:
-					if b.nav.listCursorHide {
-						b.nav.listCursorHide = false
-					} else {
-						b.bubbles.primaryPaginator.LineUp()
-					}
-
 				case components.BotInfoView:
 					b.bubbles.secondaryViewport.LineUp(1)
 			}
@@ -132,20 +121,13 @@ func (b *Bubble) scrollView(dir string) {
 						b.bubbles.primaryPaginator.LineDown()
 					}
 
-				case components.TemplatesView:
-					if b.nav.listCursorHide {
-						b.nav.listCursorHide = false
-					} else {
-						b.bubbles.primaryPaginator.LineDown()
-					}
-
 				case components.BotInfoView:
 					b.bubbles.secondaryViewport.LineDown(1)
 			}
 
 		case "left":
 			switch b.activeBox {
-				case components.BotListView, components.TemplatesView:
+				case components.BotListView:
 					if b.nav.listCursorHide {
 						b.nav.listCursorHide = false
 					} else {
@@ -155,7 +137,7 @@ func (b *Bubble) scrollView(dir string) {
 
 		case "right":
 			switch b.activeBox {
-				case components.BotListView, components.TemplatesView:
+				case components.BotListView:
 					if b.nav.listCursorHide {
 						b.nav.listCursorHide = !b.nav.listCursorHide
 					} else {

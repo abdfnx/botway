@@ -7,7 +7,6 @@ const (
 	CommandView   = 0
 	BotListView   = 1
 	BotInfoView   = 2
-	TemplatesView = 3
 
 	StatusBarHeight = 1
 	BoxPadding = 1

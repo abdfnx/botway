@@ -10,7 +10,7 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-func AddBotToConfig(botName, botType, botPath string) {
+func AddBotToConfig(botName, botType, botPath, botLang string) {
 	homeDir, _ := dfs.GetHomeDirectory()
 	botwayConfigPath := filepath.Join(homeDir, ".botway", "botway.json")
 	botwayConfig, err := ioutil.ReadFile(botwayConfigPath)
@@ -21,7 +21,8 @@ func AddBotToConfig(botName, botType, botPath string) {
 
 	botTypeContent, _ := sjson.Set(string(botwayConfig), "botway.bots." + botName + ".type", botType)
 	botPathContent, _ := sjson.Set(botTypeContent, "botway.bots." + botName + ".path", botPath)
-	addBotToBotsNamesContent, _ := sjson.Set(botPathContent, "botway.bots_names.-1", botName)
+	botLangContent, _ := sjson.Set(botPathContent, "botway.bots." + botName + ".lang", botLang)
+	addBotToBotsNamesContent, _ := sjson.Set(botLangContent, "botway.bots_names.-1", botName)
 
 	remove := os.Remove(botwayConfigPath)
 

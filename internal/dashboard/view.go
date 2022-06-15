@@ -1,10 +1,10 @@
 package dashboard
 
 import (
-	"github.com/charmbracelet/lipgloss"
 	"github.com/abdfnx/botway/internal/dashboard/components"
 	"github.com/abdfnx/botway/internal/dashboard/components/style"
 	"github.com/abdfnx/botway/internal/dashboard/components/theme"
+	"github.com/charmbracelet/lipgloss"
 	"github.com/muesli/reflow/truncate"
 )
 
@@ -42,7 +42,7 @@ func (b Bubble) View() string {
 			secondaryTitle := b.styleSecondaryTitle("Botway")
 
 			switch b.activeBox {
-				case components.BotListView, components.TemplatesView:
+				case components.BotListView:
 					primaryBoxBorderColor = theme.AppTheme.ActiveBoxBorderColor
 
 				case components.BotInfoView:

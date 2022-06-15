@@ -52,9 +52,6 @@ func New(o *options.CommonOptions) model {
 		rsStr, _ = sjson.Delete(rsStr, "6")
 	}
 
-	rStr, _ = sjson.Delete(rStr, "-1")
-	rsStr, _ = sjson.Delete(rsStr, "-1")
-
 	w, h, err := term.GetSize(int(os.Stdout.Fd()))
 
 	if err != nil {

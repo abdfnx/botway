@@ -2,8 +2,8 @@
 package dashboard
 
 import (
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/abdfnx/botway/internal/dashboard/components/style"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 // Type specifies the way we render pagination.
