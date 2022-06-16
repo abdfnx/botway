@@ -32,9 +32,9 @@ func DockerPublishImage() {
 		panic(constants.FAIL_FOREGROUND.Render("You need to run this command in your bot directory"))
 	}
 
-	viper.SetConfigType("hcl")
+	viper.SetConfigType("yaml")
 
-	viper.ReadConfig(bytes.NewBuffer(constants.DeployConfig))
+	viper.ReadConfig(bytes.NewBuffer(constants.BotConfig))
 
 	botImage := viper.GetString("docker.image")
 	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots." + viper.GetString("bot.name") + ".path").String()

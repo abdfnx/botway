@@ -32,9 +32,9 @@ func DockerBuildImage() {
 		panic(constants.FAIL_FOREGROUND.Render("You need to run this command in your bot directory"))
 	}
 
-	viper.SetConfigType("hcl")
+	viper.SetConfigType("yaml")
 
-	viper.ReadConfig(bytes.NewBuffer(constants.DeployConfig))
+	viper.ReadConfig(bytes.NewBuffer(constants.BotConfig))
 
 	buildCmd := viper.GetString("docker.cmds.build")
 	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots." + viper.GetString("bot.name") + ".path").String()

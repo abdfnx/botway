@@ -10,7 +10,6 @@ import (
 	"github.com/abdfnx/botway/internal/pipes/new"
 	"github.com/abdfnx/botway/tools"
 	"github.com/abdfnx/looker"
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/spf13/cobra"
 )
 
@@ -27,11 +26,7 @@ func NewCMD() *cobra.Command {
 					BotName: args[0],
 				}
 
-				err := tea.NewProgram(new.New(opts), tea.WithAltScreen()).Start()
-				if err != nil {
-					fmt.Fprintln(os.Stderr, err)
-					os.Exit(1)
-				}
+				new.New(opts)
 			} else {
 				cmd.Help()
 			}

@@ -49,33 +49,31 @@ func (b Bubble) botListView() string {
 	page := ""
 	v := ""
 
-	if bots.Int() != 0 {
-		bots.ForEach(func(i, value gjson.Result) bool {
-			v = value.String()
-	
-			line := trunc(value.String(), b.bubbles.primaryPaginator.Width-2)
-	
-			lang := gjson.Get(string(constants.BotwayConfig), "botway.bots." + v + ".lang").String()
-	
-			icon, color := icons.GetIcon(lang)
-	
-			fileIcon := lipgloss.NewStyle().Width(2).Render(fmt.Sprintf("%s%s\033[0m ", color, icon))
-	
-			line = fmt.Sprintf("%s %s", line, fileIcon)
-	
-			if b.bubbles.primaryPaginator.Cursor == int(i.Int()) && !b.nav.listCursorHide {
-				page += style.ListSelected.
-					Width(b.bubbles.primaryPaginator.Width).
-					Render(line)
-			} else {
-				page += line
-			}
-	
-			page += "\n"
-	
-			return true
-		})	
-	}
+	bots.ForEach(func(i, value gjson.Result) bool {
+		v = value.String()
+
+		line := trunc(value.String(), b.bubbles.primaryPaginator.Width -2 )
+
+		lang := gjson.Get(string(constants.BotwayConfig), "botway.bots." + v + ".lang").String()
+
+		icon, color := icons.GetIcon(lang)
+
+		fileIcon := lipgloss.NewStyle().Width(2).Render(fmt.Sprintf("%s%s\033[0m ", color, icon))
+
+		line = fmt.Sprintf("%s %s", line, fileIcon)
+
+		if b.bubbles.primaryPaginator.Cursor == int(i.Int()) && !b.nav.listCursorHide {
+			page += style.ListSelected.
+				Width(b.bubbles.primaryPaginator.Width).
+				Render(line)
+		} else {
+			page += line
+		}
+
+		page += "\n"
+
+		return true
+	})
 
 	page = connectVert(
 		pageStyle(page),
