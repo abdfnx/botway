@@ -139,7 +139,7 @@ scoop install botway
 - [**Viper**](https://github.com/spf13/viper)
 - [**GJson**](https://github.com/tidwall/gjson)
 - [**Termenv**](https://github.com/muesli/termenv)
-- [**Boa**](github.com/elewis787/boa)
+- [**Boa**](https://github.com/elewis787/boa)
 
 ## Special thanks ❤
 
