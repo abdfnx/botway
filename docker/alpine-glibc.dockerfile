@@ -16,7 +16,7 @@ COPY ./docker/entry.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 
 ### install deno ###
-RUN curl -fsSL https://deno.land/x/install/install.sh | sh
+RUN curl -fsSL https://deno.land/install.sh | sh
 ENV DENO_INSTALL="/root/.deno"
 ENV PATH="${DENO_INSTALL}/bin:${PATH}"
 

@@ -8,7 +8,6 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/railwayapp/cli/entity"
-	"github.com/railwayapp/cli/ui"
 )
 
 func (h *Handler) Connect(ctx context.Context, req *entity.CommandRequest) error {
@@ -26,11 +25,11 @@ func (h *Handler) Connect(ctx context.Context, req *entity.CommandRequest) error
 		return err
 	}
 
-	fmt.Printf("🎉 Connecting to: %s %s\n", ui.MagentaText(project.Name), ui.MagentaText(environment.Name))
+	fmt.Printf("🎉 Connecting to: %s %s\n", constants.INFO_FOREGROUND.Render(project.Name), constants.BOLD.Render(environment.Name))
 
 	var plugin string
 
-	if len(project.Plugins) > 2 {
+	if len(project.Plugins) > 2 && len(req.Args) == 0 {
 		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
 		fmt.Println(constants.INFO_FOREGROUND.Render(" You've multiple databases, Please select a database to connect to:\n"))
 
@@ -44,10 +43,10 @@ func (h *Handler) Connect(ctx context.Context, req *entity.CommandRequest) error
 
 		return nil
 	} else {
-		if len(project.Plugins) == 2 {
-			plugin = project.Plugins[1].Name
-		} else if len(req.Args) != 0 {
+		if len(req.Args) != 0 {
 			plugin = req.Args[0]
+		} else if len(project.Plugins) >= 2 {
+			plugin = project.Plugins[0].Name
 		}
 
 		if !isPluginValid(plugin) {
