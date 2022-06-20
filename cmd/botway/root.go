@@ -80,6 +80,9 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 		app.LoginCMD(),
 		app.VarsCMD(),
 		app.DeployCMD(),
+		app.NewGHConfigCmd,
+		app.NewGHRepoCmd,
+		app.GitHubCmd,
 		versionCmd,
 	)
 
