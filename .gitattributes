@@ -1,3 +1,2 @@
 zshrc text eol=lf
 *.sh text eol=lf
-*.mp4 filter=lfs diff=lfs merge=lfs -text
