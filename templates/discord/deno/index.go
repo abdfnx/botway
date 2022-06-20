@@ -32,7 +32,7 @@ func DiscordDeno(botName string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" deno is not installed"))
 	} else {
-		modFile := os.WriteFile(filepath.Join(botName, "mod.ts"), []byte(ModTsContent()), 0644)
+		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.ts"), []byte(MainTsContent()), 0644)
 		depsFile := os.WriteFile(filepath.Join(botName, "deps.ts"), []byte(DepsTsContent()), 0644)
 		commandsModTsFile := os.WriteFile(filepath.Join(botName, "src", "commands", "mod.ts"), []byte(CommandsModTsContent()), 0644)
 		commandsPingTsFile := os.WriteFile(filepath.Join(botName, "src", "commands", "ping.ts"), []byte(CommandsPingTsContent()), 0644)
@@ -45,8 +45,8 @@ func DiscordDeno(botName string) {
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
-		if modFile != nil {
-			log.Fatal(modFile)
+		if mainFile != nil {
+			log.Fatal(mainFile)
 		}
 
 		if depsFile != nil {

@@ -20,6 +20,7 @@ func Content(arg, templateName, botName string) string {
 
 	if status == "404" || status == "401" || strings.Contains(respone, "404") {
 		fmt.Println("404")
+		fmt.Println(respone)
 		os.Exit(0)
 	}
 

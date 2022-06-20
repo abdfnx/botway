@@ -1,6 +1,7 @@
 package new
 
 import (
+	"github.com/abdfnx/botway/templates/telegram/deno"
 	"github.com/abdfnx/botway/templates/telegram/go"
 	"github.com/abdfnx/botway/templates/telegram/nodejs"
 	"github.com/abdfnx/botway/templates/telegram/python/pip"
@@ -28,5 +29,7 @@ func TelegramHandler(m model) {
 		rust.TelegramRust(opts.BotName, "cargo")
 	} else if m.PlatformChoice == 1 && m.LangChoice == 4 && m.PMCoice == 1 {
 		rust.TelegramRust(opts.BotName, "fleet")
+	} else if m.PlatformChoice == 1 && m.LangChoice == 5 {
+		deno.TelegramDeno(opts.BotName)
 	}
 }

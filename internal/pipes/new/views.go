@@ -56,15 +56,9 @@ func langsView(m model) string {
 
 	if m.PlatformChoice != 2 {
 		langs += fmt.Sprintf(
-			"\n%s\n%s",
+			"\n%s\n%s\n%s",
 			checkbox("Ruby", l == 3),
 			checkbox("Rust", l == 4),
-		)
-	}
-
-	if m.PlatformChoice == 0 {
-		langs += fmt.Sprintf(
-			"\n%s",
 			checkbox("Deno", l == 5),
 		)
 	}

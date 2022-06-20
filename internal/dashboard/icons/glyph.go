@@ -24,4 +24,5 @@ var IconSet = map[string]*IconInfo{
 	"rust":       {icon: "\ue7a8", color: [3]uint8{250, 111, 66}},
 	"nodejs":     {icon: "\ue74e", color: [3]uint8{255, 202, 61}},
 	"typescript": {icon: "\ue628", color: [3]uint8{3, 136, 209}},
+	"deno":       {icon: "\ue628", color: [3]uint8{3, 136, 209}},
 }

@@ -10,8 +10,8 @@ func Resources() string {
 	return templates.Content("discord/deno.md", "resources", "")
 }
 
-func ModTsContent() string {
-	return templates.Content("mod.ts", "discord-deno", "")
+func MainTsContent() string {
+	return templates.Content("src/main.ts", "discord-deno", "")
 }
 
 func DepsTsContent() string {
