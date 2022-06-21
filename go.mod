@@ -8,7 +8,7 @@ require (
 	github.com/abdfnx/looker v0.1.0
 	github.com/abdfnx/resto v0.1.6
 	github.com/abdfnx/tran v0.1.31
-	github.com/botwayorg/gh v0.0.3
+	github.com/botwayorg/gh v0.0.4
 	github.com/briandowns/spinner v1.18.1
 	github.com/charmbracelet/bubbles v0.11.0
 	github.com/charmbracelet/bubbletea v0.21.0
