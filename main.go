@@ -1,13 +1,14 @@
 package main
 
 import (
-	"fmt"
-	"runtime"
 	"errors"
+	"fmt"
 	"os"
+	"runtime"
 
 	"github.com/abdfnx/botway/cmd/botway"
 	"github.com/abdfnx/botway/cmd/factory"
+	"github.com/abdfnx/botway/internal/checker"
 	"github.com/abdfnx/botway/tools"
 
 	surveyCore "github.com/AlecAivazis/survey/v2/core"
@@ -81,6 +82,8 @@ func mainRun() exitCode {
 
 		return exitError
 	}
+
+	checker.Check(version)
 
 	return exitOK
 }
