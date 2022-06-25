@@ -106,9 +106,32 @@ func DeployCMD() *cobra.Command {
 		RunE:  Contextualize(handler.Delpoy, handler.Panic),
 	}
 
+	cmd.AddCommand(DeployDownCmd())
+	cmd.AddCommand(DeployLogsCmd())
+
 	cmd.Flags().BoolP("detach", "d", false, "Detach from cloud build/deploy logs")
 	cmd.Flags().StringP("environment", "e", "", "Specify an environment to up onto")
 	cmd.Flags().StringP("service", "s", "", "Fetch variables accessible to a specific service")
 
+	return cmd
+}
+
+func DeployDownCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "down",
+		Short: "Remove the most recent deployment",
+		RunE:  Contextualize(handler.Down, handler.Panic),
+	}
+	
+	return cmd
+}
+
+func DeployLogsCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "logs",
+		Short: "View the most-recent deploy's logs",
+		RunE:  Contextualize(handler.Logs, handler.Panic),
+	}
+	
 	return cmd
 }

@@ -22,7 +22,7 @@ func DockerCMD() *cobra.Command {
 func DockerBuildCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "build",
-		Short: "Build your bot docker image.",
+		Short: "Build your bot docker image",
 		Run: func(cmd *cobra.Command, args []string) {
 			build_image.DockerBuildImage()
 		},
@@ -34,7 +34,7 @@ func DockerBuildCMD() *cobra.Command {
 func DockerPublishCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "publish",
-		Short: "Publish your bot docker image to docker registry.",
+		Short: "Publish your bot docker image to docker registry",
 		Run: func(cmd *cobra.Command, args []string) {
 			publish.DockerPublishImage()
 		},

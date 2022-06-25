@@ -21,6 +21,7 @@ func VarsCMD() *cobra.Command {
 	}
 
 	cmd.AddCommand(variablesAddCmd)
+
 	variablesAddCmd.Flags().StringP("service", "s", "", "Fetch variables accessible to a specific service")
 
 	variablesSetCmd := &cobra.Command{
@@ -32,6 +33,7 @@ func VarsCMD() *cobra.Command {
 	}
 
 	cmd.AddCommand(variablesSetCmd)
+
 	variablesSetCmd.Flags().StringP("service", "s", "", "Fetch variables accessible to a specific service")
 
 	variablesRemoveCmd := &cobra.Command{
@@ -43,6 +45,7 @@ func VarsCMD() *cobra.Command {
 	}
 
 	cmd.AddCommand(variablesRemoveCmd)
+
 	variablesRemoveCmd.Flags().StringP("service", "s", "", "Fetch variables accessible to a specific service")
 
 	return cmd
