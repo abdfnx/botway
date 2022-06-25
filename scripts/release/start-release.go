@@ -18,7 +18,15 @@ func main() {
 }
 
 func updateVersionOnPackageJSON(version string) {
-	newVersion, err := sjson.Set("package.json", "version", version)
+	version = version[1:]
+
+	packageJSON, err := ioutil.ReadFile("package.json")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	newVersion, err := sjson.Set(string(packageJSON), "version", version)
 
 	if err != nil {
 		log.Fatal(err)
