@@ -11,6 +11,7 @@ func RailwayCMD() *cobra.Command {
 		Aliases: []string{"rw"},
 	}
 
+	cmd.AddCommand(RailwayInfoCMD())
 	cmd.AddCommand(RailwayLinkCMD())
 	cmd.AddCommand(RailwayUnLinkCMD())
 
@@ -32,6 +33,16 @@ func RailwayUnLinkCMD() *cobra.Command {
 		Use:   "unlink",
 		Short: "Disassociate project from current directory",
 		RunE:  Contextualize(handler.Unlink, handler.Panic),
+	}
+
+	return cmd
+}
+
+func RailwayInfoCMD() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "info",
+		Short: "Show information about the current project",
+		RunE:  Contextualize(handler.Info, handler.Panic),
 	}
 
 	return cmd
