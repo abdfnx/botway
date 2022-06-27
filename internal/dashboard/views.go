@@ -121,7 +121,7 @@ func (b Bubble) botInfoView() string {
 			color = theme.AppTheme.Green
 		}
 
-		tokens := drawKVColor("The Tokens been setted?", is_bot_tokens_been_set, color, b)
+		tokens := drawKVColor("The Tokens been set?", is_bot_tokens_been_set, color, b)
 
 		return connectVert(
 			styles(b).Render(""),

@@ -10,7 +10,7 @@ With botway, you can focus on your bot's logic and don't worry about the infrast
 
 Botway uses [Railway][rw] to host your bot code and database.
 
-https://user-images.githubusercontent.com/64256993/174494486-14aa34d2-d720-4b27-89b5-d32ab0a3b177.mp4
+https://user-images.githubusercontent.com/64256993/175816610-70160d02-8324-4a50-ac4d-78e0993cd91d.mp4
 
 ## Requirements
 
