@@ -9,6 +9,8 @@
 	</p>
 </div>
 
+## Installation
+
 ```toml
 [dependencies]
 botway-rs = "0.2"
@@ -19,16 +21,18 @@ botway-rs = "0.2"
 > after creating a new rust botway project, you need to use your tokens to connect with your bot.
 
 ```rust
-use futures::StreamExt;
-use telegram_bot::*;
-
+use teloxide::{prelude::*, utils::command::BotCommands};
+use std::error::Error;
 use botway_rs::get;
 
 #[tokio::main]
-async fn main() -> Result<(), Error> {
-	let api = Api::new(get("token"));
-	let mut stream = api.stream();
-	...
+async fn main() {
+    pretty_env_logger::init();
+    log::info!("Starting command bot...");
+
+    let bot = Bot::new(get("token"));
+
+    teloxide::commands_repl(bot, answer, Command::ty()).await;
 }
 ...
 ```
