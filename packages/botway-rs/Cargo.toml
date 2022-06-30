@@ -1,6 +1,6 @@
 [package]
 name = "botway-rs"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Abdfn", "David Tomson"]
 edition = "2021"
 description = "Rust client package for Botway."
