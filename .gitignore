@@ -20,6 +20,7 @@ node_modules
 date.txt
 tag.txt
 /packages/botway.js/lib
+/test
 
 # Python
 __pycache__/
