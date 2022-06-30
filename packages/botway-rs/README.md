@@ -13,7 +13,7 @@
 
 ```toml
 [dependencies]
-botway-rs = "0.2"
+botway-rs = "0.2.11"
 ```
 
 ## Usage
