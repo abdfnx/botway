@@ -54,3 +54,11 @@ updates:
       interval: "daily"
     reviewers:
       - abdfnx
+  
+  - package-ecosystem: "nuget"
+    directory: "/packages/botnet"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - abdfnx
+      - david-tomson
