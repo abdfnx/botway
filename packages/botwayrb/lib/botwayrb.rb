@@ -18,7 +18,7 @@ module Botwayrb
 
     def get_token()
       if get_bot_info("lang") != "ruby"
-        raise Error, "ERROR: Botway is not running in Ruby"
+        raise Error, "ERROR: Your Bot language is not Ruby"
       else
         BotwatConfig["botway"]["bots"][get_bot_info("name")]["bot_token"]
       end
@@ -26,7 +26,7 @@ module Botwayrb
 
     def get_app_id()
       if get_bot_info("lang") != "ruby"
-        raise Error, "ERROR: Botway is not running in Ruby"
+        raise Error, "ERROR: Your Bot language is not Ruby"
       else
         if get_bot_info("type") == "slack"
           BotwatConfig["botway"]["bots"][get_bot_info("name")]["bot_app_token"]
@@ -38,9 +38,9 @@ module Botwayrb
 
     def get_guild_id(serverName)
       if get_bot_info("lang") != "ruby"
-        raise Error, "ERROR: Botway is not running in Ruby"
+        raise Error, "ERROR: Your Bot language is not Ruby"
       elsif get_bot_info("type") != "discord"
-        raise Error, "ERROR: This function/feature is only working with discord bots."
+        raise Error, "ERROR: This function/feature is only working with discord bots"
       else
         BotwatConfig["botway"]["bots"][get_bot_info("name")]["guilds"][serverName]["server_id"]
       end
@@ -48,9 +48,9 @@ module Botwayrb
 
     def get_signing_secret()
       if get_bot_info("lang") != "ruby"
-        raise Error, "ERROR: Botway is not running in Ruby"
+        raise Error, "ERROR: Your Bot language is not Ruby"
       elsif get_bot_info("type") != "slack"
-        raise Error, "ERROR: This function/feature is only working with slack bots."
+        raise Error, "ERROR: This function/feature is only working with slack bots"
       else
         BotwatConfig["botway"]["bots"][get_bot_info("name")]["signing_secret"]
       end

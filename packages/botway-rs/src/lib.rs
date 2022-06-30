@@ -50,7 +50,7 @@ fn get_bot_info(value: &str) -> String {
 // ```
 pub fn get(value_to_get: &str) -> String {
     if get_bot_info("lang") != "rust" {
-        "ERROR: Botway is not configured for rust".to_string()
+        "ERROR: Your Bot language is not Rust".to_string()
     } else {
         let json = Json::from_str(&return_path()).unwrap();
 
@@ -74,7 +74,7 @@ pub fn get(value_to_get: &str) -> String {
 // ```
 pub fn get_guild_id(server_name: &str) -> String {
     if get_bot_info("lang") != "rust" {
-        "ERROR: Botway is not configured for rust".to_string()
+        "ERROR: Your Bot language is not Rust".to_string()
     } else if get_bot_info("type") != "discord" {
         "ERROR: This function/feature is only working with discord bots.".to_string()
     } else {

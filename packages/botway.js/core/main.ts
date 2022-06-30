@@ -22,7 +22,7 @@ const getBotInfo = (value: string) => {
 
 export const GetToken = () => {
   if (getBotInfo("lang") != "nodejs") {
-    console.log("ERROR: Botway is not running in NodeJS");
+    console.log("ERROR: Your Bot framework is not NodeJS");
   } else {
     try {
       const contents = readFileSync(BOTWAY_CONFIG_PATH, "utf8");
@@ -38,7 +38,7 @@ export const GetToken = () => {
 
 export const GetAppId = () => {
   if (getBotInfo("lang") != "nodejs") {
-    console.log("ERROR: Botway is not running in NodeJS");
+    console.log("ERROR: Your Bot framework is not NodeJS");
   } else {
     try {
       const contents = readFileSync(BOTWAY_CONFIG_PATH, "utf8");
@@ -58,11 +58,11 @@ export const GetAppId = () => {
 
 export const GetGuildId = (serverName: string) => {
   if (getBotInfo("lang") != "nodejs") {
-    console.log("ERROR: Botway is not running in NodeJS");
+    console.log("ERROR: Your Bot framework is not NodeJS");
   } else {
     if (getBotInfo("type") != "discord") {
       console.log(
-        "ERROR: This function/feature is only working with discord bots."
+        "ERROR: This function/feature is only working with discord bots"
       );
     } else {
       try {
@@ -82,11 +82,11 @@ export const GetGuildId = (serverName: string) => {
 
 export const GetSigningSecret = () => {
   if (getBotInfo("lang") != "nodejs") {
-    console.log("ERROR: Botway is not running in NodeJS");
+    console.log("ERROR: Your Bot framework is not NodeJS");
   } else {
     if (getBotInfo("type") != "slack") {
       console.log(
-        "ERROR: This function/feature is only working with slack bots."
+        "ERROR: This function/feature is only working with slack bots"
       );
     } else {
       try {

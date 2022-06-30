@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/std@0.137.0/encoding/yaml.ts";
+import { parse } from "https://deno.land/std/encoding/yaml.ts";
 import { readJson } from "./json.ts";
 
 let botwayConfigPath: any = Deno.env.get("HOME") + "/.botway" + "/botway.json";
@@ -17,7 +17,7 @@ const getBotInfo = (value: string) => {
 
 export const getToken = () => {
   if (getBotInfo("lang") != "deno") {
-    console.log("ERROR: Botway is not running in Deno");
+    console.log("ERROR: Your Bot framework is not Deno");
   } else {
     try {
       return botwayConfig["botway"]["bots"][getBotInfo("name")]["bot_token"];
@@ -29,7 +29,7 @@ export const getToken = () => {
 
 export const getAppId = () => {
   if (getBotInfo("lang") != "deno") {
-    console.log("ERROR: Botway is not running in Deno");
+    console.log("ERROR: Your Bot framework is not Deno");
   } else {
     try {
       if (getBotInfo("type") == "slack") {
@@ -47,7 +47,7 @@ export const getAppId = () => {
 
 export const getGuildId = (serverName: string) => {
   if (getBotInfo("lang") != "deno") {
-    console.log("ERROR: Botway is not running in Deno");
+    console.log("ERROR: Your Bot framework is not Deno");
   } else if (getBotInfo("type") != "discord") {
     console.log(
       "ERROR: This function/feature is only working with discord bots"
@@ -65,7 +65,7 @@ export const getGuildId = (serverName: string) => {
 
 export const getSigningSecret = () => {
   if (getBotInfo("lang") != "deno") {
-    console.log("ERROR: Botway is not running in Deno");
+    console.log("ERROR: Your Bot framework is not Deno");
   } else if (getBotInfo("type") != "slack") {
     console.log("ERROR: This function/feature is only working with slack bots");
   } else {
