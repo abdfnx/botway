@@ -1,6 +1,7 @@
 package new
 
 import (
+	"github.com/abdfnx/botway/templates/discord/crystal"
 	"github.com/abdfnx/botway/templates/discord/deno"
 	"github.com/abdfnx/botway/templates/discord/go"
 	"github.com/abdfnx/botway/templates/discord/nodejs"
@@ -31,5 +32,7 @@ func DiscordHandler(m model) {
 		rust.DiscordRust(opts.BotName, "fleet")
 	} else if m.PlatformChoice == 0 && m.LangChoice == 5 {
 		deno.DiscordDeno(opts.BotName)
+	} else if m.PlatformChoice == 0 && m.LangChoice == 7 {
+		crystal.DiscordCrystal(opts.BotName)
 	}
 }

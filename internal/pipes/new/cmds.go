@@ -53,8 +53,14 @@ func updateLangs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 							m.LangChoice = 1
 						}
 					} else {
-						if m.LangChoice > 5 {
-							m.LangChoice = 5
+						if m.PlatformChoice == 0 {
+							if m.LangChoice > 7 {
+								m.LangChoice = 7
+							}
+						} else {
+							if m.LangChoice > 5 {
+								m.LangChoice = 5
+							}
 						}
 					}
 
@@ -138,6 +144,10 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		l = "Ruby"
 	} else if m.LangChoice == 4 {
 		l = "Rust"
+	} else if m.LangChoice == 6 {
+		l = "C#"
+	} else if m.LangChoice == 7 {
+		l = "Crystal"
 	}
 
 	if err := conf.Load(file.Provider(constants.BotwayConfigFile), json.Parser()); err != nil {
@@ -212,6 +222,22 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 
 		if m.LangChoice == 5 {
 			respone += "fileloader.ts"
+		}
+
+		if m.LangChoice == 6 {
+			respone = CSharpGitIgnore()
+		}
+
+		if m.LangChoice == 7 {
+			respone = `/docs/
+/lib/
+/bin/
+/.shards/
+*.dwarf
+
+# Libraries don't need dependency lock
+# Dependencies will be locked in applications that use them
+/shard.lock`
 		}
 
 		dotGitIgnoreFileContent := respone + "\n*.lock"
