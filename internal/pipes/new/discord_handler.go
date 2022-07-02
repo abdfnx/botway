@@ -3,6 +3,7 @@ package new
 import (
 	"github.com/abdfnx/botway/templates/discord/crystal"
 	"github.com/abdfnx/botway/templates/discord/csharp"
+	"github.com/abdfnx/botway/templates/discord/dart"
 	"github.com/abdfnx/botway/templates/discord/deno"
 	"github.com/abdfnx/botway/templates/discord/go"
 	"github.com/abdfnx/botway/templates/discord/nodejs"
@@ -37,5 +38,7 @@ func DiscordHandler(m model) {
 		csharp.DiscordCsharp(opts.BotName)
 	} else if m.PlatformChoice == 0 && m.LangChoice == 7 {
 		crystal.DiscordCrystal(opts.BotName)
+	} else if m.PlatformChoice == 0 && m.LangChoice == 8 {
+		dart.DiscordDart(opts.BotName)
 	}
 }

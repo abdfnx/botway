@@ -59,6 +59,8 @@ func BotLang(m model) string {
 		return "csharp"
 	} else if m.LangChoice == 7 {
 		return "crystal"
+	} else if m.LangChoice == 8 {
+		return "dart"
 	}
 
 	return ""
@@ -97,6 +99,8 @@ func BotStartCmd(m model) string {
 		return "dotnet run"
 	} else if m.LangChoice == 7 {
 		return "crystal run src/main.cr"
+	} else if m.LangChoice == 8 {
+		return "dart run src/main.dart"
 	}
 
 	return ""
@@ -127,6 +131,8 @@ func BotPM(m model) string {
 		return "dotnet"
 	} else if m.LangChoice == 7 {
 		return "shards"
+	} else if m.LangChoice == 8 {
+		return "pub"
 	}
 
 	return ""

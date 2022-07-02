@@ -54,8 +54,8 @@ func updateLangs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 						}
 					} else {
 						if m.PlatformChoice == 0 {
-							if m.LangChoice > 7 {
-								m.LangChoice = 7
+							if m.LangChoice > 8 {
+								m.LangChoice = 8
 							}
 						} else {
 							if m.LangChoice > 5 {
@@ -148,6 +148,8 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		l = "C#"
 	} else if m.LangChoice == 7 {
 		l = "Crystal"
+	} else if m.LangChoice == 8 {
+		l = "Dart"
 	}
 
 	if err := conf.Load(file.Provider(constants.BotwayConfigFile), json.Parser()); err != nil {

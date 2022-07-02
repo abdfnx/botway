@@ -24,7 +24,7 @@ func Content(arg, templateName, botName string) string {
 		os.Exit(0)
 	}
 
-	if strings.Contains(arg, ".dockerfile") || strings.Contains(arg, "Cargo.toml") || strings.Contains(arg, "shard.yml") {
+	if strings.Contains(arg, ".dockerfile") || strings.Contains(arg, "Cargo.toml") || strings.Contains(arg, "shard.yml") || strings.Contains(arg, "pubspec.yaml") {
 		return strings.ReplaceAll(respone, "{{.BotName}}", botName)
 	} else {
 		return respone
