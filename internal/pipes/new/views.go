@@ -115,9 +115,10 @@ func pmsView(m model) string {
 
 	if m.LangChoice == 0 {
 		langs += fmt.Sprintf(
-			"%s\n%s",
+			"%s\n%s\n%s",
 			checkbox("pip", pm == 0),
 			checkbox("pipenv", pm == 1),
+			checkbox("poetry", pm == 2),
 		)
 	} else if m.LangChoice == 1 {
 		if m.PlatformChoice == 2 {
@@ -192,6 +193,9 @@ func finalView(m model) string {
 
 				case 1:
 					pm = "pipenv"
+
+				case 2:
+					pm = "poetry"
 			}
 
 		case 1:

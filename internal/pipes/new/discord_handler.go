@@ -5,10 +5,11 @@ import (
 	"github.com/abdfnx/botway/templates/discord/csharp"
 	"github.com/abdfnx/botway/templates/discord/dart"
 	"github.com/abdfnx/botway/templates/discord/deno"
-	"github.com/abdfnx/botway/templates/discord/go"
+	dgo "github.com/abdfnx/botway/templates/discord/go"
 	"github.com/abdfnx/botway/templates/discord/nodejs"
 	"github.com/abdfnx/botway/templates/discord/python/pip"
 	"github.com/abdfnx/botway/templates/discord/python/pipenv"
+	"github.com/abdfnx/botway/templates/discord/python/poetry"
 	"github.com/abdfnx/botway/templates/discord/ruby"
 	"github.com/abdfnx/botway/templates/discord/rust"
 )
@@ -18,6 +19,8 @@ func DiscordHandler(m model) {
 		pip.DiscordPythonPip(opts.BotName)
 	} else if m.PlatformChoice == 0 && m.LangChoice == 0 && m.PMCoice == 1 {
 		pipenv.DiscordPythonPipenv(opts.BotName)
+	} else if m.PlatformChoice == 0 && m.LangChoice == 0 && m.PMCoice == 2 {
+		poetry.DiscordPythonPoetry(opts.BotName)
 	} else if m.PlatformChoice == 0 && m.LangChoice == 1 {
 		dgo.DiscordGo(opts.BotName)
 	} else if m.PlatformChoice == 0 && m.LangChoice == 2 && m.PMCoice == 0 {

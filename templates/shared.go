@@ -1,6 +1,7 @@
 package templates
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"strings"
@@ -8,6 +9,7 @@ import (
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/resto/core/api"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/spf13/viper"
 )
 
 func Content(arg, templateName, botName string) string {
@@ -24,11 +26,17 @@ func Content(arg, templateName, botName string) string {
 		os.Exit(0)
 	}
 
-	if strings.Contains(arg, ".dockerfile") || strings.Contains(arg, "Cargo.toml") || strings.Contains(arg, "shard.yml") || strings.Contains(arg, "pubspec.yaml") {
-		return strings.ReplaceAll(respone, "{{.BotName}}", botName)
-	} else {
-		return respone
+	if strings.Contains(arg, ".dockerfile") || strings.Contains(arg, "Cargo.toml") || strings.Contains(arg, "shard.yml") || strings.Contains(arg, "pubspec.yaml") || strings.Contains(arg, "pyproject.toml") {
+		respone = strings.ReplaceAll(respone, "{{.BotName}}", botName)
+
+		viper.SetConfigType("json")
+
+		viper.ReadConfig(bytes.NewBuffer(constants.BotwayConfig))
+
+		respone = strings.ReplaceAll(respone, "{{.Author}}", viper.GetString("user.github_username"))
 	}
+
+	return respone
 }
 
 func CheckProject(botName, botType string) {

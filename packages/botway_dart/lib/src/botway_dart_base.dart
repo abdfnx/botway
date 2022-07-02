@@ -1,13 +1,13 @@
-import 'dart:io';
-import 'dart:convert';
-import 'package:yaml/yaml.dart';
-import 'package:path/path.dart' as p;
+import "dart:io";
+import "dart:convert";
+import "package:yaml/yaml.dart";
+import "package:path/path.dart" as p;
 
 /// This is Botway class
 class Botway {
   get_bot_info(String value) {
     if (File(".botway.yaml").existsSync()) {
-      String BotConfigFile = File('.botway.yaml').readAsStringSync();
+      String BotConfigFile = File(".botway.yaml").readAsStringSync();
       dynamic BotConfig = loadYaml(BotConfigFile);
 
       return BotConfig["bot"][value];
@@ -17,10 +17,10 @@ class Botway {
   }
 
   String? get HomePath =>
-      Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'];
+      Platform.environment["HOME"] ?? Platform.environment["USERPROFILE"];
 
   String BotwayConfigFile() {
-    File BWFile = File(p.join(HomePath.toString(), '.botway', 'botway.json'));
+    File BWFile = File(p.join(HomePath.toString(), ".botway", "botway.json"));
 
     if (BWFile.existsSync()) {
       return BWFile.readAsStringSync();

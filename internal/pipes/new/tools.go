@@ -81,6 +81,12 @@ func BotStartCmd(m model) string {
 		} else {
 			return `pipenv run python3 ./src/main.py`
 		}
+	} else if m.LangChoice == 0 && m.PMCoice == 2 {
+		if runtime.GOOS == "windows" {
+			return `poetry run .\src\main.py`
+		} else {
+			return `poetry run ./src/main.py`
+		}
 	} else if m.LangChoice == 1 {
 		if m.PlatformChoice == 2 {
 			return nodeCmd
@@ -111,6 +117,8 @@ func BotPM(m model) string {
 		return "pip"
 	} else if m.LangChoice == 0 && m.PMCoice == 1 {
 		return "pipenv"
+	} else if m.LangChoice == 0 && m.PMCoice == 2 {
+		return "poetry"
 	} else if m.LangChoice == 1  {
 		return "go mod"
 	} else if m.LangChoice == 2 && m.PMCoice == 0 {

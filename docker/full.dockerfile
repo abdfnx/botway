@@ -42,7 +42,7 @@ ENV PATH /go/bin:$PATH
 RUN rm "$(curl https://go.dev/VERSION?m=text).linux-amd64.tar.gz"
 
 ### deno ###
-RUN curl -fsSL https://deno.land/x/install/install.sh | sh
+RUN curl -fsSL https://deno.land/install.sh | sh
 ENV DENO_INSTALL="$HOME/.deno"
 ENV PATH="${DENO_INSTALL}/bin:${PATH}"
 
@@ -53,6 +53,9 @@ RUN wget \
 RUN tar -xzf gh.tar.gz
 RUN sudo mv "gh_$(curl https://get-latest.herokuapp.com/cli/cli/no-v)_linux_amd64/bin/gh" /usr/bin
 RUN rm -rf gh*
+
+### fleet ###
+RUN curl -L get.fleet.rs | sh
 
 ### pyenv ###
 RUN pip install tld --ignore-installed six distlib --user
@@ -65,6 +68,14 @@ RUN /bin/bash -c "bash"
 
 ### pipenv ###
 RUN curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python3
+
+# poetry
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+
+ENV PATH="/root/.poetry/bin:$PATH"
+RUN echo 'eval "$(poetry env install -q)"' >> ~/.bashrc
+RUN echo 'eval "$(poetry env shell -q)"' >> ~/.bashrc
+RUN /bin/bash -c "bash"
 
 ### rm old ~/.zshrc ###
 RUN sudo rm -rf $ZSHRC
