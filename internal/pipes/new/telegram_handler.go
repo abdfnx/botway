@@ -6,6 +6,7 @@ import (
 	"github.com/abdfnx/botway/templates/telegram/nodejs"
 	"github.com/abdfnx/botway/templates/telegram/python/pip"
 	"github.com/abdfnx/botway/templates/telegram/python/pipenv"
+	"github.com/abdfnx/botway/templates/telegram/python/poetry"
 	"github.com/abdfnx/botway/templates/telegram/ruby"
 	"github.com/abdfnx/botway/templates/telegram/rust"
 )
@@ -15,6 +16,8 @@ func TelegramHandler(m model) {
 		pip.TelegramPythonPip(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 0 && m.PMCoice == 1 {
 		pipenv.TelegramPythonPipenv(opts.BotName)
+	} else if m.PlatformChoice == 1 && m.LangChoice == 0 && m.PMCoice == 2 {
+		poetry.TelegramPythonPoetry(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 1 {
 		tgo.TelegramGo(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMCoice == 0 {
