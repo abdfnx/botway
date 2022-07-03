@@ -1,5 +1,7 @@
 name: botway_dart
-description: Dart client package for Botway.
+description: |
+  Dart client package for Botway.
+  After creating a new dart botway project, you need to use your tokens to connect with your bot.
 version: 0.1.1
 homepage: https://github.com/abdfnx/botway
 
