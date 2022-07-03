@@ -25,7 +25,7 @@ func DockerBuildImage() {
 
 	messageStyle := lipgloss.NewStyle().Foreground(constants.CYAN_COLOR)
 
-	fmt.Println(messageStyle.Render("\n\n======= Start Building Your Bot Docker Image 🐳 ======\n"))
+	fmt.Println(messageStyle.Render("\n\n======= Start Building Your Bot Docker Image 🐳 ======\n\n"))
 
 	if _, err := os.Stat(".botway.yaml"); err != nil {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))

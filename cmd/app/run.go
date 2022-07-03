@@ -4,10 +4,10 @@ import "github.com/spf13/cobra"
 
 func RunCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:    "run",
-		Short:  "Run a local command using variables from the active environment",
-		PreRun: func(cmd *cobra.Command, args []string) { CheckDir() },
-		RunE:   Contextualize(handler.Run, handler.Panic),
+		Use:                "run",
+		Short:              "Run a local command using variables from the active environment",
+		PreRun:             func(cmd *cobra.Command, args []string) { CheckDir() },
+		RunE:               Contextualize(handler.Run, handler.Panic),
 		DisableFlagParsing: true,
 	}
 

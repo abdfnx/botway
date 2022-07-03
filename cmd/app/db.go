@@ -12,20 +12,20 @@ func DBCMD() *cobra.Command {
 	}
 
 	dbAddCmd := &cobra.Command{
-		Use:     "add",
-		Short:   "Add a new database plugin to your bot project",
-		Args:    cobra.ExactArgs(1),
-		PreRun:  func(cmd *cobra.Command, args []string) { CheckDir() },
-		RunE:    Contextualize(handler.Add, handler.Panic),
+		Use:    "add",
+		Short:  "Add a new database plugin to your bot project",
+		Args:   cobra.ExactArgs(1),
+		PreRun: func(cmd *cobra.Command, args []string) { CheckDir() },
+		RunE:   Contextualize(handler.Add, handler.Panic),
 	}
 
 	dbConnectCmd := &cobra.Command{
-		Use:     "connect",
-		Short:   "Open an interactive shell to a database",
-		PreRun:  func(cmd *cobra.Command, args []string) { CheckDir() },
-		RunE:    Contextualize(handler.Connect, handler.Panic),
+		Use:    "connect",
+		Short:  "Open an interactive shell to a database",
+		PreRun: func(cmd *cobra.Command, args []string) { CheckDir() },
+		RunE:   Contextualize(handler.Connect, handler.Panic),
 	}
-	
+
 	cmd.AddCommand(dbAddCmd)
 	cmd.AddCommand(dbConnectCmd)
 

@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
-	"os"
-	"path/filepath"
 	"time"
 
 	"github.com/abdfnx/botway/constants"
@@ -177,8 +175,6 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 	} else {
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" ☁️ Deployment is live"))
 	}
-
-	os.Remove(filepath.Join("config", "botway-deploy-tokens.env"))
 
 	return nil
 }

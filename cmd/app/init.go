@@ -1,8 +1,8 @@
 package app
 
 import (
-	"github.com/abdfnx/botway/internal/pipes/initx"
 	"github.com/abdfnx/botway/internal/options"
+	"github.com/abdfnx/botway/internal/pipes/initx"
 	"github.com/spf13/cobra"
 )
 
@@ -12,8 +12,8 @@ var opts = options.InitOptions{
 
 func InitCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "init",
-		Short: "Initialize ~/.botway",
+		Use:     "init",
+		Short:   "Initialize ~/.botway",
 		Aliases: []string{"."},
 		Run: func(cmd *cobra.Command, args []string) {
 			if opts.Docker {

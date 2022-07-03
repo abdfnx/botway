@@ -7,10 +7,10 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/internal/options"
-	"github.com/abdfnx/botway/internal/pipes/token/discord"
+	discord_token "github.com/abdfnx/botway/internal/pipes/token/discord"
 	"github.com/abdfnx/botway/internal/pipes/token/discord/guilds"
-	"github.com/abdfnx/botway/internal/pipes/token/slack"
-	"github.com/abdfnx/botway/internal/pipes/token/telegram"
+	slack_token "github.com/abdfnx/botway/internal/pipes/token/slack"
+	telegram_token "github.com/abdfnx/botway/internal/pipes/token/telegram"
 	"github.com/spf13/cobra"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -41,7 +41,7 @@ func TokenSetCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "set",
 		Short: "Create or update the value of a bot token.",
-		Args: cobra.MinimumNArgs(1),
+		Args:  cobra.MinimumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) > 0 {
 				if opts.Discord {
@@ -70,10 +70,10 @@ func TokenGetCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "get",
 		Short: "Get the value of a bot token.",
-		Args: cobra.MinimumNArgs(1),
+		Args:  cobra.MinimumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) > 0 {
-				fmt.Println(messageStyle.Render(strings.ToUpper(args[0]) + " Bot Token ==> ") + gjson.Get(string(constants.BotwayConfig), "botway.bots." + args[0] + ".bot_token").String())
+				fmt.Println(messageStyle.Render(strings.ToUpper(args[0])+" Bot Token ==> ") + gjson.Get(string(constants.BotwayConfig), "botway.bots."+args[0]+".bot_token").String())
 			} else {
 				fmt.Println("Bot Name is required")
 			}
@@ -85,13 +85,13 @@ func TokenGetCMD() *cobra.Command {
 
 func TokenRemoveCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "remove",
-		Short: "Remove a bot token.",
+		Use:     "remove",
+		Short:   "Remove a bot token.",
 		Aliases: []string{"rm", "delete"},
-		Args: cobra.MinimumNArgs(1),
+		Args:    cobra.MinimumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) > 0 {
-				remove, err := sjson.Delete(string(constants.BotwayConfig), "botway.bots." + args[0] + ".bot_token")
+				remove, err := sjson.Delete(string(constants.BotwayConfig), "botway.bots."+args[0]+".bot_token")
 
 				if err != nil {
 					fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))

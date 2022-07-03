@@ -6,8 +6,8 @@ import (
 
 func RailwayCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "railway",
-		Short: "Manage your work with Railway",
+		Use:     "railway",
+		Short:   "Manage your work with Railway",
 		Aliases: []string{"rw"},
 	}
 
@@ -20,10 +20,10 @@ func RailwayCMD() *cobra.Command {
 
 func RailwayLinkCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "link",
-		Short: "Associate existing project with current directory, may specify projectId as an argument",
-		PreRun:  func(cmd *cobra.Command, args []string) { CheckDir() },
-		RunE:  Contextualize(handler.Link, handler.Panic),
+		Use:    "link",
+		Short:  "Associate existing project with current directory, may specify projectId as an argument",
+		PreRun: func(cmd *cobra.Command, args []string) { CheckDir() },
+		RunE:   Contextualize(handler.Link, handler.Panic),
 	}
 
 	return cmd
@@ -31,10 +31,10 @@ func RailwayLinkCMD() *cobra.Command {
 
 func RailwayUnLinkCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "unlink",
-		Short: "Disassociate project from current directory",
-		PreRun:  func(cmd *cobra.Command, args []string) { CheckDir() },
-		RunE:  Contextualize(handler.Unlink, handler.Panic),
+		Use:    "unlink",
+		Short:  "Disassociate project from current directory",
+		PreRun: func(cmd *cobra.Command, args []string) { CheckDir() },
+		RunE:   Contextualize(handler.Unlink, handler.Panic),
 	}
 
 	return cmd
@@ -42,10 +42,10 @@ func RailwayUnLinkCMD() *cobra.Command {
 
 func RailwayInfoCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "info",
-		Short: "Show information about the current project",
-		PreRun:  func(cmd *cobra.Command, args []string) { CheckDir() },
-		RunE:  Contextualize(handler.Info, handler.Panic),
+		Use:    "info",
+		Short:  "Show information about the current project",
+		PreRun: func(cmd *cobra.Command, args []string) { CheckDir() },
+		RunE:   Contextualize(handler.Info, handler.Panic),
 	}
 
 	return cmd

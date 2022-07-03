@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	handler = railway.NewRW()
+	handler      = railway.NewRW()
 	messageStyle = lipgloss.NewStyle().Foreground(constants.CYAN_COLOR)
 )
 
@@ -61,7 +61,7 @@ func CheckDir() {
 	}
 }
 
-var addCmd = func (cmd, cmdx *cobra.Command) *cobra.Command {
+var addCmd = func(cmd, cmdx *cobra.Command) *cobra.Command {
 	cmd.AddCommand(cmdx)
 
 	return cmd
