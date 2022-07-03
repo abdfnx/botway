@@ -1,0 +1,8 @@
+bot:
+  name: mybot
+  platform: telegram
+  lang: nodejs
+  package_manager: pnpm
+  create_bot_editor: true
+  editor: gh codespaces # or gitpod or code server
+  create_repo: false

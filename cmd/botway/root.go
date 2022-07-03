@@ -24,9 +24,9 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 
 	// Root command
 	var rootCmd = &cobra.Command{
-		Use:   "botway <subcommand> [flags]",
+		Use:     "botway <subcommand> [flags]",
 		Version: version,
-		Short:  desc,
+		Short:   desc,
 		Example: heredoc.Doc(""),
 		Annotations: map[string]string{
 			"help:tellus": heredoc.Doc(`
