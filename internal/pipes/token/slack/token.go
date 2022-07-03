@@ -28,15 +28,15 @@ func (m model) AddToken() {
 		panic(err)
 	}
 
-	tokenContent, _ := sjson.Set(string(botwayConfig), "botway.bots." + m.botName + ".bot_token", m.inputs[0].Value())
-	appTokenContent, _ := sjson.Set(tokenContent, "botway.bots." + m.botName + ".bot_app_token", m.inputs[1].Value())
-	signingSecretContent, _ := sjson.Set(appTokenContent, "botway.bots." + m.botName + ".signing_secret", m.inputs[1].Value())
+	tokenContent, _ := sjson.Set(string(botwayConfig), "botway.bots."+m.botName+".bot_token", m.inputs[0].Value())
+	appTokenContent, _ := sjson.Set(tokenContent, "botway.bots."+m.botName+".bot_app_token", m.inputs[1].Value())
+	signingSecretContent, _ := sjson.Set(appTokenContent, "botway.bots."+m.botName+".signing_secret", m.inputs[1].Value())
 
 	remove := os.Remove(token_shared.BotwayConfigPath)
 
 	if remove != nil {
-        log.Fatal(remove)
-    }
+		log.Fatal(remove)
+	}
 
 	newBotConfig := os.WriteFile(token_shared.BotwayConfigPath, []byte(signingSecretContent), 0644)
 
@@ -51,7 +51,7 @@ func (m model) AddToken() {
 
 func initialModel(botName string) model {
 	m := model{
-		inputs: make([]textinput.Model, 3),
+		inputs:  make([]textinput.Model, 3),
 		botName: botName,
 	}
 
@@ -62,17 +62,17 @@ func initialModel(botName string) model {
 		t.CursorStyle = token_shared.CursorStyle
 
 		switch i {
-			case 0:
-				t.Placeholder = "Slack Token"
-				t.Focus()
-				t.PromptStyle = token_shared.FocusedStyle
-				t.TextStyle = token_shared.FocusedStyle
+		case 0:
+			t.Placeholder = "Slack Token"
+			t.Focus()
+			t.PromptStyle = token_shared.FocusedStyle
+			t.TextStyle = token_shared.FocusedStyle
 
-			case 1:
-				t.Placeholder = "Slack App Token"
-			
-			case 2:
-				t.Placeholder = "Slack Signing Secret"
+		case 1:
+			t.Placeholder = "Slack App Token"
+
+		case 2:
+			t.Placeholder = "Slack Signing Secret"
 		}
 
 		m.inputs[i] = t
@@ -87,49 +87,49 @@ func (m model) Init() tea.Cmd {
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
-		case tea.KeyMsg:
-			switch msg.String() {
-				case "ctrl+c", "esc":
-					return m, tea.Quit
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "ctrl+c", "esc":
+			return m, tea.Quit
 
-				case "tab", "shift+tab", "enter", "up", "down":
-					s := msg.String()
+		case "tab", "shift+tab", "enter", "up", "down":
+			s := msg.String()
 
-					if s == "enter" {
-						m.AddToken()
+			if s == "enter" {
+				m.AddToken()
 
-						return m, tea.Quit
-					}
-
-					if s == "up" || s == "shift+tab" {
-						m.focusIndex--
-					} else {
-						m.focusIndex++
-					}
-
-					if m.focusIndex > len(m.inputs) {
-						m.focusIndex = 0
-					} else if m.focusIndex < 0 {
-						m.focusIndex = len(m.inputs)
-					}
-
-					cmds := make([]tea.Cmd, len(m.inputs))
-
-					for i := 0; i <= len(m.inputs)-1; i++ {
-						if i == m.focusIndex {
-							cmds[i] = m.inputs[i].Focus()
-							m.inputs[i].PromptStyle = token_shared.FocusedStyle
-							m.inputs[i].TextStyle = token_shared.FocusedStyle
-							continue
-						}
-
-						m.inputs[i].Blur()
-						m.inputs[i].PromptStyle = token_shared.NoStyle
-						m.inputs[i].TextStyle = token_shared.NoStyle
-					}
-
-					return m, tea.Batch(cmds...)
+				return m, tea.Quit
 			}
+
+			if s == "up" || s == "shift+tab" {
+				m.focusIndex--
+			} else {
+				m.focusIndex++
+			}
+
+			if m.focusIndex > len(m.inputs) {
+				m.focusIndex = 0
+			} else if m.focusIndex < 0 {
+				m.focusIndex = len(m.inputs)
+			}
+
+			cmds := make([]tea.Cmd, len(m.inputs))
+
+			for i := 0; i <= len(m.inputs)-1; i++ {
+				if i == m.focusIndex {
+					cmds[i] = m.inputs[i].Focus()
+					m.inputs[i].PromptStyle = token_shared.FocusedStyle
+					m.inputs[i].TextStyle = token_shared.FocusedStyle
+					continue
+				}
+
+				m.inputs[i].Blur()
+				m.inputs[i].PromptStyle = token_shared.NoStyle
+				m.inputs[i].TextStyle = token_shared.NoStyle
+			}
+
+			return m, tea.Batch(cmds...)
+		}
 	}
 
 	cmd := m.updateInputs(msg)

@@ -1,10 +1,11 @@
+//go:build !windows
 // +build !windows
 
 package ios
 
 import (
-	"os"
 	"errors"
+	"os"
 )
 
 func (s *IOStreams) EnableVirtualTerminalProcessing() error {

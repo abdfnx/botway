@@ -75,15 +75,15 @@ func initialModel() model {
 		t.CharLimit = 32
 
 		switch i {
-			case 0:
-				t.Placeholder = "GitHub Username"
-				t.Focus()
-				t.PromptStyle = token_shared.FocusedStyle
-				t.TextStyle = token_shared.FocusedStyle
+		case 0:
+			t.Placeholder = "GitHub Username"
+			t.Focus()
+			t.PromptStyle = token_shared.FocusedStyle
+			t.TextStyle = token_shared.FocusedStyle
 
-			case 1:
-				t.Placeholder = "Docker Hub ID"
-				t.CharLimit = 64
+		case 1:
+			t.Placeholder = "Docker Hub ID"
+			t.CharLimit = 64
 		}
 
 		m.inputs[i] = t
@@ -98,49 +98,49 @@ func (m model) Init() tea.Cmd {
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
-		case tea.KeyMsg:
-			switch msg.String() {
-				case "ctrl+c", "esc":
-					return m, tea.Quit
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "ctrl+c", "esc":
+			return m, tea.Quit
 
-				case "tab", "shift+tab", "enter", "up", "down":
-					s := msg.String()
+		case "tab", "shift+tab", "enter", "up", "down":
+			s := msg.String()
 
-					if s == "enter" && m.focusIndex == len(m.inputs) {
-						m.InitCmd()
+			if s == "enter" && m.focusIndex == len(m.inputs) {
+				m.InitCmd()
 
-						return m, tea.Quit
-					}
-
-					if s == "up" || s == "shift+tab" {
-						m.focusIndex--
-					} else {
-						m.focusIndex++
-					}
-
-					if m.focusIndex > len(m.inputs) {
-						m.focusIndex = 0
-					} else if m.focusIndex < 0 {
-						m.focusIndex = len(m.inputs)
-					}
-
-					cmds := make([]tea.Cmd, len(m.inputs))
-
-					for i := 0; i <= len(m.inputs)-1; i++ {
-						if i == m.focusIndex {
-							cmds[i] = m.inputs[i].Focus()
-							m.inputs[i].PromptStyle = token_shared.FocusedStyle
-							m.inputs[i].TextStyle = token_shared.FocusedStyle
-							continue
-						}
-
-						m.inputs[i].Blur()
-						m.inputs[i].PromptStyle = token_shared.NoStyle
-						m.inputs[i].TextStyle = token_shared.NoStyle
-					}
-
-					return m, tea.Batch(cmds...)
+				return m, tea.Quit
 			}
+
+			if s == "up" || s == "shift+tab" {
+				m.focusIndex--
+			} else {
+				m.focusIndex++
+			}
+
+			if m.focusIndex > len(m.inputs) {
+				m.focusIndex = 0
+			} else if m.focusIndex < 0 {
+				m.focusIndex = len(m.inputs)
+			}
+
+			cmds := make([]tea.Cmd, len(m.inputs))
+
+			for i := 0; i <= len(m.inputs)-1; i++ {
+				if i == m.focusIndex {
+					cmds[i] = m.inputs[i].Focus()
+					m.inputs[i].PromptStyle = token_shared.FocusedStyle
+					m.inputs[i].TextStyle = token_shared.FocusedStyle
+					continue
+				}
+
+				m.inputs[i].Blur()
+				m.inputs[i].PromptStyle = token_shared.NoStyle
+				m.inputs[i].TextStyle = token_shared.NoStyle
+			}
+
+			return m, tea.Batch(cmds...)
+		}
 	}
 
 	cmd := m.updateInputs(msg)

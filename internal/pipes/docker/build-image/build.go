@@ -37,7 +37,7 @@ func DockerBuildImage() {
 	viper.ReadConfig(bytes.NewBuffer(constants.BotConfig))
 
 	buildCmd := viper.GetString("docker.cmds.build")
-	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots." + viper.GetString("bot.name") + ".path").String()
+	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots."+viper.GetString("bot.name")+".path").String()
 
 	cmd := exec.Command("bash", "-c", buildCmd)
 

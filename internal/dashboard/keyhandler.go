@@ -23,45 +23,45 @@ func (b *Bubble) handleKeys(msg tea.KeyMsg) tea.Cmd {
 	}
 
 	switch {
-		// Quit
-		case key.Matches(msg, b.keyMap.Quit):
-			return tea.Quit
+	// Quit
+	case key.Matches(msg, b.keyMap.Quit):
+		return tea.Quit
 
-		// Down
-		case key.Matches(msg, b.keyMap.Down):
-			b.scrollView("down")
+	// Down
+	case key.Matches(msg, b.keyMap.Down):
+		b.scrollView("down")
 
-		// Up
-		case key.Matches(msg, b.keyMap.Up):
-			b.scrollView("up")
+	// Up
+	case key.Matches(msg, b.keyMap.Up):
+		b.scrollView("up")
 
-		// Left
-		case key.Matches(msg, b.keyMap.Left):
-			b.scrollView("left")
+	// Left
+	case key.Matches(msg, b.keyMap.Left):
+		b.scrollView("left")
 
-		// Right
-		case key.Matches(msg, b.keyMap.Right):
-			b.scrollView("right")
+	// Right
+	case key.Matches(msg, b.keyMap.Right):
+		b.scrollView("right")
 
-		// Escape
-		case key.Matches(msg, b.keyMap.Esc):
-			cmds = append(cmds, b.resetView())
+	// Escape
+	case key.Matches(msg, b.keyMap.Esc):
+		cmds = append(cmds, b.resetView())
 
-		// Swap view
-		case key.Matches(msg, b.keyMap.SwapView):
-			switch b.activeBox {
-				case components.BotListView:
-					b.switchActiveView(components.BotInfoView)
+	// Swap view
+	case key.Matches(msg, b.keyMap.SwapView):
+		switch b.activeBox {
+		case components.BotListView:
+			b.switchActiveView(components.BotInfoView)
 
-				default:
-					b.switchActiveView(components.BotListView)
-			}
+		default:
+			b.switchActiveView(components.BotListView)
+		}
 
-		// Open bot project at Railway
-		case key.Matches(msg, b.keyMap.OpenAtRailway):
-			bot_project_id := gjson.Get(string(constants.RailwayConfig), "projects." + strings.ToLower(b.botInfo("path")) + ".project").String()
+	// Open bot project at Railway
+	case key.Matches(msg, b.keyMap.OpenAtRailway):
+		bot_project_id := gjson.Get(string(constants.RailwayConfig), "projects."+strings.ToLower(b.botInfo("path"))+".project").String()
 
-			OpenBrowser("https://railway.app/project/" + bot_project_id)
+		OpenBrowser("https://railway.app/project/" + bot_project_id)
 	}
 
 	return tea.Batch(cmds...)

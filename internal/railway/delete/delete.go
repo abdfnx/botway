@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	listHeight = 4
+	listHeight        = 4
 	titleStyle        = lipgloss.NewStyle().Bold(true)
 	questionStyle     = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("#04B575"))
 	itemStyle         = lipgloss.NewStyle().PaddingLeft(2)
@@ -20,11 +20,13 @@ var (
 )
 
 type item string
+
 var shouldDelete bool
 var projectName string
+
 type itemDelegate struct{}
 
-func (i item) FilterValue() string { return "" }
+func (i item) FilterValue() string                               { return "" }
 func (d itemDelegate) Height() int                               { return 1 }
 func (d itemDelegate) Spacing() int                              { return 0 }
 func (d itemDelegate) Update(msg tea.Msg, m *list.Model) tea.Cmd { return nil }
@@ -61,29 +63,29 @@ func (m model) Init() tea.Cmd {
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
-		case tea.WindowSizeMsg:
-			m.list.SetWidth(msg.Width)
+	case tea.WindowSizeMsg:
+		m.list.SetWidth(msg.Width)
 
-			return m, nil
+		return m, nil
 
-		case tea.KeyMsg:
-			switch keypress := msg.String(); keypress {
-				case "ctrl+c":
-					m.quitting = true
+	case tea.KeyMsg:
+		switch keypress := msg.String(); keypress {
+		case "ctrl+c":
+			m.quitting = true
 
-					os.Exit(0)
+			os.Exit(0)
 
-					return m, tea.Quit
+			return m, tea.Quit
 
-				case "enter":
-					i, ok := m.list.SelectedItem().(item)
+		case "enter":
+			i, ok := m.list.SelectedItem().(item)
 
-					if ok {
-						m.choice = string(i)
-					}
-
-					return m, tea.Quit
+			if ok {
+				m.choice = string(i)
 			}
+
+			return m, tea.Quit
+		}
 	}
 
 	var cmd tea.Cmd

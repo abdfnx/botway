@@ -3,13 +3,13 @@ package keymap
 import "github.com/charmbracelet/bubbles/key"
 
 type KeyMap struct {
-	Quit     	  key.Binding
-	Down     	  key.Binding
-	Up       	  key.Binding
-	Left     	  key.Binding
-	Right    	  key.Binding
-	Esc      	  key.Binding
-	SwapView 	  key.Binding
+	Quit          key.Binding
+	Down          key.Binding
+	Up            key.Binding
+	Left          key.Binding
+	Right         key.Binding
+	Esc           key.Binding
+	SwapView      key.Binding
 	OpenAtRailway key.Binding
 	PageDown      key.Binding
 	PageUp        key.Binding

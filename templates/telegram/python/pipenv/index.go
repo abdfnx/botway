@@ -14,7 +14,6 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-
 func TelegramPythonPipenv(botName string) {
 	pythonPath := "python3"
 

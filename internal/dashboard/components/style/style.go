@@ -45,14 +45,14 @@ var (
 	PaginatorInactiveDot = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{Light: "250", Dark: "238"}).Render("•")
 
 	ListSelected = lipgloss.NewStyle().
-		Background(theme.AppTheme.SelectedListItemColor).
-		Foreground(theme.AppTheme.UnselectedListItemColor)
+			Background(theme.AppTheme.SelectedListItemColor).
+			Foreground(theme.AppTheme.UnselectedListItemColor)
 
 	AbstractInfo = lipgloss.NewStyle().
-		Bold(false).
-		Align(lipgloss.Center).
-		Height(3).
-		Padding(1, 2)
+			Bold(false).
+			Align(lipgloss.Center).
+			Height(3).
+			Padding(1, 2)
 
 	KeyStyle = lipgloss.NewStyle().
 			Align(lipgloss.Left).
@@ -64,5 +64,5 @@ var (
 			Padding(0, 2)
 
 	StatusBar = lipgloss.NewStyle().
-		Height(components.StatusBarHeight)
+			Height(components.StatusBarHeight)
 )

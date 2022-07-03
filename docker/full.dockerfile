@@ -1,12 +1,34 @@
 FROM frolvlad/alpine-glibc:alpine-3.14_glibc-2.33
 
 ### variables ###
-ENV PKGS="zip unzip git curl npm rust py3-pip openssl openssl-dev libsodium ffmpeg cargo lld clang build-base abuild binutils opus autoconf automake libtool m4 youtube-dl binutils-doc gcc-doc python3-dev neofetch zsh sudo make lsof wget gcc asciidoctor ca-certificates bash-completion htop jq less llvm nano vim ruby-full ruby-dev libffi-dev"
+ENV PKGS="zip unzip git curl npm py3-pip openssl openssl-dev libsodium ffmpeg lld clang build-base abuild binutils opus autoconf automake libtool m4 youtube-dl binutils-doc gcc-doc python3-dev neofetch zsh sudo make lsof wget gcc asciidoctor ca-certificates bash-completion htop jq less llvm nano vim ruby-full ruby-dev libffi-dev"
 ENV ZSHRC=".zshrc"
 
 ### install packages ###
 RUN apk upgrade && \
     apk add --update $PKGS
+
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:$PATH
+
+RUN set -eux; \
+    apkArch="$(apk --print-arch)"; \
+    case "$apkArch" in \
+    x86_64) rustArch='x86_64-unknown-linux-musl' ;; \
+    aarch64) rustArch='aarch64-unknown-linux-musl' ;; \
+    *) echo >&2 "unsupported architecture: $apkArch"; exit 1 ;; \
+    esac; \
+    \
+    url="https://static.rust-lang.org/rustup/dist/${rustArch}/rustup-init"; \
+    wget "$url"; \
+    chmod +x rustup-init; \
+    ./rustup-init -y --no-modify-path --default-toolchain nightly; \
+    rm rustup-init; \
+    chmod -R a+w $RUSTUP_HOME $CARGO_HOME; \
+    rustup --version; \
+    cargo --version; \
+    rustc --version;
 
 ### setup user ###
 USER root
@@ -55,7 +77,7 @@ RUN sudo mv "gh_$(curl https://get-latest.herokuapp.com/cli/cli/no-v)_linux_amd6
 RUN rm -rf gh*
 
 ### fleet ###
-RUN curl -L get.fleet.rs | sh
+RUN cargo install fleet-rs
 
 ### pyenv ###
 RUN pip install tld --ignore-installed six distlib --user

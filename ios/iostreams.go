@@ -1,24 +1,24 @@
 package ios
 
 import (
-	"os"
-	"io"
-	"fmt"
-	"time"
 	"bytes"
 	"errors"
+	"fmt"
+	"io"
+	"io/ioutil"
+	"os"
 	"os/exec"
 	"strconv"
 	"strings"
-	"io/ioutil"
+	"time"
 
-	"golang.org/x/term"
-	"github.com/google/shlex"
 	"github.com/abdfnx/looker"
-	"github.com/muesli/termenv"
-	"github.com/mattn/go-isatty"
 	"github.com/briandowns/spinner"
+	"github.com/google/shlex"
 	"github.com/mattn/go-colorable"
+	"github.com/mattn/go-isatty"
+	"github.com/muesli/termenv"
+	"golang.org/x/term"
 )
 
 const DefaultWidth = 80

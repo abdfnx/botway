@@ -1,11 +1,11 @@
 package tools
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"net"
 	"strings"
-	"errors"
 
 	"github.com/AlecAivazis/survey/v2/terminal"
 	"github.com/spf13/cobra"

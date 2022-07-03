@@ -137,7 +137,7 @@ func (m *Viewport) HalfViewDown() (lines []string) {
 		return nil
 	}
 
-	m.SetYOffset(m.YOffset + m.Height / 2)
+	m.SetYOffset(m.YOffset + m.Height/2)
 
 	return m.visibleLines()
 }
@@ -147,7 +147,7 @@ func (m *Viewport) HalfViewUp() (lines []string) {
 		return nil
 	}
 
-	m.SetYOffset(m.YOffset - m.Height / 2)
+	m.SetYOffset(m.YOffset - m.Height/2)
 
 	return m.visibleLines()
 }
@@ -223,20 +223,20 @@ func (m Viewport) updateAsModel(msg tea.Msg) (Viewport, tea.Cmd) {
 	var cmd tea.Cmd
 
 	switch msg := msg.(type) {
-		case tea.KeyMsg:
-			switch {
-				case key.Matches(msg, m.KeyMap.PageDown):
-					m.ViewDown()
+	case tea.KeyMsg:
+		switch {
+		case key.Matches(msg, m.KeyMap.PageDown):
+			m.ViewDown()
 
-				case key.Matches(msg, m.KeyMap.PageUp):
-					m.ViewUp()
+		case key.Matches(msg, m.KeyMap.PageUp):
+			m.ViewUp()
 
-				case key.Matches(msg, m.KeyMap.Down):
-					m.LineDown(1)
+		case key.Matches(msg, m.KeyMap.Down):
+			m.LineDown(1)
 
-				case key.Matches(msg, m.KeyMap.Up):
-					m.LineUp(1)
-			}
+		case key.Matches(msg, m.KeyMap.Up):
+			m.LineUp(1)
+		}
 
 	case tea.MouseMsg:
 		if !m.MouseWheelEnabled {
@@ -244,11 +244,11 @@ func (m Viewport) updateAsModel(msg tea.Msg) (Viewport, tea.Cmd) {
 		}
 
 		switch msg.Type {
-			case tea.MouseWheelUp:
-				m.LineUp(m.MouseWheelDelta)
+		case tea.MouseWheelUp:
+			m.LineUp(m.MouseWheelDelta)
 
-			case tea.MouseWheelDown:
-				m.LineDown(m.MouseWheelDelta)
+		case tea.MouseWheelDown:
+			m.LineDown(m.MouseWheelDelta)
 		}
 	}
 

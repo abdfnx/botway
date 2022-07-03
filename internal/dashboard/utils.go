@@ -32,20 +32,20 @@ func OpenBrowser(url string) {
 	var err error
 
 	switch runtime.GOOS {
-		case "linux":
-			err = openInLinuxBrowser(url)
+	case "linux":
+		err = openInLinuxBrowser(url)
 
-		case "windows":
-			err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
+	case "windows":
+		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
 
-		case "darwin":
-			err = exec.Command("open", url).Start()
+	case "darwin":
+		err = exec.Command("open", url).Start()
 
-		case "android":
-			err = exec.Command("termux-open-url", url).Start()
+	case "android":
+		err = exec.Command("termux-open-url", url).Start()
 
-		default:
-			err = fmt.Errorf("unsupported platform")
+	default:
+		err = fmt.Errorf("unsupported platform")
 	}
 
 	if err != nil {

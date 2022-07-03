@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
-	token_shared "github.com/abdfnx/botway/internal/pipes/token"
 	"github.com/abdfnx/botway/internal/options"
+	token_shared "github.com/abdfnx/botway/internal/pipes/token"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/tidwall/gjson"
@@ -22,7 +22,7 @@ var opts = options.CommonOptions{
 
 func initialModel(o *options.CommonOptions) model {
 	m := model{
-		inputs: make([]textinput.Model, 2),
+		inputs:  make([]textinput.Model, 2),
 		botName: o.BotName,
 	}
 
@@ -35,15 +35,15 @@ func initialModel(o *options.CommonOptions) model {
 		t.CursorStyle = token_shared.CursorStyle
 
 		switch i {
-			case 0:
-				t.Placeholder = m.botName
-				t.Focus()
-				t.PromptStyle = token_shared.FocusedStyle
-				t.TextStyle = token_shared.FocusedStyle
+		case 0:
+			t.Placeholder = m.botName
+			t.Focus()
+			t.PromptStyle = token_shared.FocusedStyle
+			t.TextStyle = token_shared.FocusedStyle
 
-			case 1:
-				t.Placeholder = "delete my bot"
-				t.CharLimit = 13
+		case 1:
+			t.Placeholder = "delete my bot"
+			t.CharLimit = 13
 		}
 
 		m.inputs[i] = t
@@ -58,7 +58,7 @@ func (m model) RemoveCmd() {
 	}
 
 	// remove project dir
-	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots." + m.botName + ".path").String()
+	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots."+m.botName+".path").String()
 
 	if botPath == "" {
 		panic(errors.New("bot path not found"))
@@ -81,14 +81,14 @@ func (m model) RemoveCmd() {
 		return true
 	})
 
-	deleteBotFromBotsNamesList, _ := sjson.Delete(string(constants.BotwayConfig), "botway.bots_names." + i)
-	deleteBot, _ := sjson.Delete(deleteBotFromBotsNamesList, "botway.bots." + m.botName)
+	deleteBotFromBotsNamesList, _ := sjson.Delete(string(constants.BotwayConfig), "botway.bots_names."+i)
+	deleteBot, _ := sjson.Delete(deleteBotFromBotsNamesList, "botway.bots."+m.botName)
 
 	remove := os.Remove(constants.BotwayConfigFile)
 
 	if remove != nil {
-        log.Fatal(remove)
-    }
+		log.Fatal(remove)
+	}
 
 	newBotConfig := os.WriteFile(constants.BotwayConfigFile, []byte(deleteBot), 0644)
 
@@ -117,49 +117,49 @@ func (m model) Init() tea.Cmd {
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
-		case tea.KeyMsg:
-			switch msg.String() {
-				case "ctrl+c", "esc":
-					return m, tea.Quit
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "ctrl+c", "esc":
+			return m, tea.Quit
 
-				case "tab", "shift+tab", "enter", "up", "down":
-					s := msg.String()
+		case "tab", "shift+tab", "enter", "up", "down":
+			s := msg.String()
 
-					if s == "enter" && m.inputs[0].Value() == m.botName && m.inputs[1].Value() == "delete my bot" {
-						m.RemoveCmd()
+			if s == "enter" && m.inputs[0].Value() == m.botName && m.inputs[1].Value() == "delete my bot" {
+				m.RemoveCmd()
 
-						return m, tea.Quit
-					}
-
-					if s == "up" || s == "shift+tab" {
-						m.focusIndex--
-					} else {
-						m.focusIndex++
-					}
-
-					if m.focusIndex > len(m.inputs) {
-						m.focusIndex = 0
-					} else if m.focusIndex < 0 {
-						m.focusIndex = len(m.inputs)
-					}
-
-					cmds := make([]tea.Cmd, len(m.inputs))
-
-					for i := 0; i <= len(m.inputs)-1; i++ {
-						if i == m.focusIndex {
-							cmds[i] = m.inputs[i].Focus()
-							m.inputs[i].PromptStyle = token_shared.FocusedStyle
-							m.inputs[i].TextStyle = token_shared.FocusedStyle
-							continue
-						}
-
-						m.inputs[i].Blur()
-						m.inputs[i].PromptStyle = token_shared.NoStyle
-						m.inputs[i].TextStyle = token_shared.NoStyle
-					}
-
-					return m, tea.Batch(cmds...)
+				return m, tea.Quit
 			}
+
+			if s == "up" || s == "shift+tab" {
+				m.focusIndex--
+			} else {
+				m.focusIndex++
+			}
+
+			if m.focusIndex > len(m.inputs) {
+				m.focusIndex = 0
+			} else if m.focusIndex < 0 {
+				m.focusIndex = len(m.inputs)
+			}
+
+			cmds := make([]tea.Cmd, len(m.inputs))
+
+			for i := 0; i <= len(m.inputs)-1; i++ {
+				if i == m.focusIndex {
+					cmds[i] = m.inputs[i].Focus()
+					m.inputs[i].PromptStyle = token_shared.FocusedStyle
+					m.inputs[i].TextStyle = token_shared.FocusedStyle
+					continue
+				}
+
+				m.inputs[i].Blur()
+				m.inputs[i].PromptStyle = token_shared.NoStyle
+				m.inputs[i].TextStyle = token_shared.NoStyle
+			}
+
+			return m, tea.Batch(cmds...)
+		}
 	}
 
 	cmd := m.updateInputs(msg)

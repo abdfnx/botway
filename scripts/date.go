@@ -1,12 +1,12 @@
 package main
 
 import (
-    "fmt"
-    "time"
+	"fmt"
+	"time"
 )
 
 func main() {
-    currentTime := time.Now()
+	currentTime := time.Now()
 
-    fmt.Println("(" + currentTime.Format("2006-01-02") + ")")
+	fmt.Println("(" + currentTime.Format("2006-01-02") + ")")
 }

@@ -39,12 +39,12 @@ func (h *Handler) Add(ctx context.Context, req *entity.CommandRequest) error {
 		s := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
 		s.Suffix = fmt.Sprintf(" 🗄️ Adding %s plugin...", selectedPlugin)
 		s.Start()
-	
+
 		plugin, err := h.ctrl.CreatePlugin(ctx, &entity.CreatePluginRequest{
 			ProjectID: projectCfg.Project,
 			Plugin:    selectedPlugin,
 		})
-		
+
 		if err != nil {
 			s.Stop()
 
@@ -54,7 +54,7 @@ func (h *Handler) Add(ctx context.Context, req *entity.CommandRequest) error {
 		}
 
 		s.Stop()
-	
+
 		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" 🎉 Created plugin " + constants.BOLD.Render(plugin.Name)))
 	}

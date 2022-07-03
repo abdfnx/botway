@@ -28,13 +28,13 @@ func (m model) AddGuildId() {
 		panic(err)
 	}
 
-	checkBotType := gjson.Get(string(botwayConfig), "botway.bots." + m.inputs[0].Value() + ".type").String()
+	checkBotType := gjson.Get(string(botwayConfig), "botway.bots."+m.inputs[0].Value()+".type").String()
 
 	if checkBotType != "discord" {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" this command/feature only works with discord bots"))
 	} else {
-		newGuild, _ := sjson.Set(string(botwayConfig), "botway.bots." + m.inputs[0].Value() + ".guilds." + m.inputs[1].Value() + ".server_id", m.inputs[2].Value())
+		newGuild, _ := sjson.Set(string(botwayConfig), "botway.bots."+m.inputs[0].Value()+".guilds."+m.inputs[1].Value()+".server_id", m.inputs[2].Value())
 
 		remove := os.Remove(token_shared.BotwayConfigPath)
 
@@ -48,7 +48,7 @@ func (m model) AddGuildId() {
 			panic(newBotwayConfig)
 		}
 
-		bot_path := gjson.Get(string(botwayConfig), "botway.bots." + m.inputs[0].Value() + ".path").String()
+		bot_path := gjson.Get(string(botwayConfig), "botway.bots."+m.inputs[0].Value()+".path").String()
 		guildsPath := filepath.Join(bot_path, "config", "guilds.json")
 		guildsFile, err := ioutil.ReadFile(guildsPath)
 
@@ -88,18 +88,18 @@ func initialModel() model {
 		t.CursorStyle = token_shared.CursorStyle
 
 		switch i {
-			case 0:
-				t.Placeholder = "Discord Bot Name"
-				t.Focus()
-				t.PromptStyle = token_shared.FocusedStyle
-				t.TextStyle = token_shared.FocusedStyle
+		case 0:
+			t.Placeholder = "Discord Bot Name"
+			t.Focus()
+			t.PromptStyle = token_shared.FocusedStyle
+			t.TextStyle = token_shared.FocusedStyle
 
-			case 1:
-				t.Placeholder = "Discord Server Name"
+		case 1:
+			t.Placeholder = "Discord Server Name"
 
-			case 2:
-				t.Placeholder = "Discord Server ID"
-				t.CharLimit = 18
+		case 2:
+			t.Placeholder = "Discord Server ID"
+			t.CharLimit = 18
 		}
 
 		m.inputs[i] = t
@@ -114,49 +114,49 @@ func (m model) Init() tea.Cmd {
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
-		case tea.KeyMsg:
-			switch msg.String() {
-				case "ctrl+c", "esc":
-					return m, tea.Quit
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "ctrl+c", "esc":
+			return m, tea.Quit
 
-				case "tab", "shift+tab", "enter", "up", "down":
-					s := msg.String()
+		case "tab", "shift+tab", "enter", "up", "down":
+			s := msg.String()
 
-					if s == "enter" {
-						m.AddGuildId()
+			if s == "enter" {
+				m.AddGuildId()
 
-						return m, tea.Quit
-					}
-
-					if s == "up" || s == "shift+tab" {
-						m.focusIndex--
-					} else {
-						m.focusIndex++
-					}
-
-					if m.focusIndex > len(m.inputs) {
-						m.focusIndex = 0
-					} else if m.focusIndex < 0 {
-						m.focusIndex = len(m.inputs)
-					}
-
-					cmds := make([]tea.Cmd, len(m.inputs))
-
-					for i := 0; i <= len(m.inputs)-1; i++ {
-						if i == m.focusIndex {
-							cmds[i] = m.inputs[i].Focus()
-							m.inputs[i].PromptStyle = token_shared.FocusedStyle
-							m.inputs[i].TextStyle = token_shared.FocusedStyle
-							continue
-						}
-
-						m.inputs[i].Blur()
-						m.inputs[i].PromptStyle = token_shared.NoStyle
-						m.inputs[i].TextStyle = token_shared.NoStyle
-					}
-
-					return m, tea.Batch(cmds...)
+				return m, tea.Quit
 			}
+
+			if s == "up" || s == "shift+tab" {
+				m.focusIndex--
+			} else {
+				m.focusIndex++
+			}
+
+			if m.focusIndex > len(m.inputs) {
+				m.focusIndex = 0
+			} else if m.focusIndex < 0 {
+				m.focusIndex = len(m.inputs)
+			}
+
+			cmds := make([]tea.Cmd, len(m.inputs))
+
+			for i := 0; i <= len(m.inputs)-1; i++ {
+				if i == m.focusIndex {
+					cmds[i] = m.inputs[i].Focus()
+					m.inputs[i].PromptStyle = token_shared.FocusedStyle
+					m.inputs[i].TextStyle = token_shared.FocusedStyle
+					continue
+				}
+
+				m.inputs[i].Blur()
+				m.inputs[i].PromptStyle = token_shared.NoStyle
+				m.inputs[i].TextStyle = token_shared.NoStyle
+			}
+
+			return m, tea.Batch(cmds...)
+		}
 	}
 
 	cmd := m.updateInputs(msg)

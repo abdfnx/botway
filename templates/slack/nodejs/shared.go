@@ -72,7 +72,7 @@ func SlackNodejs(botName, pm string) {
 				log.Printf("error: %v\n", newPackageJson)
 			}
 
-			DockerfileContent := templates.Content(pm + ".dockerfile", "dockerfiles", botName)
+			DockerfileContent := templates.Content(pm+".dockerfile", "dockerfiles", botName)
 
 			indexFile := os.WriteFile(filepath.Join(botName, "src", "index.js"), []byte(IndexJSContent()), 0644)
 			dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent), 0644)
@@ -90,7 +90,7 @@ func SlackNodejs(botName, pm string) {
 				log.Fatal(dockerFile)
 			}
 
-			icmd := func () string {
+			icmd := func() string {
 				if pm == "npm" {
 					return " i " + Packages
 				} else {

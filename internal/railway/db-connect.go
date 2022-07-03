@@ -100,29 +100,29 @@ func commandExistsInPath(cmd string) bool {
 
 func isPluginValid(plugin string) bool {
 	switch plugin {
-		case "redis":
-			fallthrough
+	case "redis":
+		fallthrough
 
-		case "psql":
-			fallthrough
+	case "psql":
+		fallthrough
 
-		case "postgres":
-			fallthrough
+	case "postgres":
+		fallthrough
 
-		case "postgresql":
-			fallthrough
+	case "postgresql":
+		fallthrough
 
-		case "mysql":
-			fallthrough
+	case "mysql":
+		fallthrough
 
-		case "mongo":
-			fallthrough
+	case "mongo":
+		fallthrough
 
-		case "mongodb":
-			return true
+	case "mongodb":
+		return true
 
-		default:
-			return false
+	default:
+		return false
 	}
 }
 
@@ -131,57 +131,57 @@ func buildConnectCommand(plugin string, envs *entity.Envs) ([]string, map[string
 	var connectEnv map[string]string
 
 	switch plugin {
-		case "redis":
-			command = []string{"redis-cli", "-u", (*envs)["REDIS_URL"]}
+	case "redis":
+		command = []string{"redis-cli", "-u", (*envs)["REDIS_URL"]}
 
-		case "psql":
-			fallthrough
+	case "psql":
+		fallthrough
 
-		case "postgres":
-			fallthrough
+	case "postgres":
+		fallthrough
 
-		case "postgresql":
-			connectEnv = map[string]string{
-				"PGPASSWORD": (*envs)["PGPASSWORD"],
-			}
+	case "postgresql":
+		connectEnv = map[string]string{
+			"PGPASSWORD": (*envs)["PGPASSWORD"],
+		}
 
-			command = []string{
-				"psql",
-				"-U",
-				(*envs)["PGUSER"],
-				"-h",
-				(*envs)["PGHOST"],
-				"-p",
-				(*envs)["PGPORT"],
-				"-d",
-				(*envs)["PGDATABASE"],
-			}
+		command = []string{
+			"psql",
+			"-U",
+			(*envs)["PGUSER"],
+			"-h",
+			(*envs)["PGHOST"],
+			"-p",
+			(*envs)["PGPORT"],
+			"-d",
+			(*envs)["PGDATABASE"],
+		}
 
-		case "mongo":
-			fallthrough
+	case "mongo":
+		fallthrough
 
-		case "mongodb":
-			command = []string{
-				"mongo",
-				fmt.Sprintf(
-					"mongodb://%s:%s@%s:%s",
-					(*envs)["MONGOUSER"],
-					(*envs)["MONGOPASSWORD"],
-					(*envs)["MONGOHOST"],
-					(*envs)["MONGOPORT"],
-				),
-			}
+	case "mongodb":
+		command = []string{
+			"mongo",
+			fmt.Sprintf(
+				"mongodb://%s:%s@%s:%s",
+				(*envs)["MONGOUSER"],
+				(*envs)["MONGOPASSWORD"],
+				(*envs)["MONGOHOST"],
+				(*envs)["MONGOPORT"],
+			),
+		}
 
-		case "mysql":
-			command = []string{
-				"mysql",
-				fmt.Sprintf("-h%s", (*envs)["MYSQLHOST"]),
-				fmt.Sprintf("-u%s", (*envs)["MYSQLUSER"]),
-				fmt.Sprintf("-p%s", (*envs)["MYSQLPASSWORD"]),
-				fmt.Sprintf("--port=%s", (*envs)["MYSQLPORT"]),
-				"--protocol=TCP",
-				(*envs)["MYSQLDATABASE"],
-			}
+	case "mysql":
+		command = []string{
+			"mysql",
+			fmt.Sprintf("-h%s", (*envs)["MYSQLHOST"]),
+			fmt.Sprintf("-u%s", (*envs)["MYSQLUSER"]),
+			fmt.Sprintf("-p%s", (*envs)["MYSQLPASSWORD"]),
+			fmt.Sprintf("--port=%s", (*envs)["MYSQLPORT"]),
+			"--protocol=TCP",
+			(*envs)["MYSQLDATABASE"],
+		}
 	}
 
 	return command, connectEnv

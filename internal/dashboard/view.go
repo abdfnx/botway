@@ -30,52 +30,52 @@ func (b Bubble) View() string {
 	}
 
 	switch b.activeBox {
-		default:
-			var primaryBox string
-			var secondaryBox string
+	default:
+		var primaryBox string
+		var secondaryBox string
 
-			// set colors
-			primaryBoxBorderColor := theme.AppTheme.InactiveBoxBorderColor
-			secondaryBoxBorderColor := theme.AppTheme.InactiveBoxBorderColor
+		// set colors
+		primaryBoxBorderColor := theme.AppTheme.InactiveBoxBorderColor
+		secondaryBoxBorderColor := theme.AppTheme.InactiveBoxBorderColor
 
-			primaryTitle := b.styleTitle("Bot List")
-			secondaryTitle := b.styleSecondaryTitle("Botway")
+		primaryTitle := b.styleTitle("Bot List")
+		secondaryTitle := b.styleSecondaryTitle("Botway")
 
-			switch b.activeBox {
-				case components.BotListView:
-					primaryBoxBorderColor = theme.AppTheme.ActiveBoxBorderColor
+		switch b.activeBox {
+		case components.BotListView:
+			primaryBoxBorderColor = theme.AppTheme.ActiveBoxBorderColor
 
-				case components.BotInfoView:
-					secondaryBoxBorderColor = theme.AppTheme.ActiveBoxBorderColor
-			}
+		case components.BotInfoView:
+			secondaryBoxBorderColor = theme.AppTheme.ActiveBoxBorderColor
+		}
 
-			pageStyle := lipgloss.NewStyle().
-				PaddingLeft(components.BoxPadding).
-				PaddingRight(components.BoxPadding).
-				Border(lipgloss.RoundedBorder()).
-				BorderForeground(primaryBoxBorderColor).
-				Align(lipgloss.Center).Render
+		pageStyle := lipgloss.NewStyle().
+			PaddingLeft(components.BoxPadding).
+			PaddingRight(components.BoxPadding).
+			Border(lipgloss.RoundedBorder()).
+			BorderForeground(primaryBoxBorderColor).
+			Align(lipgloss.Center).Render
 
-			primaryBox = connectVert(
-				primaryTitle,
-				pageStyle(b.bubbles.primaryPaginator.GetContent()),
-			)
+		primaryBox = connectVert(
+			primaryTitle,
+			pageStyle(b.bubbles.primaryPaginator.GetContent()),
+		)
 
-			b.bubbles.secondaryViewport.Style = lipgloss.NewStyle().
-				PaddingLeft(components.BoxPadding).
-				PaddingRight(components.BoxPadding).
-				Border(lipgloss.RoundedBorder()).
-				BorderForeground(secondaryBoxBorderColor)
-			secondaryBox = connectVert(
-				secondaryTitle,
-				b.bubbles.secondaryViewport.View(),
-				b.bubbles.commandViewport.View(),
-			)
+		b.bubbles.secondaryViewport.Style = lipgloss.NewStyle().
+			PaddingLeft(components.BoxPadding).
+			PaddingRight(components.BoxPadding).
+			Border(lipgloss.RoundedBorder()).
+			BorderForeground(secondaryBoxBorderColor)
+		secondaryBox = connectVert(
+			secondaryTitle,
+			b.bubbles.secondaryViewport.View(),
+			b.bubbles.commandViewport.View(),
+		)
 
-			body = connectHorz(
-				primaryBox,
-				secondaryBox,
-			)
+		body = connectHorz(
+			primaryBox,
+			secondaryBox,
+		)
 	}
 
 	return connectVert(

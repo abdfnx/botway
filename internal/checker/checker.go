@@ -36,16 +36,16 @@ func Check(buildVersion string) {
 
 	if buildVersion != latestVersion {
 		fmt.Fprintf(stderr, "\n%s %s → %s",
-			constants.WARN_FOREGROUND.Render("There's a new version of ") +
-			constants.PRIMARY_FOREGROUND.Render("botway") +
-			constants.WARN_FOREGROUND.Render(" is avalaible:"),
+			constants.WARN_FOREGROUND.Render("There's a new version of ")+
+				constants.PRIMARY_FOREGROUND.Render("botway")+
+				constants.WARN_FOREGROUND.Render(" is avalaible:"),
 			constants.PRIMARY_FOREGROUND.Render(buildVersion),
-			constants.PRIMARY_FOREGROUND.Render(latestVersion) +
-			"\n",
+			constants.PRIMARY_FOREGROUND.Render(latestVersion)+
+				"\n",
 		)
 
 		if command() != "" {
-			fmt.Fprintf(stderr, constants.WARN_FOREGROUND.Render("To upgrade, run: %s"), constants.COMMAND_FOREGROUND.Render(command()) + "\n")
+			fmt.Fprintf(stderr, constants.WARN_FOREGROUND.Render("To upgrade, run: %s"), constants.COMMAND_FOREGROUND.Render(command())+"\n")
 		}
 	}
 }

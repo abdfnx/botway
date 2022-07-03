@@ -1,10 +1,10 @@
 package ios
 
 import (
-	"os"
 	"fmt"
-	"strings"
+	"os"
 	"strconv"
+	"strings"
 
 	"github.com/mgutz/ansi"
 )
@@ -195,26 +195,26 @@ func (c *ColorScheme) ColorFromString(s string) func(string) string {
 	var fn func(string) string
 
 	switch s {
-		case "bold":
-			fn = c.Bold
-		case "red":
-			fn = c.Red
-		case "yellow":
-			fn = c.Yellow
-		case "green":
-			fn = c.Green
-		case "gray":
-			fn = c.Gray
-		case "magenta":
-			fn = c.Magenta
-		case "cyan":
-			fn = c.Cyan
-		case "blue":
-			fn = c.Blue
-		default:
-			fn = func(s string) string {
-				return s
-			}
+	case "bold":
+		fn = c.Bold
+	case "red":
+		fn = c.Red
+	case "yellow":
+		fn = c.Yellow
+	case "green":
+		fn = c.Green
+	case "gray":
+		fn = c.Gray
+	case "magenta":
+		fn = c.Magenta
+	case "cyan":
+		fn = c.Cyan
+	case "blue":
+		fn = c.Blue
+	default:
+		fn = func(s string) string {
+			return s
+		}
 	}
 
 	return fn

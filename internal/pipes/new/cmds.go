@@ -18,24 +18,24 @@ import (
 
 func updatePlatforms(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
-		case tea.KeyMsg:
-			switch msg.String() {
-				case "j", "down":
-					m.PlatformChoice += 1
-					if m.PlatformChoice > 2 {
-						m.PlatformChoice = 3
-					}
-
-				case "k", "up":
-					m.PlatformChoice -= 1
-					if m.PlatformChoice < 0 {
-						m.PlatformChoice = 0
-					}
-
-				case "enter":
-					m.Platform = true
-					return m, frame()
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "j", "down":
+			m.PlatformChoice += 1
+			if m.PlatformChoice > 2 {
+				m.PlatformChoice = 3
 			}
+
+		case "k", "up":
+			m.PlatformChoice -= 1
+			if m.PlatformChoice < 0 {
+				m.PlatformChoice = 0
+			}
+
+		case "enter":
+			m.Platform = true
+			return m, frame()
+		}
 	}
 
 	return m, nil
@@ -43,39 +43,39 @@ func updatePlatforms(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 
 func updateLangs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
-		case tea.KeyMsg:
-			switch msg.String() {
-				case "j", "down":
-					m.LangChoice += 1
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "j", "down":
+			m.LangChoice += 1
 
-					if m.PlatformChoice == 2 {
-						if m.LangChoice > 1 {
-							m.LangChoice = 1
-						}
-					} else {
-						if m.PlatformChoice == 0 {
-							if m.LangChoice > 8 {
-								m.LangChoice = 8
-							}
-						} else {
-							if m.LangChoice > 5 {
-								m.LangChoice = 5
-							}
-						}
+			if m.PlatformChoice == 2 {
+				if m.LangChoice > 1 {
+					m.LangChoice = 1
+				}
+			} else {
+				if m.PlatformChoice == 0 {
+					if m.LangChoice > 8 {
+						m.LangChoice = 8
 					}
-
-				case "k", "up":
-					m.LangChoice -= 1
-
-					if m.LangChoice < 0 {
-						m.LangChoice = 0
+				} else {
+					if m.LangChoice > 5 {
+						m.LangChoice = 5
 					}
-
-				case "enter":
-					m.Lang = true
-
-					return m, frame()
+				}
 			}
+
+		case "k", "up":
+			m.LangChoice -= 1
+
+			if m.LangChoice < 0 {
+				m.LangChoice = 0
+			}
+
+		case "enter":
+			m.Lang = true
+
+			return m, frame()
+		}
 	}
 
 	return m, nil
@@ -83,41 +83,41 @@ func updateLangs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 
 func updatePMs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
-		case tea.KeyMsg:
-			switch msg.String() {
-				case "j", "down":
-					m.PMCoice += 1
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "j", "down":
+			m.PMCoice += 1
 
-					if m.LangChoice == 1 {
-						if m.PlatformChoice == 2 {
-							if m.PMCoice > 2 {
-								m.PMCoice = 2
-							}
-						} else {
-							if m.PMCoice > 0 {
-								m.PMCoice = 0
-							}
-						}
-					} else if m.LangChoice == 0 || m.LangChoice == 2 {
-						if m.PMCoice > 2 {
-							m.PMCoice = 2
-						}
-					} else {
-						if m.PMCoice > 1 {
-							m.PMCoice = 1
-						}
+			if m.LangChoice == 1 {
+				if m.PlatformChoice == 2 {
+					if m.PMCoice > 2 {
+						m.PMCoice = 2
 					}
-
-				case "k", "up":
-					m.PMCoice -= 1
-					if m.PMCoice < 0 {
+				} else {
+					if m.PMCoice > 0 {
 						m.PMCoice = 0
 					}
-
-				case "enter":
-					m.PM = true
-					return m, frame()
+				}
+			} else if m.LangChoice == 0 || m.LangChoice == 2 {
+				if m.PMCoice > 2 {
+					m.PMCoice = 2
+				}
+			} else {
+				if m.PMCoice > 1 {
+					m.PMCoice = 1
+				}
 			}
+
+		case "k", "up":
+			m.PMCoice -= 1
+			if m.PMCoice < 0 {
+				m.PMCoice = 0
+			}
+
+		case "enter":
+			m.PM = true
+			return m, frame()
+		}
 	}
 
 	return m, nil
@@ -184,8 +184,8 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		botwayConfig.SetDefault("bot.version", "0.1.0")
 
 		botwayConfig.SetDefault("docker.image", dockerImage)
-		botwayConfig.SetDefault("docker.cmds.build", "docker build -t " + dockerImage + " .")
-		botwayConfig.SetDefault("docker.cmds.run", "docker run -it " + dockerImage)
+		botwayConfig.SetDefault("docker.cmds.build", "docker build -t "+dockerImage+" .")
+		botwayConfig.SetDefault("docker.cmds.run", "docker run -it "+dockerImage)
 
 		if m.PlatformChoice == 0 {
 			guildsFile := os.WriteFile(filepath.Join(opts.BotName, "config", "guilds.json"), []byte("{}"), 0644)
@@ -211,7 +211,7 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 			}
 		}
 
-		respone, status, _, err := api.BasicGet("https://raw.githubusercontent.com/github/gitignore/main/" + l + ".gitignore", "GET", "", "", "", "", true, 0, nil)
+		respone, status, _, err := api.BasicGet("https://raw.githubusercontent.com/github/gitignore/main/"+l+".gitignore", "GET", "", "", "", "", true, 0, nil)
 
 		if err != nil {
 			fmt.Println(err.Error())

@@ -119,7 +119,7 @@ func BotPM(m model) string {
 		return "pipenv"
 	} else if m.LangChoice == 0 && m.PMCoice == 2 {
 		return "poetry"
-	} else if m.LangChoice == 1  {
+	} else if m.LangChoice == 1 {
 		return "go mod"
 	} else if m.LangChoice == 2 && m.PMCoice == 0 {
 		return "npm"

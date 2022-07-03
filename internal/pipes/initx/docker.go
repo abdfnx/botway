@@ -74,11 +74,11 @@ func DockerInit() {
 
 	env.ReadConfig(bytes.NewBuffer(secretsFile))
 
-	viper.SetDefault("botway.bots." + GetBotName() + ".bot_token", env.Get(bot_token))
+	viper.SetDefault("botway.bots."+GetBotName()+".bot_token", env.Get(bot_token))
 	viper.SetDefault("botway.bots_names", []string{GetBotName()})
 
 	if t != "telegram" {
-		viper.SetDefault("botway.bots." + GetBotName() + "." + cid, env.Get(app_token))
+		viper.SetDefault("botway.bots."+GetBotName()+"."+cid, env.Get(app_token))
 	}
 
 	if t == "discord" {
@@ -86,13 +86,13 @@ func DockerInit() {
 			panic(constants.Gerr)
 		} else {
 			guilds := gjson.Get(string(constants.Guilds), "guilds.#")
-			
+
 			for x := 0; x < int(guilds.Int()); x++ {
-				server := gjson.Get(string(constants.Guilds), "guilds." + fmt.Sprint(x)).String()
+				server := gjson.Get(string(constants.Guilds), "guilds."+fmt.Sprint(x)).String()
 
 				sgi := strings.ToUpper(server) + "_GUILD_ID"
 
-				viper.Set("botway.bots." + GetBotName() + ".guilds." + server + ".server_id", env.Get(sgi))
+				viper.Set("botway.bots."+GetBotName()+".guilds."+server+".server_id", env.Get(sgi))
 			}
 		}
 	}

@@ -29,7 +29,7 @@ func Start() {
 	fmt.Println(messageStyle.Render("\n\n======= Starting Your Bot 🤖 ======\n\n"))
 
 	startCmd := viper.GetString("bot.start_cmd")
-	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots." + viper.GetString("bot.name") + ".path").String()
+	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots."+viper.GetString("bot.name")+".path").String()
 
 	cmd := exec.Command("bash", "-c", startCmd)
 

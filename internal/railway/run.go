@@ -246,7 +246,7 @@ func (h *Handler) runInDocker(ctx context.Context, pwd string, envs *entity.Envs
 
 	// Start running the image
 	fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
-	fmt.Println(constants.INFO_FOREGROUND.Render(" 🚂 Running at " + constants.SUCCESS_FOREGROUND.Render("127.0.0.1:" + externalPort)))
+	fmt.Println(constants.INFO_FOREGROUND.Render(" 🚂 Running at " + constants.SUCCESS_FOREGROUND.Render("127.0.0.1:"+externalPort)))
 
 	runArgs := []string{"run", "--init", "--rm", "-p", fmt.Sprintf("127.0.0.1:%s:%s", externalPort, internalPort), "-e", fmt.Sprintf("PORT=%s", internalPort), "-d"}
 	// Build up env
@@ -296,13 +296,13 @@ func (h *Handler) runInDocker(ctx context.Context, pwd string, envs *entity.Envs
 func getAvailablePort() (string, error) {
 	searchRange := 64
 
-	for i := constants.RAIL_PORT; i < constants.RAIL_PORT + searchRange; i++ {
+	for i := constants.RAIL_PORT; i < constants.RAIL_PORT+searchRange; i++ {
 		if isAvailable(i) {
 			return strconv.Itoa(i), nil
 		}
 	}
 
-	return "", fmt.Errorf("Couldn't find available port between %d and %d", constants.RAIL_PORT, constants.RAIL_PORT + searchRange)
+	return "", fmt.Errorf("Couldn't find available port between %d and %d", constants.RAIL_PORT, constants.RAIL_PORT+searchRange)
 }
 
 func isAvailable(port int) bool {

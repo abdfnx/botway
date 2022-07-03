@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	bots = gjson.Get(string(constants.BotwayConfig), "botway.bots_names")
+	bots       = gjson.Get(string(constants.BotwayConfig), "botway.bots_names")
 	bots_count = gjson.Get(string(constants.BotwayConfig), "botway.bots_names.#").Int()
 )
 
@@ -21,7 +21,7 @@ func (b Bubble) botInfo(infoToGet string) string {
 		return true
 	})
 
-	bot := gjson.Get(string(constants.BotwayConfig), "botway.bots." + v)
+	bot := gjson.Get(string(constants.BotwayConfig), "botway.bots."+v)
 
 	if infoToGet == "token" {
 		return gjson.Get(bot.String(), "bot_token").String()

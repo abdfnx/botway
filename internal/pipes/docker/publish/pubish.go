@@ -37,7 +37,7 @@ func DockerPublishImage() {
 	viper.ReadConfig(bytes.NewBuffer(constants.BotConfig))
 
 	botImage := viper.GetString("docker.image")
-	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots." + viper.GetString("bot.name") + ".path").String()
+	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots."+viper.GetString("bot.name")+".path").String()
 	dockerPublish := dockerPath + " publish " + botImage
 
 	cmd := exec.Command("bash", "-c", dockerPublish)

@@ -77,7 +77,7 @@ func SetupTokensInDocker() {
 			guilds := gjson.Get(string(constants.Guilds), "guilds.#")
 
 			for x := 0; x < int(guilds.Int()); x++ {
-				server := gjson.Get(string(constants.Guilds), "guilds." + fmt.Sprint(x)).String()
+				server := gjson.Get(string(constants.Guilds), "guilds."+fmt.Sprint(x)).String()
 
 				sgi := strings.ToUpper(server) + "_GUILD_ID"
 				sgi_content := botwayConfig.GetString("botway.bots." + botName + ".guilds." + server + ".server_id")

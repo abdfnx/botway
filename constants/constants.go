@@ -12,57 +12,57 @@ import (
 var (
 	// Styles
 	PRIMARY_COLOR_HEX = "#1E90FF"
-	PRIMARY_COLOR = lipgloss.Color(PRIMARY_COLOR_HEX)
-	CYAN_COLOR = lipgloss.Color("#00FFFF")
-    GREEN_COLOR = "#04B575"
-  	RED_COLOR = "#FF4141"
-	YELLOW_COLOR = lipgloss.Color("178")
- 	GRAY_COLOR = lipgloss.AdaptiveColor{Light: "#9B9B9B", Dark: "#5C5C5C"}
+	PRIMARY_COLOR     = lipgloss.Color(PRIMARY_COLOR_HEX)
+	CYAN_COLOR        = lipgloss.Color("#00FFFF")
+	GREEN_COLOR       = "#04B575"
+	RED_COLOR         = "#FF4141"
+	YELLOW_COLOR      = lipgloss.Color("178")
+	GRAY_COLOR        = lipgloss.AdaptiveColor{Light: "#9B9B9B", Dark: "#5C5C5C"}
 
 	BOLD = lipgloss.NewStyle().Bold(true)
 
- 	SUCCESS_BACKGROUND = lipgloss.NewStyle().
-		Bold(true).
-		Foreground(lipgloss.Color("#FFF")).
-		Background(lipgloss.Color(GREEN_COLOR)).
-		PaddingLeft(1).
-		PaddingRight(1)
+	SUCCESS_BACKGROUND = lipgloss.NewStyle().
+				Bold(true).
+				Foreground(lipgloss.Color("#FFF")).
+				Background(lipgloss.Color(GREEN_COLOR)).
+				PaddingLeft(1).
+				PaddingRight(1)
 	FAIL_BACKGROUND = lipgloss.NewStyle().
-		Bold(true).
-		Foreground(lipgloss.Color("#FFF")).
-		Background(lipgloss.Color(RED_COLOR)).
-		PaddingLeft(1).
-		PaddingRight(1)
+			Bold(true).
+			Foreground(lipgloss.Color("#FFF")).
+			Background(lipgloss.Color(RED_COLOR)).
+			PaddingLeft(1).
+			PaddingRight(1)
 	INFO_BACKGROUND = lipgloss.NewStyle().
-		Bold(true).
-		Foreground(lipgloss.Color("#FFF")).
-		Background(lipgloss.Color(CYAN_COLOR)).
-		PaddingLeft(1).
-		PaddingRight(1)
+			Bold(true).
+			Foreground(lipgloss.Color("#FFF")).
+			Background(lipgloss.Color(CYAN_COLOR)).
+			PaddingLeft(1).
+			PaddingRight(1)
 	WARN_BACKGROUND = lipgloss.NewStyle().
-		Bold(true).
-		Foreground(lipgloss.Color("#FFF")).
-		Background(lipgloss.Color(YELLOW_COLOR)).
-		PaddingLeft(1).
-		PaddingRight(1)
+			Bold(true).
+			Foreground(lipgloss.Color("#FFF")).
+			Background(lipgloss.Color(YELLOW_COLOR)).
+			PaddingLeft(1).
+			PaddingRight(1)
 	PRIMARY_FOREGROUND = lipgloss.NewStyle().Bold(true).Foreground(PRIMARY_COLOR)
 	SUCCESS_FOREGROUND = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(GREEN_COLOR))
-	FAIL_FOREGROUND = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(RED_COLOR))
-	INFO_FOREGROUND = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(CYAN_COLOR))
+	FAIL_FOREGROUND    = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(RED_COLOR))
+	INFO_FOREGROUND    = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(CYAN_COLOR))
 	COMMAND_FOREGROUND = lipgloss.NewStyle().Bold(true).Foreground(GRAY_COLOR)
-	WARN_FOREGROUND = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(YELLOW_COLOR))
+	WARN_FOREGROUND    = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(YELLOW_COLOR))
 
 	// File Paths
-	HomeDir, _ = dfs.GetHomeDirectory()
-	BotwayConfigFile = filepath.Join(HomeDir, ".botway", "botway.json")
+	HomeDir, _         = dfs.GetHomeDirectory()
+	BotwayConfigFile   = filepath.Join(HomeDir, ".botway", "botway.json")
 	BotwayConfig, Berr = ioutil.ReadFile(BotwayConfigFile)
-	BotConfig, Oerr = ioutil.ReadFile(".botway.yaml")
-	Guilds, Gerr = ioutil.ReadFile(filepath.Join("config", "guilds.json"))
+	BotConfig, Oerr    = ioutil.ReadFile(".botway.yaml")
+	Guilds, Gerr       = ioutil.ReadFile(filepath.Join("config", "guilds.json"))
 
-	RailwayConfigFile = filepath.Join(HomeDir, ".railway", "config.json")
+	RailwayConfigFile   = filepath.Join(HomeDir, ".railway", "config.json")
 	RailwayConfig, Rerr = ioutil.ReadFile(RailwayConfigFile)
 
-	BotwayDirPath = func () string {
+	BotwayDirPath = func() string {
 		if runtime.GOOS == "windows" {
 			return `$HOME\\.botway`
 		} else {

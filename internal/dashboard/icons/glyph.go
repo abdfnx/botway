@@ -5,8 +5,8 @@ package icons
 import "fmt"
 
 type IconInfo struct {
-	icon       string
-	color      [3]uint8
+	icon  string
+	color [3]uint8
 }
 
 func (i *IconInfo) GetGlyph() string {

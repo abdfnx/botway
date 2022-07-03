@@ -40,7 +40,7 @@ func (m *Paginator) SetTotalPages(items int) int {
 
 	n := items / m.PerPage
 
-	if items % m.PerPage > 0 {
+	if items%m.PerPage > 0 {
 		n++
 	}
 
@@ -72,7 +72,7 @@ func (m *Paginator) GetSliceBounds() (start int, end int) {
 	length := m.Index + 1
 	start = m.Page * m.PerPage
 
-	end = minPaginator(m.Page * m.PerPage + m.PerPage, length)
+	end = minPaginator(m.Page*m.PerPage+m.PerPage, length)
 
 	return start, end
 }

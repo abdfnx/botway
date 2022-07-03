@@ -2,7 +2,7 @@ package new
 
 import (
 	"github.com/abdfnx/botway/templates/telegram/deno"
-	"github.com/abdfnx/botway/templates/telegram/go"
+	tgo "github.com/abdfnx/botway/templates/telegram/go"
 	"github.com/abdfnx/botway/templates/telegram/nodejs"
 	"github.com/abdfnx/botway/templates/telegram/python/pip"
 	"github.com/abdfnx/botway/templates/telegram/python/pipenv"

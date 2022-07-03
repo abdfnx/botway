@@ -11,14 +11,14 @@ import (
 type ErrorMsg error
 
 type Bubble struct {
-	bubbles        Bubbles
-	keyMap         keymap.KeyMap
-	nav            Nav
-	ready          bool
-	activeBox      int
-	lastActiveBox  int
-	width          int
-	height         int
+	bubbles       Bubbles
+	keyMap        keymap.KeyMap
+	nav           Nav
+	ready         bool
+	activeBox     int
+	lastActiveBox int
+	width         int
+	height        int
 }
 
 type Bubbles struct {
@@ -60,11 +60,11 @@ func InitialModel() Bubble {
 	}
 
 	return Bubble{
-		bubbles:        bubs,
-		ready:          false,
-		nav:            nav,
-		activeBox:      components.BotListView,
-		keyMap:         keymap.New(),
+		bubbles:   bubs,
+		ready:     false,
+		nav:       nav,
+		activeBox: components.BotListView,
+		keyMap:    keymap.New(),
 	}
 }
 

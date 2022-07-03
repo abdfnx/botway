@@ -173,95 +173,95 @@ func finalView(m model) string {
 	var platform, lang, pm string
 
 	switch m.PlatformChoice {
-		case 0:
-			platform = "Discord"
+	case 0:
+		platform = "Discord"
 
-		case 1:
-			platform = "Telegram"
+	case 1:
+		platform = "Telegram"
 
-		case 2:
-			platform = "Slack"
+	case 2:
+		platform = "Slack"
 	}
 
 	switch m.LangChoice {
+	case 0:
+		lang = "Python"
+
+		switch m.PMCoice {
 		case 0:
-			lang = "Python"
-
-			switch m.PMCoice {
-				case 0:
-					pm = "pip"
-
-				case 1:
-					pm = "pipenv"
-
-				case 2:
-					pm = "poetry"
-			}
+			pm = "pip"
 
 		case 1:
-			if m.PlatformChoice == 2 {
-				lang = "Node.js"
-
-				switch m.PMCoice {
-					case 0:
-						pm = "npm"
-
-					case 1:
-						pm = "yarn"
-
-					case 2:
-						pm = "pnpm"
-				}
-			} else {
-				lang = "Golang"
-				pm = "go mod"
-			}
+			pm = "pipenv"
 
 		case 2:
+			pm = "poetry"
+		}
+
+	case 1:
+		if m.PlatformChoice == 2 {
 			lang = "Node.js"
 
 			switch m.PMCoice {
-				case 0:
-					pm = "npm"
+			case 0:
+				pm = "npm"
 
-				case 1:
-					pm = "yarn"
+			case 1:
+				pm = "yarn"
 
-				case 2:
-					pm = "pnpm"
+			case 2:
+				pm = "pnpm"
 			}
+		} else {
+			lang = "Golang"
+			pm = "go mod"
+		}
 
-		case 3:
-			lang = "Ruby"
-			pm = "bundler"
+	case 2:
+		lang = "Node.js"
 
-		case 4:
-			lang = "Rust"
+		switch m.PMCoice {
+		case 0:
+			pm = "npm"
 
-			switch m.PMCoice {
-				case 0:
-					pm = "cargo"
+		case 1:
+			pm = "yarn"
 
-				case 1:
-					pm = "fleet"
-			}
+		case 2:
+			pm = "pnpm"
+		}
 
-		case 5:
-			lang = "Deno"
-			pm = "deno"
+	case 3:
+		lang = "Ruby"
+		pm = "bundler"
 
-		case 6:
-			lang = "C#"
-			pm = "dotnet"
-		
-		case 7:
-			lang = "Crystal"
-			pm = "shards"
+	case 4:
+		lang = "Rust"
 
-		case 8:
-			lang = "Dart"
-			pm = "pub"
+		switch m.PMCoice {
+		case 0:
+			pm = "cargo"
+
+		case 1:
+			pm = "fleet"
+		}
+
+	case 5:
+		lang = "Deno"
+		pm = "deno"
+
+	case 6:
+		lang = "C#"
+		pm = "dotnet"
+
+	case 7:
+		lang = "Crystal"
+		pm = "shards"
+
+	case 8:
+		lang = "Dart"
+		pm = "pub"
 	}
 
-	return "\n🤖 Noice, you're going to build a " + prim.Render(platform)  + " bot via " + prim.Render(lang) +  " with " + prim.Render(pm) + " package manager\n"
+	return "\n🤖 Noice, you're going to build a " + prim.Render(platform) + " bot via " + prim.Render(lang) + " with " + prim.Render(pm) + " package manager\n"
 }

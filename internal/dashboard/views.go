@@ -16,7 +16,7 @@ import (
 )
 
 var (
-	keyStyle = func (b Bubble) lipgloss.Style {
+	keyStyle = func(b Bubble) lipgloss.Style {
 		return style.KeyStyle.Width((b.bubbles.secondaryViewport.Width / 4) + 3)
 	}
 
@@ -34,7 +34,7 @@ var (
 				Render(v))
 	}
 
-	styles = func (b Bubble) lipgloss.Style {
+	styles = func(b Bubble) lipgloss.Style {
 		return lipgloss.NewStyle().Width(b.bubbles.secondaryViewport.Width)
 	}
 )
@@ -52,9 +52,9 @@ func (b Bubble) botListView() string {
 	bots.ForEach(func(i, value gjson.Result) bool {
 		v = value.String()
 
-		line := trunc(value.String(), b.bubbles.primaryPaginator.Width -2 )
+		line := trunc(value.String(), b.bubbles.primaryPaginator.Width-2)
 
-		lang := gjson.Get(string(constants.BotwayConfig), "botway.bots." + v + ".lang").String()
+		lang := gjson.Get(string(constants.BotwayConfig), "botway.bots."+v+".lang").String()
 
 		icon, color := icons.GetIcon(lang)
 
@@ -102,9 +102,9 @@ func (b Bubble) botInfoView() string {
 
 		version := drawKV("Bot Version", bot_config.GetString("bot.version"), b)
 
-		lang := drawKVColor("Language",  b.botInfo("lang"), theme.AppTheme.LightGray, b)
+		lang := drawKVColor("Language", b.botInfo("lang"), theme.AppTheme.LightGray, b)
 
-		bPath := trunc(b.botInfo("path"), (b.bubbles.secondaryViewport.Width * 2 / 3) - 3)
+		bPath := trunc(b.botInfo("path"), (b.bubbles.secondaryViewport.Width*2/3)-3)
 
 		bPath = drawKVColor("Path", bPath, theme.AppTheme.Blue, b)
 
@@ -140,9 +140,8 @@ func (b Bubble) botInfoView() string {
 		Render(b.homeView())
 }
 
-
 func (b Bubble) statusBarView() string {
-	count := fmt.Sprintf("Bot: %d/%d", b.bubbles.primaryPaginator.GetCursorIndex() + 1, int(bots_count))
+	count := fmt.Sprintf("Bot: %d/%d", b.bubbles.primaryPaginator.GetCursorIndex()+1, int(bots_count))
 
 	count = style.StatusBar.Copy().
 		Align(lipgloss.Right).

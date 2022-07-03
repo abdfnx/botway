@@ -9,7 +9,7 @@ import (
 type model struct {
 	PlatformChoice int
 	Platform       bool
-	Ticks      	   int
+	Ticks          int
 	Frames         int
 	Progress       float64
 	Loaded         bool

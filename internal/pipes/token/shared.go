@@ -27,26 +27,26 @@ var (
 
 	HomeDir, _       = dfs.GetHomeDirectory()
 	BotwayConfigPath = filepath.Join(HomeDir, ".botway", "botway.json")
-	UserSecret 	     = Generator()
+	UserSecret       = Generator()
 )
 
 func Generator() string {
 	rand.Seed(time.Now().Unix())
-    charSet := []rune("abcdedfghijklmnopqrstABCDEFGHIJKLMNOP1234567890")
+	charSet := []rune("abcdedfghijklmnopqrstABCDEFGHIJKLMNOP1234567890")
 
-    var output strings.Builder
+	var output strings.Builder
 
 	for i := 0; i < 32; i++ {
-        random := rand.Intn(len(charSet))
-        randomChar := charSet[random]
-        output.WriteRune(randomChar)
-    }
+		random := rand.Intn(len(charSet))
+		randomChar := charSet[random]
+		output.WriteRune(randomChar)
+	}
 
 	return output.String()
 }
 
 func EncryptTokens(token, id string) (string, string) {
-	var encryptAES = func (data string) string {
+	var encryptAES = func(data string) string {
 		text := []byte(data)
 		key := []byte(UserSecret)
 

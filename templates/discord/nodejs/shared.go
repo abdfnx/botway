@@ -72,7 +72,7 @@ func DiscordNodejs(botName, pm string) {
 				log.Printf("error: %v\n", newPackageJson)
 			}
 
-			DockerfileContent := templates.Content(pm + ".dockerfile", "dockerfiles", botName)
+			DockerfileContent := templates.Content(pm+".dockerfile", "dockerfiles", botName)
 
 			indexFile := os.WriteFile(filepath.Join(botName, "src", "index.js"), []byte(IndexJSContent()), 0644)
 			dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent), 0644)
@@ -90,7 +90,7 @@ func DiscordNodejs(botName, pm string) {
 				log.Fatal(dockerFile)
 			}
 
-			icmd := func () string {
+			icmd := func() string {
 				if pm == "npm" {
 					return " i " + Packages
 				} else {
@@ -116,7 +116,7 @@ func DiscordNodejs(botName, pm string) {
 			}
 
 			if runtime.GOOS == "windows" {
-				installWindowsBuildTools := exec.Command("powershell.exe", npmPath + " i --global --production --add-python-to-path windows-build-tools")
+				installWindowsBuildTools := exec.Command("powershell.exe", npmPath+" i --global --production --add-python-to-path windows-build-tools")
 
 				installWindowsBuildTools.Dir = botName
 				installWindowsBuildTools.Stdin = os.Stdin
