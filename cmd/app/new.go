@@ -13,6 +13,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var newOpts = &options.NewOptions{
+	CreateRepo: false,
+	RepoName:   "",
+	IsPrivate:  false,
+}
+
 func NewCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "new",
@@ -27,6 +33,10 @@ func NewCMD() *cobra.Command {
 				}
 
 				new.New(opts)
+
+				if newOpts.CreateRepo {
+					new.CreateRepo(newOpts, opts.BotName)
+				}
 			} else {
 				cmd.Help()
 			}
@@ -63,6 +73,10 @@ func NewCMD() *cobra.Command {
 			}
 		},
 	}
+
+	cmd.Flags().BoolVarP(&newOpts.CreateRepo, "repo", "r", false, "Create a new github repository under your account")
+	cmd.Flags().BoolVarP(&newOpts.IsPrivate, "private", "p", false, "Make your repository private")
+	cmd.Flags().StringVarP(&newOpts.RepoName, "repo-name", "n", "", "Name of the repository, if not specified, it will be the same as the bot name")
 
 	return cmd
 }

@@ -60,9 +60,3 @@ func CheckDir() {
 		panic(constants.FAIL_FOREGROUND.Render("You need to run this command in your bot directory"))
 	}
 }
-
-var addCmd = func(cmd, cmdx *cobra.Command) *cobra.Command {
-	cmd.AddCommand(cmdx)
-
-	return cmd
-}

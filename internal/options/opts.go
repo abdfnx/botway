@@ -12,6 +12,12 @@ type CommonOptions struct {
 	BotName string
 }
 
+type NewOptions struct {
+	CreateRepo bool
+	RepoName   string
+	IsPrivate  bool
+}
+
 type TokenAddOptions struct {
 	BotName  string
 	Discord  bool
