@@ -29,6 +29,8 @@ func DiscordHandler(m model) {
 		nodejs.DiscordNodejs(opts.BotName, "yarn")
 	} else if m.PlatformChoice == 0 && m.LangChoice == 2 && m.PMCoice == 2 {
 		nodejs.DiscordNodejs(opts.BotName, "pnpm")
+	} else if m.PlatformChoice == 0 && m.LangChoice == 2 && m.PMCoice == 3 {
+		nodejs.DiscordNodejs(opts.BotName, "bun")
 	} else if m.PlatformChoice == 0 && m.LangChoice == 3 {
 		ruby.DiscordRuby(opts.BotName)
 	} else if m.PlatformChoice == 0 && m.LangChoice == 4 && m.PMCoice == 0 {

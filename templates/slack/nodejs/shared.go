@@ -18,7 +18,7 @@ import (
 var Packages = "@slack/bolt botway.js"
 
 func IndexJSContent() string {
-	return templates.Content("index.js", "slack-nodejs", "")
+	return templates.Content("main.js", "slack-nodejs", "")
 }
 
 func Resources() string {
@@ -62,7 +62,7 @@ func SlackNodejs(botName, pm string) {
 			description, _ := sjson.Delete(version, "description")
 			keywords, _ := sjson.Delete(description, "keywords")
 			license, _ := sjson.Delete(keywords, "license")
-			main, _ := sjson.Set(string(license), "main", "src/index.js")
+			main, _ := sjson.Set(string(license), "main", "src/main.js")
 			author, _ := sjson.Delete(string(main), "author")
 			final, _ := sjson.Delete(author, "scripts")
 
@@ -74,7 +74,7 @@ func SlackNodejs(botName, pm string) {
 
 			DockerfileContent := templates.Content(pm+".dockerfile", "dockerfiles", botName)
 
-			indexFile := os.WriteFile(filepath.Join(botName, "src", "index.js"), []byte(IndexJSContent()), 0644)
+			indexFile := os.WriteFile(filepath.Join(botName, "src", "main.js"), []byte(IndexJSContent()), 0644)
 			dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent), 0644)
 			resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 

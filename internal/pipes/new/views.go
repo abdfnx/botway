@@ -106,10 +106,11 @@ func pmsView(m model) string {
 
 	langs := ""
 	nodePms := fmt.Sprintf(
-		"%s\n%s\n%s",
+		"%s\n%s\n%s\n%s",
 		checkbox("npm", pm == 0),
 		checkbox("yarn", pm == 1),
 		checkbox("pnpm", pm == 2),
+		checkbox("bun", pm == 3),
 	)
 	rubyPM := checkbox("bundler", pm == 0)
 
@@ -211,6 +212,9 @@ func finalView(m model) string {
 
 			case 2:
 				pm = "pnpm"
+
+			case 3:
+				pm = "bun"
 			}
 		} else {
 			lang = "Golang"
@@ -229,6 +233,9 @@ func finalView(m model) string {
 
 		case 2:
 			pm = "pnpm"
+
+		case 3:
+			pm = "bun"
 		}
 
 	case 3:

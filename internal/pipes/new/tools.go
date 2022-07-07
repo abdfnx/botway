@@ -67,7 +67,7 @@ func BotLang(m model) string {
 }
 
 func BotStartCmd(m model) string {
-	nodeCmd := "node src/index.js"
+	nodeCmd := "node src/main.js"
 
 	if m.LangChoice == 0 && m.PMCoice == 0 {
 		if runtime.GOOS == "windows" {
@@ -127,6 +127,8 @@ func BotPM(m model) string {
 		return "yarn"
 	} else if m.LangChoice == 2 && m.PMCoice == 2 {
 		return "pnpm"
+	} else if m.LangChoice == 2 && m.PMCoice == 3 {
+		return "bun"
 	} else if m.LangChoice == 3 {
 		return "bundler"
 	} else if m.LangChoice == 4 && m.PMCoice == 0 {

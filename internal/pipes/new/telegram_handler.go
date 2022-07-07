@@ -28,6 +28,8 @@ func TelegramHandler(m model) {
 		nodejs.TelegramNodejs(opts.BotName, "yarn")
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMCoice == 2 {
 		nodejs.TelegramNodejs(opts.BotName, "pnpm")
+	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMCoice == 3 {
+		nodejs.TelegramNodejs(opts.BotName, "bun")
 	} else if m.PlatformChoice == 1 && m.LangChoice == 3 {
 		ruby.TelegramRuby(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 4 && m.PMCoice == 0 {

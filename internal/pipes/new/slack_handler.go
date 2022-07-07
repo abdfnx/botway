@@ -20,5 +20,7 @@ func SlackHandler(m model) {
 		nodejs.SlackNodejs(opts.BotName, "yarn")
 	} else if m.PlatformChoice == 2 && m.LangChoice == 1 && m.PMCoice == 2 {
 		nodejs.SlackNodejs(opts.BotName, "pnpm")
+	} else if m.PlatformChoice == 2 && m.LangChoice == 1 && m.PMCoice == 3 {
+		nodejs.SlackNodejs(opts.BotName, "bun")
 	}
 }
