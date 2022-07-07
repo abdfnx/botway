@@ -1,6 +1,8 @@
 package new
 
 import (
+	"github.com/abdfnx/botway/templates/telegram/csharp"
+	"github.com/abdfnx/botway/templates/telegram/dart"
 	"github.com/abdfnx/botway/templates/telegram/deno"
 	tgo "github.com/abdfnx/botway/templates/telegram/go"
 	"github.com/abdfnx/botway/templates/telegram/nodejs"
@@ -34,5 +36,9 @@ func TelegramHandler(m model) {
 		rust.TelegramRust(opts.BotName, "fleet")
 	} else if m.PlatformChoice == 1 && m.LangChoice == 5 {
 		deno.TelegramDeno(opts.BotName)
+	} else if m.PlatformChoice == 1 && m.LangChoice == 6 {
+		csharp.TelegramCsharp(opts.BotName)
+	} else if m.PlatformChoice == 1 && m.LangChoice == 7 {
+		dart.TelegramDart(opts.BotName)
 	}
 }

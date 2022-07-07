@@ -58,7 +58,7 @@ func SetupTokensInDocker() {
 	bot_token_content := botwayConfig.GetString("botway.bots." + botName + ".bot_token")
 	app_token_content := botwayConfig.GetString("botway.bots." + botName + "." + cid)
 
-	if bot_token_content == "" || app_token_content == "" {
+	if bot_token_content == "" || t != "telegram" && app_token_content == "" {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Print(" ")
 		panic(constants.FAIL_FOREGROUND.Render("You didn't set bot token or app token"))

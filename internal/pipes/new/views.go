@@ -56,19 +56,19 @@ func langsView(m model) string {
 
 	if m.PlatformChoice != 2 {
 		langs += fmt.Sprintf(
-			"\n%s\n%s\n%s",
+			"\n%s\n%s\n%s\n%s\n%s",
 			checkbox("Ruby", l == 3),
 			checkbox("Rust", l == 4),
 			checkbox("Deno", l == 5),
+			checkbox("C#", l == 6),
+			checkbox("Dart", l == 7),
 		)
 	}
 
 	if m.PlatformChoice == 0 {
 		langs += fmt.Sprintf(
-			"\n%s\n%s\n%s",
-			checkbox("C#", l == 6),
-			checkbox("Crystal", l == 7),
-			checkbox("Dart", l == 8),
+			"\n%s",
+			checkbox("Crystal", l == 8),
 		)
 	}
 
@@ -95,9 +95,9 @@ func pmsView(m model) string {
 	} else if m.LangChoice == 6 {
 		l = "C#"
 	} else if m.LangChoice == 7 {
-		l = "Crystal"
-	} else if m.LangChoice == 8 {
 		l = "Dart"
+	} else if m.LangChoice == 8 {
+		l = "Crystal"
 	}
 
 	tpl := "Choose your favorite package manager for " + l + "\n\n"
@@ -145,9 +145,9 @@ func pmsView(m model) string {
 	} else if m.LangChoice == 6 {
 		langs += checkbox("dotnet", pm == 0)
 	} else if m.LangChoice == 7 {
-		langs += checkbox("shards", pm == 0)
-	} else if m.LangChoice == 8 {
 		langs += checkbox("pub", pm == 0)
+	} else if m.LangChoice == 8 {
+		langs += checkbox("shards", pm == 0)
 	}
 
 	return fmt.Sprintf(tpl, langs)
@@ -255,12 +255,12 @@ func finalView(m model) string {
 		pm = "dotnet"
 
 	case 7:
-		lang = "Crystal"
-		pm = "shards"
+		pm = "pub"
+		lang = "Dart"
 
 	case 8:
-		lang = "Dart"
-		pm = "pub"
+		lang = "Crystal"
+		pm = "shards"
 	}
 
 	return "\n🤖 Noice, you're going to build a " + prim.Render(platform) + " bot via " + prim.Render(lang) + " with " + prim.Render(pm) + " package manager\n"

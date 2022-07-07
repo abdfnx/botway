@@ -40,8 +40,8 @@ func DiscordHandler(m model) {
 	} else if m.PlatformChoice == 0 && m.LangChoice == 6 {
 		csharp.DiscordCsharp(opts.BotName)
 	} else if m.PlatformChoice == 0 && m.LangChoice == 7 {
-		crystal.DiscordCrystal(opts.BotName)
-	} else if m.PlatformChoice == 0 && m.LangChoice == 8 {
 		dart.DiscordDart(opts.BotName)
+	} else if m.PlatformChoice == 0 && m.LangChoice == 8 {
+		crystal.DiscordCrystal(opts.BotName)
 	}
 }
