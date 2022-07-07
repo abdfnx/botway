@@ -1,13 +1,16 @@
 package app
 
-import "github.com/spf13/cobra"
+import (
+	"github.com/abdfnx/botway/tools"
+	"github.com/spf13/cobra"
+)
 
 func VarsCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "variables",
 		Aliases: []string{"vars"},
 		Short:   "Show variables for active environment",
-		PreRun:  func(cmd *cobra.Command, args []string) { CheckDir() },
+		PreRun:  func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		RunE:    Contextualize(handler.Variables, handler.Panic),
 	}
 
@@ -18,7 +21,7 @@ func VarsCMD() *cobra.Command {
 		Short:   "Get the value of a variable",
 		RunE:    Contextualize(handler.VariablesGet, handler.Panic),
 		Args:    cobra.MinimumNArgs(1),
-		PreRun:  func(cmd *cobra.Command, args []string) { CheckDir() },
+		PreRun:  func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		Example: "  botway variables get PORT",
 	}
 
@@ -31,7 +34,7 @@ func VarsCMD() *cobra.Command {
 		Short:   "Create or update the value of a variable",
 		RunE:    Contextualize(handler.VariablesSet, handler.Panic),
 		Args:    cobra.MinimumNArgs(1),
-		PreRun:  func(cmd *cobra.Command, args []string) { CheckDir() },
+		PreRun:  func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		Example: "  botway variables set KEY=VALUE",
 	}
 
@@ -43,7 +46,7 @@ func VarsCMD() *cobra.Command {
 		Use:     "remove a variable",
 		Aliases: []string{"rm", "delete"},
 		Short:   "Delete a variable",
-		PreRun:  func(cmd *cobra.Command, args []string) { CheckDir() },
+		PreRun:  func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		RunE:    Contextualize(handler.VariablesDelete, handler.Panic),
 		Example: "  botway variables remove MY_KEY",
 	}

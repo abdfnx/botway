@@ -30,7 +30,7 @@ func DeployDownCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:    "down",
 		Short:  "Remove the most recent deployment",
-		PreRun: func(cmd *cobra.Command, args []string) { CheckDir() },
+		PreRun: func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		RunE:   Contextualize(handler.Down, handler.Panic),
 	}
 
@@ -41,7 +41,7 @@ func DeployLogsCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:    "logs",
 		Short:  "View the most-recent deploy's logs",
-		PreRun: func(cmd *cobra.Command, args []string) { CheckDir() },
+		PreRun: func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		RunE:   Contextualize(handler.Logs, handler.Panic),
 	}
 
@@ -52,7 +52,7 @@ func DeployLiveCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:    "live",
 		Short:  "Open the deployed application",
-		PreRun: func(cmd *cobra.Command, args []string) { CheckDir() },
+		PreRun: func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		RunE:   Contextualize(handler.OpenApp, handler.Panic),
 	}
 

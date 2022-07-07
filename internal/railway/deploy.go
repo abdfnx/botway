@@ -14,6 +14,8 @@ import (
 )
 
 func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error {
+	CheckBuildKit()
+
 	var src string
 
 	if len(req.Args) == 0 {

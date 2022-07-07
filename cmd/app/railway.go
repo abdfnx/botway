@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/abdfnx/botway/tools"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +23,7 @@ func RailwayLinkCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:    "link",
 		Short:  "Associate existing project with current directory, may specify projectId as an argument",
-		PreRun: func(cmd *cobra.Command, args []string) { CheckDir() },
+		PreRun: func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		RunE:   Contextualize(handler.Link, handler.Panic),
 	}
 
@@ -33,7 +34,7 @@ func RailwayUnLinkCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:    "unlink",
 		Short:  "Disassociate project from current directory",
-		PreRun: func(cmd *cobra.Command, args []string) { CheckDir() },
+		PreRun: func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		RunE:   Contextualize(handler.Unlink, handler.Panic),
 	}
 
@@ -44,7 +45,7 @@ func RailwayInfoCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:    "info",
 		Short:  "Show information about the current project",
-		PreRun: func(cmd *cobra.Command, args []string) { CheckDir() },
+		PreRun: func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		RunE:   Contextualize(handler.Info, handler.Panic),
 	}
 

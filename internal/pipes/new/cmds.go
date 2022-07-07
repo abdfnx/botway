@@ -184,6 +184,7 @@ func buildBot(msg tea.Msg, m model, botName string) (tea.Model, tea.Cmd) {
 		botwayConfig.SetDefault("bot.version", "0.1.0")
 
 		botwayConfig.SetDefault("docker.image", dockerImage)
+		botwayConfig.SetDefault("docker.enable_buildkit", false)
 		botwayConfig.SetDefault("docker.cmds.build", "docker build -t "+dockerImage+" .")
 		botwayConfig.SetDefault("docker.cmds.run", "docker run -it "+dockerImage)
 
