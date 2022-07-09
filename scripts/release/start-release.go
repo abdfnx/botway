@@ -41,7 +41,7 @@ func updateVersionOnPackageJSON(version string) {
 }
 
 func gitCommit() {
-	cmd := "git commit"
+	cmd := "git add . && git commit -m 'bump' && git push"
 
 	commitCmd := exec.Command("bash", "-c", cmd)
 
