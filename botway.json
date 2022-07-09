@@ -1,19 +1,19 @@
 {
-    "version": "0.1.3",
+    "version": "0.1.5",
     "architecture": {
         "32bit": {
-            "url": "https://github.com/abdfnx/botway/releases/download/v0.1.3/botway_windows_v0.1.3_386.zip",
+            "url": "https://github.com/abdfnx/botway/releases/download/v0.1.5/botway_windows_v0.1.5_386.zip",
             "bin": [
                 "bin/botway.exe"
             ],
-            "hash": "b15d66f655de1c0d33cbc97110ea6e1cca57be2ad5f44cc15aef33f7ec7712e0"
+            "hash": "4781e012348a62c81138cb353a21319ed8bf77b0c020f583eb16474793080b83"
         },
         "64bit": {
-            "url": "https://github.com/abdfnx/botway/releases/download/v0.1.3/botway_windows_v0.1.3_amd64.zip",
+            "url": "https://github.com/abdfnx/botway/releases/download/v0.1.5/botway_windows_v0.1.5_amd64.zip",
             "bin": [
                 "bin/botway.exe"
             ],
-            "hash": "fbe728ffd96d845af94cc4c25eba83361545a1be403c157bbd49882256c2c93e"
+            "hash": "fb41911125c5e333ccaf6c3d0218c035c6fef458ad33b37fab1e603f8e8f8b3d"
         }
     },
     "homepage": "https://botway.web.app",
