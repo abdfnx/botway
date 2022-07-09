@@ -12,6 +12,7 @@ import (
 
 func main() {
 	updateVersionOnPackageJSON(os.Args[1])
+	gitCommit()
 	gitTag(os.Args[1])
 	gitPushOrigin(os.Args[1])
 	publishOnNPM()
@@ -36,6 +37,25 @@ func updateVersionOnPackageJSON(version string) {
 
 	if err != nil {
 		log.Fatal(err)
+	}
+}
+
+func gitCommit() {
+	cmd := "git commit"
+
+	commitCmd := exec.Command("bash", "-c", cmd)
+
+	if runtime.GOOS == "windows" {
+		commitCmd = exec.Command("powershell.exe", cmd)
+	}
+
+	commitCmd.Stdin = os.Stdin
+	commitCmd.Stdout = os.Stdout
+	commitCmd.Stderr = os.Stderr
+	err := commitCmd.Run()
+
+	if err != nil {
+		log.Printf("error: %v\n", err)
 	}
 }
 
