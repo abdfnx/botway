@@ -100,7 +100,7 @@ func BotStartCmd(m model) string {
 	} else if m.LangChoice == 4 {
 		return "cargo run src/main.rs"
 	} else if m.LangChoice == 5 {
-		return "deno run --allow-all src/main.ts"
+		return "deno run --allow-all main.ts"
 	} else if m.LangChoice == 6 {
 		return "dotnet run"
 	} else if m.LangChoice == 7 {

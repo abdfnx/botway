@@ -20,7 +20,7 @@ func TelegramDeno(botName string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" deno is not installed"))
 	} else {
-		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.ts"), []byte(MainTsContent()), 0644)
+		mainFile := os.WriteFile(filepath.Join(botName, "main.ts"), []byte(MainTsContent()), 0644)
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
@@ -36,7 +36,7 @@ func TelegramDeno(botName string) {
 			log.Fatal(resourcesFile)
 		}
 
-		denoInstall := deno + " cache src/main.ts"
+		denoInstall := deno + " cache main.ts"
 
 		installCmd := exec.Command("bash", "-c", denoInstall)
 

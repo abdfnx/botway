@@ -11,7 +11,7 @@ func Resources() string {
 }
 
 func MainTsContent() string {
-	return templates.Content("src/main.ts", "discord-deno", "")
+	return templates.Content("main.ts", "discord-deno", "")
 }
 
 func DepsTsContent() string {

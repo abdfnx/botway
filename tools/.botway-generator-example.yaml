@@ -1,7 +1,0 @@
-bot:
-  name: mybot
-  platform: telegram
-  lang: nodejs
-  package_manager: pnpm
-  create_repo: false
-  enable_buildkit: true
