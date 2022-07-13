@@ -1,22 +1,18 @@
 {
-    "version": "0.1.5",
-    "architecture": {
-        "32bit": {
-            "url": "https://github.com/abdfnx/botway/releases/download/v0.1.5/botway_windows_v0.1.5_386.zip",
-            "bin": [
-                "bin/botway.exe"
-            ],
-            "hash": "4781e012348a62c81138cb353a21319ed8bf77b0c020f583eb16474793080b83"
-        },
-        "64bit": {
-            "url": "https://github.com/abdfnx/botway/releases/download/v0.1.5/botway_windows_v0.1.5_amd64.zip",
-            "bin": [
-                "bin/botway.exe"
-            ],
-            "hash": "fb41911125c5e333ccaf6c3d0218c035c6fef458ad33b37fab1e603f8e8f8b3d"
-        }
+  "version": "0.1.5",
+  "architecture": {
+    "32bit": {
+      "url": "https://github.com/abdfnx/botway/releases/download/v0.1.5/botway_windows_v0.1.5_386.zip",
+      "bin": ["bin/botway.exe"],
+      "hash": "4781e012348a62c81138cb353a21319ed8bf77b0c020f583eb16474793080b83"
     },
-    "homepage": "https://botway.web.app",
-    "license": "MIT",
-    "description": "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack"
+    "64bit": {
+      "url": "https://github.com/abdfnx/botway/releases/download/v0.1.5/botway_windows_v0.1.5_amd64.zip",
+      "bin": ["bin/botway.exe"],
+      "hash": "fb41911125c5e333ccaf6c3d0218c035c6fef458ad33b37fab1e603f8e8f8b3d"
+    }
+  },
+  "homepage": "https://botway.web.app",
+  "license": "MIT",
+  "description": "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack"
 }

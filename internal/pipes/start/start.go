@@ -9,16 +9,14 @@ import (
 	"runtime"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/viper"
 	"github.com/tidwall/gjson"
 )
 
 func Start() {
-	if _, err := os.Stat(".botway.yaml"); err != nil {
-		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
-		panic(constants.FAIL_FOREGROUND.Render("You need to run this command in your bot directory"))
-	}
+	tools.CheckDir()
 
 	viper.SetConfigType("yaml")
 

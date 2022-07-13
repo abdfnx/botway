@@ -15,7 +15,7 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-var Packages = "discord.js @discordjs/rest @discordjs/builders discord-api-types discord-rpc zlib-sync erlpack bufferutil utf-8-validate @discordjs/voice libsodium-wrappers opusscript sodium-native botway.js"
+var Packages = "discord.js @discordjs/rest @discordjs/builders discord-api-types zlib-sync erlpack bufferutil utf-8-validate @discordjs/voice libsodium-wrappers opusscript sodium-native botway.js"
 
 func IndexJSContent() string {
 	return templates.Content("main.js", "discord-nodejs", "")
