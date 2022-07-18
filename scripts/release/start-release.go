@@ -45,10 +45,6 @@ func gitCommit() {
 
 	commitCmd := exec.Command("bash", "-c", cmd)
 
-	if runtime.GOOS == "windows" {
-		commitCmd = exec.Command("powershell.exe", cmd)
-	}
-
 	commitCmd.Stdin = os.Stdin
 	commitCmd.Stdout = os.Stdout
 	commitCmd.Stderr = os.Stderr
@@ -64,10 +60,6 @@ func gitTag(version string) {
 
 	runCmd := exec.Command("bash", "-c", cmd)
 
-	if runtime.GOOS == "windows" {
-		runCmd = exec.Command("powershell.exe", cmd)
-	}
-
 	runCmd.Stdin = os.Stdin
 	runCmd.Stdout = os.Stdout
 	runCmd.Stderr = os.Stderr
@@ -81,10 +73,6 @@ func gitTag(version string) {
 func gitPushOrigin(version string) {
 	cmd := "git push origin " + version
 	runCmd := exec.Command("bash", "-c", cmd)
-
-	if runtime.GOOS == "windows" {
-		runCmd = exec.Command("powershell.exe", cmd)
-	}
 
 	runCmd.Stdin = os.Stdin
 	runCmd.Stdout = os.Stdout
@@ -100,10 +88,6 @@ func publishOnNPM() {
 	cmd := "yarn publish"
 
 	runCmd := exec.Command("bash", "-c", cmd)
-
-	if runtime.GOOS == "windows" {
-		runCmd = exec.Command("powershell.exe", cmd)
-	}
 
 	runCmd.Stdin = os.Stdin
 	runCmd.Stdout = os.Stdout
