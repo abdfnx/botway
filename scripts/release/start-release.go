@@ -84,7 +84,7 @@ func gitPushOrigin(version string) {
 }
 
 func publishOnNPM() {
-	cmd := "yarn publish"
+	cmd := "pnpm publish"
 
 	runCmd := exec.Command("bash", "-c", cmd)
 
