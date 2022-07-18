@@ -1,6 +1,7 @@
 {
   "name": "abdfnx/bw-php",
   "description": "PHP client package for Botway.",
+  "type": "library",
   "license": "MIT",
   "autoload": {
     "files": [
@@ -16,7 +17,7 @@
     }
   ],
   "require": {
-    "php": ">=5.3.0",
+    "php": ">=7.2",
     "dallgoot/yaml": "dev-master"
   },
   "minimum-stability": "dev"

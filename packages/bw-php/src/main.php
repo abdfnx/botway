@@ -20,11 +20,11 @@ class Botway {
         return $BotwayConfig["botway"]["bots"][$this->GetBotInfo("name")][$value];
     }
 
-    function GetToken() {
+    public function GetToken(): string {
         return $this->BotwayConfig("bot_token");
     }
 
-    function GetAppId() {
+    public function GetAppId(): string {
         if ($this->GetBotInfo("type") == "slack") {
             return $this->BotwayConfig("bot_app_token");
         } else {
@@ -32,7 +32,7 @@ class Botway {
         }
     }
 
-    function GetGuildId(string $serverName) {
+    public function GetGuildId(string $serverName): string {
         if ($this->GetBotInfo("type") != "discord") {
             echo "ERROR: This function/feature is only working with discord bots";
         } else {
@@ -42,7 +42,7 @@ class Botway {
         }
     }
 
-    function GetSigningSecret() {
+    public function GetSigningSecret(): string {
         if ($this->GetBotInfo("type") != "slack") {
             echo "ERROR: This function/feature is only working with slack bots";
         } else {
