@@ -13,9 +13,10 @@ type CommonOptions struct {
 }
 
 type NewOptions struct {
-	CreateRepo bool
-	RepoName   string
-	IsPrivate  bool
+	CreateRepo     bool
+	RepoName       string
+	IsPrivate      bool
+	IsBlank        bool
 }
 
 type TokenAddOptions struct {

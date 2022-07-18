@@ -17,6 +17,7 @@ var newOpts = &options.NewOptions{
 	CreateRepo: false,
 	RepoName:   "",
 	IsPrivate:  false,
+	IsBlank:    false,
 }
 
 func NewCMD() *cobra.Command {
@@ -32,7 +33,7 @@ func NewCMD() *cobra.Command {
 					BotName: args[0],
 				}
 
-				new.New(opts)
+				new.New(opts, newOpts.IsBlank)
 
 				if newOpts.CreateRepo {
 					new.CreateRepo(newOpts, opts.BotName)
@@ -43,39 +44,45 @@ func NewCMD() *cobra.Command {
 		},
 		PostRunE: Contextualize(handler.Init, handler.Panic),
 		PersistentPostRun: func(cmd *cobra.Command, args []string) {
-			fmt.Println(messageStyle.Render("> Installing some required packages"))
+			if runtime.GOOS != "windows" {
+				fmt.Println(messageStyle.Render("> Installing some required packages"))
 
-			installCmd := exec.Command("bash", "-c", tools.Packages())
+				installCmd := exec.Command("bash", "-c", tools.Packages())
 
-			if runtime.GOOS == "linux" {
-				installCmd.Stdin = os.Stdin
-				installCmd.Stdout = os.Stdout
-				installCmd.Stderr = os.Stderr
-				err := installCmd.Run()
-
-				if err != nil {
-					panic(err)
-				}
-			} else if runtime.GOOS == "darwin" {
-				_, err := looker.LookPath("brew")
-
-				if err != nil {
-					panic("error: brew is not installed")
-				} else {
-					installCmd = exec.Command("bash", "-c", "brew install opus libsodium")
-
-					err = installCmd.Run()
+				if runtime.GOOS == "linux" {
+					installCmd.Stdin = os.Stdin
+					installCmd.Stdout = os.Stdout
+					installCmd.Stderr = os.Stderr
+					err := installCmd.Run()
 
 					if err != nil {
 						panic(err)
+					}
+				} else if runtime.GOOS == "darwin" {
+					brewPath, err := looker.LookPath("brew")
+
+					if err != nil {
+						panic("error: brew is not installed")
+					} else {
+						installCmd = exec.Command("bash", "-c", brewPath+" install opus libsodium")
+
+						installCmd.Stdin = os.Stdin
+						installCmd.Stdout = os.Stdout
+						installCmd.Stderr = os.Stderr
+						err = installCmd.Run()
+
+						if err != nil {
+							panic(err)
+						}
 					}
 				}
 			}
 		},
 	}
 
-	cmd.Flags().BoolVarP(&newOpts.CreateRepo, "repo", "r", false, "Create a new github repository under your account")
+	cmd.Flags().BoolVarP(&newOpts.CreateRepo, "create-repo", "r", false, "Create a new github repository under your account")
 	cmd.Flags().BoolVarP(&newOpts.IsPrivate, "private", "p", false, "Make your repository private")
+	cmd.Flags().BoolVarP(&newOpts.IsBlank, "blank", "b", false, "Create a blank bot project")
 	cmd.Flags().StringVarP(&newOpts.RepoName, "repo-name", "n", "", "Name of the repository, if not specified, it will be the same as the bot name")
 
 	return cmd

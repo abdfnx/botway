@@ -42,7 +42,7 @@ curl -sL https://bit.ly/botway | bash
 - PowerShell
 
 ```powershell
-iwr -useb https://bit.ly/bw-win | iex
+irm bit.ly/bw-win | iex
 ```
 
 **then restart your powershell**
@@ -145,7 +145,7 @@ scoop install botway
 
 ## Special thanks ❤
 
-Thanks to [**@charmbracelet**](https://github.com/charmbracelet) for thier awesome TUI libraries 🏗.
+Thanks to [**@charmbracelet**](https://github.com/charmbracelet) for their awesome TUI libraries 🏗.
 
 Also thanks to [**@railwayapp**](https://github.com/railwayapp) for amazing cloud services ☁️.
 

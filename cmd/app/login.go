@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func LoginCMD() *cobra.Command {
+func LogoutCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "login",
 		Short:   "Authenticate with Railway",

@@ -8,14 +8,24 @@ import (
 	"github.com/muesli/reflow/indent"
 )
 
-func New(o *options.CommonOptions) {
-	m := model{0, false, 10, 0, 0, false, false, 0, false, 0, false}
-	p := tea.NewProgram(m)
+func New(o *options.CommonOptions, isBlank bool) {
+	m := model{}
 
 	opts.BotName = o.BotName
+	isBlank = isBlank
 
-	if err := p.Start(); err != nil {
-		fmt.Println("could not start program:", err)
+	if !isBlank {
+		m = model{0, false, 10, 0, 0, false, false, 0, false, 0, false}
+
+		p := tea.NewProgram(m)
+
+		if err := p.Start(); err != nil {
+			fmt.Println("could not start program:", err)
+		}
+	} else {
+		m = model{-1, false, 10, 0, 0, false, false, -1, false, -1, false}
+
+		NewBot(m, "", -1, -1)
 	}
 }
 
@@ -45,7 +55,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return updatePMs(msg, m)
 	}
 
-	return buildBot(msg, m, opts.BotName)
+	return buildBot(msg, m)
 }
 
 func (m model) View() string {

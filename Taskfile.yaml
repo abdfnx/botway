@@ -4,6 +4,7 @@ version: "3"
 
 vars:
   BOTWAY_UNIX_PATH: /usr/local/bin
+  BOTWAY_WINDOWS_PATH_GIT_BASH: ~/AppData/Local/botway/bin
 
 tasks:
   default:
@@ -16,6 +17,12 @@ tasks:
       - task: build
       - task: install
 
+  bfsw:
+    cmds:
+      - task: remove-win
+      - task: build-win
+      - task: install-win
+
   setup:
     cmds:
       - if [ -f "date.txt" ]; then rm date.txt; fi
@@ -27,9 +34,17 @@ tasks:
     cmds:
       - sudo rm -rf "{{ .BOTWAY_UNIX_PATH }}"/botway
 
+  remove-win:
+    cmds:
+      - rm -rf "{{ .BOTWAY_WINDOWS_PATH_GIT_BASH }}"/botway.exe
+
   install:
     cmds:
       - sudo mv botway "{{ .BOTWAY_UNIX_PATH }}"
+
+  install-win:
+    cmds:
+      - mv botway.exe "{{ .BOTWAY_WINDOWS_PATH_GIT_BASH }}"
 
   release:
     cmds:
@@ -40,6 +55,12 @@ tasks:
       - task: setup
       - go mod tidy
       - go build -ldflags "-X main.version=$(cat tag.txt) -X main.buildDate=$(cat date.txt)" -o botway
+
+  build-win:
+    cmds:
+      - task: setup
+      - go mod tidy
+      - go build -ldflags "-X main.version=$(cat tag.txt) -X main.buildDate=$(cat date.txt)" -o botway.exe
 
   docker:
     cmds:

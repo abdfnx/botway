@@ -16,6 +16,8 @@ var (
 	opts   = options.CommonOptions{
 		BotName: "",
 	}
+
+	isBlank = false
 )
 
 func checkbox(label string, checked bool) string {
@@ -35,8 +37,10 @@ func BotType(m model) string {
 		return "slack"
 	}
 
-	return ""
+	return "# You need to specify a platform (discord, telegram, slack)"
 }
+
+var blankLangMessage = "# You need to specify a language (python, go, nodejs, ruby, rust, deno, csharp, dart, crystal)"
 
 func BotLang(m model) string {
 	if m.LangChoice == 0 {
@@ -63,7 +67,7 @@ func BotLang(m model) string {
 		return "crystal"
 	}
 
-	return ""
+	return blankLangMessage
 }
 
 func BotStartCmd(m model) string {
@@ -109,7 +113,7 @@ func BotStartCmd(m model) string {
 		return "crystal run src/main.cr"
 	}
 
-	return ""
+	return "# Write your start command here"
 }
 
 func BotPM(m model) string {
@@ -145,7 +149,7 @@ func BotPM(m model) string {
 		return "shards"
 	}
 
-	return ""
+	return "# Specify the package manager here"
 }
 
 func CSharpGitIgnore() string {

@@ -31,6 +31,7 @@ func (h *Handler) Delete(ctx context.Context, req *entity.CommandRequest) error 
 
 		if uuid.IsValidUUID(arg) {
 			project, err := h.ctrl.GetProject(ctx, arg)
+
 			if err != nil {
 				return err
 			}

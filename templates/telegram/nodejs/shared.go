@@ -115,20 +115,6 @@ func TelegramNodejs(botName, pm string) {
 				log.Printf("error: %v\n", err)
 			}
 
-			if runtime.GOOS == "windows" {
-				installWindowsBuildTools := exec.Command("powershell.exe", npmPath+" i --global --production --add-python-to-path windows-build-tools")
-
-				installWindowsBuildTools.Dir = botName
-				installWindowsBuildTools.Stdin = os.Stdin
-				installWindowsBuildTools.Stdout = os.Stdout
-				installWindowsBuildTools.Stderr = os.Stderr
-				err = installWindowsBuildTools.Run()
-
-				if err != nil {
-					log.Printf("error: %v\n", err)
-				}
-			}
-
 			templates.CheckProject(botName, "telegram")
 		}
 	}
