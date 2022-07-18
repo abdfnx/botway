@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/internal/railway/project"
 	"github.com/railwayapp/cli/entity"
 	"github.com/railwayapp/cli/ui"
 	"github.com/railwayapp/cli/uuid"
@@ -89,7 +90,7 @@ func (h *Handler) deleteFromAccount(ctx context.Context, req *entity.CommandRequ
 		return nil
 	}
 
-	fmt.Printf("🔥 Deleting project %s\n", ui.MagentaText(name))
+	fmt.Printf("🔥 Deleting project %s\n", constants.WARN_FOREGROUND.Render(name))
 
 	err = h.deleteById(ctx, project.Id)
 
@@ -104,7 +105,8 @@ func (h *Handler) deleteFromAccount(ctx context.Context, req *entity.CommandRequ
 }
 
 func (h *Handler) deleteFromID(ctx context.Context, req *entity.CommandRequest) error {
-	projectID, err := ui.PromptText("Enter your project id")
+	projectID, err := project.Project()
+
 	if err != nil {
 		return err
 	}
@@ -115,7 +117,7 @@ func (h *Handler) deleteFromID(ctx context.Context, req *entity.CommandRequest) 
 		return err
 	}
 
-	fmt.Printf("🔥 Deleting project %s\n", ui.MagentaText(project.Name))
+	fmt.Printf("🔥 Deleting project %s\n", constants.WARN_FOREGROUND.Render(project.Name))
 
 	err = h.deleteById(ctx, project.Id)
 
