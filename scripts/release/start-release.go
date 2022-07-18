@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"runtime"
 
 	"github.com/tidwall/sjson"
 )
