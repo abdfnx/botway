@@ -1,0 +1,82 @@
+{
+  "_readme": [
+    "This file locks the dependencies of your project to a known state",
+    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+    "This file is @generated automatically"
+  ],
+  "content-hash": "f1b6a30ae245526a870098ac688e452e",
+  "packages": [
+    {
+      "name": "dallgoot/yaml",
+      "version": "dev-master",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dallgoot/yaml.git",
+        "reference": "096826fc13e398fd7f43c47f47b2501e0358c74d"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/dallgoot/yaml/zipball/096826fc13e398fd7f43c47f47b2501e0358c74d",
+        "reference": "096826fc13e398fd7f43c47f47b2501e0358c74d",
+        "shasum": ""
+      },
+      "require": {
+        "ext-json": "*",
+        "ext-pcre": "*",
+        "ext-spl": "*",
+        "lib-pcre": "*",
+        "php": ">=7.1.10"
+      },
+      "require-dev": {
+        "composer/xdebug-handler": "^1.3",
+        "ext-reflection": "*",
+        "paulthebaud/phpunit-generator": "^2.1",
+        "phan/phan": "^1.3",
+        "phploc/phploc": "^4.0",
+        "phpmetrics/phpmetrics": "^2.4",
+        "phpunit/phpunit": "^7",
+        "roave/better-reflection": "dev-master#c87d856"
+      },
+      "default-branch": true,
+      "type": "library",
+      "autoload": {
+        "classmap": ["sources"]
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": ["Apache-2.0"],
+      "authors": [
+        {
+          "name": "dallgoot",
+          "email": "stephane.rebai@gmail.com"
+        }
+      ],
+      "description": "Provides loader, dumper and an API for YAML content. Loader builds to equivalent data types in PHP 7.x",
+      "homepage": "https://github.com/dallgoot/yaml",
+      "keywords": ["parser", "yaml"],
+      "support": {
+        "issues": "https://github.com/dallgoot/yaml/issues",
+        "source": "https://github.com/dallgoot/yaml/tree/master"
+      },
+      "funding": [
+        {
+          "url": "https://github.com/dallgoot",
+          "type": "github"
+        }
+      ],
+      "time": "2021-08-09T15:04:03+00:00"
+    }
+  ],
+  "packages-dev": [],
+  "aliases": [],
+  "minimum-stability": "dev",
+  "stability-flags": {
+    "dallgoot/yaml": 20
+  },
+  "prefer-stable": false,
+  "prefer-lowest": false,
+  "platform": {
+    "php": ">=5.3.0"
+  },
+  "platform-dev": [],
+  "plugin-api-version": "2.3.0"
+}
