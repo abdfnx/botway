@@ -25,4 +25,9 @@ var IconSet = map[string]*IconInfo{
 	"nodejs":     {icon: "\ue74e", color: [3]uint8{255, 202, 61}},
 	"typescript": {icon: "\ue628", color: [3]uint8{3, 136, 209}},
 	"deno":       {icon: "\ue628", color: [3]uint8{3, 136, 209}},
+	"csharp":     {icon: "\uf81a", color: [3]uint8{2, 119, 189}},
+	"dart":       {icon: "\ue798", color: [3]uint8{87, 182, 240}},
+	"java":       {icon: "\uf675", color: [3]uint8{244, 68, 62}},
+	"kotlin":     {icon: "\ue70e", color: [3]uint8{139, 195, 74}},
+	"other":      {icon: "\ufba7", color: [3]uint8{249, 89, 63}},
 }

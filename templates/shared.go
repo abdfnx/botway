@@ -26,7 +26,13 @@ func Content(arg, templateName, botName string) string {
 		os.Exit(0)
 	}
 
-	if strings.Contains(arg, ".dockerfile") || strings.Contains(arg, "Cargo.toml") || strings.Contains(arg, "shard.yml") || strings.Contains(arg, "pubspec.yaml") || strings.Contains(arg, "pyproject.toml") {
+	if
+		strings.Contains(arg, ".dockerfile")    ||
+		strings.Contains(arg, "Cargo.toml")     ||
+		strings.Contains(arg, "shard.yml")      ||
+		strings.Contains(arg, "pubspec.yaml")   ||
+		strings.Contains(arg, "pyproject.toml") ||
+		strings.Contains(arg, "composer.json") {
 		respone = strings.ReplaceAll(respone, "{{.BotName}}", botName)
 
 		viper.SetConfigType("json")

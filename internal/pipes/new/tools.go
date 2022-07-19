@@ -40,7 +40,7 @@ func BotType(m model) string {
 	return "# You need to specify a platform (discord, telegram, slack)"
 }
 
-var blankLangMessage = "# You need to specify a language (python, go, nodejs, ruby, rust, deno, csharp, dart, crystal)"
+var blankLangMessage = "# You need to specify a language (python, go, nodejs, ruby, rust, deno, csharp, dart, php, crystal)"
 
 func BotLang(m model) string {
 	if m.LangChoice == 0 {
@@ -64,6 +64,8 @@ func BotLang(m model) string {
 	} else if m.LangChoice == 7 {
 		return "dart"
 	} else if m.LangChoice == 8 {
+		return "php"
+	} else if m.LangChoice == 9 {
 		return "crystal"
 	}
 
@@ -110,6 +112,8 @@ func BotStartCmd(m model) string {
 	} else if m.LangChoice == 7 {
 		return "dart run src/main.dart"
 	} else if m.LangChoice == 8 {
+		return "php src/main.php"
+	} else if m.LangChoice == 9 {
 		return "crystal run src/main.cr"
 	}
 
@@ -146,6 +150,8 @@ func BotPM(m model) string {
 	} else if m.LangChoice == 7 {
 		return "pub"
 	} else if m.LangChoice == 8 {
+		return "composer"
+	} else if m.LangChoice == 9 {
 		return "shards"
 	}
 

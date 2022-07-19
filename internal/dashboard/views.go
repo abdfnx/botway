@@ -54,7 +54,12 @@ func (b Bubble) botListView() string {
 
 		line := trunc(value.String(), b.bubbles.primaryPaginator.Width-2)
 
+		
 		lang := gjson.Get(string(constants.BotwayConfig), "botway.bots."+v+".lang").String()
+
+		if lang == "php" || lang == "crystal" {
+			lang = "other"
+		}
 
 		icon, color := icons.GetIcon(lang)
 
