@@ -23,8 +23,10 @@ func NewBot(m model, l string, platform, lang int) {
 		log.Fatal(err)
 	}
 
-	if err := os.Mkdir(filepath.Join(opts.BotName, "src"), os.ModePerm); err != nil {
-		log.Fatal(err)
+	if lang != 9 {
+		if err := os.Mkdir(filepath.Join(opts.BotName, "src"), os.ModePerm); err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	if err := os.Mkdir(filepath.Join(opts.BotName, "config"), os.ModePerm); err != nil {
@@ -111,6 +113,10 @@ func NewBot(m model, l string, platform, lang int) {
 # Libraries don't need dependency lock
 # Dependencies will be locked in applications that use them
 /shard.lock`
+		}
+
+		if lang == 9 {
+			respone += "\n.gradle\nbuild"
 		}
 
 		dotGitIgnoreFileContent = respone + "\n*.lock"

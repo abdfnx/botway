@@ -44,8 +44,8 @@ func updateLangs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 				}
 			} else {
 				if m.PlatformChoice == 0 {
-					if m.LangChoice > 9 {
-						m.LangChoice = 9
+					if m.LangChoice > 10 {
+						m.LangChoice = 10
 					}
 				} else {
 					if m.LangChoice > 7 {
@@ -139,6 +139,8 @@ func buildBot(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 	} else if m.LangChoice == 8 {
 		l = "PHP"
 	} else if m.LangChoice == 9 {
+		l = "Java"
+	} else if m.LangChoice == 10 {
 		l = "Crystal"
 	}
 
