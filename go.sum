@@ -426,8 +426,8 @@ github.com/prometheus/common v0.4.0/go.mod h1:TNfzLD0ON7rHzMJeJkieUDPYmFC7Snx/y8
 github.com/prometheus/procfs v0.0.0-20181005140218-185b4288413d/go.mod h1:c3At6R/oaqEKCNdg8wHV1ftS6bRYblBhIjjI8uT2IGk=
 github.com/prometheus/procfs v0.0.0-20190507164030-5867b95ac084/go.mod h1:TjEm7ze935MbeOT/UhFTIMYKhuLP4wbCsTZCD3I8kEA=
 github.com/prometheus/tsdb v0.7.1/go.mod h1:qhTCs0VvXwvX/y3TZrWD7rabWM+ijKTux40TwIPHuXU=
-github.com/railwayapp/cli v1.8.3 h1:BBWbWfqWJBLE7lrxx+OOHY2qSUH1lkMg37xxW8uGtnQ=
-github.com/railwayapp/cli v1.8.3/go.mod h1:7BdNt6Coh0jdfxHb7NUOij4kXe3vTXES6f2PpGPPidE=
+github.com/railwayapp/cli v1.8.4 h1:xkYajSVVOArA2j6XysypP6fqrjy8RQN/oN5Fb13bzYw=
+github.com/railwayapp/cli v1.8.4/go.mod h1:7BdNt6Coh0jdfxHb7NUOij4kXe3vTXES6f2PpGPPidE=
 github.com/rivo/tview v0.0.0-20220703182358-a13d901d3386 h1:Mi1WlPy6SDxnhljPcE4zFHe1iyWdCxAEkiQfNh18/d0=
 github.com/rivo/tview v0.0.0-20220703182358-a13d901d3386/go.mod h1:WIfMkQNY+oq/mWwtsjOYHIZBuwthioY2srOmljJkTnk=
 github.com/rivo/uniseg v0.1.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=

@@ -21,7 +21,7 @@ require (
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/muesli/reflow v0.3.0
 	github.com/muesli/termenv v0.12.0
-	github.com/railwayapp/cli v1.8.3
+	github.com/railwayapp/cli v1.8.4
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.12.0
 	github.com/tidwall/gjson v1.14.1
