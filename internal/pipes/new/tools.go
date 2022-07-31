@@ -40,7 +40,7 @@ func BotType(m model) string {
 	return "# You need to specify a platform (discord, telegram, slack)"
 }
 
-var blankLangMessage = "# You need to specify a language (python, go, nodejs, ruby, rust, deno, csharp, dart, php, kotlin, crystal)"
+var blankLangMessage = "# You need to specify a language (python, go, nodejs, ruby, rust, deno, csharp, dart, php, kotlin, java, crystal)"
 
 func BotLang(m model) string {
 	if m.LangChoice == 0 {
@@ -68,6 +68,8 @@ func BotLang(m model) string {
 	} else if m.LangChoice == 9 {
 		return "kotlin"
 	} else if m.LangChoice == 10 {
+		return "java"
+	} else if m.LangChoice == 11 {
 		return "crystal"
 	}
 
@@ -115,13 +117,13 @@ func BotStartCmd(m model) string {
 		return "dart run src/main.dart"
 	} else if m.LangChoice == 8 {
 		return "php src/main.php"
-	} else if m.LangChoice == 9 {
+	} else if m.LangChoice == 9 || m.LangChoice == 10 {
 		if runtime.GOOS == "windows" {
-			return "./gradlew.bat run"
+			return `.\gradlew.bat run`
 		} else {
 			return "./gradlew run"
 		}
-	} else if m.LangChoice == 10 {
+	} else if m.LangChoice == 11 {
 		return "crystal run src/main.cr"
 	}
 
@@ -159,9 +161,9 @@ func BotPM(m model) string {
 		return "pub"
 	} else if m.LangChoice == 8 {
 		return "composer"
-	} else if m.LangChoice == 9 {
+	} else if m.LangChoice == 9 || m.LangChoice == 10 {
 		return "gradle"
-	} else if m.LangChoice == 10 {
+	} else if m.LangChoice == 11 {
 		return "shards"
 	}
 

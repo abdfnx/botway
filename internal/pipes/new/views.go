@@ -56,7 +56,7 @@ func langsView(m model) string {
 
 	if m.PlatformChoice != 2 {
 		langs += fmt.Sprintf(
-			"\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
+			"\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
 			checkbox("Ruby", l == 3),
 			checkbox("Rust", l == 4),
 			checkbox("Deno", l == 5),
@@ -64,13 +64,14 @@ func langsView(m model) string {
 			checkbox("Dart", l == 7),
 			checkbox("PHP", l == 8),
 			checkbox("Kotlin", l == 9),
+			checkbox("Java", l == 10),
 		)
 	}
 
 	if m.PlatformChoice == 0 {
 		langs += fmt.Sprintf(
 			"\n%s",
-			checkbox("Crystal", l == 10),
+			checkbox("Crystal", l == 11),
 		)
 	}
 
@@ -153,9 +154,9 @@ func pmsView(m model) string {
 		langs += checkbox("pub", pm == 0)
 	} else if m.LangChoice == 8 {
 		langs += checkbox("composer", pm == 0)
-	} else if m.LangChoice == 9 {
+	} else if m.LangChoice == 9 || m.LangChoice == 10 {
 		langs += checkbox("gradle", pm == 0)
-	} else if m.LangChoice == 10 {
+	} else if m.LangChoice == 11 {
 		langs += checkbox("shards", pm == 0)
 	}
 
@@ -282,6 +283,10 @@ func finalView(m model) string {
 		pm = "gradle"
 
 	case 10:
+		lang = "Java"
+		pm = "gradle"
+
+	case 11:
 		lang = "Crystal"
 		pm = "shards"
 	}

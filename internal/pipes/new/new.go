@@ -12,7 +12,6 @@ func New(o *options.CommonOptions, isBlank bool) {
 	m := model{}
 
 	opts.BotName = o.BotName
-	isBlank = isBlank
 
 	if !isBlank {
 		m = model{0, false, 10, 0, 0, false, false, 0, false, 0, false}

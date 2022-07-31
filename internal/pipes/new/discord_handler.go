@@ -6,6 +6,7 @@ import (
 	"github.com/abdfnx/botway/templates/discord/dart"
 	"github.com/abdfnx/botway/templates/discord/deno"
 	dgo "github.com/abdfnx/botway/templates/discord/go"
+	"github.com/abdfnx/botway/templates/discord/java"
 	"github.com/abdfnx/botway/templates/discord/kotlin"
 	"github.com/abdfnx/botway/templates/discord/nodejs"
 	"github.com/abdfnx/botway/templates/discord/php"
@@ -50,6 +51,8 @@ func DiscordHandler(m model) {
 	} else if m.PlatformChoice == 0 && m.LangChoice == 9 {
 		kotlin.DiscordKotlin(opts.BotName)
 	} else if m.PlatformChoice == 0 && m.LangChoice == 10 {
+		java.DiscordJava(opts.BotName)
+	} else if m.PlatformChoice == 0 && m.LangChoice == 11 {
 		crystal.DiscordCrystal(opts.BotName)
 	}
 }

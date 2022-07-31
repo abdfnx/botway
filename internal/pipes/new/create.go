@@ -115,14 +115,14 @@ func NewBot(m model, l string, platform, lang int) {
 /shard.lock`
 		}
 
-		if lang == 9 {
+		if lang == 9 || lang == 10 {
 			respone += "\n.gradle\nbuild"
 		}
 
 		dotGitIgnoreFileContent = respone + "\n*.lock"
 
 		if BotLang(m) == "rust" && BotPM(m) == "fleet" {
-			dotGitIgnoreFileContent += "\n.cargo\nfleet.toml"
+			dotGitIgnoreFileContent += "\nfleet.toml"
 		}
 
 		DiscordHandler(m)
