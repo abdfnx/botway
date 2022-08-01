@@ -78,8 +78,8 @@ github.com/botwayorg/gh v0.0.6/go.mod h1:b+UvxCDipi9TM9HhkIymMKI2f7vSwwczJZI4Edh
 github.com/botwayorg/git v0.0.0-20220620131453-e25d6a207203 h1:L7DgT7HxlQPEhD1A8howR2npdqdmWV41oH3Kv95qnAc=
 github.com/botwayorg/git v0.0.0-20220620131453-e25d6a207203/go.mod h1:prxF3A1XxRyW6Xy20aST4tEc9k0sYbALJ7Hq0bCZNS0=
 github.com/briandowns/spinner v1.11.1/go.mod h1:QOuQk7x+EaDASo80FEXwlwiA+j/PPIcX3FScO+3/ZPQ=
-github.com/briandowns/spinner v1.18.1 h1:yhQmQtM1zsqFsouh09Bk/jCjd50pC3EOGsh28gLVvwY=
-github.com/briandowns/spinner v1.18.1/go.mod h1:mQak9GHqbspjC/5iUx3qMlIho8xBS/ppAL/hX5SmPJU=
+github.com/briandowns/spinner v1.19.0 h1:s8aq38H+Qju89yhp89b4iIiMzMm8YN3p6vGpwyh/a8E=
+github.com/briandowns/spinner v1.19.0/go.mod h1:mQak9GHqbspjC/5iUx3qMlIho8xBS/ppAL/hX5SmPJU=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/cespare/xxhash v1.1.0/go.mod h1:XrSqR1VqqWfGrhpAt58auRo0WTKS1nRRg3ghfAqPWnc=
 github.com/charmbracelet/bubbles v0.13.0 h1:zP/ROH3wJEBqZWKIsD50ZKKlx3ydLInq3LdD/Nrlb8w=
