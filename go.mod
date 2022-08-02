@@ -7,7 +7,7 @@ require (
 	github.com/MakeNowJust/heredoc v1.0.0
 	github.com/abdfnx/looker v0.1.0
 	github.com/abdfnx/resto v0.1.6
-	github.com/abdfnx/tran v0.1.41
+	github.com/abdfnx/tran v0.1.42
 	github.com/botwayorg/gh v0.0.6
 	github.com/briandowns/spinner v1.19.0
 	github.com/charmbracelet/bubbles v0.13.0
