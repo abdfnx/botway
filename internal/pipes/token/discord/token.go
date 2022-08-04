@@ -9,6 +9,7 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	token_shared "github.com/abdfnx/botway/internal/pipes/token"
+	"github.com/abdfnx/botway/tools"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/tidwall/sjson"
@@ -45,6 +46,9 @@ func (m model) AddToken() {
 
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.botName + " Discord tokens're added successfully"))
+
+	tools.GenerateCConfig(m.inputs[0].Value())
+
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render("You can add the guild ids of your discord server via the command") + token_shared.BoldStyle.Render(" "+"botway tokens add-guilds") + " 📁")
 }
 
