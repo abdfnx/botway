@@ -16,8 +16,6 @@ var (
 	opts   = options.CommonOptions{
 		BotName: "",
 	}
-
-	isBlank = false
 )
 
 func checkbox(label string, checked bool) string {
