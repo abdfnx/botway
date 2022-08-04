@@ -38,7 +38,7 @@ func BotType(m model) string {
 	return "# You need to specify a platform (discord, telegram, slack)"
 }
 
-var blankLangMessage = "# You need to specify a language (python, go, nodejs, ruby, rust, deno, csharp, dart, php, kotlin, java, crystal)"
+var blankLangMessage = "# You need to specify a language (python, go, nodejs, ruby, rust, deno, csharp, dart, php, kotlin, java, crystal, c++, nim, c)"
 
 func BotLang(m model) string {
 	if m.LangChoice == 0 {
@@ -68,6 +68,12 @@ func BotLang(m model) string {
 	} else if m.LangChoice == 10 {
 		return "java"
 	} else if m.LangChoice == 11 {
+		return "cpp"
+	} else if m.LangChoice == 12 {
+		return "nim"
+	} else if m.LangChoice == 13 {
+		return "c"
+	} else if m.LangChoice == 14 {
 		return "crystal"
 	}
 
@@ -121,7 +127,15 @@ func BotStartCmd(m model) string {
 		} else {
 			return "./gradlew run"
 		}
-	} else if m.LangChoice == 11 {
+	} else if m.LangChoice == 11 || m.LangChoice == 13 {
+		if runtime.GOOS == "windows" {
+			return `.\run.ps1`
+		} else {
+			return "./run"
+		}
+	} else if m.LangChoice == 12 {
+		return "nim c -r src/main.nim"
+	} else if m.LangChoice == 14 {
 		return "crystal run src/main.cr"
 	}
 
@@ -162,6 +176,12 @@ func BotPM(m model) string {
 	} else if m.LangChoice == 9 || m.LangChoice == 10 {
 		return "gradle"
 	} else if m.LangChoice == 11 {
+		return "cmake"
+	} else if m.LangChoice == 12 {
+		return "nimble"
+	} else if m.LangChoice == 13 {
+		return "continue"
+	} else if m.LangChoice == 14 {
 		return "shards"
 	}
 

@@ -16,14 +16,6 @@ import (
 func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error {
 	CheckBuildKit()
 
-	var src string
-
-	if len(req.Args) == 0 {
-		src = "."
-	} else {
-		src = "./" + req.Args[0]
-	}
-
 	isVerbose, err := req.Cmd.Flags().GetBool("verbose")
 	if err != nil {
 		// Verbose mode isn't a necessary flag; just default to false.
@@ -47,6 +39,9 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 	if err != nil {
 		return err
 	}
+
+	fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+	fmt.Println(constants.INFO_FOREGROUND.Render("Loaded project configuration for " + constants.SUCCESS_FOREGROUND.Render(projectConfig.ProjectPath)))
 
 	if isVerbose {
 		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
@@ -127,7 +122,7 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 		ProjectID:     projectConfig.Project,
 		EnvironmentID: environment.Id,
 		ServiceID:     serviceId,
-		RootDir:       src,
+		RootDir:       projectConfig.ProjectPath,
 	})
 
 	if err != nil {

@@ -1,7 +1,10 @@
 package new
 
 import (
+	"github.com/abdfnx/botway/templates/discord/c"
+	"github.com/abdfnx/botway/templates/discord/cpp"
 	"github.com/abdfnx/botway/templates/discord/crystal"
+	"github.com/abdfnx/botway/templates/discord/nim"
 	"github.com/abdfnx/botway/templates/discord/csharp"
 	"github.com/abdfnx/botway/templates/discord/dart"
 	"github.com/abdfnx/botway/templates/discord/deno"
@@ -53,6 +56,12 @@ func DiscordHandler(m model) {
 	} else if m.PlatformChoice == 0 && m.LangChoice == 10 {
 		java.DiscordJava(opts.BotName)
 	} else if m.PlatformChoice == 0 && m.LangChoice == 11 {
+		cpp.DiscordCpp(opts.BotName)
+	} else if m.PlatformChoice == 0 && m.LangChoice == 12 {
+		nim.DiscordNim(opts.BotName)
+	} else if m.PlatformChoice == 0 && m.LangChoice == 13 {
+		c.DiscordC(opts.BotName)
+	} else if m.PlatformChoice == 0 && m.LangChoice == 14 {
 		crystal.DiscordCrystal(opts.BotName)
 	}
 }

@@ -29,5 +29,9 @@ var IconSet = map[string]*IconInfo{
 	"dart":       {icon: "\ue798", color: [3]uint8{87, 182, 240}},
 	"java":       {icon: "\uf675", color: [3]uint8{244, 68, 62}},
 	"kotlin":     {icon: "\ue70e", color: [3]uint8{139, 195, 74}},
+	"c":          {icon: "\ufb70", color: [3]uint8{2, 119, 189}},
+	"cpp":        {icon: "\ufb71", color: [3]uint8{2, 119, 189}},
+	"nim":        {icon: "\uf6a4", color: [3]uint8{255, 202, 61}},
+	"lua":        {icon: "\ue620", color: [3]uint8{66, 165, 245}},
 	"other":      {icon: "\ufba7", color: [3]uint8{249, 89, 63}},
 }

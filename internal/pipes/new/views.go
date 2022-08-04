@@ -56,7 +56,7 @@ func langsView(m model) string {
 
 	if m.PlatformChoice != 2 {
 		langs += fmt.Sprintf(
-			"\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
+			"\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
 			checkbox("Ruby", l == 3),
 			checkbox("Rust", l == 4),
 			checkbox("Deno", l == 5),
@@ -65,13 +65,16 @@ func langsView(m model) string {
 			checkbox("PHP", l == 8),
 			checkbox("Kotlin", l == 9),
 			checkbox("Java", l == 10),
+			checkbox("C++", l == 11),
+			checkbox("Nim", l == 12),
 		)
 	}
 
 	if m.PlatformChoice == 0 {
 		langs += fmt.Sprintf(
-			"\n%s",
-			checkbox("Crystal", l == 11),
+			"\n%s\n%s",
+			checkbox("C", l == 13),
+			checkbox("Crystal", l == 14),
 		)
 	}
 
@@ -102,6 +105,16 @@ func pmsView(m model) string {
 	} else if m.LangChoice == 8 {
 		l = "PHP"
 	} else if m.LangChoice == 9 {
+		l = "Kotlin"
+	} else if m.LangChoice == 10 {
+		l = "Java"
+	} else if m.LangChoice == 11 {
+		l = "C++"
+	} else if m.LangChoice == 12 {
+		l = "Nim"
+	} else if m.LangChoice == 13 {
+		l = "C"
+	} else if m.LangChoice == 14 {
 		l = "Crystal"
 	}
 
@@ -157,6 +170,12 @@ func pmsView(m model) string {
 	} else if m.LangChoice == 9 || m.LangChoice == 10 {
 		langs += checkbox("gradle", pm == 0)
 	} else if m.LangChoice == 11 {
+		langs += checkbox("cmake", pm == 0)
+	} else if m.LangChoice == 12 {
+		langs += checkbox("nimble", pm == 0)
+	} else if m.LangChoice == 13 {
+		langs += checkbox("continue", pm == 0)
+	} else if m.LangChoice == 14 {
 		langs += checkbox("shards", pm == 0)
 	}
 
@@ -287,9 +306,26 @@ func finalView(m model) string {
 		pm = "gradle"
 
 	case 11:
+		lang = "C++"
+		pm = "cmake"
+
+	case 12:
+		lang = "Nim"
+		pm = "nimble"
+
+	case 13:
+		lang = "C"
+
+	case 14:
 		lang = "Crystal"
 		pm = "shards"
 	}
 
-	return "\n🤖 Noice, you're going to build a " + prim.Render(platform) + " bot via " + prim.Render(lang) + " with " + prim.Render(pm) + " package manager\n"
+	msg := "\n🤖 Noice, you're going to build a " + prim.Render(platform) + " bot via " + prim.Render(lang)
+
+	if lang == "C" {
+		return msg + "\n"
+	} else {
+		return msg + " with " + prim.Render(pm) + " package manager\n"
+	}
 }

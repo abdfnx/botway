@@ -48,7 +48,11 @@ func NewBot(m model, l string, platform, lang int) {
 	botConfig.SetDefault("author", botwayConfig.GetString("user.github_username"))
 	botConfig.SetDefault("bot.lang", BotLang(m))
 	botConfig.SetDefault("bot.name", opts.BotName)
-	botConfig.SetDefault("bot.package_manager", BotPM(m))
+
+	if BotPM(m) != "continue" {
+		botConfig.SetDefault("bot.package_manager", BotPM(m))
+	}
+
 	botConfig.SetDefault("bot.type", BotType(m))
 	botConfig.SetDefault("bot.start_cmd", BotStartCmd(m))
 
@@ -103,7 +107,11 @@ func NewBot(m model, l string, platform, lang int) {
 			respone = CSharpGitIgnore()
 		}
 
-		if lang == 8 {
+		if lang == 9 || lang == 10 {
+			respone += "\n.gradle\nbuild"
+		}
+
+		if lang == 11 {
 			respone = `/docs/
 /lib/
 /bin/
@@ -113,10 +121,6 @@ func NewBot(m model, l string, platform, lang int) {
 # Libraries don't need dependency lock
 # Dependencies will be locked in applications that use them
 /shard.lock`
-		}
-
-		if lang == 9 || lang == 10 {
-			respone += "\n.gradle\nbuild"
 		}
 
 		dotGitIgnoreFileContent = respone + "\n*.lock"
