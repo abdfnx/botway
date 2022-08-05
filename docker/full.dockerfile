@@ -1,7 +1,7 @@
 FROM frolvlad/alpine-glibc:alpine-3.14_glibc-2.33
 
 ### variables ###
-ENV PKGS="zip unzip git curl npm py3-pip openssl openssl-dev libsodium ffmpeg lld clang build-base abuild binutils opus autoconf automake libtool m4 youtube-dl binutils-doc gcc-doc python3-dev neofetch zsh sudo make lsof wget gcc asciidoctor ca-certificates bash-completion htop jq less llvm nano vim ruby-full ruby-dev libffi-dev"
+ENV PKGS="zip unzip git curl npm py3-pip openssl openssl-dev libsodium ffmpeg lld clang build-base abuild binutils opus autoconf automake libtool m4 youtube-dl binutils-doc gcc-doc python3-dev neofetch zsh sudo make lsof wget gcc asciidoctor ca-certificates bash-completion htop jq less llvm nano vim ruby-full ruby-dev libffi-dev icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib"
 ENV ZSHRC=".zshrc"
 
 ### install packages ###
@@ -91,13 +91,16 @@ RUN /bin/bash -c "bash"
 ### pipenv ###
 RUN curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python3
 
-# poetry
+### poetry ###
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
 
 ENV PATH="/root/.poetry/bin:$PATH"
 RUN echo 'eval "$(poetry env install -q)"' >> ~/.bashrc
 RUN echo 'eval "$(poetry env shell -q)"' >> ~/.bashrc
 RUN /bin/bash -c "bash"
+
+### c# ###
+RUN curl -sL https://dot.net/v1/dotnet-install.sh | bash
 
 ### rm old ~/.zshrc ###
 RUN sudo rm -rf $ZSHRC
