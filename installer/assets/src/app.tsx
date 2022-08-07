@@ -1,15 +1,9 @@
-import React from "react";
-import Head from "next/head";
-import { LogoSection } from "../components/logo";
+import { LogoSection } from "./logo";
 
-function MainPage() {
+function App() {
   return (
     <>
       <main className="flex flex-col md:flex-row-reverse md:h-screen sm:pt-20">
-        <Head>
-          <title>abdfnx/botway 🤖</title>
-          <link rel="icon" href="/icon.svg" />
-        </Head>
         <LogoSection />
 
         <section className="justify-center px-4 md:px-0 md:flex md:w-2/3">
@@ -22,4 +16,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default App;

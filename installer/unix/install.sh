@@ -4,11 +4,11 @@ echo Installing Botway installer...
 
 # Download the installer
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-    wget https://cdn-botway.up.railway.app/installers/installer-macos -O bw-installer
+    wget https://cdn-botway.waypoint.run/installers/installer-macos -O bw-installer
 fi
 
 if [[ "$OSTYPE" =~ ^linux ]]; then
-    wget https://cdn-botway.up.railway.app/installers/installer-linux -O bw-installer
+    wget https://cdn-botway.waypoint.run/installers/installer-linux -O bw-installer
 fi
 
 # Make it an executable

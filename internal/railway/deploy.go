@@ -40,8 +40,15 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 		return err
 	}
 
+	src := projectConfig.ProjectPath
+
+	if src == "" {
+		// When deploying with a project token, the project path is empty
+		src = "."
+	}
+
 	fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
-	fmt.Println(constants.INFO_FOREGROUND.Render("Loaded project configuration for " + constants.SUCCESS_FOREGROUND.Render(projectConfig.ProjectPath)))
+	fmt.Println(constants.INFO_FOREGROUND.Render("Uploading directory " + constants.BOLD.Render(src)))
 
 	if isVerbose {
 		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
@@ -122,7 +129,7 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 		ProjectID:     projectConfig.Project,
 		EnvironmentID: environment.Id,
 		ServiceID:     serviceId,
-		RootDir:       projectConfig.ProjectPath,
+		RootDir:       src,
 	})
 
 	if err != nil {

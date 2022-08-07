@@ -47,3 +47,14 @@ MANIFEST
 target/
 Cargo.lock
 osxcross
+
+# Vercel
+.vercel
+
+# Turborepo
+.turbo
+
+# Waypoint
+.waypoint
+data.db
+waypoint-restore.db.lock

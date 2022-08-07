@@ -47,6 +47,8 @@ RUN rm -rf ${INSTALLERS_DIR_PATH}
 
 COPY --from=rs ./botway/installer/assets/${INSTALLERS_DIR_PATH} ${INSTALLERS_DIR_PATH}
 
-RUN yarn
+RUN yarn global add pnpm && pnpm i
 
-ENTRYPOINT [ "yarn", "dev" ]
+RUN pnpm build
+
+ENTRYPOINT [ "pnpm", "serve" ]
