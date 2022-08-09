@@ -16,6 +16,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Set up Go
         uses: actions/setup-go@v2
@@ -36,6 +39,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Set up Go
         uses: actions/setup-go@v2
@@ -60,6 +66,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Install from script
         run: curl -sL https://bit.ly/botway | bash
@@ -74,6 +83,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Install from script
         run: |
@@ -90,6 +102,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Get Botway via homebrew
         run: brew install abdfnx/tap/botway
@@ -104,6 +119,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Run in docker container
         run: docker run --rm -iv botwayorg/botway -v
