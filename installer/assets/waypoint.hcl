@@ -1,16 +1,16 @@
 project = "botway-cdn"
 
 app "botway-cdn" {
-    labels = {
-        "service" = "botway-cdn",
-        "env" = "dev"
-    }
+  labels = {
+    "service" = "botway-cdn",
+    "env"     = "dev"
+  }
 
-    build {
-        use "docker" {}
-    }
+  build {
+    use "docker" {}
+  }
 
-    deploy {
-        use "docker" {}
-    }
+  deploy {
+    use "docker" {}
+  }
 }

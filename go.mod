@@ -26,8 +26,8 @@ require (
 	github.com/spf13/viper v1.12.0
 	github.com/tidwall/gjson v1.14.2
 	github.com/tidwall/sjson v1.2.5
-	golang.org/x/sys v0.0.0-20220704084225-05e143d24a9e
-	golang.org/x/term v0.0.0-20220526004731-065cf7ba2467
+	golang.org/x/sys v0.0.0-20220808155132-1c4a2a72c664
+	golang.org/x/term v0.0.0-20220722155259-a9ba230a4035
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -37,30 +37,30 @@ require (
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/botwayorg/git v0.0.0-20220620131453-e25d6a207203 // indirect
 	github.com/charmbracelet/glamour v0.5.0 // indirect
-	github.com/chzyer/readline v1.5.0 // indirect
+	github.com/chzyer/readline v1.5.1 // indirect
 	github.com/cli/browser v1.1.0 // indirect
 	github.com/cli/oauth v0.9.0 // indirect
 	github.com/cli/safeexec v1.0.0 // indirect
 	github.com/cli/shurcooL-graphql v0.0.1 // indirect
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/dlclark/regexp2 v1.4.0 // indirect
+	github.com/dlclark/regexp2 v1.7.0 // indirect
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/gdamore/encoding v1.0.0 // indirect
-	github.com/gdamore/tcell/v2 v2.5.1 // indirect
+	github.com/gdamore/tcell/v2 v2.5.2 // indirect
 	github.com/google/go-github v17.0.0+incompatible // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
-	github.com/gookit/goutil v0.5.5 // indirect
+	github.com/gookit/goutil v0.5.7 // indirect
 	github.com/gorilla/css v1.0.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/henvic/httpretty v0.1.0 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
-	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/inconshreveable/mousetrap v1.0.1 // indirect
 	github.com/itchyny/gojq v0.12.8 // indirect
 	github.com/itchyny/timefmt-go v0.1.3 // indirect
-	github.com/jedib0t/go-pretty/v6 v6.3.3 // indirect
+	github.com/jedib0t/go-pretty/v6 v6.3.6 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/logrusorgru/aurora v2.0.3+incompatible // indirect
@@ -78,13 +78,13 @@ require (
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/rivo/tview v0.0.0-20220703182358-a13d901d3386 // indirect
-	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/rivo/tview v0.0.0-20220805210617-37ad0bb93703 // indirect
+	github.com/rivo/uniseg v0.3.4 // indirect
 	github.com/sahilm/fuzzy v0.1.0 // indirect
 	github.com/scmn-dev/browser v0.1.3 // indirect
 	github.com/shurcooL/githubv4 v0.0.0-20220520033151-0b4e3294ff00 // indirect
 	github.com/shurcooL/graphql v0.0.0-20220606043923-3cf50f8a0a29 // indirect
-	github.com/spf13/afero v1.8.2 // indirect
+	github.com/spf13/afero v1.9.2 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
@@ -94,10 +94,10 @@ require (
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/yosssi/gohtml v0.0.0-20201013000340-ee4748c638f4 // indirect
-	github.com/yuin/goldmark v1.4.12 // indirect
+	github.com/yuin/goldmark v1.4.13 // indirect
 	github.com/yuin/goldmark-emoji v1.0.1 // indirect
-	golang.org/x/net v0.0.0-20220706163947-c90051bbdb60 // indirect
+	golang.org/x/net v0.0.0-20220809012201-f428fae20770 // indirect
 	golang.org/x/text v0.3.7 // indirect
-	gopkg.in/ini.v1 v1.66.6 // indirect
+	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

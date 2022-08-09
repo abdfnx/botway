@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://botway.web.app" target="_blank">
-    <img src="https://cdn-botway.up.railway.app/botway.svg" alt="Botway" width="300">
+    <img src="https://cdn-botway.waypoint.run/botway.svg" alt="Botway" width="300">
   </a>
 </p>
 
@@ -42,7 +42,7 @@ curl -sL https://bit.ly/botway | bash
 - PowerShell
 
 ```powershell
-irm bit.ly/bw-win | iex
+irm https://bit.ly/bw-win | iex
 ```
 
 **then restart your powershell**

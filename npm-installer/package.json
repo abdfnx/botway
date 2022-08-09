@@ -16,6 +16,9 @@
   "bin": {
     "botway": "../bin/botway.js"
   },
+  "scripts": {
+    "postinstall": "node ./postinstall.js"
+  },
   "files": [
     "../bin",
     "config.js",

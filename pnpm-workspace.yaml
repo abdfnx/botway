@@ -1,4 +1,3 @@
 packages:
   - "web"
-  - "npm-installer"
   - "installer/assets"
