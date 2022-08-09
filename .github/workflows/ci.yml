@@ -1,0 +1,109 @@
+name: Botway CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+jobs:
+  bfs: # build from source
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
+
+      - name: Set up Task
+        uses: arduino/setup-task@v1
+
+      - name: Building From Source
+        run: task bfs
+
+      - name: Run Help
+        run: botway help
+
+  bfs-windows: # build from source (windows)
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
+
+      - name: Set up Task
+        uses: arduino/setup-task@v1
+
+      - name: Building From Source
+        run: |
+          task bfs
+          echo "::add-path::C:\Users\runneradmin\AppData\Local\botway\bin\;"
+
+      - name: Run Help
+        run: botway help
+
+  from-script:
+    needs: [ bfs ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install from script
+        run: curl -sL https://bit.ly/botway | bash
+
+      - name: Run Help
+        run: botway help
+
+  from-script-windows:
+    needs: [ bfs-windows ]
+
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install from script
+        run: |
+          irm https://bit.ly/bw-win | iex
+          echo "::add-path::C:\Users\runneradmin\AppData\Local\botway\bin\;"
+
+      - name: Run Help
+        run: botway help
+
+  homebrew:
+    needs: [ bfs ]
+
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get Botway via homebrew
+        run: brew install abdfnx/tap/botway
+
+      - name: Run Help
+        run: botway help
+
+  docker:
+    needs: [ bfs, from-script ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run in docker container
+        run: docker run --rm -iv botwayorg/botway -v
