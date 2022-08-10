@@ -34,32 +34,6 @@ jobs:
       - name: Run Version
         run: botway -v
 
-  bfs-windows: # build from source (windows)
-    runs-on: windows-latest
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-          fetch-depth: 0
-
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.18
-
-      - name: Set up Task
-        uses: arduino/setup-task@v1
-
-      - name: Building From Source
-        shell: powershell
-        run: |
-          task bfs
-          echo "::add-path::C:\Users\runneradmin\AppData\Local\botway\bin\;"
-
-      - name: Run Version
-        run: botway -v
-
   from-script:
     needs: [ bfs ]
 
@@ -78,8 +52,6 @@ jobs:
         run: botway -v
 
   from-script-windows:
-    needs: [ bfs-windows ]
-
     runs-on: windows-latest
 
     steps:
