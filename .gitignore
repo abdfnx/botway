@@ -53,8 +53,3 @@ osxcross
 
 # Turborepo
 .turbo
-
-# Waypoint
-.waypoint
-data.db
-waypoint-restore.db.lock

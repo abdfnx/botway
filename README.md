@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://botway.web.app" target="_blank">
-    <img src="https://cdn-botway.waypoint.run/botway.svg" alt="Botway" width="300">
+    <img src="https://botway-cdn.onrender.com/botway.svg" alt="Botway" width="300">
   </a>
 </p>
 
@@ -62,58 +62,58 @@ scoop install botway
 
 ## Usage
 
-* Initialize `~/.botway`
+- Initialize `~/.botway`
 
   ```bash
   botway init
   ```
 
-* Authenticate with [**Railway**][rw]
+- Authenticate with [**Railway**][rw]
 
   ```bash
   botway login
   ```
 
-* Open Botway TUI
+- Open Botway TUI
 
   ```bash
   botway
   ```
 
-* Create a new botway project
+- Create a new botway project
 
   ```bash
   botway new <project-name>
   ```
 
-* Manage your bot tokens
+- Manage your bot tokens
 
   ```bash
   botway tokens <command> [flags] <project-name>
   ```
 
-* Start running your bot
+- Start running your bot
 
   ```bash
   # Under the project directory
   botway start
   ```
 
-* Manage your bot database
+- Manage your bot database
 
   ```bash
   # Under the project directory
   botway database <command>
   ```
 
-* Deploy and upload project to [**Railway**][rw] from the current directory
+- Deploy and upload project to [**Railway**][rw] from the current directory
 
   ```bash
   # Under the project directory
   botway deploy
   ```
 
-* Run a local command using variables from the active environment
+- Run a local command using variables from the active environment
 
   ```bash
   # Under the project directory
