@@ -145,6 +145,7 @@ jobs:
           cd installer/assets
           waypoint install -platform=docker -accept-tos
           waypoint init
+          waypoint hostname delete cdn-botway-test
           waypoint hostname register -app=botway-cdn cdn-botway-test
           waypoint up
           waypoint logs
