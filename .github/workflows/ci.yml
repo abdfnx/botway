@@ -9,7 +9,6 @@ on:
 env:
   GITHUB_TOKEN: ${{ github.token }}
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-  WAYPOINT_SERVER_TOKEN: ${{ secrets.WAYPOINT_TOKEN }}
   WAYPOINT_SERVER_TLS: 1
   WAYPOINT_SERVER_TLS_SKIP_VERIFY: 1
 
@@ -144,8 +143,7 @@ jobs:
       - name: Deploy Botway CDN
         run: |
           cd installer/assets
-          waypoint install -platform=docker -accept-tos
           waypoint init
-          waypoint hostname register -app=botway-cdn cdn-botway
+          waypoint hostname register -app=botway-cdn cdn-botway-test
           waypoint up
           waypoint deploy
