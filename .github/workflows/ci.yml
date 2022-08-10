@@ -9,6 +9,8 @@ on:
 env:
   GITHUB_TOKEN: ${{ github.token }}
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+  WAYPOINT_SERVER_TLS: 1
+  WAYPOINT_SERVER_TLS_SKIP_VERIFY: 1
 
 jobs:
   bfs: # build from source
@@ -125,3 +127,23 @@ jobs:
 
       - name: Run in docker container
         run: docker run --rm -iv botwayorg/botway -v
+  
+  botway-cdn:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up Waypoint
+        uses: hashicorp/action-setup-waypoint
+  
+      - name: Deploy Botway CDN
+        run: |
+          cd installer/assets
+          waypoint init
+          waypoint hostname register cdn-botway
+          waypoint up
+          waypoint deploy
