@@ -144,6 +144,6 @@ jobs:
         run: |
           cd installer/assets
           waypoint init
-          waypoint hostname register cdn-botway
+          waypoint hostname register -app=botway-cdn cdn-botway
           waypoint up
           waypoint deploy
