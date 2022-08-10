@@ -124,4 +124,4 @@ jobs:
           fetch-depth: 0
 
       - name: Run in docker container
-        run: docker run --rm -iv botwayorg/botway -v
+        run: docker run --rm -i botwayorg/botway -v
