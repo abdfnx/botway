@@ -127,25 +127,3 @@ jobs:
 
       - name: Run in docker container
         run: docker run --rm -iv botwayorg/botway -v
-  
-  botway-cdn:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-          fetch-depth: 0
-
-      - name: Set up Waypoint
-        uses: hashicorp/action-setup-waypoint@main
-  
-      - name: Deploy Botway CDN
-        run: |
-          cd installer/assets
-          waypoint install -platform=docker -accept-tos
-          waypoint init
-          waypoint hostname delete cdn-botway-test
-          waypoint hostname register -app=botway-cdn cdn-botway-test
-          waypoint up
-          waypoint logs
