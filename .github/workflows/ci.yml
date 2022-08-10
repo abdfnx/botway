@@ -138,7 +138,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Waypoint
-        uses: hashicorp/action-setup-waypoint
+        uses: hashicorp/action-setup-waypoint@main
   
       - name: Deploy Botway CDN
         run: |
