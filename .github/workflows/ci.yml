@@ -52,6 +52,7 @@ jobs:
         uses: arduino/setup-task@v1
 
       - name: Building From Source
+        shell: powershell
         run: |
           task bfs
           echo "::add-path::C:\Users\runneradmin\AppData\Local\botway\bin\;"
