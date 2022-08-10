@@ -143,6 +143,7 @@ jobs:
       - name: Deploy Botway CDN
         run: |
           cd installer/assets
+          waypoint install -platform=docker -accept-tos
           waypoint init
           waypoint hostname register -app=botway-cdn cdn-botway
           waypoint up
