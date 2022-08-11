@@ -1,0 +1,16 @@
+[submodule "packages/botwaygo"]
+	path = packages/botwaygo
+	url = https://github.com/abdfnx/botwaygo
+	branch = main
+[submodule "packages/botwaycr"]
+	path = packages/botwaycr
+	url = https://github.com/abdfnx/botwaycr
+	branch = main
+[submodule "packages/botway-lua"]
+	path = packages/botway-lua
+	url = https://github.com/abdfnx/botway-lua
+	branch = main
+[submodule "packages/botway-swift"]
+	path = packages/botway-swift
+	url = https://github.com/abdfnx/botway-swift
+	branch = main
