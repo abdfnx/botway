@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Botlin</h1>
+  <h1>Botnim</h1>
 	<p>
 		Nim client package for Botway
 	</p>

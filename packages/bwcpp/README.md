@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Botlin</h1>
+  <h1>BW++</h1>
 	<p>
 		C++ client package for Botway
 	</p>

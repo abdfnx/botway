@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Botlin</h1>
+  <h1>BW-PHP<h1>
 	<p>
 		PHP client package for Botway
 	</p>
