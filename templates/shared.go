@@ -13,7 +13,13 @@ import (
 )
 
 func Content(arg, templateName, botName string) string {
-	url := fmt.Sprintf("https://raw.githubusercontent.com/botwayorg/%s/main/%s", templateName, arg)
+	org := "botwayorg"
+
+	if templateName == "botway" {
+		org = "abdfnx"
+	}
+
+	url := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/main/%s", org, templateName, arg)
 	respone, status, _, err := api.BasicGet(url, "GET", "", "", "", "", false, 0, nil)
 
 	if err != nil {

@@ -15,7 +15,7 @@ func MainNimContent() string {
 }
 
 func BotnimContent(botName string) string {
-	return templates.Content("src/botnim.nim", "discord-nim", botName)
+	return templates.Content("packages/botnim/main.nim", "botway", botName)
 }
 
 func PngFileContent() string {

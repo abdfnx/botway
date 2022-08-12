@@ -11,7 +11,7 @@ func MainPHPContent() string {
 }
 
 func BotwayPHPContent() string {
-	return templates.Content("src/botway.php", "discord-php", "")
+	return templates.Content("packages/bw-php/main.php", "botway", "")
 }
 
 func Resources() string {

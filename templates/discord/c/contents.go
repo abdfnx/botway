@@ -15,7 +15,7 @@ func MainCContent() string {
 }
 
 func BWCContent(botName string) string {
-	return templates.Content("src/botway.h", "discord-c", botName)
+	return templates.Content("packages/bwc/main.h", "botway", botName)
 }
 
 func RunPsFileContent() string {

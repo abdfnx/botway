@@ -11,7 +11,7 @@ func Resources() string {
 }
 
 func BotlinContent() string {
-	return templates.Content("app/src/main/kotlin/botway/Botway.kt", "discord-kotlin", "")
+	return templates.Content("packages/botlin/main.kt", "botway", "")
 }
 
 func MainJavaContent() string {
