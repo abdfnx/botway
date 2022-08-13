@@ -1,6 +1,6 @@
 {
   "name": "botway.js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Nodejs client for botway.",
   "author": "@abdfnx",
   "homepage": "https://github.com/abdfnx/botway",

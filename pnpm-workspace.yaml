@@ -1,3 +1,4 @@
 packages:
   - "web"
   - "installer/assets"
+  - "packages/botway.js"

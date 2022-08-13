@@ -20,15 +20,15 @@ const getBotInfo = (value: string) => {
   }
 };
 
+const contents = readFileSync(BOTWAY_CONFIG_PATH, "utf8");
+
+const json = JSON.parse(contents);
+
 export const GetToken = () => {
   if (getBotInfo("lang") != "nodejs") {
     console.log("ERROR: Your Bot framework is not NodeJS");
   } else {
     try {
-      const contents = readFileSync(BOTWAY_CONFIG_PATH, "utf8");
-
-      const json = JSON.parse(contents);
-
       return json["botway"]["bots"][getBotInfo("name")]["bot_token"];
     } catch (err: any) {
       console.log(err.stack || String(err));
@@ -41,10 +41,6 @@ export const GetAppId = () => {
     console.log("ERROR: Your Bot framework is not NodeJS");
   } else {
     try {
-      const contents = readFileSync(BOTWAY_CONFIG_PATH, "utf8");
-
-      const json = JSON.parse(contents);
-
       if (getBotInfo("type") == "slack") {
         return json["botway"]["bots"][getBotInfo("name")]["bot_app_token"];
       } else {
@@ -66,10 +62,6 @@ export const GetGuildId = (serverName: string) => {
       );
     } else {
       try {
-        const contents = readFileSync(BOTWAY_CONFIG_PATH, "utf8");
-
-        const json = JSON.parse(contents);
-
         return json["botway"]["bots"][getBotInfo("name")]["guilds"][serverName][
           "server_id"
         ];
@@ -90,10 +82,6 @@ export const GetSigningSecret = () => {
       );
     } else {
       try {
-        const contents = readFileSync(BOTWAY_CONFIG_PATH, "utf8");
-
-        const json = JSON.parse(contents);
-
         return json["botway"]["bots"][getBotInfo("name")]["signing_secret"];
       } catch (err: any) {
         console.log(err.stack || String(err));
