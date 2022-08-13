@@ -42,7 +42,7 @@ func DiscordCpp(botName string) {
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" cmake is not installed"))
 	} else {
 		findDPPCmakeFile := os.WriteFile(filepath.Join(botName, "cmake", "FindDPP.cmake"), []byte(FindDppCmakeContent()), 0644)
-		botwayHeader := os.WriteFile(filepath.Join(botName, "include", "botway", "botway.h"), []byte((BWCPPFileContent(botName))), 0644)
+		botwayHeader := os.WriteFile(filepath.Join(botName, "include", "botway", "botway.hpp"), []byte((BWCPPFileContent(botName))), 0644)
 		mainIncludeFile := os.WriteFile(filepath.Join(botName, "include", botName, botName + ".h"), []byte((MainIncludeFileContent())), 0644)
 		dotDockerIgnoreFile := os.WriteFile(filepath.Join(botName, ".dockerignore"), []byte(DotDockerIgnoreContent()), 0644)
 		cmakeListsFile := os.WriteFile(filepath.Join(botName, "CMakeLists.txt"), []byte(CmakeListsContent(botName)), 0644)

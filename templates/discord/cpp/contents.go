@@ -15,7 +15,7 @@ func FindDppCmakeContent() string {
 }
 
 func BWCPPFileContent(botName string) string {
-	return templates.Content("packages/bwpp/main.h", "botway", botName)
+	return templates.Content("packages/bwpp/main.hpp", "botway", botName)
 }
 
 func MainIncludeFileContent() string {
