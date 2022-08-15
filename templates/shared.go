@@ -32,7 +32,13 @@ func Content(arg, templateName, botName string) string {
 		os.Exit(0)
 	}
 
-	respone = strings.ReplaceAll(respone, "{{.BotName}}", botName)
+	if strings.Contains(respone, "#include <{{.BotName}}/{{.BotName}}.h>") && strings.Contains(templateName, "telegram") {
+		respone = strings.ReplaceAll(respone, "#include <{{.BotName}}/{{.BotName}}.h>", "")
+	} else if strings.Contains(respone, `#include "botway/botway.hpp"`) && strings.Contains(templateName, "telegram") {
+		respone = strings.ReplaceAll(respone, `#include "botway/botway.hpp"`, `#include "botway.hpp"`)
+	} else {
+		respone = strings.ReplaceAll(respone, "{{.BotName}}", botName)
+	}
 
 	viper.SetConfigType("json")
 
