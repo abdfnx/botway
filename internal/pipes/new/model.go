@@ -7,17 +7,19 @@ import (
 )
 
 type model struct {
-	PlatformChoice int
-	Platform       bool
-	Ticks          int
-	Frames         int
-	Progress       float64
-	Loaded         bool
-	Lang           bool
-	LangChoice     int
-	PM             bool // package manager
-	PMCoice        int
-	Quitting       bool
+	PlatformChoice 	  int
+	Platform       	  bool
+	Ticks          	  int
+	Frames            int
+	Progress       	  float64
+	Loaded            bool
+	Lang           	  bool
+	LangChoice     	  int
+	PM             	  bool // package manager
+	PMChoice       	  int
+	HostService    	  bool
+	HostServiceChoice int
+	Quitting       	  bool
 }
 
 type frameMsg struct{}

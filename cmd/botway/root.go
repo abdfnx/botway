@@ -78,7 +78,6 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 		app.RunCMD(),
 		app.StartCMD(),
 		app.LoginCMD(),
-		app.LogoutCMD(),
 		app.VarsCMD(),
 		app.DeployCMD(),
 		app.NewGHConfigCmd,

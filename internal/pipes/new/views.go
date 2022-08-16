@@ -88,7 +88,7 @@ func langsView(m model) string {
 }
 
 func pmsView(m model) string {
-	pm := m.PMCoice
+	pm := m.PMChoice
 
 	l := ""
 
@@ -196,6 +196,22 @@ func pmsView(m model) string {
 	return fmt.Sprintf(tpl, langs)
 }
 
+func hostServicesView(m model) string {
+	c := m.HostServiceChoice
+
+	tpl := "Which hosting service do you want to use?\n\n"
+	tpl += "%s\n\n"
+	tpl += subtle.Render("j/k, up/down: select") + dot + subtle.Render("enter: choose") + dot + subtle.Render("q, esc: quit")
+
+	choices := fmt.Sprintf(
+		"%s\n%s",
+		checkbox("Railway (railway.app)", c == 0),
+		checkbox("Render (render.com)", c == 1),
+	)
+
+	return fmt.Sprintf(tpl, choices)
+}
+
 // func tokenView(m model) string {
 // 	instructionsIn := `# Setup Discord Bot Token
 
@@ -213,7 +229,7 @@ func pmsView(m model) string {
 // }
 
 func finalView(m model) string {
-	var platform, lang, pm string
+	var platform, lang, pm, hostService string
 
 	switch m.PlatformChoice {
 	case 0:
@@ -226,11 +242,19 @@ func finalView(m model) string {
 		platform = "Slack"
 	}
 
+	switch m.HostServiceChoice {
+	case 0:
+		hostService = "Railway"
+		
+	case 1:
+		hostService = "Render"
+	}
+
 	switch m.LangChoice {
 	case 0:
 		lang = "Python"
 
-		switch m.PMCoice {
+		switch m.PMChoice {
 		case 0:
 			pm = "pip"
 
@@ -245,7 +269,7 @@ func finalView(m model) string {
 		if m.PlatformChoice == 2 {
 			lang = "Node.js"
 
-			switch m.PMCoice {
+			switch m.PMChoice {
 			case 0:
 				pm = "npm"
 
@@ -266,7 +290,7 @@ func finalView(m model) string {
 	case 2:
 		lang = "Node.js"
 
-		switch m.PMCoice {
+		switch m.PMChoice {
 		case 0:
 			pm = "npm"
 
@@ -287,7 +311,7 @@ func finalView(m model) string {
 	case 4:
 		lang = "Rust"
 
-		switch m.PMCoice {
+		switch m.PMChoice {
 		case 0:
 			pm = "cargo"
 
@@ -341,10 +365,11 @@ func finalView(m model) string {
 	}
 
 	msg := "\n🤖 Noice, you're going to build a " + prim.Render(platform) + " bot via " + prim.Render(lang)
+	hMsg := " and " + prim.Render(hostService) + " as hosting service"
 
 	if lang == "C" {
-		return msg + "\n"
+		return msg + hMsg + "\n"
 	} else {
-		return msg + " with " + prim.Render(pm) + " package manager\n"
+		return msg + " with " + prim.Render(pm) + " package manager " + hMsg + "\n"
 	}
 }

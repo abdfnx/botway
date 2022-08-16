@@ -23,12 +23,12 @@ func NewBot(m model, l string, platform, lang int) {
 		log.Fatal(err)
 	}
 
-	if lang != 9 || lang != 10 {
-		if m.PlatformChoice == 1 && lang != 13 {
-			if err := os.Mkdir(filepath.Join(opts.BotName, "src"), os.ModePerm); err != nil {
-				log.Fatal(err)
-			}
-		}
+	if err := os.Mkdir(filepath.Join(opts.BotName, "src"), os.ModePerm); err != nil {
+		log.Fatal(err)
+	}
+
+	if l == "Swift" || l == "Java" {
+		os.RemoveAll(filepath.Join(opts.BotName, "src"))
 	}
 
 	if err := os.Mkdir(filepath.Join(opts.BotName, "config"), os.ModePerm); err != nil {
@@ -41,15 +41,16 @@ func NewBot(m model, l string, platform, lang int) {
 	botwayConfig.SetConfigType("json")
 	botwayConfig.ReadConfig(bytes.NewBuffer(constants.BotwayConfig))
 
-	dockerImage := botwayConfig.GetString("user.docker_id") + "/" + opts.BotName
+	dockerImage := botwayConfig.GetString("docker.id") + "/" + opts.BotName
 
 	botConfig.AddConfigPath(opts.BotName)
 	botConfig.SetConfigName(".botway")
 	botConfig.SetConfigType("yaml")
 
-	botConfig.SetDefault("author", botwayConfig.GetString("user.github_username"))
+	botConfig.SetDefault("author", botwayConfig.GetString("github.username"))
 	botConfig.SetDefault("bot.lang", BotLang(m))
 	botConfig.SetDefault("bot.name", opts.BotName)
+	botConfig.SetDefault("bot.host_service", HostService(m))
 
 	if BotPM(m) != "continue" {
 		botConfig.SetDefault("bot.package_manager", BotPM(m))
@@ -123,6 +124,10 @@ func NewBot(m model, l string, platform, lang int) {
 # Libraries don't need dependency lock
 # Dependencies will be locked in applications that use them
 /shard.lock`
+		}
+
+		if lang == 13 && platform == 1 {
+			respone += "\n.build\nPackage.resolved"
 		}
 
 		dotGitIgnoreFileContent = respone + "\n*.lock"

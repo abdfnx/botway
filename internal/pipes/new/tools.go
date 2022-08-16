@@ -26,6 +26,16 @@ func checkbox(label string, checked bool) string {
 	return fmt.Sprintf("[ ] %s", label)
 }
 
+func HostService(m model) string {
+	if m.HostServiceChoice == 0 {
+		return "railway.app"
+	} else if m.HostServiceChoice == 1 {
+		return "render.com"
+	}
+
+	return "# Specify the host service here"
+}
+
 func BotType(m model) string {
 	if m.PlatformChoice == 0 {
 		return "discord"
@@ -87,19 +97,19 @@ func BotLang(m model) string {
 func BotStartCmd(m model) string {
 	nodeCmd := "node src/main.js"
 
-	if m.LangChoice == 0 && m.PMCoice == 0 {
+	if m.LangChoice == 0 && m.PMChoice == 0 {
 		if runtime.GOOS == "windows" {
 			return `py .\src\main.py`
 		} else {
 			return `python3 ./src/main.py`
 		}
-	} else if m.LangChoice == 0 && m.PMCoice == 1 {
+	} else if m.LangChoice == 0 && m.PMChoice == 1 {
 		if runtime.GOOS == "windows" {
 			return `pipenv run py .\src\main.py`
 		} else {
 			return `pipenv run python3 ./src/main.py`
 		}
-	} else if m.LangChoice == 0 && m.PMCoice == 2 {
+	} else if m.LangChoice == 0 && m.PMChoice == 2 {
 		if runtime.GOOS == "windows" {
 			return `poetry run .\src\main.py`
 		} else {
@@ -139,12 +149,12 @@ func BotStartCmd(m model) string {
 		}
 	} else if m.LangChoice == 13 {
 		if m.PlatformChoice == 1 {
-			return "swift Sources/" + opts.BotName + "/main.swift"
+			return "swift run"
 		} else {
 			if runtime.GOOS == "windows" {
 				return `.\run.ps1`
 			} else {
-				return "cd build; make -j; gcc src/main.c -o bot -pthread -ldiscord -lcurl; ./bot"
+				return "gcc src/main.c -o bot -pthread -ldiscord -lcurl; ./bot"
 			}
 		}
 	} else if m.LangChoice == 12 {
@@ -157,27 +167,27 @@ func BotStartCmd(m model) string {
 }
 
 func BotPM(m model) string {
-	if m.LangChoice == 0 && m.PMCoice == 0 {
+	if m.LangChoice == 0 && m.PMChoice == 0 {
 		return "pip"
-	} else if m.LangChoice == 0 && m.PMCoice == 1 {
+	} else if m.LangChoice == 0 && m.PMChoice == 1 {
 		return "pipenv"
-	} else if m.LangChoice == 0 && m.PMCoice == 2 {
+	} else if m.LangChoice == 0 && m.PMChoice == 2 {
 		return "poetry"
 	} else if m.LangChoice == 1 {
 		return "go mod"
-	} else if m.LangChoice == 2 && m.PMCoice == 0 {
+	} else if m.LangChoice == 2 && m.PMChoice == 0 {
 		return "npm"
-	} else if m.LangChoice == 2 && m.PMCoice == 1 {
+	} else if m.LangChoice == 2 && m.PMChoice == 1 {
 		return "yarn"
-	} else if m.LangChoice == 2 && m.PMCoice == 2 {
+	} else if m.LangChoice == 2 && m.PMChoice == 2 {
 		return "pnpm"
-	} else if m.LangChoice == 2 && m.PMCoice == 3 {
+	} else if m.LangChoice == 2 && m.PMChoice == 3 {
 		return "bun"
 	} else if m.LangChoice == 3 {
 		return "bundler"
-	} else if m.LangChoice == 4 && m.PMCoice == 0 {
+	} else if m.LangChoice == 4 && m.PMChoice == 0 {
 		return "cargo"
-	} else if m.LangChoice == 4 && m.PMCoice == 1 {
+	} else if m.LangChoice == 4 && m.PMChoice == 1 {
 		return "fleet"
 	} else if m.LangChoice == 5 {
 		return "deno"

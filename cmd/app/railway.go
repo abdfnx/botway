@@ -12,9 +12,20 @@ func RailwayCMD() *cobra.Command {
 		Aliases: []string{"rw"},
 	}
 
+	cmd.AddCommand(RailwayLogoutCMD())
 	cmd.AddCommand(RailwayInfoCMD())
 	cmd.AddCommand(RailwayLinkCMD())
 	cmd.AddCommand(RailwayUnLinkCMD())
+
+	return cmd
+}
+
+func RailwayLogoutCMD() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "logout",
+		Short: "Logout of your Railway account",
+		RunE:  Contextualize(handler.Logout, handler.Panic),
+	}
 
 	return cmd
 }

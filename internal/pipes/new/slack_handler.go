@@ -8,19 +8,19 @@ import (
 )
 
 func SlackHandler(m model) {
-	if m.PlatformChoice == 2 && m.LangChoice == 0 && m.PMCoice == 0 {
+	if m.PlatformChoice == 2 && m.LangChoice == 0 && m.PMChoice == 0 {
 		pip.SlackPythonPip(opts.BotName)
-	} else if m.PlatformChoice == 2 && m.LangChoice == 0 && m.PMCoice == 1 {
+	} else if m.PlatformChoice == 2 && m.LangChoice == 0 && m.PMChoice == 1 {
 		pipenv.SlackPythonPipenv(opts.BotName)
-	} else if m.PlatformChoice == 2 && m.LangChoice == 0 && m.PMCoice == 2 {
+	} else if m.PlatformChoice == 2 && m.LangChoice == 0 && m.PMChoice == 2 {
 		poetry.SlackPythonPoetry(opts.BotName)
-	} else if m.PlatformChoice == 2 && m.LangChoice == 1 && m.PMCoice == 0 {
+	} else if m.PlatformChoice == 2 && m.LangChoice == 1 && m.PMChoice == 0 {
 		nodejs.SlackNodejs(opts.BotName, "npm")
-	} else if m.PlatformChoice == 2 && m.LangChoice == 1 && m.PMCoice == 1 {
+	} else if m.PlatformChoice == 2 && m.LangChoice == 1 && m.PMChoice == 1 {
 		nodejs.SlackNodejs(opts.BotName, "yarn")
-	} else if m.PlatformChoice == 2 && m.LangChoice == 1 && m.PMCoice == 2 {
+	} else if m.PlatformChoice == 2 && m.LangChoice == 1 && m.PMChoice == 2 {
 		nodejs.SlackNodejs(opts.BotName, "pnpm")
-	} else if m.PlatformChoice == 2 && m.LangChoice == 1 && m.PMCoice == 3 {
+	} else if m.PlatformChoice == 2 && m.LangChoice == 1 && m.PMChoice == 3 {
 		nodejs.SlackNodejs(opts.BotName, "bun")
 	}
 }

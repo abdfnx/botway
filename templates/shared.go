@@ -44,7 +44,7 @@ func Content(arg, templateName, botName string) string {
 
 	viper.ReadConfig(bytes.NewBuffer(constants.BotwayConfig))
 
-	respone = strings.ReplaceAll(respone, "{{.Author}}", viper.GetString("user.github_username"))
+	respone = strings.ReplaceAll(respone, "{{.Author}}", viper.GetString("github.username"))
 
 	return respone
 }

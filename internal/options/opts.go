@@ -28,5 +28,5 @@ type TokenAddOptions struct {
 
 type LoginOptions struct {
 	Railway bool
-	GitHub  bool
+	Render  bool
 }

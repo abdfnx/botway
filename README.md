@@ -71,7 +71,7 @@ scoop install botway
 - Authenticate with [**Railway**][rw]
 
   ```bash
-  botway login
+  botway login railway
   ```
 
 - Open Botway TUI

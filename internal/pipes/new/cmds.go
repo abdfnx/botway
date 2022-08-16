@@ -6,6 +6,31 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
+func updateHostServices(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "j", "down":
+			m.HostServiceChoice += 1
+			if m.HostServiceChoice > 1 {
+				m.HostServiceChoice = 2
+			}
+
+		case "k", "up":
+			m.HostServiceChoice -= 1
+			if m.HostServiceChoice < 0 {
+				m.HostServiceChoice = 0
+			}
+
+		case "enter":
+			m.HostService = true
+			return m, frame()
+		}
+	}
+
+	return m, nil
+}
+
 func updatePlatforms(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
@@ -76,32 +101,32 @@ func updatePMs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "j", "down":
-			m.PMCoice += 1
+			m.PMChoice += 1
 
 			if m.LangChoice == 1 {
 				if m.PlatformChoice == 2 {
-					if m.PMCoice > 3 {
-						m.PMCoice = 3
+					if m.PMChoice > 3 {
+						m.PMChoice = 3
 					}
 				} else {
-					if m.PMCoice > 0 {
-						m.PMCoice = 0
+					if m.PMChoice > 0 {
+						m.PMChoice = 0
 					}
 				}
 			} else if m.LangChoice == 0 || m.LangChoice == 2 {
-				if m.PMCoice > 3 {
-					m.PMCoice = 3
+				if m.PMChoice > 3 {
+					m.PMChoice = 3
 				}
 			} else {
-				if m.PMCoice > 1 {
-					m.PMCoice = 1
+				if m.PMChoice > 1 {
+					m.PMChoice = 1
 				}
 			}
 
 		case "k", "up":
-			m.PMCoice -= 1
-			if m.PMCoice < 0 {
-				m.PMCoice = 0
+			m.PMChoice -= 1
+			if m.PMChoice < 0 {
+				m.PMChoice = 0
 			}
 
 		case "enter":
@@ -145,7 +170,11 @@ func buildBot(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 	} else if m.LangChoice == 12 {
 		l = "Nim"
 	} else if m.LangChoice == 13 {
-		l = "C"
+		if m.PlatformChoice == 1 {
+			l = "Swift"
+		} else {
+			l = "C"
+		}
 	} else if m.LangChoice == 14 {
 		l = "Crystal"
 	}

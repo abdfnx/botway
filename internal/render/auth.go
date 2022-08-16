@@ -1,59 +1,55 @@
-package initx
+package render
 
 import (
-	"errors"
 	"fmt"
+	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
 	token_shared "github.com/abdfnx/botway/internal/pipes/token"
-	"github.com/abdfnx/tran/dfs"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/spf13/viper"
+	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
 )
 
-func (m model) InitCmd() {
-	err := dfs.CreateDirectory(filepath.Join(constants.HomeDir, ".botway"))
+func (m model) Auth() {
+	email := strings.ReplaceAll(m.inputs[1].Value(), "@", "%40")
 
-	if err != nil {
-		log.Fatal(err)
+	url := fmt.Sprintf("https://api.render.com/v1/owners?name=%s&email=%s&limit=20", m.inputs[0].Value(), email)
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer " + m.inputs[2].Value())
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+
+	body, _ := ioutil.ReadAll(res.Body)
+
+	id := gjson.Get(string(body), "0.owner.id").String()
+
+	userName, _ := sjson.Set(string(constants.BotwayConfig), "render.user.name", m.inputs[0].Value())
+	userEmail, _ := sjson.Set(userName, "render.user.email", m.inputs[1].Value())
+	userId, _ := sjson.Set(userEmail, "render.user.id", id)
+	apiToken, _ := sjson.Set(userId, "render.user.api_token", m.inputs[2].Value())
+	renderProjects, _ := sjson.Set(apiToken, "render.projects", []string{})
+
+	remove := os.Remove(constants.BotwayConfigFile)
+
+	if remove != nil {
+		log.Fatal(remove)
 	}
 
-	viper.AddConfigPath(constants.BotwayDirPath())
-	viper.SetConfigName("botway")
-	viper.SetConfigType("json")
+	newBotConfig := os.WriteFile(constants.BotwayConfigFile, []byte(renderProjects), 0644)
 
-	viper.SetDefault("botway.bots", map[string]string{})
-	viper.SetDefault("botway.bots_names", []string{})
-	viper.SetDefault("github.username", m.inputs[0].Value())
-	viper.SetDefault("docker.id", m.inputs[1].Value())
-
-	if err := viper.SafeWriteConfig(); err != nil {
-		if os.IsNotExist(err) {
-			err = viper.WriteConfig()
-
-			if err != nil {
-				log.Fatal(err)
-			}
-		}
-	}
-
-	if err := viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			log.Fatal(err)
-		}
-	}
-
-	if _, err := os.Stat(constants.BotwayConfigFile); err == nil {
-		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
-		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" Initialization Successful"))
-	} else if errors.Is(err, os.ErrNotExist) {
-		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
-		fmt.Println(constants.FAIL_FOREGROUND.Render(" Initialization Failed, try again"))
+	if newBotConfig != nil {
+		panic(newBotConfig)
 	}
 }
 
@@ -64,7 +60,7 @@ type model struct {
 
 func initialModel() model {
 	m := model{
-		inputs: make([]textinput.Model, 2),
+		inputs: make([]textinput.Model, 3),
 	}
 
 	var t textinput.Model
@@ -76,13 +72,17 @@ func initialModel() model {
 
 		switch i {
 		case 0:
-			t.Placeholder = "GitHub Username"
+			t.Placeholder = "Render User Name"
 			t.Focus()
 			t.PromptStyle = token_shared.FocusedStyle
 			t.TextStyle = token_shared.FocusedStyle
 
 		case 1:
-			t.Placeholder = "Docker Hub ID"
+			t.Placeholder = "Render User Email"
+			t.CharLimit = 64
+
+		case 2:
+			t.Placeholder = "Render API Token"
 			t.CharLimit = 64
 		}
 
@@ -107,7 +107,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			s := msg.String()
 
 			if s == "enter" && m.focusIndex == len(m.inputs) {
-				m.InitCmd()
+				m.Auth()
 
 				return m, tea.Quit
 			}
@@ -181,7 +181,7 @@ func (m model) View() string {
 	return b.String()
 }
 
-func BotwayInit() {
+func BotwayRenderAuth() {
 	if err := tea.NewProgram(initialModel()).Start(); err != nil {
 		fmt.Printf("could not start program: %s\n", err)
 		os.Exit(1)
