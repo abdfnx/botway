@@ -72,7 +72,11 @@ func BotLang(m model) string {
 	} else if m.LangChoice == 12 {
 		return "nim"
 	} else if m.LangChoice == 13 {
-		return "c"
+		if m.PlatformChoice == 1 {
+			return "swift"
+		} else {
+			return "c"
+		}
 	} else if m.LangChoice == 14 {
 		return "crystal"
 	}
@@ -127,11 +131,21 @@ func BotStartCmd(m model) string {
 		} else {
 			return "./gradlew run"
 		}
-	} else if m.LangChoice == 11 || m.LangChoice == 13 {
+	} else if m.LangChoice == 11 {
 		if runtime.GOOS == "windows" {
 			return `.\run.ps1`
 		} else {
-			return "./run"
+			return "cd build; make -j; ./" + opts.BotName
+		}
+	} else if m.LangChoice == 13 {
+		if m.PlatformChoice == 1 {
+			return "swift Sources/" + opts.BotName + "/main.swift"
+		} else {
+			if runtime.GOOS == "windows" {
+				return `.\run.ps1`
+			} else {
+				return "cd build; make -j; gcc src/main.c -o bot -pthread -ldiscord -lcurl; ./bot"
+			}
 		}
 	} else if m.LangChoice == 12 {
 		return "nim c -r src/main.nim"
@@ -180,7 +194,11 @@ func BotPM(m model) string {
 	} else if m.LangChoice == 12 {
 		return "nimble"
 	} else if m.LangChoice == 13 {
-		return "continue"
+		if m.PlatformChoice == 1 {
+			return "swift"
+		} else {
+			return "continue"
+		}
 	} else if m.LangChoice == 14 {
 		return "shards"
 	}

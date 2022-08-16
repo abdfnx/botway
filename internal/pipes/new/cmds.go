@@ -48,8 +48,8 @@ func updateLangs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 						m.LangChoice = 14
 					}
 				} else {
-					if m.LangChoice > 7 {
-						m.LangChoice = 7
+					if m.LangChoice > 13 {
+						m.LangChoice = 13
 					}
 				}
 			}

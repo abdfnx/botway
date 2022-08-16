@@ -6,6 +6,12 @@ import (
 	"github.com/abdfnx/botway/templates/telegram/deno"
 	tgo "github.com/abdfnx/botway/templates/telegram/go"
 	"github.com/abdfnx/botway/templates/telegram/nodejs"
+	"github.com/abdfnx/botway/templates/telegram/php"
+	"github.com/abdfnx/botway/templates/telegram/kotlin"
+	"github.com/abdfnx/botway/templates/telegram/java"
+	"github.com/abdfnx/botway/templates/telegram/cpp"
+	"github.com/abdfnx/botway/templates/telegram/nim"
+	"github.com/abdfnx/botway/templates/telegram/swift"
 	"github.com/abdfnx/botway/templates/telegram/python/pip"
 	"github.com/abdfnx/botway/templates/telegram/python/pipenv"
 	"github.com/abdfnx/botway/templates/telegram/python/poetry"
@@ -42,5 +48,17 @@ func TelegramHandler(m model) {
 		csharp.TelegramCsharp(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 7 {
 		dart.TelegramDart(opts.BotName)
+	} else if m.PlatformChoice == 1 && m.LangChoice == 8 {
+		php.TelegramPHP(opts.BotName)
+	} else if m.PlatformChoice == 1 && m.LangChoice == 9 {
+		kotlin.TelegramKotlin(opts.BotName)
+	} else if m.PlatformChoice == 1 && m.LangChoice == 10 {
+		java.TelegramJava(opts.BotName)
+	} else if m.PlatformChoice == 1 && m.LangChoice == 11 {
+		cpp.TelegramCpp(opts.BotName)
+	} else if m.PlatformChoice == 1 && m.LangChoice == 12 {
+		nim.TelegramNim(opts.BotName)
+	} else if m.PlatformChoice == 1 && m.LangChoice == 13 {
+		swift.TelegramSwift(opts.BotName)
 	}
 }

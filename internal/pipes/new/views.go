@@ -55,8 +55,14 @@ func langsView(m model) string {
 	)
 
 	if m.PlatformChoice != 2 {
+		l13 := "C"
+
+		if m.PlatformChoice == 1 {
+			l13 = "Swift"
+		}
+
 		langs += fmt.Sprintf(
-			"\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
+			"\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
 			checkbox("Ruby", l == 3),
 			checkbox("Rust", l == 4),
 			checkbox("Deno", l == 5),
@@ -67,13 +73,13 @@ func langsView(m model) string {
 			checkbox("Java", l == 10),
 			checkbox("C++", l == 11),
 			checkbox("Nim", l == 12),
+			checkbox(l13, l == 13),
 		)
 	}
 
 	if m.PlatformChoice == 0 {
 		langs += fmt.Sprintf(
-			"\n%s\n%s",
-			checkbox("C", l == 13),
+			"\n%s",
 			checkbox("Crystal", l == 14),
 		)
 	}
@@ -113,7 +119,11 @@ func pmsView(m model) string {
 	} else if m.LangChoice == 12 {
 		l = "Nim"
 	} else if m.LangChoice == 13 {
-		l = "C"
+		if m.PlatformChoice == 1 {
+			l = "Swift"
+		} else {
+			l = "C"
+		}
 	} else if m.LangChoice == 14 {
 		l = "Crystal"
 	}
@@ -174,7 +184,11 @@ func pmsView(m model) string {
 	} else if m.LangChoice == 12 {
 		langs += checkbox("nimble", pm == 0)
 	} else if m.LangChoice == 13 {
-		langs += checkbox("continue", pm == 0)
+		if m.PlatformChoice == 1 {
+			langs += checkbox("swift package", pm == 0)
+		} else {
+			langs += checkbox("continue", pm == 0)
+		}
 	} else if m.LangChoice == 14 {
 		langs += checkbox("shards", pm == 0)
 	}
@@ -314,7 +328,12 @@ func finalView(m model) string {
 		pm = "nimble"
 
 	case 13:
-		lang = "C"
+		if m.PlatformChoice == 1 {
+			lang = "Swift"
+			pm = "swift package"
+		} else {
+			lang = "C"
+		}
 
 	case 14:
 		lang = "Crystal"

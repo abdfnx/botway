@@ -23,9 +23,11 @@ func NewBot(m model, l string, platform, lang int) {
 		log.Fatal(err)
 	}
 
-	if lang != 9 {
-		if err := os.Mkdir(filepath.Join(opts.BotName, "src"), os.ModePerm); err != nil {
-			log.Fatal(err)
+	if lang != 9 || lang != 10 {
+		if m.PlatformChoice == 1 && lang != 13 {
+			if err := os.Mkdir(filepath.Join(opts.BotName, "src"), os.ModePerm); err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
 
