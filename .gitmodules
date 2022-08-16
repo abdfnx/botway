@@ -10,7 +10,3 @@
 	path = packages/botway-lua
 	url = https://github.com/abdfnx/botway-lua
 	branch = main
-[submodule "packages/botway-swift"]
-	path = packages/botway-swift
-	url = https://github.com/abdfnx/botway-swift
-	branch = main
