@@ -38,7 +38,7 @@ func (m model) Auth() {
 	userEmail, _ := sjson.Set(userName, "render.user.email", m.inputs[1].Value())
 	userId, _ := sjson.Set(userEmail, "render.user.id", id)
 	apiToken, _ := sjson.Set(userId, "render.user.api_token", m.inputs[2].Value())
-	renderProjects, _ := sjson.Set(apiToken, "render.projects", []string{})
+	renderProjects, _ := sjson.Set(apiToken, "render.projects", map[string]string{})
 
 	remove := os.Remove(constants.BotwayConfigFile)
 

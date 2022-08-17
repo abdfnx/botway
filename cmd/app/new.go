@@ -14,10 +14,10 @@ import (
 )
 
 var newOpts = &options.NewOptions{
-	CreateRepo: false,
-	RepoName:   "",
-	IsPrivate:  false,
-	IsBlank:    false,
+	NoRepo:    false,
+	RepoName:  "",
+	IsPrivate: false,
+	IsBlank:   false,
 }
 
 func NewCMD() *cobra.Command {
@@ -35,7 +35,7 @@ func NewCMD() *cobra.Command {
 
 				new.New(opts, newOpts.IsBlank)
 
-				if newOpts.CreateRepo {
+				if !newOpts.NoRepo {
 					new.CreateRepo(newOpts, opts.BotName)
 				}
 			} else {
@@ -80,7 +80,7 @@ func NewCMD() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().BoolVarP(&newOpts.CreateRepo, "create-repo", "r", false, "Create a new github repository under your account")
+	cmd.Flags().BoolVarP(&newOpts.NoRepo, "no-repo", "", false, "Don't create a repository under my account")
 	cmd.Flags().BoolVarP(&newOpts.IsPrivate, "private", "p", false, "Make your repository private")
 	cmd.Flags().BoolVarP(&newOpts.IsBlank, "blank", "b", false, "Create a blank bot project")
 	cmd.Flags().StringVarP(&newOpts.RepoName, "repo-name", "n", "", "Name of the repository, if not specified, it will be the same as the bot name")

@@ -11,17 +11,19 @@ func DeployCMD() *cobra.Command {
 		Short:   "Deploy and upload project from the current directory",
 		Aliases: []string{"up"},
 		PreRun:  func(cmd *cobra.Command, args []string) { tools.SetupTokensInDocker() },
-		RunE:    Contextualize(handler.Delpoy, handler.Panic),
 		PostRun: func(cmd *cobra.Command, args []string) { tools.RemoveConfig() },
 	}
 
-	cmd.AddCommand(DeployDownCMD())
-	cmd.AddCommand(DeployLogsCMD())
-	cmd.AddCommand(DeployLiveCMD())
+	if BotConfig("bot.host_service") == "railway.app" {
+		cmd.RunE = Contextualize(handler.Delpoy, handler.Panic)
+		cmd.AddCommand(DeployDownCMD())
+		cmd.AddCommand(DeployLogsCMD())
+		cmd.AddCommand(DeployLiveCMD())
 
-	cmd.Flags().BoolP("detach", "d", false, "Detach from cloud build/deploy logs")
-	cmd.Flags().StringP("environment", "e", "", "Specify an environment to up onto")
-	cmd.Flags().StringP("service", "s", "", "Fetch variables accessible to a specific service")
+		cmd.Flags().BoolP("detach", "d", false, "Detach from cloud build/deploy logs")
+		cmd.Flags().StringP("environment", "e", "", "Specify an environment to up onto")
+		cmd.Flags().StringP("service", "s", "", "Fetch variables accessible to a specific service")
+	}
 
 	return cmd
 }

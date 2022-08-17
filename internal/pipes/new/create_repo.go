@@ -1,13 +1,17 @@
 package new
 
 import (
+	"bytes"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"runtime"
 
 	"github.com/abdfnx/botway/internal/options"
+	"github.com/spf13/viper"
 )
 
 func createRepoWindows(botName string, isPrivate bool) string {
@@ -49,6 +53,22 @@ func createRepoUnix(botName string, isPrivate bool) string {
 func CreateRepo(o *options.NewOptions, botName string) {
 	if o.RepoName == "" {
 		o.RepoName = botName
+	}
+
+	viper.SetConfigType("yaml")
+
+	configFile := filepath.Join(botName, ".botway.yaml")
+
+	configFileContent, _ := ioutil.ReadFile(configFile)
+
+	viper.ReadConfig(bytes.NewBuffer(configFileContent))
+
+	viper.Set("bot.repo", "github.com/"+viper.GetString("author")+"/"+o.RepoName)
+
+	newConfig := viper.WriteConfigAs(configFile)
+
+	if newConfig != nil {
+		log.Fatal(newConfig)
 	}
 
 	createRepoCmd := exec.Command("bash", "-c", createRepoUnix(o.RepoName, o.IsPrivate))
