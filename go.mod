@@ -24,7 +24,7 @@ require (
 	github.com/railwayapp/cli v1.8.4
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.12.0
-	github.com/tidwall/gjson v1.14.2
+	github.com/tidwall/gjson v1.14.3
 	github.com/tidwall/sjson v1.2.5
 	golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab
 	golang.org/x/term v0.0.0-20220722155259-a9ba230a4035
