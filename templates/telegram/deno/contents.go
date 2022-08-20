@@ -3,7 +3,7 @@ package deno
 import "github.com/abdfnx/botway/templates"
 
 func DockerfileContent(botName string) string {
-	return templates.Content("deno.dockerfile", "dockerfiles", botName)
+	return templates.Content("deno.dockerfile", "botway/dockerfiles", botName)
 }
 
 func Resources() string {

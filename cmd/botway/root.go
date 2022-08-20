@@ -84,6 +84,7 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 		app.NewGHRepoCmd,
 		app.GitHubCmd,
 		app.RailwayCMD(),
+		app.RenderCMD(),
 		versionCmd,
 	)
 

@@ -3,7 +3,6 @@ package constants
 import (
 	"io/ioutil"
 	"path/filepath"
-	"runtime"
 
 	"github.com/abdfnx/tran/dfs"
 	"github.com/charmbracelet/lipgloss"
@@ -54,21 +53,14 @@ var (
 
 	// File Paths
 	HomeDir, _         = dfs.GetHomeDirectory()
-	BotwayConfigFile   = filepath.Join(HomeDir, ".botway", "botway.json")
+	BotwayDirPath      = filepath.Join(HomeDir, ".botway")
+	BotwayConfigFile   = filepath.Join(BotwayDirPath, "botway.json")
 	BotwayConfig, Berr = ioutil.ReadFile(BotwayConfigFile)
 	BotConfig, Oerr    = ioutil.ReadFile(".botway.yaml")
 	Guilds, Gerr       = ioutil.ReadFile(filepath.Join("config", "guilds.json"))
 
 	RailwayConfigFile   = filepath.Join(HomeDir, ".railway", "config.json")
 	RailwayConfig, Rerr = ioutil.ReadFile(RailwayConfigFile)
-
-	BotwayDirPath = func() string {
-		if runtime.GOOS == "windows" {
-			return `$HOME\\.botway`
-		} else {
-			return `$HOME/.botway`
-		}
-	}
 
 	RAIL_PORT = 4411
 )

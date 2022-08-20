@@ -3,7 +3,7 @@ package nim
 import "github.com/abdfnx/botway/templates"
 
 func DockerfileContent(botName string) string {
-	return templates.Content("nim.dockerfile", "dockerfiles", botName)
+	return templates.Content("nim.dockerfile", "botway/dockerfiles", botName)
 }
 
 func Resources() string {

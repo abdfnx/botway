@@ -11,7 +11,7 @@ import (
 )
 
 func GenerateCConfig(token string) {
-	viper.AddConfigPath(constants.BotwayDirPath())
+	viper.AddConfigPath(constants.BotwayDirPath)
 	viper.SetConfigName("botway-c-config")
 	viper.SetConfigType("json")
 

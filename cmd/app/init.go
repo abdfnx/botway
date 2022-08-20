@@ -8,6 +8,7 @@ import (
 
 var opts = options.InitOptions{
 	Docker: false,
+	NoRepo: false,
 }
 
 func InitCMD() *cobra.Command {
@@ -20,11 +21,16 @@ func InitCMD() *cobra.Command {
 				initx.DockerInit()
 			} else {
 				initx.BotwayInit()
+
+				if !opts.NoRepo {
+					initx.SetupGitRepo()
+				}
 			}
 		},
 	}
 
 	cmd.Flags().BoolVarP(&opts.Docker, "docker", "", false, "Initialize botway config in docker")
+	cmd.Flags().BoolVarP(&opts.NoRepo, "no-repo", "", false, "Don't create a private git repo under my account")
 
 	return cmd
 }

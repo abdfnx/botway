@@ -370,6 +370,6 @@ func finalView(m model) string {
 	if lang == "C" {
 		return msg + hMsg + "\n"
 	} else {
-		return msg + " with " + prim.Render(pm) + " package manager " + hMsg + "\n"
+		return msg + " with " + prim.Render(pm) + " package manager" + hMsg + "\n"
 	}
 }

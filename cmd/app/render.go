@@ -1,7 +1,6 @@
 package app
 
 import (
-	"github.com/abdfnx/botway/internal/pipes/new"
 	"github.com/abdfnx/botway/internal/render"
 	"github.com/abdfnx/botway/tools"
 	"github.com/spf13/cobra"
@@ -40,7 +39,6 @@ func RenderConnectMD() *cobra.Command {
 		Args:    cobra.MaximumNArgs(1),
 		PreRun:  func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		Run: func(cmd *cobra.Command, args []string) {
-			new.CreateRepo(newOpts, BotConfig("bot.name"))
 			render.ConnectService()
 		},
 	}

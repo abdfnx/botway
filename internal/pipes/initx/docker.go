@@ -42,7 +42,7 @@ func DockerInit() {
 		log.Fatal(err)
 	}
 
-	viper.AddConfigPath(constants.BotwayDirPath())
+	viper.AddConfigPath(constants.BotwayDirPath)
 	viper.SetConfigName("botway")
 	viper.SetConfigType("json")
 

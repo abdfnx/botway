@@ -15,7 +15,7 @@ import (
 )
 
 func DockerfileContent(botName string) string {
-	return templates.Content("blank.dockerfile", "dockerfiles", botName)
+	return templates.Content("blank.dockerfile", "botway/dockerfiles", botName)
 }
 
 func NewBot(m model, l string, platform, lang int) {

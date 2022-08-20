@@ -3,7 +3,7 @@ package kotlin
 import "github.com/abdfnx/botway/templates"
 
 func DockerfileContent(botName string) string {
-	return templates.Content("gradle.dockerfile", "dockerfiles", botName)
+	return templates.Content("gradle.dockerfile", "botway/dockerfiles", botName)
 }
 
 func Resources() string {
