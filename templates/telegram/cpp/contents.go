@@ -3,7 +3,7 @@ package cpp
 import "github.com/abdfnx/botway/templates"
 
 func DockerfileContent(botName string) string {
-	return templates.Content("cmake-telegram.dockerfile", "botway/dockerfiles", botName)
+	return templates.Content("dockerfiles/cmake-telegram.dockerfile", "botway", botName)
 }
 
 func Resources() string {

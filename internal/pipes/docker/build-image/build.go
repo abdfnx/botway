@@ -1,7 +1,6 @@
 package build_image
 
 import (
-	"bytes"
 	"fmt"
 	"log"
 	"os"
@@ -10,6 +9,7 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/tools"
+	"github.com/abdfnx/botwaygo"
 	"github.com/abdfnx/looker"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/viper"
@@ -30,11 +30,7 @@ func DockerBuildImage() {
 
 	tools.CheckDir()
 
-	viper.SetConfigType("yaml")
-
-	viper.ReadConfig(bytes.NewBuffer(constants.BotConfig))
-
-	buildCmd := viper.GetString("docker.cmds.build")
+	buildCmd := botwaygo.GetBotInfo("docker.cmds.build")
 	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots."+viper.GetString("bot.name")+".path").String()
 
 	cmd := exec.Command("bash", "-c", buildCmd)

@@ -1,7 +1,6 @@
 package run
 
 import (
-	"bytes"
 	"fmt"
 	"log"
 	"os"
@@ -10,6 +9,7 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/tools"
+	"github.com/abdfnx/botwaygo"
 	"github.com/abdfnx/looker"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/viper"
@@ -30,11 +30,7 @@ func DockerRunImage() {
 
 	tools.CheckDir()
 
-	viper.SetConfigType("yaml")
-
-	viper.ReadConfig(bytes.NewBuffer(constants.BotConfig))
-
-	runCmd := viper.GetString("docker.cmds.run")
+	runCmd := botwaygo.GetBotInfo("docker.cmds.run")
 	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots."+viper.GetString("bot.name")+".path").String()
 
 	cmd := exec.Command("bash", "-c", runCmd)

@@ -35,7 +35,7 @@ func TelegramPythonPoetry(botName string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" poetry is not installed"))
 	} else {
-		dockerFileContent := templates.Content("poetry.dockerfile", "botway/dockerfiles", botName)
+		dockerFileContent := templates.Content("dockerfiles/poetry.dockerfile", "botway", botName)
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)
 		pyprojectFile := os.WriteFile(filepath.Join(botName, "pyproject.toml"), []byte(PyProjectContent(botName)), 0644)

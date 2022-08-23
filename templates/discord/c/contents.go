@@ -3,7 +3,7 @@ package c
 import "github.com/abdfnx/botway/templates"
 
 func DockerfileContent(botName string) string {
-	return templates.Content("c-discord.dockerfile", "botway/dockerfiles", botName)
+	return templates.Content("dockerfiles/c-discord.dockerfile", "botway", botName)
 }
 
 func Resources() string {

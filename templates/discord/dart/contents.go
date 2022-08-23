@@ -3,7 +3,7 @@ package dart
 import "github.com/abdfnx/botway/templates"
 
 func DockerfileContent(botName string) string {
-	return templates.Content("dart.dockerfile", "botway/dockerfiles", botName)
+	return templates.Content("dockerfiles/dart.dockerfile", "botway", botName)
 }
 
 func Resources() string {

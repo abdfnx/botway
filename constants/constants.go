@@ -50,6 +50,7 @@ var (
 	INFO_FOREGROUND    = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(CYAN_COLOR))
 	COMMAND_FOREGROUND = lipgloss.NewStyle().Bold(true).Foreground(GRAY_COLOR)
 	WARN_FOREGROUND    = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(YELLOW_COLOR))
+	HEADING            = lipgloss.NewStyle().Foreground(lipgloss.Color(PRIMARY_COLOR)).SetString("==> ").String()
 
 	// File Paths
 	HomeDir, _         = dfs.GetHomeDirectory()

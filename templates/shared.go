@@ -27,8 +27,7 @@ func Content(arg, templateName, botName string) string {
 	}
 
 	if status == "404" || status == "401" || strings.Contains(respone, "404") {
-		fmt.Println("404")
-		fmt.Println(respone)
+		fmt.Println("404: " + url)
 		os.Exit(0)
 	}
 
@@ -36,9 +35,11 @@ func Content(arg, templateName, botName string) string {
 		respone = strings.ReplaceAll(respone, "#include <{{.BotName}}/{{.BotName}}.h>", "")
 	} else if strings.Contains(respone, `#include "botway/botway.hpp"`) && strings.Contains(templateName, "telegram") {
 		respone = strings.ReplaceAll(respone, `#include "botway/botway.hpp"`, `#include "botway.hpp"`)
-	} else {
-		respone = strings.ReplaceAll(respone, "{{.BotName}}", botName)
+	} else if strings.Contains(arg, "pubspec.yaml") {
+		respone = strings.ReplaceAll(respone, "{{.BotName}}", strings.ReplaceAll(botName, "-", ""))
 	}
+
+	respone = strings.ReplaceAll(respone, "{{.BotName}}", botName)
 
 	viper.SetConfigType("json")
 

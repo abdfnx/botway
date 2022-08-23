@@ -72,7 +72,7 @@ func DiscordNodejs(botName, pm string) {
 				log.Printf("error: %v\n", newPackageJson)
 			}
 
-			DockerfileContent := templates.Content(pm+".dockerfile", "botway/dockerfiles", botName)
+			DockerfileContent := templates.Content("dockerfiles/"+pm+".dockerfile", "botway", botName)
 
 			indexFile := os.WriteFile(filepath.Join(botName, "src", "main.js"), []byte(IndexJSContent()), 0644)
 			dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent), 0644)

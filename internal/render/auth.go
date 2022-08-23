@@ -26,7 +26,11 @@ func (m model) Auth() {
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("Authorization", "Bearer " + m.inputs[2].Value())
 
-	res, _ := http.DefaultClient.Do(req)
+	res, serr := http.DefaultClient.Do(req)
+
+	if serr != nil {
+		panic(serr)
+	}
 
 	defer res.Body.Close()
 

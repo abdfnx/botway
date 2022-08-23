@@ -3,7 +3,7 @@ package php
 import "github.com/abdfnx/botway/templates"
 
 func DockerfileContent(botName string) string {
-	return templates.Content("php.dockerfile", "botway/dockerfiles", botName)
+	return templates.Content("dockerfiles/php.dockerfile", "botway", botName)
 }
 
 func MainPHPContent() string {

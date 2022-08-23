@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
-	"github.com/abdfnx/botway/internal/pipes/initx"
+	"github.com/abdfnx/botwaygo"
 	"github.com/spf13/viper"
 	"github.com/tidwall/gjson"
 )
@@ -16,22 +16,23 @@ import (
 func SetupTokensInDocker() {
 	CheckDir()
 
-	botName := initx.GetBotName()
-	t := initx.GetBotType()
+	botName := botwaygo.GetBotInfo("bot.name")
+	botType := botwaygo.GetBotInfo("bot.type")
 
 	bot_token := ""
 	app_token := ""
+	signing_secret := "SLACK_SIGNING_SECRET"
 	cid := ""
 
-	if t == "discord" {
+	if botType == "discord" {
 		bot_token = "DISCORD_TOKEN"
 		app_token = "DISCORD_CLIENT_ID"
 		cid = "bot_app_id"
-	} else if t == "slack" {
+	} else if botType == "slack" {
 		bot_token = "SLACK_TOKEN"
 		app_token = "SLACK_APP_TOKEN"
 		cid = "bot_app_token"
-	} else if t == "telegram" {
+	} else if botType == "telegram" {
 		bot_token = "TELEGRAM_TOKEN"
 	}
 
@@ -48,25 +49,25 @@ func SetupTokensInDocker() {
 	botPath := botwayConfig.GetString("botway.bots." + botName + ".path")
 
 	env.AddConfigPath(filepath.Join(botPath, "config"))
-	env.SetConfigName("botway-deploy-tokens")
+	env.SetConfigName("botway-tokens")
 	env.SetConfigType("env")
 
 	bot_token_content := botwayConfig.GetString("botway.bots." + botName + ".bot_token")
 	app_token_content := botwayConfig.GetString("botway.bots." + botName + "." + cid)
 
-	if bot_token_content == "" || t != "telegram" && app_token_content == "" {
+	if bot_token_content == "" || botType != "telegram" && app_token_content == "" || botType == "slack" && signing_secret == "" {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Print(" ")
-		panic(constants.FAIL_FOREGROUND.Render("You didn't set bot token or app token"))
+		panic(constants.FAIL_FOREGROUND.Render("You didn't set bot token or app token or signing secret"))
 	}
 
 	env.SetDefault(bot_token, bot_token_content)
 
-	if t != "telegram" {
+	if botType != "telegram" {
 		env.SetDefault(app_token, app_token_content)
 	}
 
-	if t == "discord" {
+	if botType == "discord" {
 		if constants.Gerr != nil {
 			panic(constants.Gerr)
 		} else {
@@ -81,6 +82,12 @@ func SetupTokensInDocker() {
 				env.Set(sgi, sgi_content)
 			}
 		}
+	}
+
+	if botType == "slack" {
+		signing_secret_content := botwayConfig.GetString("botway.bots." + botName + ".signing_secret")
+
+		env.SetDefault(signing_secret, signing_secret_content)
 	}
 
 	if err := env.SafeWriteConfig(); err != nil {
@@ -101,5 +108,5 @@ func SetupTokensInDocker() {
 }
 
 func RemoveConfig() {
-	os.Remove(filepath.Join("config", "botway-deploy-tokens.env"))
+	os.Remove(filepath.Join("config", "botway-tokens.env"))
 }

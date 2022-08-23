@@ -5,7 +5,7 @@ import (
 )
 
 func DockerfileContent(botName string) string {
-	return templates.Content("go.dockerfile", "botway/dockerfiles", botName)
+	return templates.Content("dockerfiles/go.dockerfile", "botway", botName)
 }
 
 func MainGoContent() string {

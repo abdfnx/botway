@@ -2,6 +2,7 @@ package app
 
 import (
 	"github.com/abdfnx/botway/tools"
+	"github.com/abdfnx/botwaygo"
 	"github.com/spf13/cobra"
 )
 
@@ -14,7 +15,7 @@ func DeployCMD() *cobra.Command {
 		PostRun: func(cmd *cobra.Command, args []string) { tools.RemoveConfig() },
 	}
 
-	if BotConfig("bot.host_service") == "railway.app" {
+	if botwaygo.GetBotInfo("bot.host_service") == "railway.app" {
 		cmd.RunE = Contextualize(handler.Delpoy, handler.Panic)
 		cmd.AddCommand(DeployDownCMD())
 		cmd.AddCommand(DeployLogsCMD())

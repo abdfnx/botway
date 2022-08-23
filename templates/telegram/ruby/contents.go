@@ -7,7 +7,7 @@ func MainRbContent() string {
 }
 
 func DockerfileContent(botName string) string {
-	return templates.Content("ruby.dockerfile", "botway/dockerfiles", botName)
+	return templates.Content("dockerfiles/ruby.dockerfile", "botway", botName)
 }
 
 func Resources() string {

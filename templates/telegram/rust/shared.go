@@ -36,7 +36,7 @@ func TelegramRust(botName, pm string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" " + pm + "  is not installed"))
 	} else {
-		DockerfileContent := templates.Content(pm+".dockerfile", "botway/dockerfiles", botName)
+		DockerfileContent := templates.Content("dockerfiles/"+pm+".dockerfile", "botway", botName)
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.rs"), []byte(MainRsContent()), 0644)
 		cargoFile := os.WriteFile(filepath.Join(botName, "Cargo.toml"), []byte(CargoFileContent(botName)), 0644)
