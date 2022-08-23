@@ -1,6 +1,8 @@
 {
-  "name": "botway-monorepo",
-  "description": "🤖 Botway Monorepo.",
+  "name": "botway",
+  "version": "0.1.82",
+  "description": "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack.",
+  "type": "module",
   "author": "abdfnx",
   "license": "MIT",
   "homepage": "https://github.com/abdfnx/botway",
@@ -8,12 +10,25 @@
     "type": "git",
     "url": "https://github.com/abdfnx/botway.git"
   },
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel"
+  "engines": {
+    "node": ">=8.0.0"
   },
-  "packageManager": "pnpm@7.9.0",
-  "devDependencies": {
-    "turbo": "^1.4.2"
-  }
+  "bin": {
+    "botway": "../bin/botway.js"
+  },
+  "scripts": {
+    "postinstall": "node ./postinstall.js"
+  },
+  "files": [
+    "../bin",
+    "config.js",
+    "postinstall.js"
+  ],
+  "dependencies": {
+    "global": "^4.4.0",
+    "node-fetch": "^3.2.4",
+    "node-stream-zip": "^1.15.0",
+    "stream": "^0.0.2"
+  },
+  "packageManager": "pnpm@7.9.0"
 }
