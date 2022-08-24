@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/abdfnx/botway/internal/options"
 	"github.com/abdfnx/botway/internal/pipes/initx"
+	"github.com/abdfnx/botway/tools"
 	"github.com/spf13/cobra"
 )
 
@@ -18,6 +19,7 @@ func InitCMD() *cobra.Command {
 		Aliases: []string{"."},
 		Run: func(cmd *cobra.Command, args []string) {
 			if opts.Docker {
+				tools.SetupTokensInDocker()
 				initx.DockerInit()
 			} else {
 				initx.BotwayInit()
