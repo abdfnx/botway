@@ -108,5 +108,5 @@ func DockerInit() {
 		}
 	}
 
-	fmt.Println(constants.HEADING + constants.BOLD.Render("Done"))
+	fmt.Println(constants.HEADING + constants.BOLD.Render("Done 🐋️"))
 }

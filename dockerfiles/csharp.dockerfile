@@ -27,6 +27,9 @@ ENV \
 RUN apk update && \
 	apk add --no-cache --virtual ${PACKAGES}
 
+# Add packages you want
+# RUN apk add PACKAGE_NAME
+
 COPY --from=build /app /app
 
 COPY --from=bw /root/.botway /root/.botway

@@ -58,7 +58,7 @@ func DiscordPythonPoetry(botName string) {
 			log.Fatal(resourcesFile)
 		}
 
-		poetryAdd := poetry + " add discord-py-api botway.py pyyaml pynacl"
+		poetryAdd := poetry + " add discord.py botway.py pyyaml pynacl"
 
 		cmd := exec.Command("bash", "-c", poetryAdd)
 

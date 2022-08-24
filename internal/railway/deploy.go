@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/tools"
 	"github.com/briandowns/spinner"
 	"github.com/railwayapp/cli/entity"
 	CLIErrors "github.com/railwayapp/cli/errors"
@@ -15,6 +16,7 @@ import (
 
 func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error {
 	CheckBuildKit()
+	tools.SetupTokensInDocker()
 
 	isVerbose, err := req.Cmd.Flags().GetBool("verbose")
 	if err != nil {

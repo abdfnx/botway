@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/abdfnx/botway/internal/render"
 	"github.com/abdfnx/botway/tools"
 	"github.com/abdfnx/botwaygo"
 	"github.com/spf13/cobra"
@@ -8,10 +9,9 @@ import (
 
 func DeployCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "deploy [path]",
+		Use:     "deploy",
 		Short:   "Deploy and upload project from the current directory",
 		Aliases: []string{"up"},
-		PreRun:  func(cmd *cobra.Command, args []string) { tools.SetupTokensInDocker() },
 		PostRun: func(cmd *cobra.Command, args []string) { tools.RemoveConfig() },
 	}
 
@@ -24,6 +24,10 @@ func DeployCMD() *cobra.Command {
 		cmd.Flags().BoolP("detach", "d", false, "Detach from cloud build/deploy logs")
 		cmd.Flags().StringP("environment", "e", "", "Specify an environment to up onto")
 		cmd.Flags().StringP("service", "s", "", "Fetch variables accessible to a specific service")
+	} else if botwaygo.GetBotInfo("bot.host_service") == "render.com" {
+		cmd.Run = func(cmd *cobra.Command, args []string) {
+			render.Deploy()
+		}
 	}
 
 	return cmd

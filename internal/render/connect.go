@@ -14,7 +14,14 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-func AddTokens(serviceId, apiToken string) {
+var (
+	id = gjson.Get(string(constants.BotwayConfig), "render.user.id").String()
+	apiToken = gjson.Get(string(constants.BotwayConfig), "render.user.api_token").String()
+
+	serviceName = strings.ReplaceAll(botwaygo.GetBotInfo("bot.name"), " ", "%20")
+)
+
+func UpdateTokens(serviceId string) {
 	url := fmt.Sprintf("https://api.render.com/v1/services/%s/env-vars", serviceId)
 
 	botType := botwaygo.GetBotInfo("bot.type")
@@ -52,18 +59,13 @@ func AddTokens(serviceId, apiToken string) {
 	body, _ := ioutil.ReadAll(res.Body)
 
 	if res.StatusCode == 200 {
-		fmt.Println(constants.HEADING + constants.BOLD.Render("Tokens added successfuly"))
+		fmt.Println(constants.HEADING + constants.BOLD.Render("Tokens updated successfuly 🔑️"))
 	} else {
 		fmt.Println(string(body))
 	}
 }
 
 func ConnectService() {
-	id := gjson.Get(string(constants.BotwayConfig), "render.user.id").String()
-	apiToken := gjson.Get(string(constants.BotwayConfig), "render.user.api_token").String()
-
-	serviceName := strings.ReplaceAll(botwaygo.GetBotInfo("bot.name"), " ", "%20")
-
 	url := fmt.Sprintf("https://api.render.com/v1/services?name=%s&type=web_service&env=docker&ownerId=%s&limit=20", serviceName, id)
 
 	req, _ := http.NewRequest("GET", url, nil)
@@ -100,5 +102,5 @@ func ConnectService() {
 		panic(newBotConfig)
 	}
 
-	AddTokens(serviceId, apiToken)
+	UpdateTokens(serviceId)
 }
