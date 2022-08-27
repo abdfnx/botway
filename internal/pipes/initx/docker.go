@@ -49,20 +49,20 @@ func DockerInit() {
 	env := viper.New()
 	env.SetConfigType("env")
 
-	secretsFile, serr := ioutil.ReadFile(filepath.Join("config", "botway-tokens.env"))
-
-	if serr != nil {
-		panic(serr)
-	}
-
-	env.ReadConfig(bytes.NewBuffer(secretsFile))
-
 	get := func(value string) string {
 		if botwaygo.GetBotInfo("bot.host_service") == "render.com" && tools.IsRunningInContainer() {
 			return os.Getenv(value)
-		}
+		} else {
+			secretsFile, serr := ioutil.ReadFile(filepath.Join("config", "botway-tokens.env"))
 
-		return env.GetString(bot_token)
+			if serr != nil {
+				panic(serr)
+			}
+
+			env.ReadConfig(bytes.NewBuffer(secretsFile))
+
+			return env.GetString(bot_token)
+		}
 	}
 
 	viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+".bot_token", get(bot_token))
