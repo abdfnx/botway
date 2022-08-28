@@ -63,18 +63,6 @@ func SetupTokensInDocker() {
 		panic(constants.FAIL_FOREGROUND.Render("You didn't set bot token or app token or signing secret"))
 	}
 
-	// if botwaygo.GetBotInfo("bot.host_service") == "render.com" && IsRunningInContainer() {
-	// 	env.SetDefault(bot_token, os.Getenv(bot_token))
-
-	// 	if botType != "telegram" {
-	// 		env.SetDefault(app_token, os.Getenv(app_token))
-	// 	}
-
-	// 	if botType == "slack" {
-	// 		env.SetDefault(signing_secret, os.Getenv(signing_secret))
-	// 	}
-	// }
-
 	env.SetDefault(bot_token, bot_token_content)
 
 	if botType != "telegram" {
@@ -123,6 +111,18 @@ func SetupTokensInDocker() {
 
 func SetupTokensInDockerRender() {
 	CheckDir()
+
+	if botType == "discord" {
+		bot_token = "DISCORD_TOKEN"
+		app_token = "DISCORD_CLIENT_ID"
+		cid = "bot_app_id"
+	} else if botType == "slack" {
+		bot_token = "SLACK_TOKEN"
+		app_token = "SLACK_APP_TOKEN"
+		cid = "bot_app_token"
+	} else if botType == "telegram" {
+		bot_token = "TELEGRAM_TOKEN"
+	}
 
 	env := viper.New()
 
