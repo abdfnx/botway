@@ -3,6 +3,8 @@ package app
 import (
 	"github.com/abdfnx/botway/internal/options"
 	"github.com/abdfnx/botway/internal/pipes/initx"
+	"github.com/abdfnx/botway/tools"
+	"github.com/abdfnx/botwaygo"
 	"github.com/spf13/cobra"
 )
 
@@ -18,6 +20,12 @@ func InitCMD() *cobra.Command {
 		Aliases: []string{"."},
 		Run: func(cmd *cobra.Command, args []string) {
 			if opts.Docker {
+				if botwaygo.GetBotInfo("bot.host_service") == "render.com" && tools.IsRunningInContainer() {
+					tools.SetupTokensInDockerRender()
+				} else {
+					tools.SetupTokensInDocker()
+				}
+
 				initx.DockerInit()
 			} else {
 				initx.BotwayInit()

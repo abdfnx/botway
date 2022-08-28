@@ -13,16 +13,18 @@ import (
 	"github.com/tidwall/gjson"
 )
 
+var (
+	botName = botwaygo.GetBotInfo("bot.name")
+	botType = botwaygo.GetBotInfo("bot.type")
+
+	bot_token      = ""
+	app_token      = ""
+	signing_secret = "SLACK_SIGNING_SECRET"
+	cid            = ""
+)
+
 func SetupTokensInDocker() {
 	CheckDir()
-
-	botName := botwaygo.GetBotInfo("bot.name")
-	botType := botwaygo.GetBotInfo("bot.type")
-
-	bot_token := ""
-	app_token := ""
-	signing_secret := "SLACK_SIGNING_SECRET"
-	cid := ""
 
 	if botType == "discord" {
 		bot_token = "DISCORD_TOKEN"
@@ -61,45 +63,99 @@ func SetupTokensInDocker() {
 		panic(constants.FAIL_FOREGROUND.Render("You didn't set bot token or app token or signing secret"))
 	}
 
-	if botwaygo.GetBotInfo("bot.host_service") == "render.com" && IsRunningInContainer() {
-		env.SetDefault(bot_token, os.Getenv(bot_token))
+	// if botwaygo.GetBotInfo("bot.host_service") == "render.com" && IsRunningInContainer() {
+	// 	env.SetDefault(bot_token, os.Getenv(bot_token))
 
-		if botType != "telegram" {
-			env.SetDefault(app_token, os.Getenv(app_token))
-		}
+	// 	if botType != "telegram" {
+	// 		env.SetDefault(app_token, os.Getenv(app_token))
+	// 	}
 
-		if botType == "slack" {
-			env.SetDefault(signing_secret, os.Getenv(signing_secret))
-		}
-	} else {
-		env.SetDefault(bot_token, bot_token_content)
+	// 	if botType == "slack" {
+	// 		env.SetDefault(signing_secret, os.Getenv(signing_secret))
+	// 	}
+	// }
 
-		if botType != "telegram" {
-			env.SetDefault(app_token, app_token_content)
-		}
+	env.SetDefault(bot_token, bot_token_content)
 
-		if botType == "discord" {
-			if constants.Gerr != nil {
-				panic(constants.Gerr)
-			} else {
-				guilds := gjson.Get(string(constants.Guilds), "guilds.#")
+	if botType != "telegram" {
+		env.SetDefault(app_token, app_token_content)
+	}
 
-				for x := 0; x < int(guilds.Int()); x++ {
-					server := gjson.Get(string(constants.Guilds), "guilds."+fmt.Sprint(x)).String()
+	if botType == "discord" {
+		if constants.Gerr != nil {
+			panic(constants.Gerr)
+		} else {
+			guilds := gjson.Get(string(constants.Guilds), "guilds.#")
 
-					sgi := strings.ToUpper(server) + "_GUILD_ID"
-					sgi_content := botwayConfig.GetString("botway.bots." + botName + ".guilds." + server + ".server_id")
+			for x := 0; x < int(guilds.Int()); x++ {
+				server := gjson.Get(string(constants.Guilds), "guilds."+fmt.Sprint(x)).String()
 
-					env.Set(sgi, sgi_content)
-				}
+				sgi := strings.ToUpper(server) + "_GUILD_ID"
+				sgi_content := botwayConfig.GetString("botway.bots." + botName + ".guilds." + server + ".server_id")
+
+				env.Set(sgi, sgi_content)
 			}
 		}
+	}
 
-		if botType == "slack" {
-			signing_secret_content := botwayConfig.GetString("botway.bots." + botName + ".signing_secret")
+	if botType == "slack" {
+		signing_secret_content := botwayConfig.GetString("botway.bots." + botName + ".signing_secret")
 
-			env.SetDefault(signing_secret, signing_secret_content)
+		env.SetDefault(signing_secret, signing_secret_content)
+	}
+
+	if err := env.SafeWriteConfig(); err != nil {
+		if os.IsNotExist(err) {
+			err = env.WriteConfig()
+
+			if err != nil {
+				panic(err)
+			}
 		}
+	}
+
+	if err := env.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			panic(err)
+		}
+	}
+}
+
+func SetupTokensInDockerRender() {
+	CheckDir()
+
+	env := viper.New()
+
+	pwd, _ := os.Getwd()
+
+	env.AddConfigPath(filepath.Join(pwd, "config"))
+	env.SetConfigName("botway-tokens")
+	env.SetConfigType("env")
+
+	env.SetDefault(bot_token, os.Getenv(bot_token))
+
+	if botType != "telegram" {
+		env.SetDefault(app_token, os.Getenv(bot_token))
+	}
+
+	if botType == "discord" {
+		if constants.Gerr != nil {
+			panic(constants.Gerr)
+		} else {
+			guilds := gjson.Get(string(constants.Guilds), "guilds.#")
+
+			for x := 0; x < int(guilds.Int()); x++ {
+				server := gjson.Get(string(constants.Guilds), "guilds."+fmt.Sprint(x)).String()
+
+				sgi := strings.ToUpper(server) + "_GUILD_ID"
+
+				env.Set(sgi, os.Getenv(sgi))
+			}
+		}
+	}
+
+	if botType == "slack" {
+		env.SetDefault(signing_secret, os.Getenv(signing_secret))
 	}
 
 	if err := env.SafeWriteConfig(); err != nil {
