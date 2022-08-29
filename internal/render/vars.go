@@ -11,7 +11,7 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-func Vars() {
+func Vars(isGetEnvCmd bool, args []string) {
 	url := "https://api.render.com/v1/services/" + serviceId + "/env-vars?limit=100"
 
 	req, _ := http.NewRequest("GET", url, nil)
@@ -38,7 +38,13 @@ func Vars() {
 			k := gjson.Get(e.String(), "key")
 			v := gjson.Get(e.String(), "value")
 
-			fmt.Println(constants.BOLD.Render(k.String()) + ": " + v.String())
+			if isGetEnvCmd {
+				if args[0] == k.String() {
+					fmt.Println(v.String())
+				}
+			} else {
+				fmt.Println(constants.BOLD.Render(k.String()) + ": " + v.String())
+			}
 		}
 	} else {
 		fmt.Println(string(body))

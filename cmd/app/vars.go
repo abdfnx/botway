@@ -55,10 +55,12 @@ func VarsCMD() *cobra.Command {
 		variablesRemoveCmd.Flags().StringP("service", "s", "", desc)
 	} else if botwaygo.GetBotInfo("bot.host_service") == "render.com" {
 		cmd.Run = func(cmd *cobra.Command, args []string) {
-			render.Vars()
+			render.Vars(false, args)
 		}
 
-		variablesGetCmd.Run = func(cmd *cobra.Command, args []string) {}
+		variablesGetCmd.Run = func(cmd *cobra.Command, args []string) {
+			render.Vars(true, args)
+		}
 
 		variablesSetCmd.Run = func(cmd *cobra.Command, args []string) {
 			render.SetEnvVars(args)
