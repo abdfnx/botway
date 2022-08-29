@@ -14,13 +14,6 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-var (
-	id = gjson.Get(string(constants.BotwayConfig), "render.user.id").String()
-	apiToken = gjson.Get(string(constants.BotwayConfig), "render.user.api_token").String()
-
-	serviceName = strings.ReplaceAll(botwaygo.GetBotInfo("bot.name"), " ", "%20")
-)
-
 func UpdateTokens(serviceId string) {
 	url := fmt.Sprintf("https://api.render.com/v1/services/%s/env-vars", serviceId)
 
@@ -56,10 +49,12 @@ func UpdateTokens(serviceId string) {
 		panic(serr)
 	}
 
+	defer res.Body.Close()
+
 	body, _ := ioutil.ReadAll(res.Body)
 
 	if res.StatusCode == 200 {
-		fmt.Println(constants.HEADING + constants.BOLD.Render("Tokens updated successfuly 🔑️"))
+		fmt.Println(constants.HEADING + constants.BOLD.Render("Tokens updated successfully 🔑️"))
 	} else {
 		fmt.Println(string(body))
 	}

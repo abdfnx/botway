@@ -5,16 +5,16 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func RunCMD() *cobra.Command {
+func ExecCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:                "run",
-		Short:              "Run a local command using variables from the active environment",
+		Use:                "exec",
+		Short:              "Execute a local command using variables from the active environment",
 		PreRun:             func(cmd *cobra.Command, args []string) { tools.CheckDir() },
-		RunE:               Contextualize(handler.Run, handler.Panic),
+		RunE:               Contextualize(handler.Exec, handler.Panic),
 		DisableFlagParsing: true,
 	}
 
-	cmd.Flags().Bool("ephemeral", false, "Run the local command in an ephemeral environment")
+	cmd.Flags().Bool("ephemeral", false, "Execute the local command in an ephemeral environment")
 	cmd.Flags().String("service", "", "Fetch variables accessible to a specific service")
 
 	return cmd

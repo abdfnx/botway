@@ -8,14 +8,10 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/tools"
-	"github.com/abdfnx/botwaygo"
-	"github.com/tidwall/gjson"
 )
 
 func Deploy() {
 	tools.SetupTokensInDocker()
-
-	serviceId := gjson.Get(string(constants.BotwayConfig), "render.projects."+botwaygo.GetBotInfo("bot.name")+".id").String()
 
 	UpdateTokens(serviceId)
 
@@ -34,6 +30,8 @@ func Deploy() {
 	if serr != nil {
 		panic(serr)
 	}
+
+	defer res.Body.Close()
 
 	body, _ := ioutil.ReadAll(res.Body)
 

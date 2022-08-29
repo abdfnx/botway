@@ -3,6 +3,8 @@ package app
 import (
 	"github.com/abdfnx/botway/internal/options"
 	"github.com/abdfnx/botway/internal/pipes/remove"
+	"github.com/abdfnx/botway/internal/render"
+	"github.com/abdfnx/botwaygo"
 	"github.com/spf13/cobra"
 )
 
@@ -23,7 +25,14 @@ func RemoveCMD() *cobra.Command {
 				cmd.Help()
 			}
 		},
-		PostRunE: Contextualize(handler.Delete, handler.Panic),
+	}
+
+	if botwaygo.GetBotInfo("bot.host_service") == "railway.app" {
+		cmd.PostRunE = Contextualize(handler.Delete, handler.Panic)
+	} else if botwaygo.GetBotInfo("bot.host_service") == "render.com" {
+		cmd.Run = func(cmd *cobra.Command, args []string) {
+			render.Deploy()
+		}
 	}
 
 	return cmd

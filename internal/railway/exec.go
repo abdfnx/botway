@@ -27,7 +27,7 @@ func (h *Handler) getEnvironment(ctx context.Context, environmentName string) (*
 	return h.ctrl.GetEnvironmentByName(ctx, environmentName)
 }
 
-func (h *Handler) Run(ctx context.Context, req *entity.CommandRequest) error {
+func (h *Handler) Exec(ctx context.Context, req *entity.CommandRequest) error {
 	isEphemeral := false
 
 	for _, arg := range req.Args {
