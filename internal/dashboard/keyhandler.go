@@ -57,11 +57,17 @@ func (b *Bubble) handleKeys(msg tea.KeyMsg) tea.Cmd {
 			b.switchActiveView(components.BotListView)
 		}
 
-	// Open bot project at Railway
-	case key.Matches(msg, b.keyMap.OpenAtRailway):
-		bot_project_id := gjson.Get(string(constants.RailwayConfig), "projects."+strings.ToLower(b.botInfo("path"))+".project").String()
+	// Open bot project at Railway or Render
+	case key.Matches(msg, b.keyMap.Open):
+		if b.botInfo("host_service") == "railway.app" {
+			bot_project_id := gjson.Get(string(constants.RailwayConfig), "projects."+strings.ToLower(b.botInfo("path"))+".project").String()
 
-		OpenBrowser("https://railway.app/project/" + bot_project_id)
+			OpenBrowser("https://railway.app/project/" + bot_project_id)
+		} else if b.botInfo("host_service") == "render.com" {
+			bot_project_id := gjson.Get(string(constants.BotwayConfig), "render.projects."+b.botInfo("name")+".id").String()
+
+			OpenBrowser("https://dashboard.render.com/web/" + bot_project_id)
+		}
 	}
 
 	return tea.Batch(cmds...)

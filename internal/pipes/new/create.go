@@ -157,5 +157,5 @@ func NewBot(m model, l string, platform, lang int) {
 
 	pwd = filepath.Join(pwd, opts.BotName)
 
-	config.AddBotToConfig(opts.BotName, BotType(m), pwd, BotLang(m))
+	config.AddBotToConfig(opts.BotName, BotType(m), pwd, BotLang(m), HostService(m))
 }

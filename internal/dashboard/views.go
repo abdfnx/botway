@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/internal/config"
 	"github.com/abdfnx/botway/internal/dashboard/components/style"
 	"github.com/abdfnx/botway/internal/dashboard/components/theme"
 	"github.com/abdfnx/botway/internal/dashboard/icons"
@@ -54,7 +55,6 @@ func (b Bubble) botListView() string {
 
 		line := trunc(value.String(), b.bubbles.primaryPaginator.Width-2)
 
-		
 		lang := gjson.Get(string(constants.BotwayConfig), "botway.bots."+v+".lang").String()
 
 		if lang == "php" || lang == "crystal" {
@@ -105,8 +105,6 @@ func (b Bubble) botInfoView() string {
 
 		bType := drawKVColor("Bot Type", b.botInfo("type"), theme.AppTheme.Blue, b)
 
-		version := drawKV("Bot Version", bot_config.GetString("bot.version"), b)
-
 		lang := drawKVColor("Language", b.botInfo("lang"), theme.AppTheme.LightGray, b)
 
 		bPath := trunc(b.botInfo("path"), (b.bubbles.secondaryViewport.Width*2/3)-3)
@@ -131,7 +129,6 @@ func (b Bubble) botInfoView() string {
 		return connectVert(
 			styles(b).Render(""),
 			bType,
-			version,
 			"\n",
 			lang,
 			bPath,
@@ -172,9 +169,8 @@ func (b Bubble) homeView() string {
 		is_logged_in = drawKVColor("Is Logged In ?", "Yes", theme.AppTheme.Green, b)
 	}
 
-	gh_username := drawKVColor("GitHub Username", "abdfnx", theme.AppTheme.LightGray, b)
-	docker_id := drawKVColor("Docker ID", "abdcodedoc", theme.AppTheme.Blue, b)
-	host := drawKV("Host", "abdfnx@railway.app", b)
+	gh_username := drawKVColor("GitHub Username", config.Get("github.username"), theme.AppTheme.LightGray, b)
+	docker_id := drawKVColor("Docker ID", config.Get("docker.id"), theme.AppTheme.Blue, b)
 	total_bots := drawKV("Total Bots", fmt.Sprint(bots_count), b)
 
 	style := lipgloss.NewStyle().
@@ -187,7 +183,6 @@ func (b Bubble) homeView() string {
 		gh_username,
 		docker_id,
 		"\n",
-		host,
 		is_logged_in,
 		"\n",
 		total_bots,
@@ -199,7 +194,7 @@ func (b Bubble) helpView() string {
 		b.drawHelpKV("up", "Move up"),
 		b.drawHelpKV("down", "Move down"),
 		b.drawHelpKV("tab", "Swap windows"),
-		b.drawHelpKV("ctrl+o", "Open bot project at Railway"),
+		b.drawHelpKV("ctrl+o", "Open bot project at Host Service"),
 		b.drawHelpKV("esc", "Reset"),
 	}
 

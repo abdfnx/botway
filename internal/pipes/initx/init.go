@@ -28,6 +28,8 @@ func (m model) InitCmd() {
 	viper.SetConfigType("json")
 
 	viper.SetDefault("botway.bots", map[string]string{})
+	viper.SetDefault("botway.settings.auto_sync", true)
+	viper.SetDefault("botway.settings.check_updates", true)
 	viper.SetDefault("botway.bots_names", []string{})
 	viper.SetDefault("github.username", m.inputs[0].Value())
 	viper.SetDefault("docker.id", m.inputs[1].Value())

@@ -3,17 +3,17 @@ package keymap
 import "github.com/charmbracelet/bubbles/key"
 
 type KeyMap struct {
-	Quit          key.Binding
-	Down          key.Binding
-	Up            key.Binding
-	Left          key.Binding
-	Right         key.Binding
-	Esc           key.Binding
-	SwapView      key.Binding
-	OpenAtRailway key.Binding
-	PageDown      key.Binding
-	PageUp        key.Binding
-	New           key.Binding
+	Quit     key.Binding
+	Down     key.Binding
+	Up       key.Binding
+	Left     key.Binding
+	Right    key.Binding
+	Esc      key.Binding
+	SwapView key.Binding
+	Open     key.Binding
+	PageDown key.Binding
+	PageUp   key.Binding
+	New      key.Binding
 }
 
 func New() KeyMap {
@@ -46,9 +46,9 @@ func New() KeyMap {
 			key.WithKeys("tab"),
 			key.WithHelp("tab", "select"),
 		),
-		OpenAtRailway: key.NewBinding(
+		Open: key.NewBinding(
 			key.WithKeys("ctrl+o"),
-			key.WithHelp("ctrl+o", "Open bot project at Railway"),
+			key.WithHelp("ctrl+o", "Open bot project at Host Service"),
 		),
 		PageDown: key.NewBinding(
 			key.WithKeys("pgdown", " ", "f"),

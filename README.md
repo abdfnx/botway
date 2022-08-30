@@ -8,13 +8,14 @@
 
 With botway, you can focus on your bot's logic and don't worry about the infrastructure. and we will take care of the rest.
 
-Botway uses [Railway][rw] to host your bot code and database.
+Botway uses [Railway][rw] and [Render][rnd] to host your bot code and database.
 
 https://user-images.githubusercontent.com/64256993/175816610-70160d02-8324-4a50-ac4d-78e0993cd91d.mp4
 
 ## Requirements
 
 - [**Railway Account**][rw]
+- [**Render Account**][rnd]
 
 ## Installation ⬇
 
@@ -68,10 +69,14 @@ scoop install botway
   botway init
   ```
 
-- Authenticate with [**Railway**][rw]
+- Authenticate with your favorite host service
 
   ```bash
+  # railway
   botway login railway
+
+  # render
+  botway login render
   ```
 
 - Open Botway TUI
@@ -106,18 +111,18 @@ scoop install botway
   botway database <command>
   ```
 
-- Deploy and upload project to [**Railway**][rw] from the current directory
+- Deploy and upload project from the current directory
 
   ```bash
   # Under the project directory
   botway deploy
   ```
 
-- Run a local command using variables from the active environment
+- Execute a local command using variables from the active environment
 
   ```bash
   # Under the project directory
-  botway run <command>
+  botway exec <command>
   ```
 
 ## Roadmap
@@ -129,13 +134,14 @@ scoop install botway
 - <kbd>Up</kbd>: **Move up**
 - <kbd>Down</kbd>: **Move down**
 - <kbd>Tab</kbd>: **Switch windows**
-- <kbd>Ctrl+O</kbd>: **Open bot project at Railway**
+- <kbd>Ctrl+O</kbd>: **Open bot project at Host Service**
 - <kbd>Esc</kbd>: **Reset**
 - <kbd>Ctrl+Q</kbd>: **Quit**
 
 ### Technologies Used in Botway
 
 - [**Railway API**][rw]
+- [**Render Rest API**][rnd]
 - [**Charm**](https://charm.sh)
 - [**Cobra**](https://github.com/spf13/cobra)
 - [**Viper**](https://github.com/spf13/viper)
@@ -147,7 +153,7 @@ scoop install botway
 
 Thanks to [**@charmbracelet**](https://github.com/charmbracelet) for their awesome TUI libraries 🏗.
 
-Also thanks to [**@railwayapp**](https://github.com/railwayapp) for amazing cloud services ☁️.
+Also thanks to [**@railwayapp**](https://github.com/railwayapp) and [**renderinc**](https://github.com/renderinc) for their amazing cloud and host services ☁️.
 
 ### License
 
@@ -158,3 +164,4 @@ botway is licensed under the terms of [MIT](https://github.com/abdfnx/botway/blo
 [![Star History Chart](https://api.star-history.com/svg?repos=abdfnx/botway&type=Date)](https://star-history.com/#abdfnx/botway)
 
 [rw]: https://railway.app
+[rnd]: https://render.com

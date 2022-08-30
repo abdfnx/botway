@@ -25,6 +25,8 @@ func (b Bubble) botInfo(infoToGet string) string {
 
 	if infoToGet == "token" {
 		return gjson.Get(bot.String(), "bot_token").String()
+	} else if infoToGet == "name" {
+		return v
 	}
 
 	return gjson.Get(bot.String(), infoToGet).String()
