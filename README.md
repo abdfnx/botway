@@ -153,7 +153,7 @@ scoop install botway
 
 Thanks to [**@charmbracelet**](https://github.com/charmbracelet) for their awesome TUI libraries 🏗.
 
-Also thanks to [**@railwayapp**](https://github.com/railwayapp) and [**renderinc**](https://github.com/renderinc) for their amazing cloud and host services ☁️.
+Also thanks to [**@railwayapp**](https://github.com/railwayapp) and [**@renderinc**](https://github.com/renderinc) for their amazing cloud and host services ☁️.
 
 ### License
 
