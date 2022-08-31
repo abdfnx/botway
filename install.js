@@ -3,7 +3,7 @@ import * as fs from "fs/promises";
 import fetch from "node-fetch";
 import { pipeline } from "stream/promises";
 import StreamZip from "node-stream-zip";
-import { ARCH_MAPPING, CONFIG, PLATFORM_MAPPING } from "./config.js";
+import { ARCH_MAPPING, CONFIG, PLATFORM_MAPPING } from "./npm-config.js";
 import path from "path";
 
 async function install() {
@@ -38,7 +38,7 @@ async function install() {
     if (old == "yes") {
       return path.join(f, "bin", "botway");
     } else if (old == "no") {
-      return path.join("..", "bin", "botway");
+      return path.join("bin", "botway");
     } else {
       return f;
     }
@@ -66,7 +66,7 @@ async function install() {
   });
 
   // chmod +x /bin/botway
-  await fs.chmod(path.join("..", "bin", "botway"), 0o755);
+  await fs.chmod(path.join("bin", "botway"), 0o755);
 
   await fs.rm(zipFile);
   await fs.rm(folder(), { recursive: true });

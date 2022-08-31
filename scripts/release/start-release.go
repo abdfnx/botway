@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"path"
 
 	"github.com/tidwall/sjson"
 )
@@ -21,7 +20,7 @@ func main() {
 func updateVersionOnPackageJSON(version string) {
 	version = version[1:]
 
-	packageJSON, err := ioutil.ReadFile(path.Join("npm-installer", "package.json"))
+	packageJSON, err := ioutil.ReadFile("package.json")
 
 	if err != nil {
 		log.Fatal(err)

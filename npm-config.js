@@ -10,7 +10,7 @@ export const CONFIG = {
   /**
    * @type {string}
    */
-  path: "./bin",
+  path: "../bin",
 
   /**
    * @type {string}
