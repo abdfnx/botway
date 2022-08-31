@@ -153,6 +153,12 @@ func NewBot(m model, l string, platform, lang int) {
 		log.Fatal(dotGitIgnoreFile)
 	}
 
+	readmeFile := os.WriteFile(filepath.Join(opts.BotName, "README.md"), []byte(templates.Content("bot-readme.md", "resources", "")), 0644)
+
+	if readmeFile != nil {
+		log.Fatal(readmeFile)
+	}
+
 	pwd, _ := os.Getwd()
 
 	pwd = filepath.Join(pwd, opts.BotName)
