@@ -114,7 +114,11 @@ func NewBot(m model, l string, platform, lang int) {
 			respone += "\n.gradle\nbuild"
 		}
 
-		if lang == 11 {
+		if lang == 13 && platform == 1 {
+			respone += "\n.build\nPackage.resolved"
+		}
+
+		if lang == 14 {
 			respone = `/docs/
 /lib/
 /bin/
@@ -126,11 +130,7 @@ func NewBot(m model, l string, platform, lang int) {
 /shard.lock`
 		}
 
-		if lang == 13 && platform == 1 {
-			respone += "\n.build\nPackage.resolved"
-		}
-
-		dotGitIgnoreFileContent = respone + "\n*.lock"
+		dotGitIgnoreFileContent = respone + "\n*.lock\nbotway-tokens.env"
 
 		if BotLang(m) == "rust" && BotPM(m) == "fleet" {
 			dotGitIgnoreFileContent += "\nfleet.toml"
