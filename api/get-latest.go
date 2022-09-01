@@ -12,7 +12,7 @@ import (
 )
 
 func GetLatest() string {
-	url := "https://get-latest.herokuapp.com/abdfnx/botway"
+	url := "https://get-latest.onrender.com/abdfnx/botway"
 
 	req, err := http.NewRequest("GET", url, nil)
 

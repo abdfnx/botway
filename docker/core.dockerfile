@@ -1,7 +1,7 @@
 FROM alpine AS download
 
 RUN apk update && apk add unzip curl
-RUN curl -s https://get-latest.herokuapp.com/abdfnx/botway >> tag.txt
+RUN curl -s https://get-latest.onrender.com/abdfnx/botway >> tag.txt
 
 RUN curl -fsSL "https://github.com/abdfnx/botway/releases/download/$(cat tag.txt)/botway_linux_$(cat tag.txt)_amd64.zip" \
   --output botway.zip \
