@@ -11,7 +11,7 @@ require (
 	github.com/abdfnx/tran v0.1.43
 	github.com/botwayorg/gh v0.0.9
 	github.com/briandowns/spinner v1.19.0
-	github.com/charmbracelet/bubbles v0.13.0
+	github.com/charmbracelet/bubbles v0.14.0
 	github.com/charmbracelet/bubbletea v0.22.1
 	github.com/charmbracelet/lipgloss v0.6.0
 	github.com/elewis787/boa v0.1.1
