@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/abdfnx/botway/constants"
-	"github.com/railwayapp/cli/entity"
-	"github.com/railwayapp/cli/errors"
+	"github.com/botwayorg/railway-api/entity"
+	"github.com/botwayorg/railway-api/errors"
 )
 
 func (h *Handler) Info(ctx context.Context, req *entity.CommandRequest) error {

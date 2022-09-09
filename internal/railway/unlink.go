@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/abdfnx/botway/constants"
-	"github.com/railwayapp/cli/entity"
+	"github.com/botwayorg/railway-api/entity"
 )
 
 func (h *Handler) Unlink(ctx context.Context, req *entity.CommandRequest) error {

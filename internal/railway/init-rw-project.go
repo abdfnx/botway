@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/abdfnx/botway/constants"
-	"github.com/railwayapp/cli/entity"
-	"github.com/railwayapp/cli/ui"
+	"github.com/botwayorg/railway-api/entity"
+	"github.com/botwayorg/railway-api/ui"
 )
 
 func (h *Handler) initNew(ctx context.Context, req *entity.CommandRequest) error {

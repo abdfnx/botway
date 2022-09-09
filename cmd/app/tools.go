@@ -8,9 +8,9 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/internal/railway"
+	rw_constants "github.com/botwayorg/railway-api/constants"
+	"github.com/botwayorg/railway-api/entity"
 	"github.com/charmbracelet/lipgloss"
-	rw_constants "github.com/railwayapp/cli/constants"
-	"github.com/railwayapp/cli/entity"
 	"github.com/spf13/cobra"
 )
 

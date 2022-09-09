@@ -8,10 +8,10 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/tools"
+	"github.com/botwayorg/railway-api/entity"
+	CLIErrors "github.com/botwayorg/railway-api/errors"
+	"github.com/botwayorg/railway-api/ui"
 	"github.com/briandowns/spinner"
-	"github.com/railwayapp/cli/entity"
-	CLIErrors "github.com/railwayapp/cli/errors"
-	"github.com/railwayapp/cli/ui"
 )
 
 func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error {

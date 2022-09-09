@@ -1,8 +1,8 @@
 package railway
 
 import (
-	"github.com/railwayapp/cli/configs"
-	"github.com/railwayapp/cli/controller"
+	"github.com/botwayorg/railway-api/configs"
+	"github.com/botwayorg/railway-api/controller"
 )
 
 type Handler struct {

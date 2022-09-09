@@ -6,7 +6,7 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	deleteProject "github.com/abdfnx/botway/internal/railway/delete"
-	"github.com/railwayapp/cli/entity"
+	"github.com/botwayorg/railway-api/entity"
 )
 
 func (h *Handler) Down(ctx context.Context, req *entity.CommandRequest) error {

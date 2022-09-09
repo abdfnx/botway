@@ -4,14 +4,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"os"
 	"strings"
 	"time"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/botwayorg/railway-api/entity"
+	"github.com/botwayorg/railway-api/ui"
 	"github.com/briandowns/spinner"
-	"github.com/railwayapp/cli/entity"
-	"github.com/railwayapp/cli/ui"
 )
 
 func (h *Handler) Variables(ctx context.Context, req *entity.CommandRequest) error {
@@ -31,7 +30,7 @@ func (h *Handler) Variables(ctx context.Context, req *entity.CommandRequest) err
 		return err
 	}
 
-	fmt.Print(ui.Heading(fmt.Sprintf("%s Environment Variables", environment.Name)))
+	fmt.Print(constants.HEADING + (fmt.Sprintf("%s Environment Variables", environment.Name)))
 	fmt.Print(ui.KeyValues(*envs))
 
 	return nil
@@ -58,8 +57,44 @@ func (h *Handler) VariablesGet(ctx context.Context, req *entity.CommandRequest) 
 
 func (h *Handler) VariablesSet(ctx context.Context, req *entity.CommandRequest) error {
 	serviceName, err := req.Cmd.Flags().GetString("service")
+
 	if err != nil {
 		return err
+	}
+
+	skipRedeploy, err := req.Cmd.Flags().GetBool("skip-redeploy")
+
+	if err != nil {
+		// The flag is optional; default to false.
+		skipRedeploy = false
+	}
+
+	replace, err := req.Cmd.Flags().GetBool("replace")
+
+	if err != nil {
+		// The flag is optional; default to false.
+		replace = false
+	}
+
+	yes, err := req.Cmd.Flags().GetBool("yes")
+
+	if err != nil {
+		// The flag is optional; default to false.
+		yes = false
+	}
+
+	if replace && !yes {
+		fmt.Println(ui.Bold(ui.RedText(fmt.Sprintf("Warning! You are about to fully replace all your variables for the service '%s'.", serviceName)).String()))
+
+		confirm, err := ui.PromptYesNo("Continue?")
+
+		if err != nil {
+			return err
+		}
+
+		if !confirm {
+			return nil
+		}
 	}
 
 	variables := &entity.Envs{}
@@ -67,6 +102,7 @@ func (h *Handler) VariablesSet(ctx context.Context, req *entity.CommandRequest) 
 
 	for _, kvPair := range req.Args {
 		parts := strings.SplitN(kvPair, "=", 2)
+
 		if len(parts) != 2 {
 			return errors.New("invalid variables invocation. See --help")
 		}
@@ -78,7 +114,7 @@ func (h *Handler) VariablesSet(ctx context.Context, req *entity.CommandRequest) 
 		updatedEnvNames = append(updatedEnvNames, key)
 	}
 
-	err = h.ctrl.UpsertEnvs(ctx, variables, &serviceName)
+	err = h.ctrl.UpdateEnvs(ctx, variables, &serviceName, replace)
 
 	if err != nil {
 		return err
@@ -89,57 +125,27 @@ func (h *Handler) VariablesSet(ctx context.Context, req *entity.CommandRequest) 
 		return err
 	}
 
-	fmt.Print(ui.Heading(fmt.Sprintf("Updated %s for \"%s\"", strings.Join(updatedEnvNames, ", "), environment.Name)))
+	operation := "Updated"
+
+	if replace {
+		operation = "Replaced existing variables with"
+	}
+
+	fmt.Print(constants.HEADING + (fmt.Sprintf("%s %s for \"%s\"", operation, strings.Join(updatedEnvNames, ", "), environment.Name)))
 	fmt.Print(ui.KeyValues(*variables))
 
-	err = h.redeployAfterVariablesChange(ctx, environment)
+	if !skipRedeploy {
+		serviceID, err := h.ctrl.GetServiceIdByName(ctx, &serviceName)
 
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (h *Handler) OSVariablesSet(ctx context.Context, req *entity.CommandRequest) error {
-	serviceName, err := req.Cmd.Flags().GetString("service")
-	if err != nil {
-		return err
-	}
-
-	variables := &entity.Envs{}
-	updatedEnvNames := make([]string, 0)
-
-	for _, kvPair := range os.Args {
-		parts := strings.SplitN(kvPair, "=", 2)
-		if len(parts) != 2 {
-			return errors.New("invalid variables invocation. See --help")
+		if err != nil {
+			return err
 		}
 
-		key := parts[0]
-		value := parts[1]
+		err = h.redeployAfterVariablesChange(ctx, environment, serviceID)
 
-		variables.Set(key, value)
-		updatedEnvNames = append(updatedEnvNames, key)
-	}
-
-	err = h.ctrl.UpsertEnvs(ctx, variables, &serviceName)
-
-	if err != nil {
-		return err
-	}
-
-	environment, err := h.ctrl.GetCurrentEnvironment(ctx)
-	if err != nil {
-		return err
-	}
-
-	fmt.Print(ui.Heading(fmt.Sprintf("Updated %s for \"%s\"", strings.Join(updatedEnvNames, ", "), environment.Name)))
-	fmt.Print(ui.KeyValues(*variables))
-
-	err = h.redeployAfterVariablesChange(ctx, environment)
-	if err != nil {
-		return err
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
@@ -149,6 +155,12 @@ func (h *Handler) VariablesDelete(ctx context.Context, req *entity.CommandReques
 	serviceName, err := req.Cmd.Flags().GetString("service")
 	if err != nil {
 		return err
+	}
+
+	skipRedeploy, err := req.Cmd.Flags().GetBool("skip-redeploy")
+	if err != nil {
+		// The flag is optional; default to false.
+		skipRedeploy = false
 	}
 
 	err = h.ctrl.DeleteEnvs(ctx, req.Args, &serviceName)
@@ -161,17 +173,24 @@ func (h *Handler) VariablesDelete(ctx context.Context, req *entity.CommandReques
 		return err
 	}
 
-	fmt.Print(ui.Heading(fmt.Sprintf("Deleted %s for \"%s\"", strings.Join(req.Args, ", "), environment.Name)))
+	fmt.Print(constants.HEADING + (fmt.Sprintf("Deleted %s for \"%s\"", strings.Join(req.Args, ", "), environment.Name)))
 
-	err = h.redeployAfterVariablesChange(ctx, environment)
-	if err != nil {
-		return err
+	if !skipRedeploy {
+		serviceID, err := h.ctrl.GetServiceIdByName(ctx, &serviceName)
+		if err != nil {
+			return err
+		}
+
+		err = h.redeployAfterVariablesChange(ctx, environment, serviceID)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
 }
 
-func (h *Handler) redeployAfterVariablesChange(ctx context.Context, environment *entity.Environment) error {
+func (h *Handler) redeployAfterVariablesChange(ctx context.Context, environment *entity.Environment, serviceID *string) error {
 	deployments, err := h.ctrl.GetDeployments(ctx)
 	if err != nil {
 		return err
@@ -195,7 +214,7 @@ func (h *Handler) redeployAfterVariablesChange(ctx context.Context, environment 
 	s.Suffix = fmt.Sprintf(" 📟 Redeploying \"%s\" with new variables", environment.Name)
 	s.Start()
 
-	err = h.ctrl.DeployEnvironmentTriggers(ctx)
+	err = h.ctrl.DeployEnvironmentTriggers(ctx, serviceID)
 	if err != nil {
 		return err
 	}

@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/botwayorg/railway-api/entity"
 	"github.com/briandowns/spinner"
-	"github.com/railwayapp/cli/entity"
 )
 
 func avaliableDBs() {
