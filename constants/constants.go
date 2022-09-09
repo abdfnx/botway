@@ -60,8 +60,11 @@ var (
 	BotConfig, Oerr    = ioutil.ReadFile(".botway.yaml")
 	Guilds, Gerr       = ioutil.ReadFile(filepath.Join("config", "guilds.json"))
 
-	RailwayConfigFile   = filepath.Join(HomeDir, ".railway", "config.json")
+	RailwayConfigFile   = filepath.Join(HomeDir, ".botway", "railway-config.json")
 	RailwayConfig, Rerr = ioutil.ReadFile(RailwayConfigFile)
+
+	RenderConfigFile   = filepath.Join(HomeDir, ".botway", "render-config.json")
+	RenderConfig, Nerr = ioutil.ReadFile(RenderConfigFile)
 
 	RAIL_PORT = 4411
 )

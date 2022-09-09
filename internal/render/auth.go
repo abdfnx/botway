@@ -24,7 +24,7 @@ func (m model) Auth() {
 	req, _ := http.NewRequest("GET", url, nil)
 
 	req.Header.Add("Accept", "application/json")
-	req.Header.Add("Authorization", "Bearer " + m.inputs[2].Value())
+	req.Header.Add("Authorization", "Bearer "+m.inputs[2].Value())
 
 	res, serr := http.DefaultClient.Do(req)
 
@@ -38,19 +38,19 @@ func (m model) Auth() {
 
 	id := gjson.Get(string(body), "0.owner.id").String()
 
-	userName, _ := sjson.Set(string(constants.BotwayConfig), "render.user.name", m.inputs[0].Value())
-	userEmail, _ := sjson.Set(userName, "render.user.email", m.inputs[1].Value())
-	userId, _ := sjson.Set(userEmail, "render.user.id", id)
-	apiToken, _ := sjson.Set(userId, "render.user.api_token", m.inputs[2].Value())
-	renderProjects, _ := sjson.Set(apiToken, "render.projects", map[string]string{})
+	userName, _ := sjson.Set(string(constants.RenderConfig), "user.name", m.inputs[0].Value())
+	userEmail, _ := sjson.Set(userName, "user.email", m.inputs[1].Value())
+	userId, _ := sjson.Set(userEmail, "user.id", id)
+	apiToken, _ := sjson.Set(userId, "user.api_token", m.inputs[2].Value())
+	renderProjects, _ := sjson.Set(apiToken, "projects", map[string]string{})
 
-	remove := os.Remove(constants.BotwayConfigFile)
+	remove := os.Remove(constants.RenderConfigFile)
 
 	if remove != nil {
 		log.Fatal(remove)
 	}
 
-	newBotConfig := os.WriteFile(constants.BotwayConfigFile, []byte(renderProjects), 0644)
+	newBotConfig := os.WriteFile(constants.RenderConfigFile, []byte(renderProjects), 0644)
 
 	if newBotConfig != nil {
 		panic(newBotConfig)

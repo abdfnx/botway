@@ -9,15 +9,15 @@ import (
 )
 
 func Logout() {
-	clearUserConfig, _ := sjson.Delete(string(constants.BotwayConfig), "render.user")
+	clearUserConfig, _ := sjson.Delete(string(constants.RenderConfig), "user")
 
-	remove := os.Remove(constants.BotwayConfigFile)
+	remove := os.Remove(constants.RenderConfigFile)
 
 	if remove != nil {
 		log.Fatal(remove)
 	}
 
-	newBotConfig := os.WriteFile(constants.BotwayConfigFile, []byte(clearUserConfig), 0644)
+	newBotConfig := os.WriteFile(constants.RenderConfigFile, []byte(clearUserConfig), 0644)
 
 	if newBotConfig != nil {
 		panic(newBotConfig)

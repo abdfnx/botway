@@ -80,18 +80,18 @@ func ConnectService() {
 	serviceSlug := gjson.Get(string(body), "0.service.slug").String()
 	serviceRepo := gjson.Get(string(body), "0.service.repo").String()
 
-	renderPath := "render.projects." + serviceSlug
+	renderPath := "projects." + serviceSlug
 
-	service, _ := sjson.Set(string(constants.BotwayConfig), renderPath+".id", serviceId)
+	service, _ := sjson.Set(string(constants.RenderConfig), renderPath+".id", serviceId)
 	addRepoToservice, _ := sjson.Set(service, renderPath+".repo", serviceRepo)
 
-	remove := os.Remove(constants.BotwayConfigFile)
+	remove := os.Remove(constants.RenderConfigFile)
 
 	if remove != nil {
 		log.Fatal(remove)
 	}
 
-	newBotConfig := os.WriteFile(constants.BotwayConfigFile, []byte(addRepoToservice), 0644)
+	newBotConfig := os.WriteFile(constants.RenderConfigFile, []byte(addRepoToservice), 0644)
 
 	if newBotConfig != nil {
 		panic(newBotConfig)

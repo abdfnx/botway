@@ -64,7 +64,7 @@ func (b *Bubble) handleKeys(msg tea.KeyMsg) tea.Cmd {
 
 			OpenBrowser("https://railway.app/project/" + bot_project_id)
 		} else if b.botInfo("host_service") == "render.com" {
-			bot_project_id := gjson.Get(string(constants.BotwayConfig), "render.projects."+b.botInfo("name")+".id").String()
+			bot_project_id := gjson.Get(string(constants.RenderConfig), "projects."+b.botInfo("name")+".id").String()
 
 			OpenBrowser("https://dashboard.render.com/web/" + bot_project_id)
 		}

@@ -10,7 +10,7 @@ import (
 )
 
 func DeleteRenderService(serviceName string) {
-	serviceId := gjson.Get(string(constants.BotwayConfig), "render.projects."+serviceName+".id").String()
+	serviceId := gjson.Get(string(constants.RenderConfig), "projects."+serviceName+".id").String()
 
 	url := "https://api.render.com/v1/services/" + serviceId
 
