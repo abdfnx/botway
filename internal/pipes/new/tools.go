@@ -48,7 +48,7 @@ func BotType(m model) string {
 	return "# You need to specify a platform (discord, telegram, slack)"
 }
 
-var blankLangMessage = "# You need to specify a language (python, go, nodejs, ruby, rust, deno, csharp, dart, php, kotlin, java, crystal, c++, nim, c)"
+var blankLangMessage = "# You need to specify a language (python, go, nodejs, nodejs (typescript) ruby, rust, deno, csharp, dart, php, kotlin, java, crystal, c++, nim, c)"
 
 func BotLang(m model) string {
 	if m.LangChoice == 0 {
@@ -62,32 +62,34 @@ func BotLang(m model) string {
 	} else if m.LangChoice == 2 {
 		return "nodejs"
 	} else if m.LangChoice == 3 {
-		return "ruby"
+		return "typescript"
 	} else if m.LangChoice == 4 {
-		return "rust"
+		return "ruby"
 	} else if m.LangChoice == 5 {
-		return "deno"
+		return "rust"
 	} else if m.LangChoice == 6 {
-		return "csharp"
+		return "deno"
 	} else if m.LangChoice == 7 {
-		return "dart"
+		return "csharp"
 	} else if m.LangChoice == 8 {
-		return "php"
+		return "dart"
 	} else if m.LangChoice == 9 {
-		return "kotlin"
+		return "php"
 	} else if m.LangChoice == 10 {
-		return "java"
+		return "kotlin"
 	} else if m.LangChoice == 11 {
-		return "cpp"
+		return "java"
 	} else if m.LangChoice == 12 {
-		return "nim"
+		return "cpp"
 	} else if m.LangChoice == 13 {
+		return "nim"
+	} else if m.LangChoice == 14 {
 		if m.PlatformChoice == 1 {
 			return "swift"
 		} else {
 			return "c"
 		}
-	} else if m.LangChoice == 14 {
+	} else if m.LangChoice == 15 {
 		return "crystal"
 	}
 
@@ -95,7 +97,7 @@ func BotLang(m model) string {
 }
 
 func BotStartCmd(m model) string {
-	nodeCmd := "node src/main.js"
+	nodeCmd := BotPM(m) + " src/main."
 
 	if m.LangChoice == 0 && m.PMChoice == 0 {
 		if runtime.GOOS == "windows" {
@@ -117,37 +119,39 @@ func BotStartCmd(m model) string {
 		}
 	} else if m.LangChoice == 1 {
 		if m.PlatformChoice == 2 {
-			return nodeCmd
+			return nodeCmd + ".js"
 		} else {
 			return "go run src/main.go"
 		}
 	} else if m.LangChoice == 2 {
-		return nodeCmd
+		return nodeCmd + ".js"
 	} else if m.LangChoice == 3 {
-		return "bundle exec ruby src/main.rb"
+		return nodeCmd + ".js"
 	} else if m.LangChoice == 4 {
-		return "cargo run src/main.rs"
+		return "bundle exec ruby src/main.rb"
 	} else if m.LangChoice == 5 {
-		return "deno run --allow-all main.ts"
+		return "cargo run src/main.rs"
 	} else if m.LangChoice == 6 {
-		return "dotnet run"
+		return "deno run --allow-all main.ts"
 	} else if m.LangChoice == 7 {
-		return "dart run src/main.dart"
+		return "dotnet run"
 	} else if m.LangChoice == 8 {
+		return "dart run src/main.dart"
+	} else if m.LangChoice == 9 {
 		return "php src/main.php"
-	} else if m.LangChoice == 9 || m.LangChoice == 10 {
+	} else if m.LangChoice == 10 || m.LangChoice == 11 {
 		if runtime.GOOS == "windows" {
 			return `.\gradlew.bat run`
 		} else {
 			return "./gradlew run"
 		}
-	} else if m.LangChoice == 11 {
+	} else if m.LangChoice == 12 {
 		if runtime.GOOS == "windows" {
 			return `.\run.ps1`
 		} else {
 			return "cd build; make -j; ./" + opts.BotName
 		}
-	} else if m.LangChoice == 13 {
+	} else if m.LangChoice == 14 {
 		if m.PlatformChoice == 1 {
 			return "swift run"
 		} else {
@@ -157,9 +161,9 @@ func BotStartCmd(m model) string {
 				return "gcc src/main.c -o bot -pthread -ldiscord -lcurl; ./bot"
 			}
 		}
-	} else if m.LangChoice == 12 {
+	} else if m.LangChoice == 13 {
 		return "nim c -r src/main.nim"
-	} else if m.LangChoice == 14 {
+	} else if m.LangChoice == 15 {
 		return "crystal run src/main.cr"
 	}
 
@@ -175,41 +179,41 @@ func BotPM(m model) string {
 		return "poetry"
 	} else if m.LangChoice == 1 {
 		return "go mod"
-	} else if m.LangChoice == 2 && m.PMChoice == 0 {
+	} else if m.LangChoice == 2 || m.LangChoice == 3 && m.PMChoice == 0 {
 		return "npm"
-	} else if m.LangChoice == 2 && m.PMChoice == 1 {
+	} else if m.LangChoice == 2 || m.LangChoice == 3 && m.PMChoice == 1 {
 		return "yarn"
-	} else if m.LangChoice == 2 && m.PMChoice == 2 {
+	} else if m.LangChoice == 2 || m.LangChoice == 3 && m.PMChoice == 2 {
 		return "pnpm"
-	} else if m.LangChoice == 2 && m.PMChoice == 3 {
+	} else if m.LangChoice == 2 || m.LangChoice == 3 && m.PMChoice == 3 {
 		return "bun"
-	} else if m.LangChoice == 3 {
+	} else if m.LangChoice == 4 {
 		return "bundler"
-	} else if m.LangChoice == 4 && m.PMChoice == 0 {
+	} else if m.LangChoice == 5 && m.PMChoice == 0 {
 		return "cargo"
-	} else if m.LangChoice == 4 && m.PMChoice == 1 {
+	} else if m.LangChoice == 5 && m.PMChoice == 1 {
 		return "fleet"
-	} else if m.LangChoice == 5 {
-		return "deno"
 	} else if m.LangChoice == 6 {
-		return "dotnet"
+		return "deno"
 	} else if m.LangChoice == 7 {
-		return "pub"
+		return "dotnet"
 	} else if m.LangChoice == 8 {
+		return "pub"
+	} else if m.LangChoice == 9 {
 		return "composer"
-	} else if m.LangChoice == 9 || m.LangChoice == 10 {
+	} else if m.LangChoice == 10 || m.LangChoice == 11 {
 		return "gradle"
-	} else if m.LangChoice == 11 {
-		return "cmake"
 	} else if m.LangChoice == 12 {
-		return "nimble"
+		return "cmake"
 	} else if m.LangChoice == 13 {
+		return "nimble"
+	} else if m.LangChoice == 14 {
 		if m.PlatformChoice == 1 {
 			return "swift"
 		} else {
 			return "continue"
 		}
-	} else if m.LangChoice == 14 {
+	} else if m.LangChoice == 15 {
 		return "shards"
 	}
 

@@ -38,12 +38,17 @@ func langsView(m model) string {
 
 	var n = func() string {
 		if m.PlatformChoice == 2 {
-			return checkbox("Node.js", l == 1)
-		} else {
 			return fmt.Sprintf(
 				"%s\n%s",
+				checkbox("Node.js", l == 1),
+				checkbox("Node.js (TypeScript)", l == 2),
+			)
+		} else {
+			return fmt.Sprintf(
+				"%s\n%s\n%s",
 				checkbox("Golang", l == 1),
 				checkbox("Node.js", l == 2),
+				checkbox("Node.js (TypeScript)", l == 3),
 			)
 		}
 	}
@@ -55,32 +60,32 @@ func langsView(m model) string {
 	)
 
 	if m.PlatformChoice != 2 {
-		l13 := "C"
+		l14 := "C"
 
 		if m.PlatformChoice == 1 {
-			l13 = "Swift"
+			l14 = "Swift"
 		}
 
 		langs += fmt.Sprintf(
 			"\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
-			checkbox("Ruby", l == 3),
-			checkbox("Rust", l == 4),
-			checkbox("Deno", l == 5),
-			checkbox("C#", l == 6),
-			checkbox("Dart", l == 7),
-			checkbox("PHP", l == 8),
-			checkbox("Kotlin", l == 9),
-			checkbox("Java", l == 10),
-			checkbox("C++", l == 11),
-			checkbox("Nim", l == 12),
-			checkbox(l13, l == 13),
+			checkbox("Ruby", l == 4),
+			checkbox("Rust", l == 5),
+			checkbox("Deno", l == 6),
+			checkbox("C#", l == 7),
+			checkbox("Dart", l == 8),
+			checkbox("PHP", l == 9),
+			checkbox("Kotlin", l == 10),
+			checkbox("Java", l == 11),
+			checkbox("C++", l == 12),
+			checkbox("Nim", l == 13),
+			checkbox(l14, l == 14),
 		)
 	}
 
 	if m.PlatformChoice == 0 {
 		langs += fmt.Sprintf(
 			"\n%s",
-			checkbox("Crystal", l == 14),
+			checkbox("Crystal", l == 15),
 		)
 	}
 
@@ -99,32 +104,34 @@ func pmsView(m model) string {
 	} else if m.LangChoice == 2 {
 		l = "Node.js"
 	} else if m.LangChoice == 3 {
-		l = "Ruby"
+		l = "Node.js (TypeScript)"
 	} else if m.LangChoice == 4 {
-		l = "Rust"
+		l = "Ruby"
 	} else if m.LangChoice == 5 {
-		l = "Deno"
+		l = "Rust"
 	} else if m.LangChoice == 6 {
-		l = "C#"
+		l = "Deno"
 	} else if m.LangChoice == 7 {
-		l = "Dart"
+		l = "C#"
 	} else if m.LangChoice == 8 {
-		l = "PHP"
+		l = "Dart"
 	} else if m.LangChoice == 9 {
-		l = "Kotlin"
+		l = "PHP"
 	} else if m.LangChoice == 10 {
-		l = "Java"
+		l = "Kotlin"
 	} else if m.LangChoice == 11 {
-		l = "C++"
+		l = "Java"
 	} else if m.LangChoice == 12 {
-		l = "Nim"
+		l = "C++"
 	} else if m.LangChoice == 13 {
+		l = "Nim"
+	} else if m.LangChoice == 14 {
 		if m.PlatformChoice == 1 {
 			l = "Swift"
 		} else {
 			l = "C"
 		}
-	} else if m.LangChoice == 14 {
+	} else if m.LangChoice == 15 {
 		l = "Crystal"
 	}
 
@@ -155,41 +162,37 @@ func pmsView(m model) string {
 		} else {
 			langs += checkbox("go mod", pm == 0)
 		}
-	} else if m.LangChoice == 2 {
-		if m.PlatformChoice == 2 {
-			langs += rubyPM
-		} else {
-			langs += nodePms
-		}
-	} else if m.LangChoice == 3 {
-		langs += rubyPM
+	} else if m.LangChoice == 2 || m.LangChoice == 3 {
+		langs += nodePms
 	} else if m.LangChoice == 4 {
+		langs += rubyPM
+	} else if m.LangChoice == 5 {
 		langs += fmt.Sprintf(
 			"%s\n%s",
 			checkbox("cargo", pm == 0),
 			checkbox("fleet", pm == 1),
 		)
-	} else if m.LangChoice == 5 {
-		langs += checkbox("deno", pm == 0)
 	} else if m.LangChoice == 6 {
-		langs += checkbox("dotnet", pm == 0)
+		langs += checkbox("deno", pm == 0)
 	} else if m.LangChoice == 7 {
-		langs += checkbox("pub", pm == 0)
+		langs += checkbox("dotnet", pm == 0)
 	} else if m.LangChoice == 8 {
+		langs += checkbox("pub", pm == 0)
+	} else if m.LangChoice == 9 {
 		langs += checkbox("composer", pm == 0)
-	} else if m.LangChoice == 9 || m.LangChoice == 10 {
+	} else if m.LangChoice == 10 || m.LangChoice == 11 {
 		langs += checkbox("gradle", pm == 0)
-	} else if m.LangChoice == 11 {
-		langs += checkbox("cmake", pm == 0)
 	} else if m.LangChoice == 12 {
-		langs += checkbox("nimble", pm == 0)
+		langs += checkbox("cmake", pm == 0)
 	} else if m.LangChoice == 13 {
+		langs += checkbox("nimble", pm == 0)
+	} else if m.LangChoice == 14 {
 		if m.PlatformChoice == 1 {
 			langs += checkbox("swift package", pm == 0)
 		} else {
 			langs += checkbox("continue", pm == 0)
 		}
-	} else if m.LangChoice == 14 {
+	} else if m.LangChoice == 15 {
 		langs += checkbox("shards", pm == 0)
 	}
 
@@ -245,7 +248,7 @@ func finalView(m model) string {
 	switch m.HostServiceChoice {
 	case 0:
 		hostService = "Railway"
-		
+
 	case 1:
 		hostService = "Render"
 	}
@@ -288,7 +291,12 @@ func finalView(m model) string {
 		}
 
 	case 2:
+	case 3:
 		lang = "Node.js"
+
+		if m.LangChoice == 3 {
+			lang = "Node.js (TypeScript)"
+		}
 
 		switch m.PMChoice {
 		case 0:
@@ -304,11 +312,11 @@ func finalView(m model) string {
 			pm = "bun"
 		}
 
-	case 3:
+	case 4:
 		lang = "Ruby"
 		pm = "bundler"
 
-	case 4:
+	case 5:
 		lang = "Rust"
 
 		switch m.PMChoice {
@@ -319,39 +327,39 @@ func finalView(m model) string {
 			pm = "fleet"
 		}
 
-	case 5:
+	case 6:
 		lang = "Deno"
 		pm = "deno"
 
-	case 6:
+	case 7:
 		lang = "C#"
 		pm = "dotnet"
 
-	case 7:
+	case 8:
 		pm = "pub"
 		lang = "Dart"
 
-	case 8:
+	case 9:
 		lang = "PHP"
 		pm = "composer"
 
-	case 9:
+	case 10:
 		lang = "Kotlin"
 		pm = "gradle"
 
-	case 10:
+	case 11:
 		lang = "Java"
 		pm = "gradle"
 
-	case 11:
+	case 12:
 		lang = "C++"
 		pm = "cmake"
 
-	case 12:
+	case 13:
 		lang = "Nim"
 		pm = "nimble"
 
-	case 13:
+	case 14:
 		if m.PlatformChoice == 1 {
 			lang = "Swift"
 			pm = "swift package"
@@ -359,7 +367,7 @@ func finalView(m model) string {
 			lang = "C"
 		}
 
-	case 14:
+	case 15:
 		lang = "Crystal"
 		pm = "shards"
 	}

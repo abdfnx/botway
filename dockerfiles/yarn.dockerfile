@@ -20,4 +20,4 @@ COPY . .
 
 RUN yarn
 
-ENTRYPOINT ["node", "./src/main.js"]
+ENTRYPOINT ["yarn", "start"]

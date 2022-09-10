@@ -21,6 +21,10 @@ func RemoveCMD() *cobra.Command {
 				}
 
 				remove.Remove(opts)
+
+				if botwaygo.GetBotInfo("bot.host_service") == "render.com" {
+					render.DeleteRenderService(args[0])
+				}
 			} else {
 				cmd.Help()
 			}
@@ -29,10 +33,6 @@ func RemoveCMD() *cobra.Command {
 
 	if botwaygo.GetBotInfo("bot.host_service") == "railway.app" {
 		cmd.PostRunE = Contextualize(handler.Delete, handler.Panic)
-	} else if botwaygo.GetBotInfo("bot.host_service") == "render.com" {
-		cmd.Run = func(cmd *cobra.Command, args []string) {
-			render.Deploy()
-		}
 	}
 
 	return cmd

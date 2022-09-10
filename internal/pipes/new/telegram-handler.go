@@ -1,6 +1,7 @@
 package new
 
 import (
+	"github.com/abdfnx/botway/templates/nodejs"
 	"github.com/abdfnx/botway/templates/telegram/cpp"
 	"github.com/abdfnx/botway/templates/telegram/csharp"
 	"github.com/abdfnx/botway/templates/telegram/dart"
@@ -9,7 +10,6 @@ import (
 	"github.com/abdfnx/botway/templates/telegram/java"
 	"github.com/abdfnx/botway/templates/telegram/kotlin"
 	"github.com/abdfnx/botway/templates/telegram/nim"
-	"github.com/abdfnx/botway/templates/telegram/nodejs"
 	"github.com/abdfnx/botway/templates/telegram/php"
 	"github.com/abdfnx/botway/templates/telegram/python/pip"
 	"github.com/abdfnx/botway/templates/telegram/python/pipenv"
@@ -17,6 +17,7 @@ import (
 	"github.com/abdfnx/botway/templates/telegram/ruby"
 	"github.com/abdfnx/botway/templates/telegram/rust"
 	"github.com/abdfnx/botway/templates/telegram/swift"
+	"github.com/abdfnx/botway/templates/ts"
 )
 
 func TelegramHandler(m model) {
@@ -29,36 +30,44 @@ func TelegramHandler(m model) {
 	} else if m.PlatformChoice == 1 && m.LangChoice == 1 {
 		tgo.TelegramGo(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMChoice == 0 {
-		nodejs.TelegramNodejs(opts.BotName, "npm")
+		nodejs.Nodejs(opts.BotName, "npm", "telegram")
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMChoice == 1 {
-		nodejs.TelegramNodejs(opts.BotName, "yarn")
+		nodejs.Nodejs(opts.BotName, "yarn", "telegram")
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMChoice == 2 {
-		nodejs.TelegramNodejs(opts.BotName, "pnpm")
+		nodejs.Nodejs(opts.BotName, "pnpm", "telegram")
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMChoice == 3 {
-		nodejs.TelegramNodejs(opts.BotName, "bun")
-	} else if m.PlatformChoice == 1 && m.LangChoice == 3 {
+		nodejs.Nodejs(opts.BotName, "bun", "telegram")
+	} else if m.PlatformChoice == 1 && m.LangChoice == 3 && m.PMChoice == 0 {
+		ts.NodejsTS(opts.BotName, "npm", "telegram")
+	} else if m.PlatformChoice == 1 && m.LangChoice == 3 && m.PMChoice == 1 {
+		ts.NodejsTS(opts.BotName, "yarn", "telegram")
+	} else if m.PlatformChoice == 1 && m.LangChoice == 3 && m.PMChoice == 2 {
+		ts.NodejsTS(opts.BotName, "pnpm", "telegram")
+	} else if m.PlatformChoice == 1 && m.LangChoice == 3 && m.PMChoice == 3 {
+		ts.NodejsTS(opts.BotName, "bun", "telegram")
+	} else if m.PlatformChoice == 1 && m.LangChoice == 4 {
 		ruby.TelegramRuby(opts.BotName)
-	} else if m.PlatformChoice == 1 && m.LangChoice == 4 && m.PMChoice == 0 {
+	} else if m.PlatformChoice == 1 && m.LangChoice == 5 && m.PMChoice == 0 {
 		rust.TelegramRust(opts.BotName, "cargo")
-	} else if m.PlatformChoice == 1 && m.LangChoice == 4 && m.PMChoice == 1 {
+	} else if m.PlatformChoice == 1 && m.LangChoice == 5 && m.PMChoice == 1 {
 		rust.TelegramRust(opts.BotName, "fleet")
-	} else if m.PlatformChoice == 1 && m.LangChoice == 5 {
-		deno.TelegramDeno(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 6 {
-		csharp.TelegramCsharp(opts.BotName)
+		deno.TelegramDeno(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 7 {
-		dart.TelegramDart(opts.BotName)
+		csharp.TelegramCsharp(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 8 {
-		php.TelegramPHP(opts.BotName)
+		dart.TelegramDart(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 9 {
-		kotlin.TelegramKotlin(opts.BotName)
+		php.TelegramPHP(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 10 {
-		java.TelegramJava(opts.BotName)
+		kotlin.TelegramKotlin(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 11 {
-		cpp.TelegramCpp(opts.BotName)
+		java.TelegramJava(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 12 {
-		nim.TelegramNim(opts.BotName)
+		cpp.TelegramCpp(opts.BotName)
 	} else if m.PlatformChoice == 1 && m.LangChoice == 13 {
+		nim.TelegramNim(opts.BotName)
+	} else if m.PlatformChoice == 1 && m.LangChoice == 14 {
 		swift.TelegramSwift(opts.BotName)
 	}
 }

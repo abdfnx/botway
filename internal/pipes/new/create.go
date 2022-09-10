@@ -102,23 +102,23 @@ func NewBot(m model, l string, platform, lang int) {
 			os.Exit(0)
 		}
 
-		if lang == 5 {
+		if lang == 6 {
 			respone += "fileloader.ts"
 		}
 
-		if lang == 6 {
+		if lang == 7 {
 			respone = CSharpGitIgnore()
 		}
 
-		if lang == 9 || lang == 10 {
+		if lang == 8 || lang == 11 {
 			respone += "\n.gradle\nbuild"
 		}
 
-		if lang == 13 && platform == 1 {
+		if lang == 14 && platform == 1 {
 			respone += "\n.build\nPackage.resolved"
 		}
 
-		if lang == 14 {
+		if lang == 15 {
 			respone = `/docs/
 /lib/
 /bin/

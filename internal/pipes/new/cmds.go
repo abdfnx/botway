@@ -38,7 +38,7 @@ func updatePlatforms(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 		case "j", "down":
 			m.PlatformChoice += 1
 			if m.PlatformChoice > 2 {
-				m.PlatformChoice = 3
+				m.PlatformChoice = 2
 			}
 
 		case "k", "up":
@@ -64,17 +64,17 @@ func updateLangs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 			m.LangChoice += 1
 
 			if m.PlatformChoice == 2 {
-				if m.LangChoice > 1 {
-					m.LangChoice = 1
+				if m.LangChoice > 2 {
+					m.LangChoice = 2
 				}
 			} else {
 				if m.PlatformChoice == 0 {
-					if m.LangChoice > 14 {
-						m.LangChoice = 14
+					if m.LangChoice > 15 {
+						m.LangChoice = 15
 					}
 				} else {
-					if m.LangChoice > 13 {
-						m.LangChoice = 13
+					if m.LangChoice > 14 {
+						m.LangChoice = 14
 					}
 				}
 			}
@@ -113,7 +113,7 @@ func updatePMs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 						m.PMChoice = 0
 					}
 				}
-			} else if m.LangChoice == 0 || m.LangChoice == 2 {
+			} else if m.LangChoice == 0 || m.LangChoice == 2 || m.LangChoice == 3 {
 				if m.PMChoice > 3 {
 					m.PMChoice = 3
 				}
@@ -151,31 +151,31 @@ func buildBot(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 		} else {
 			l = "Go"
 		}
-	} else if m.LangChoice == 2 || m.LangChoice == 5 {
+	} else if m.LangChoice == 2 || m.LangChoice == 3 || m.LangChoice == 6 {
 		l = "Node"
-	} else if m.LangChoice == 3 {
-		l = "Ruby"
 	} else if m.LangChoice == 4 {
+		l = "Ruby"
+	} else if m.LangChoice == 5 {
 		l = "Rust"
-	} else if m.LangChoice == 6 {
-		l = "C#"
 	} else if m.LangChoice == 7 {
-		l = "Dart"
+		l = "C#"
 	} else if m.LangChoice == 8 {
+		l = "Dart"
+	} else if m.LangChoice == 9 {
 		l = "PHP"
-	} else if m.LangChoice == 9 || m.LangChoice == 10 {
+	} else if m.LangChoice == 10 || m.LangChoice == 11 {
 		l = "Java"
-	} else if m.LangChoice == 11 {
-		l = "C++"
 	} else if m.LangChoice == 12 {
-		l = "Nim"
+		l = "C++"
 	} else if m.LangChoice == 13 {
+		l = "Nim"
+	} else if m.LangChoice == 14 {
 		if m.PlatformChoice == 1 {
 			l = "Swift"
 		} else {
 			l = "C"
 		}
-	} else if m.LangChoice == 14 {
+	} else if m.LangChoice == 15 {
 		l = "Crystal"
 	}
 

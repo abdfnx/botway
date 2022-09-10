@@ -22,4 +22,4 @@ COPY . .
 RUN pnpm fetch --prod
 RUN pnpm install
 
-ENTRYPOINT ["node", "./src/main.js"]
+ENTRYPOINT ["pnpm", "start"]
