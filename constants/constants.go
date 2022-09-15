@@ -53,12 +53,13 @@ var (
 	HEADING            = lipgloss.NewStyle().Foreground(lipgloss.Color(PRIMARY_COLOR)).SetString("==> ").String()
 
 	// File Paths
-	HomeDir, _         = dfs.GetHomeDirectory()
-	BotwayDirPath      = filepath.Join(HomeDir, ".botway")
-	BotwayConfigFile   = filepath.Join(BotwayDirPath, "botway.json")
-	BotwayConfig, Berr = ioutil.ReadFile(BotwayConfigFile)
-	BotConfig, Oerr    = ioutil.ReadFile(".botway.yaml")
-	Guilds, Gerr       = ioutil.ReadFile(filepath.Join("config", "guilds.json"))
+	HomeDir, _             = dfs.GetHomeDirectory()
+	BotwayDirPath          = filepath.Join(HomeDir, ".botway")
+	BotwayConfigFile       = filepath.Join(BotwayDirPath, "botway.json")
+	BotwayConfig, Berr     = ioutil.ReadFile(BotwayConfigFile)
+	BotConfig, Oerr        = ioutil.ReadFile(".botway.yaml")
+	BotComposeConfig, Cerr = ioutil.ReadFile(".botway-compose.yaml")
+	Guilds, Gerr           = ioutil.ReadFile(filepath.Join("config", "guilds.json"))
 
 	RailwayConfigFile   = filepath.Join(HomeDir, ".botway", "railway-config.json")
 	RailwayConfig, Rerr = ioutil.ReadFile(RailwayConfigFile)

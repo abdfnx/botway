@@ -1,0 +1,16 @@
+bots:
+  news-bot:
+    run_in_container: true
+    path: .
+    deploy: true
+    container:
+      image: botway-local/news-bot
+      ports: 3000:3000
+      remove_after_run: true
+
+  golang-bot:
+    run_local: true
+    path: ../golang-bot
+    deploy: false
+    local:
+      cmd: "default"

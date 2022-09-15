@@ -9,11 +9,11 @@ import (
 	"github.com/abdfnx/botway/cmd/botway"
 	"github.com/abdfnx/botway/cmd/factory"
 	"github.com/abdfnx/botway/internal/checker"
+	"github.com/abdfnx/botway/internal/config"
 	"github.com/abdfnx/botway/tools"
 
 	surveyCore "github.com/AlecAivazis/survey/v2/core"
 	"github.com/AlecAivazis/survey/v2/terminal"
-
 	"github.com/mgutz/ansi"
 	"github.com/spf13/cobra"
 )
@@ -32,8 +32,8 @@ const (
 )
 
 func main() {
-	code := mainRun()
-	os.Exit(int(code))
+	run := mainRun()
+	os.Exit(int(run))
 }
 
 func mainRun() exitCode {
@@ -65,9 +65,9 @@ func mainRun() exitCode {
 		cobra.MousetrapHelpText = ""
 	}
 
-	RootCmd := botway.Execute(cmdFactory, version, buildDate)
+	rootCmd := botway.Execute(cmdFactory, version, buildDate)
 
-	if cmd, err := RootCmd.ExecuteC(); err != nil {
+	if cmd, err := rootCmd.ExecuteC(); err != nil {
 		if err == tools.SilentError {
 			return exitError
 		} else if tools.IsUserCancellation(err) {
@@ -83,7 +83,9 @@ func mainRun() exitCode {
 		return exitError
 	}
 
-	checker.Check(version)
+	if config.Get("settings.check_updates") == "true" {
+		checker.Check(version)
+	}
 
 	return exitOK
 }

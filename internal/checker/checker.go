@@ -28,7 +28,7 @@ func Check(buildVersion string) {
 		} else if isFromScoop {
 			return "scoop update botway"
 		} else if isFromAppData {
-			return "iwr -useb https://bit.ly/bw-win | iex"
+			return "irm https://bit.ly/bw-win | iex"
 		}
 
 		return ""

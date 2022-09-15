@@ -20,15 +20,15 @@ func InitCMD() *cobra.Command {
 		Aliases: []string{"."},
 		Run: func(cmd *cobra.Command, args []string) {
 			if opts.Docker {
+				initx.DockerInit()
+
 				if botwaygo.GetBotInfo("bot.host_service") == "render.com" {
 					tools.SetupTokensInDockerRender()
 				} else {
 					tools.SetupTokensInDocker()
 				}
-
-				initx.DockerInit()
 			} else {
-				initx.BotwayInit()
+				initx.Init()
 
 				if !opts.NoRepo {
 					initx.SetupGitRepo()

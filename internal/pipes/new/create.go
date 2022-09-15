@@ -41,7 +41,7 @@ func NewBot(m model, l string, platform, lang int) {
 	botwayConfig.SetConfigType("json")
 	botwayConfig.ReadConfig(bytes.NewBuffer(constants.BotwayConfig))
 
-	dockerImage := botwayConfig.GetString("docker.id") + "/" + opts.BotName
+	dockerImage := "botway-local/" + opts.BotName
 
 	botConfig.AddConfigPath(opts.BotName)
 	botConfig.SetConfigName(".botway")

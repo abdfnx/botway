@@ -10,7 +10,7 @@ require (
 	github.com/abdfnx/resto v0.1.6
 	github.com/abdfnx/tran v0.1.43
 	github.com/botwayorg/gh v0.0.9
-	github.com/botwayorg/railway-api v0.0.2
+	github.com/botwayorg/railway-api v0.0.3
 	github.com/briandowns/spinner v1.19.0
 	github.com/charmbracelet/bubbles v0.14.0
 	github.com/charmbracelet/bubbletea v0.22.1
@@ -26,7 +26,7 @@ require (
 	github.com/spf13/viper v1.13.0
 	github.com/tidwall/gjson v1.14.3
 	github.com/tidwall/sjson v1.2.5
-	golang.org/x/sys v0.0.0-20220909162455-aba9fc2a8ff2
+	golang.org/x/sys v0.0.0-20220913175220-63ea55921009
 	golang.org/x/term v0.0.0-20220722155259-a9ba230a4035
 	gopkg.in/yaml.v3 v3.0.1
 )
@@ -77,8 +77,8 @@ require (
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/rivo/tview v0.0.0-20220906194528-4664d8bf22d9 // indirect
-	github.com/rivo/uniseg v0.3.4 // indirect
+	github.com/rivo/tview v0.0.0-20220911190240-55965cf21d8e // indirect
+	github.com/rivo/uniseg v0.4.2 // indirect
 	github.com/sahilm/fuzzy v0.1.0 // indirect
 	github.com/scmn-dev/browser v0.1.3 // indirect
 	github.com/shurcooL/githubv4 v0.0.0-20220520033151-0b4e3294ff00 // indirect

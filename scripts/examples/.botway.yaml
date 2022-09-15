@@ -1,0 +1,14 @@
+author: bw
+bot:
+  host_service: railway.app
+  lang: deno
+  name: botx
+  package_manager: deno
+  start_cmd: deno run --allow-all main.ts
+  type: discord
+docker:
+  cmds:
+    build: docker build -t docker/botx .
+    run: docker run -it docker/botx
+  enable_buildkit: true
+  image: docker/botx

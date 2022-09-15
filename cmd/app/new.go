@@ -47,34 +47,26 @@ func NewCMD() *cobra.Command {
 			if runtime.GOOS != "windows" {
 				fmt.Println(messageStyle.Render("> Installing some required packages"))
 
-				installCmd := exec.Command("bash", "-c", tools.Packages())
+				cmd := tools.Packages()
+				brewPath, err := looker.LookPath("brew")
 
-				if runtime.GOOS == "linux" {
-					installCmd.Stdin = os.Stdin
-					installCmd.Stdout = os.Stdout
-					installCmd.Stderr = os.Stderr
-					err := installCmd.Run()
-
-					if err != nil {
-						panic(err)
-					}
-				} else if runtime.GOOS == "darwin" {
-					brewPath, err := looker.LookPath("brew")
-
+				if runtime.GOOS == "darwin" {
 					if err != nil {
 						panic("error: brew is not installed")
 					} else {
-						installCmd = exec.Command("bash", "-c", brewPath+" install opus libsodium")
-
-						installCmd.Stdin = os.Stdin
-						installCmd.Stdout = os.Stdout
-						installCmd.Stderr = os.Stderr
-						err = installCmd.Run()
-
-						if err != nil {
-							panic(err)
-						}
+						cmd = brewPath+" install opus libsodium"
 					}
+				}
+
+				installCmd := exec.Command("bash", "-c", cmd)
+
+				installCmd.Stdin = os.Stdin
+				installCmd.Stdout = os.Stdout
+				installCmd.Stderr = os.Stderr
+				err = installCmd.Run()
+
+				if err != nil {
+					panic(err)
 				}
 			}
 		},
