@@ -4,10 +4,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
+	"os"
+	"os/exec"
+	"runtime"
 	"strings"
 	"time"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botwaygo"
 	"github.com/botwayorg/railway-api/entity"
 	"github.com/botwayorg/railway-api/ui"
 	"github.com/briandowns/spinner"
@@ -31,7 +36,7 @@ func (h *Handler) Variables(ctx context.Context, req *entity.CommandRequest) err
 	}
 
 	fmt.Print(constants.HEADING + (fmt.Sprintf("%s Environment Variables", environment.Name)))
-	fmt.Print(ui.KeyValues(*envs))
+	fmt.Print(ui.KeyValues(*envs, false))
 
 	return nil
 }
@@ -74,6 +79,18 @@ func (h *Handler) VariablesSet(ctx context.Context, req *entity.CommandRequest) 
 	if err != nil {
 		// The flag is optional; default to false.
 		replace = false
+	}
+
+	noRedeployHint, err := req.Cmd.Flags().GetBool("no-redeploy-hint")
+
+	if err != nil {
+		noRedeployHint = false
+	}
+
+	hidden, err := req.Cmd.Flags().GetBool("hidden")
+
+	if err != nil {
+		hidden = false
 	}
 
 	yes, err := req.Cmd.Flags().GetBool("yes")
@@ -131,8 +148,8 @@ func (h *Handler) VariablesSet(ctx context.Context, req *entity.CommandRequest) 
 		operation = "Replaced existing variables with"
 	}
 
-	fmt.Print(constants.HEADING + (fmt.Sprintf("%s %s for \"%s\"", operation, strings.Join(updatedEnvNames, ", "), environment.Name)))
-	fmt.Print(ui.KeyValues(*variables))
+	fmt.Println(constants.HEADING + (fmt.Sprintf("%s %s for \"%s\"", operation, strings.Join(updatedEnvNames, ", "), environment.Name)))
+	fmt.Print(ui.KeyValues(*variables, hidden))
 
 	if !skipRedeploy {
 		serviceID, err := h.ctrl.GetServiceIdByName(ctx, &serviceName)
@@ -141,7 +158,7 @@ func (h *Handler) VariablesSet(ctx context.Context, req *entity.CommandRequest) 
 			return err
 		}
 
-		err = h.redeployAfterVariablesChange(ctx, environment, serviceID)
+		err = h.redeployAfterVariablesChange(ctx, environment, serviceID, noRedeployHint)
 
 		if err != nil {
 			return err
@@ -163,6 +180,12 @@ func (h *Handler) VariablesDelete(ctx context.Context, req *entity.CommandReques
 		skipRedeploy = false
 	}
 
+	noRedeployHint, err := req.Cmd.Flags().GetBool("no-redeploy-hint")
+
+	if err != nil {
+		noRedeployHint = false
+	}
+
 	err = h.ctrl.DeleteEnvs(ctx, req.Args, &serviceName)
 	if err != nil {
 		return err
@@ -181,7 +204,7 @@ func (h *Handler) VariablesDelete(ctx context.Context, req *entity.CommandReques
 			return err
 		}
 
-		err = h.redeployAfterVariablesChange(ctx, environment, serviceID)
+		err = h.redeployAfterVariablesChange(ctx, environment, serviceID, noRedeployHint)
 		if err != nil {
 			return err
 		}
@@ -190,7 +213,7 @@ func (h *Handler) VariablesDelete(ctx context.Context, req *entity.CommandReques
 	return nil
 }
 
-func (h *Handler) redeployAfterVariablesChange(ctx context.Context, environment *entity.Environment, serviceID *string) error {
+func (h *Handler) redeployAfterVariablesChange(ctx context.Context, environment *entity.Environment, serviceID *string, noRedeployHint bool) error {
 	deployments, err := h.ctrl.GetDeployments(ctx)
 	if err != nil {
 		return err
@@ -204,8 +227,10 @@ func (h *Handler) redeployAfterVariablesChange(ctx context.Context, environment 
 	// Don't redeploy if the latest deploy for environment came from up
 	latestDeploy := deployments[0]
 	if latestDeploy.Meta == nil || latestDeploy.Meta.Repo == "" {
-		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
-		fmt.Println(constants.INFO_FOREGROUND.Render(fmt.Sprintf(" Run %s to redeploy your project ", constants.COMMAND_FOREGROUND.Render("botway deploy"))))
+		if !noRedeployHint {
+			fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
+			fmt.Println(constants.INFO_FOREGROUND.Render(fmt.Sprintf(" Run %s to redeploy your project ", constants.COMMAND_FOREGROUND.Render("botway deploy"))))
+		}
 
 		return nil
 	}
@@ -226,4 +251,32 @@ func (h *Handler) redeployAfterVariablesChange(ctx context.Context, environment 
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render(fmt.Sprintf("☁️ Deploy Logs available at %s\n", constants.COMMAND_FOREGROUND.Render(h.ctrl.GetProjectDeploymentsURL(ctx, latestDeploy.ProjectID)))))
 
 	return nil
+}
+
+func UpdateTokens(botPath, botType string) {
+	setVarCmd := "botway vars set --no-redeploy-hint --hidden "
+
+	if botType == "discord" {
+		setVarCmd += "DISCORD_TOKEN=" + botwaygo.GetToken() + " DISCORD_CLIENT_ID=" + botwaygo.GetAppId()
+	} else if botType == "slack" {
+		setVarCmd += "SLACK_TOKEN=" + botwaygo.GetToken() + " SLACK_APP_TOKEN=" + botwaygo.GetAppId() + " SIGNING_SECRET=" + botwaygo.GetSigningSecret()
+	} else if botType == "telegram" {
+		setVarCmd += "TELEGRAM_TOKEN=" + botwaygo.GetToken()
+	}
+
+	cmd := exec.Command("bash", "-c", setVarCmd)
+
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("powershell.exe", setVarCmd)
+	}
+
+	cmd.Dir = botPath
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
+
+	if err != nil {
+		log.Printf("error: %v\n", err)
+	}
 }

@@ -4,7 +4,6 @@ import (
 	"github.com/abdfnx/botway/internal/options"
 	"github.com/abdfnx/botway/internal/pipes/initx"
 	"github.com/abdfnx/botway/tools"
-	"github.com/abdfnx/botwaygo"
 	"github.com/spf13/cobra"
 )
 
@@ -22,11 +21,7 @@ func InitCMD() *cobra.Command {
 			if opts.Docker {
 				initx.DockerInit()
 
-				if botwaygo.GetBotInfo("bot.host_service") == "render.com" {
-					tools.SetupTokensInDockerRender()
-				} else {
-					tools.SetupTokensInDocker()
-				}
+				tools.SetupTokensInDocker()
 			} else {
 				initx.Init()
 

@@ -1,34 +1,29 @@
 package railway
 
 import (
-	"bytes"
 	"log"
 	"os"
 	"os/exec"
 	"runtime"
 
-	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/internal/config"
 	"github.com/abdfnx/botway/tools"
+	"github.com/abdfnx/botwaygo"
 	"github.com/spf13/viper"
-	"github.com/tidwall/gjson"
 )
 
 func CheckBuildKit() {
 	tools.CheckDir()
 
-	viper.SetConfigType("yaml")
+	checkBuildKit := botwaygo.GetBotInfo("docker.enable_buildkit")
 
-	viper.ReadConfig(bytes.NewBuffer(constants.BotConfig))
+	setVarCmd := "botway vars set --no-redeploy-hint DOCKER_BUILDKIT=0"
 
-	checkBuildKit := viper.GetBool("docker.enable_buildkit")
-
-	setVarCmd := "botway vars set DOCKER_BUILDKIT=0"
-
-	if checkBuildKit {
-		setVarCmd = "botway vars set DOCKER_BUILDKIT=1"
+	if checkBuildKit == "true" {
+		setVarCmd = "botway vars set --no-redeploy-hint DOCKER_BUILDKIT=1"
 	}
 
-	botPath := gjson.Get(string(constants.BotwayConfig), "botway.bots."+viper.GetString("bot.name")+".path").String()
+	botPath := config.Get("botway.bots." + viper.GetString("bot.name") + ".path")
 
 	cmd := exec.Command("bash", "-c", setVarCmd)
 

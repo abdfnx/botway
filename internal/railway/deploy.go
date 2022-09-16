@@ -8,6 +8,7 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/tools"
+	"github.com/abdfnx/botwaygo"
 	"github.com/botwayorg/railway-api/entity"
 	CLIErrors "github.com/botwayorg/railway-api/errors"
 	"github.com/botwayorg/railway-api/ui"
@@ -49,8 +50,10 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 		src = "."
 	}
 
+	UpdateTokens(src, botwaygo.GetBotInfo("bot.type"))
+
 	fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))
-	fmt.Println(constants.INFO_FOREGROUND.Render("Uploading directory " + constants.BOLD.Render(src)))
+	fmt.Println(constants.INFO_FOREGROUND.Render(" Uploading directory " + constants.BOLD.Render(src)))
 
 	if isVerbose {
 		fmt.Print(constants.INFO_BACKGROUND.Render("INFO"))

@@ -52,6 +52,8 @@ func VarsCMD() *cobra.Command {
 
 		variablesGetCmd.Flags().StringP("service", "s", "", desc)
 		variablesSetCmd.Flags().StringP("service", "s", "", desc)
+		variablesSetCmd.Flags().BoolP("no-redeploy-hint", "", false, "Don't show re-deploy hints after setting a new variable")
+		variablesSetCmd.Flags().BoolP("hidden", "", false, "Hide variable value")
 		variablesRemoveCmd.Flags().StringP("service", "s", "", desc)
 	} else if botwaygo.GetBotInfo("bot.host_service") == "render.com" {
 		cmd.Run = func(cmd *cobra.Command, args []string) {
