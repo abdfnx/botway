@@ -28,12 +28,12 @@
   ],
   "dependencies": {
     "global": "^4.4.0",
-    "node-fetch": "^3.2.4",
+    "node-fetch": "^3.2.10",
     "node-stream-zip": "^1.15.0",
     "stream": "^0.0.2"
   },
   "packageManager": "pnpm@7.9.0",
   "devDependencies": {
-    "turbo": "^1.4.3"
+    "turbo": "^1.4.7"
   }
 }

@@ -5,6 +5,7 @@
 *.so
 *.dylib
 /botway
+/bin/botway
 
 # Test binary, built with `go test -c`
 *.test
