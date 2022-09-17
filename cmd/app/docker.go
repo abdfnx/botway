@@ -24,12 +24,9 @@ func DockerCMD() *cobra.Command {
 
 func DockerBuildCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "build",
-		Short: "Build your bot docker image",
-		PreRun: func(cmd *cobra.Command, args []string) {
-			tools.CheckDir()
-			tools.SetupTokensInDocker()
-		},
+		Use:     "build",
+		Short:   "Build your bot docker image",
+		PreRun:  func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		Run:     func(cmd *cobra.Command, args []string) { build_image.DockerBuildImage() },
 		PostRun: func(cmd *cobra.Command, args []string) { tools.RemoveConfig() },
 	}

@@ -3,6 +3,7 @@ package tools
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/abdfnx/botway/constants"
 )
@@ -13,4 +14,8 @@ func CheckDir() {
 		fmt.Print(" ")
 		panic(constants.FAIL_FOREGROUND.Render("You need to run this command in your bot directory"))
 	}
+}
+
+func RemoveConfig() {
+	os.Remove(filepath.Join("config", "botway-tokens.env"))
 }

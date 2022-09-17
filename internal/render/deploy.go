@@ -7,12 +7,9 @@ import (
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
-	"github.com/abdfnx/botway/tools"
 )
 
 func Deploy() {
-	tools.SetupTokensInDocker()
-
 	UpdateTokens(serviceId)
 
 	url := fmt.Sprintf("https://api.render.com/v1/services/%s/deploys", serviceId)

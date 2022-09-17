@@ -17,6 +17,14 @@ import (
 )
 
 func (m model) Auth() {
+	if _, err := os.Stat(constants.RenderConfigFile); os.IsNotExist(err) {
+		renderConfigFile := os.WriteFile(constants.RenderConfigFile, []byte("{}"), 0644)
+
+		if renderConfigFile != nil {
+			log.Fatal(renderConfigFile)
+		}
+	}
+
 	email := strings.ReplaceAll(m.inputs[1].Value(), "@", "%40")
 
 	url := fmt.Sprintf("https://api.render.com/v1/owners?name=%s&email=%s&limit=20", m.inputs[0].Value(), email)

@@ -43,18 +43,15 @@ func DockerInit() {
 		bot_token = "TELEGRAM_TOKEN"
 	}
 
-	env := viper.New()
-	env.SetConfigType("env")
-
-	viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+".bot_token", env.GetString(bot_token))
+	viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+".bot_token", os.Getenv(bot_token))
 	viper.SetDefault("botway.bots_names", []string{botwaygo.GetBotInfo("bot.name")})
 
 	if botType != "telegram" {
-		viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+"."+cid, env.GetString(app_token))
+		viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+"."+cid, os.Getenv(app_token))
 	}
 
 	if botType == "slack" {
-		viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+".signing_secret", env.GetString(signing_secret))
+		viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+".signing_secret", os.Getenv(signing_secret))
 	}
 
 	if botType == "discord" {
@@ -68,7 +65,7 @@ func DockerInit() {
 
 				sgi := strings.ToUpper(server) + "_GUILD_ID"
 
-				viper.Set("botway.bots."+botwaygo.GetBotInfo("bot.name")+".guilds."+server+".server_id", env.GetString(sgi))
+				viper.Set("botway.bots."+botwaygo.GetBotInfo("bot.name")+".guilds."+server+".server_id", os.Getenv(sgi))
 			}
 		}
 	}
