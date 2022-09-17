@@ -45,7 +45,8 @@ func Compose(justBuild bool, listMode bool) {
 				}
 
 				dockerRunCmd := fmt.Sprintf(`
-					docker run %s %s %s
+					docker run %s %s
+					%s
 				`, portsFlag, image, removeAfterRun)
 
 				if justBuild {

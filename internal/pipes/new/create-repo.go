@@ -1,16 +1,14 @@
 package new
 
 import (
-	"bytes"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"runtime"
 
 	"github.com/abdfnx/botway/internal/options"
+	"github.com/abdfnx/botwaygo"
 	"github.com/spf13/viper"
 )
 
@@ -55,17 +53,9 @@ func CreateRepo(o *options.NewOptions, botName string) {
 		o.RepoName = botName
 	}
 
-	viper.SetConfigType("yaml")
+	viper.Set("bot.repo", "github.com/"+botwaygo.GetBotInfo("author")+"/"+o.RepoName)
 
-	configFile := filepath.Join(botName, ".botway.yaml")
-
-	configFileContent, _ := ioutil.ReadFile(configFile)
-
-	viper.ReadConfig(bytes.NewBuffer(configFileContent))
-
-	viper.Set("bot.repo", "github.com/"+viper.GetString("author")+"/"+o.RepoName)
-
-	newConfig := viper.WriteConfigAs(configFile)
+	newConfig := viper.WriteConfigAs(".botway.yaml")
 
 	if newConfig != nil {
 		log.Fatal(newConfig)

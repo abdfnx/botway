@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.6
 	github.com/MakeNowJust/heredoc v1.0.0
-	github.com/abdfnx/botwaygo v0.1.0
+	github.com/abdfnx/botwaygo v0.1.1
 	github.com/abdfnx/looker v0.1.0
 	github.com/abdfnx/resto v0.1.6
 	github.com/abdfnx/tran v0.1.43
@@ -77,7 +77,7 @@ require (
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/rivo/tview v0.0.0-20220911190240-55965cf21d8e // indirect
+	github.com/rivo/tview v0.0.0-20220916081518-2e69b7385a37 // indirect
 	github.com/rivo/uniseg v0.4.2 // indirect
 	github.com/sahilm/fuzzy v0.1.0 // indirect
 	github.com/scmn-dev/browser v0.1.3 // indirect

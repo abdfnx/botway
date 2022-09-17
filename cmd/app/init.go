@@ -19,9 +19,9 @@ func InitCMD() *cobra.Command {
 		Aliases: []string{"."},
 		Run: func(cmd *cobra.Command, args []string) {
 			if opts.Docker {
-				initx.DockerInit()
-
 				tools.SetupTokensInDocker()
+
+				initx.DockerInit()
 			} else {
 				initx.Init()
 

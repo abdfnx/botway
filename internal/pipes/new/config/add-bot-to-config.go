@@ -1,37 +1,27 @@
 package config
 
 import (
-	"io/ioutil"
 	"log"
 	"os"
-	"path/filepath"
 
-	"github.com/abdfnx/tran/dfs"
+	"github.com/abdfnx/botway/constants"
 	"github.com/tidwall/sjson"
 )
 
 func AddBotToConfig(botName, botType, botPath, botLang, hostService string) {
-	homeDir, _ := dfs.GetHomeDirectory()
-	botwayConfigPath := filepath.Join(homeDir, ".botway", "botway.json")
-	botwayConfig, err := ioutil.ReadFile(botwayConfigPath)
-
-	if err != nil {
-		panic(err)
-	}
-
-	botTypeContent, _ := sjson.Set(string(botwayConfig), "botway.bots."+botName+".type", botType)
+	botTypeContent, _ := sjson.Set(string(constants.BotwayConfig), "botway.bots."+botName+".type", botType)
 	botPathContent, _ := sjson.Set(botTypeContent, "botway.bots."+botName+".path", botPath)
 	botLangContent, _ := sjson.Set(botPathContent, "botway.bots."+botName+".lang", botLang)
 	botHostServiceContent, _ := sjson.Set(botLangContent, "botway.bots."+botName+".host_service", hostService)
 	addBotToBotsNamesContent, _ := sjson.Set(botHostServiceContent, "botway.bots_names.-1", botName)
 
-	remove := os.Remove(botwayConfigPath)
+	remove := os.Remove(constants.BotwayConfigFile)
 
 	if remove != nil {
 		log.Fatal(remove)
 	}
 
-	newBotConfig := os.WriteFile(botwayConfigPath, []byte(addBotToBotsNamesContent), 0644)
+	newBotConfig := os.WriteFile(constants.BotwayConfigFile, []byte(addBotToBotsNamesContent), 0644)
 
 	if newBotConfig != nil {
 		panic(newBotConfig)
