@@ -1,21 +1,126 @@
 package railway
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
+	"os"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botwaygo"
+	"github.com/abdfnx/tran/dfs"
 	"github.com/botwayorg/railway-api/entity"
 	CLIErrors "github.com/botwayorg/railway-api/errors"
 	"github.com/botwayorg/railway-api/ui"
 	"github.com/briandowns/spinner"
+	"github.com/spf13/viper"
+	"github.com/tidwall/gjson"
 )
+
+func (h *Handler) DockerInit(ctx context.Context, req *entity.CommandRequest) error {
+	err := dfs.CreateDirectory(filepath.Join(constants.HomeDir, ".botway"))
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	envs, err := h.ctrl.GetEnvsForCurrentEnvironment(ctx, nil)
+	if err != nil {
+		return err
+	}
+
+	encoded, err := json.MarshalIndent(envs, "", "  ")
+	if err != nil {
+		return err
+	}
+
+	botEnv := viper.New()
+
+	botEnv.SetConfigType("json")
+	botEnv.ReadConfig(bytes.NewBuffer(encoded))
+
+	viper.AddConfigPath(constants.BotwayDirPath)
+	viper.SetConfigName("botway")
+	viper.SetConfigType("json")
+
+	botType := botwaygo.GetBotInfo("bot.type")
+	botToken := ""
+	appToken := ""
+	signingSecret := "SLACK_SIGNING_SECRET"
+	cid := ""
+
+	if botType == "discord" {
+		botToken = "DISCORD_TOKEN"
+		appToken = "DISCORD_CLIENT_ID"
+		cid = "bot_app_id"
+	} else if botType == "slack" {
+		botToken = "SLACK_TOKEN"
+		appToken = "SLACK_APP_TOKEN"
+		cid = "bot_app_token"
+	} else if botType == "telegram" {
+		botToken = "TELEGRAM_TOKEN"
+	}
+
+	viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+".bot_token", botEnv.GetString(botToken))
+	viper.SetDefault("botway.bots_names", []string{botwaygo.GetBotInfo("bot.name")})
+
+	if botType != "telegram" {
+		viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+"."+cid, botEnv.GetString(appToken))
+	}
+
+	if botType == "slack" {
+		viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+".signing_secret", botEnv.GetString(signingSecret))
+	}
+
+	if botType == "discord" {
+		if constants.Gerr != nil {
+			panic(constants.Gerr)
+		} else {
+			guilds := gjson.Get(string(constants.Guilds), "guilds.#")
+
+			for x := 0; x < int(guilds.Int()); x++ {
+				server := gjson.Get(string(constants.Guilds), "guilds."+fmt.Sprint(x)).String()
+
+				sgi := strings.ToUpper(server) + "_GUILD_ID"
+
+				viper.Set("botway.bots."+botwaygo.GetBotInfo("bot.name")+".guilds."+server+".server_id", botEnv.GetString(sgi))
+			}
+		}
+	}
+
+	if err := viper.SafeWriteConfig(); err != nil {
+		if os.IsNotExist(err) {
+			err = viper.WriteConfig()
+
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
+
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			log.Fatal(err)
+		}
+	}
+
+	fmt.Println(constants.HEADING + constants.BOLD.Render("Done 🐋️"))
+
+	os.RemoveAll("botway.json")
+
+	return nil
+}
 
 func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error {
 	CheckBuildKit()
+
+	h.DockerInit(ctx, req)
 
 	isVerbose, err := req.Cmd.Flags().GetBool("verbose")
 	if err != nil {

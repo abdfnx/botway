@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/abdfnx/botway/internal/options"
 	"github.com/abdfnx/botway/internal/pipes/initx"
+	"github.com/abdfnx/botwaygo"
 	"github.com/spf13/cobra"
 )
 
@@ -16,17 +17,22 @@ func InitCMD() *cobra.Command {
 		Use:     "init",
 		Short:   "Initialize ~/.botway",
 		Aliases: []string{"."},
-		Run: func(cmd *cobra.Command, args []string) {
-			if opts.Docker {
-				initx.DockerInit()
-			} else {
-				initx.Init()
+	}
 
-				if !opts.NoRepo {
-					initx.SetupGitRepo()
-				}
+	if botwaygo.GetBotInfo("bot.host") == "railway.app" {
+		cmd.RunE = Contextualize(handler.DockerInit, handler.Panic)
+	} else if botwaygo.GetBotInfo("bot.host") == "render.com" {
+		cmd.Run = func(cmd *cobra.Command, args []string) {
+			initx.DockerInit()
+		}
+	} else {
+		cmd.Run = func(cmd *cobra.Command, args []string) {
+			initx.Init()
+
+			if !opts.NoRepo {
+				initx.SetupGitRepo()
 			}
-		},
+		}
 	}
 
 	cmd.Flags().BoolVarP(&opts.Docker, "docker", "", false, "Initialize botway config in docker")
