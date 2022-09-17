@@ -11,9 +11,17 @@
 
 ## Installation
 
+- `Cargo.toml`
+
 ```toml
 [dependencies]
-botway-rs = "0.2.11"
+botway-rs = "0.2.2"
+```
+
+- `CLI`
+
+```
+cargo add botway-rs
 ```
 
 ## Usage
