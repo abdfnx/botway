@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "botwayrb/version"
+require_relative "bwrb/version"
 require "yaml"
 require "json"
 

@@ -49,7 +49,7 @@ updates:
       - abdfnx
 
   - package-ecosystem: "bundler"
-    directory: "/packages/botwayrb"
+    directory: "/packages/bwrb"
     schedule:
       interval: "daily"
     reviewers:

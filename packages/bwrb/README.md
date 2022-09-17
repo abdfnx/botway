@@ -11,27 +11,27 @@
 
 ### With Bundler
 
-Using [Bundler](https://bundler.io/#getting-started), you can add botwayrb to your Gemfile:
+Using [Bundler](https://bundler.io/#getting-started), you can add bwrb to your Gemfile:
 
-    gem "botwayrb"
+    gem "bwrb"
 
 And then install via `bundle install`.
 
 ### With Gem
 
-Alternatively, while Bundler is the recommended option, you can also install botwayrb without it.
+Alternatively, while Bundler is the recommended option, you can also install bwrb without it.
 
 #### Linux / macOS
 
-    gem install botwayrb
+    gem install bwrb
 
 #### Windows
 
-> **Make sure you have the DevKit installed! See the [Dependencies](https://github.com/shardlab/botwayrb#dependencies) section)**
-    gem install botwayrb --platform=ruby
+> **Make sure you have the DevKit installed!**
+    gem install bwrb --platform=ruby
 
 ```ruby
-gem "botwayrb"
+gem "bwrb"
 ```
 
 ## Usage
@@ -40,7 +40,7 @@ gem "botwayrb"
 
 ```ruby
 require "discordrb"
-require "botwayrb"
+require "bwrb"
 
 bw = Botwayrb::Core.new
 bot = Discordrb::Bot.new token: bw.get_token

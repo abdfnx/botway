@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "lib/botwayrb/version"
+require_relative "lib/bwrb/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "botwayrb"
+  spec.name          = "bwrb"
   spec.version       = Botwayrb::VERSION
   spec.authors       = ["abdfnx"]
 
@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://rubygems.org/gems/botwayrb"
+  spec.metadata["source_code_uri"] = "https://rubygems.org/gems/bwrb"
   spec.metadata["changelog_uri"] = "https://github.com/abdfnx/botway/main/CHANGELOG.md"
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do

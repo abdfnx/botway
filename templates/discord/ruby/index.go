@@ -105,7 +105,7 @@ You can add a folder to your '$LOAD_PAT'H either at runtime or via the -I comman
 			log.Printf("error: %v\n", err)
 		}
 
-		bundleAddBotwayrb := bundlePath + " add botwayrb"
+		bundleAddBotwayrb := bundlePath + " add bwrb"
 
 		addBotwayCmd := exec.Command("bash", "-c", bundleAddBotwayrb)
 

@@ -76,7 +76,7 @@ func TelegramRuby(botName string) {
 			log.Printf("error: %v\n", err)
 		}
 
-		bundleAdd := bundlePath + " add telegram-bot-ruby botwayrb"
+		bundleAdd := bundlePath + " add telegram-bot-ruby bwrb"
 
 		addCmd := exec.Command("bash", "-c", bundleAdd)
 
