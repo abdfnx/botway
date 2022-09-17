@@ -24,12 +24,7 @@ public class Core {
         if (File.Exists(".botway.yaml")) {
             dynamic BotConfig = deserializer.Deserialize<dynamic>(File.ReadAllText(".botway.yaml"));
 
-            if (BotConfig["bot"]["lang"] != "csharp") {
-                Exception e = new Exception("ERROR: Your Bot language is not C#");
-                throw e;
-            } else {
-                return BotConfig["bot"][value].ToString();
-            }
+            return BotConfig["bot"][value].ToString();
         } else {
             Exception e = new Exception("ERROR: Bot config file not found");
             throw e;

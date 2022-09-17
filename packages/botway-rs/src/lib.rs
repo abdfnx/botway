@@ -49,18 +49,14 @@ fn get_bot_info(value: &str) -> String {
 // let app_id = botway::get("app_id");
 // ```
 pub fn get(value_to_get: &str) -> String {
-    if get_bot_info("lang") != "rust" {
-        "ERROR: Your Bot language is not Rust".to_string()
-    } else {
-        let json = Json::from_str(&return_path()).unwrap();
+    let json = Json::from_str(&return_path()).unwrap();
 
-        if value_to_get == "token" {
-            unescape(&json.find_path(&["botway", "bots", &get_bot_info("name"), "bot_token"]).unwrap().to_string()).unwrap()
-        } else if value_to_get == "app_id" {
-            unescape(&json.find_path(&["botway", "bots", &get_bot_info("name"), "bot_app_id"]).unwrap().to_string()).unwrap()
-        } else {
-            "ERROR: Invalid value to get".to_string()
-        }
+    if value_to_get == "token" {
+        unescape(&json.find_path(&["botway", "bots", &get_bot_info("name"), "bot_token"]).unwrap().to_string()).unwrap()
+    } else if value_to_get == "app_id" {
+        unescape(&json.find_path(&["botway", "bots", &get_bot_info("name"), "bot_app_id"]).unwrap().to_string()).unwrap()
+    } else {
+        "ERROR: Invalid value to get".to_string()
     }
 }
 
@@ -73,9 +69,7 @@ pub fn get(value_to_get: &str) -> String {
 // let my_server_id = botway::get_guild_id("SERVER_NAME");
 // ```
 pub fn get_guild_id(server_name: &str) -> String {
-    if get_bot_info("lang") != "rust" {
-        "ERROR: Your Bot language is not Rust".to_string()
-    } else if get_bot_info("type") != "discord" {
+    if get_bot_info("type") != "discord" {
         "ERROR: This function/feature is only working with discord bots.".to_string()
     } else {
         let json = Json::from_str(&return_path()).unwrap();

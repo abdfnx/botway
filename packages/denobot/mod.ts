@@ -16,39 +16,29 @@ const getBotInfo = (value: string) => {
 };
 
 export const getToken = () => {
-  if (getBotInfo("lang") != "deno") {
-    console.log("ERROR: Your Bot framework is not Deno");
-  } else {
-    try {
-      return botwayConfig["botway"]["bots"][getBotInfo("name")]["bot_token"];
-    } catch (err: any) {
-      console.log(err.stack || String(err));
-    }
+  try {
+    return botwayConfig["botway"]["bots"][getBotInfo("name")]["bot_token"];
+  } catch (err: any) {
+    console.log(err.stack || String(err));
   }
 };
 
 export const getAppId = () => {
-  if (getBotInfo("lang") != "deno") {
-    console.log("ERROR: Your Bot framework is not Deno");
-  } else {
-    try {
-      if (getBotInfo("type") == "slack") {
-        return botwayConfig["botway"]["bots"][getBotInfo("name")][
-          "bot_app_token"
-        ];
-      } else {
-        return botwayConfig["botway"]["bots"][getBotInfo("name")]["bot_app_id"];
-      }
-    } catch (err: any) {
-      console.log(err.stack || String(err));
+  try {
+    if (getBotInfo("type") == "slack") {
+      return botwayConfig["botway"]["bots"][getBotInfo("name")][
+        "bot_app_token"
+      ];
+    } else {
+      return botwayConfig["botway"]["bots"][getBotInfo("name")]["bot_app_id"];
     }
+  } catch (err: any) {
+    console.log(err.stack || String(err));
   }
 };
 
 export const getGuildId = (serverName: string) => {
-  if (getBotInfo("lang") != "deno") {
-    console.log("ERROR: Your Bot framework is not Deno");
-  } else if (getBotInfo("type") != "discord") {
+  if (getBotInfo("type") != "discord") {
     console.log(
       "ERROR: This function/feature is only working with discord bots"
     );
@@ -64,9 +54,7 @@ export const getGuildId = (serverName: string) => {
 };
 
 export const getSigningSecret = () => {
-  if (getBotInfo("lang") != "deno") {
-    console.log("ERROR: Your Bot framework is not Deno");
-  } else if (getBotInfo("type") != "slack") {
+  if (getBotInfo("type") != "slack") {
     console.log("ERROR: This function/feature is only working with slack bots");
   } else {
     try {

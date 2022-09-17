@@ -33,9 +33,6 @@ def getBotInfo(value):
     for val in find(botConfigData, 'bot'):
         return val[value]
 
-if getBotInfo('lang') != 'python':
-    raise RuntimeError('ERROR: Your Bot language is not Python')
-
 def GetToken():
     for val in find(botwayConfigData, 'botway'):
         return val['bots'][getBotInfo('name')]['bot_token']
