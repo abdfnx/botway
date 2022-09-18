@@ -1,6 +1,6 @@
 {
   "name": "botway",
-  "version": "0.1.95",
+  "version": "0.1.96",
   "description": "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack.",
   "type": "module",
   "author": "abdfnx",
