@@ -19,11 +19,13 @@ func InitCMD() *cobra.Command {
 		Aliases: []string{"."},
 	}
 
-	if botwaygo.GetBotInfo("bot.host") == "railway.app" {
-		cmd.RunE = Contextualize(handler.DockerInit, handler.Panic)
-	} else if botwaygo.GetBotInfo("bot.host") == "render.com" {
-		cmd.Run = func(cmd *cobra.Command, args []string) {
-			initx.DockerInit()
+	if opts.Docker {
+		if botwaygo.GetBotInfo("bot.host") == "railway.app" {
+			cmd.RunE = Contextualize(handler.DockerInit, handler.Panic)
+		} else if botwaygo.GetBotInfo("bot.host") == "render.com" {
+			cmd.Run = func(cmd *cobra.Command, args []string) {
+				initx.DockerInit()
+			}
 		}
 	} else {
 		cmd.Run = func(cmd *cobra.Command, args []string) {
