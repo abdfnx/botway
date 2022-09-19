@@ -5,8 +5,8 @@ type RootOptions struct {
 }
 
 type InitOptions struct {
-	Docker bool
-	NoRepo bool
+	CopyFile bool
+	NoRepo   bool
 }
 
 type CommonOptions struct {

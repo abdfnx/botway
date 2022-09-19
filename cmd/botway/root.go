@@ -72,6 +72,7 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 		app.InitCMD(),
 		app.DBCMD(),
 		app.DockerCMD(),
+		app.DockerInitCMD(),
 		app.ComposeCMD(),
 		app.NewCMD(),
 		app.TokenCMD(),

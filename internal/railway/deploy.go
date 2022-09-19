@@ -8,13 +8,11 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"path/filepath"
 	"strings"
 	"time"
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botwaygo"
-	"github.com/abdfnx/tran/dfs"
 	"github.com/botwayorg/railway-api/entity"
 	CLIErrors "github.com/botwayorg/railway-api/errors"
 	"github.com/botwayorg/railway-api/ui"
@@ -24,12 +22,6 @@ import (
 )
 
 func (h *Handler) DockerInit(ctx context.Context, req *entity.CommandRequest) error {
-	err := dfs.CreateDirectory(filepath.Join(constants.HomeDir, ".botway"))
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	envs, err := h.ctrl.GetEnvsForCurrentEnvironment(ctx, nil)
 	if err != nil {
 		return err
@@ -45,7 +37,7 @@ func (h *Handler) DockerInit(ctx context.Context, req *entity.CommandRequest) er
 	botEnv.SetConfigType("json")
 	botEnv.ReadConfig(bytes.NewBuffer(encoded))
 
-	viper.AddConfigPath(constants.BotwayDirPath)
+	viper.AddConfigPath(".")
 	viper.SetConfigName("botway")
 	viper.SetConfigType("json")
 
@@ -111,8 +103,6 @@ func (h *Handler) DockerInit(ctx context.Context, req *entity.CommandRequest) er
 	}
 
 	fmt.Println(constants.HEADING + constants.BOLD.Render("Done 🐋️"))
-
-	os.RemoveAll("botway.json")
 
 	return nil
 }
@@ -287,6 +277,8 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 	} else {
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" ☁️ Deployment is live"))
 	}
+
+	os.RemoveAll("botway.json")
 
 	return nil
 }
