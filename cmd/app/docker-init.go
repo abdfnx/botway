@@ -2,7 +2,9 @@ package app
 
 import (
 	"log"
+	"path/filepath"
 
+	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/internal/pipes/initx"
 	"github.com/abdfnx/botway/tools"
 	"github.com/abdfnx/tran/dfs"
@@ -15,13 +17,13 @@ func DockerInitCMD() *cobra.Command {
 		Short: "Initialize ~/.botway for docker containers",
 		Run: func(cmd *cobra.Command, args []string) {
 			if opts.CopyFile {
-				err := dfs.CreateDirectory("/root/.botway")
+				err := dfs.CreateDirectory(filepath.Join(constants.HomeDir, ".botway"))
 
 				if err != nil {
 					log.Fatal(err)
 				}
 
-				tools.Copy("botway.json", "/root/.botway")
+				tools.Copy("botway.json", constants.BotwayConfigFile)
 			} else {
 				initx.DockerInit()
 			}
