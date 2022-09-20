@@ -1,39 +1,20 @@
 package tools
 
 import (
-	"fmt"
-	"io"
-	"os"
+	"io/ioutil"
+	"log"
 )
 
-func Copy(src, dst string) (int64, error) {
-	sourceFileStat, err := os.Stat(src)
+func Copy(src, dst string) {
+	bytesRead, err := ioutil.ReadFile(src)
 
 	if err != nil {
-		return 0, err
+		log.Fatal(err)
 	}
 
-	if !sourceFileStat.Mode().IsRegular() {
-		return 0, fmt.Errorf("%s is not a regular file", src)
-	}
-
-	source, err := os.Open(src)
+	err = ioutil.WriteFile(dst, bytesRead, 0644)
 
 	if err != nil {
-		return 0, err
+		log.Fatal(err)
 	}
-
-	defer source.Close()
-
-	destination, err := os.Create(dst)
-
-	if err != nil {
-		return 0, err
-	}
-
-	defer destination.Close()
-
-	nBytes, err := io.Copy(destination, source)
-
-	return nBytes, err
 }
