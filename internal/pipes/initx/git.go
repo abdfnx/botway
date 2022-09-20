@@ -1,12 +1,14 @@
 package initx
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
 	"runtime"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/internal/config"
 )
 
 func windowsCommands() string {
@@ -48,5 +50,33 @@ func SetupGitRepo() {
 
 	if err != nil {
 		log.Printf("error: %v\n", err)
+	}
+}
+
+func UpdateConfig() {
+	if config.Get("botway.settings.auto_sync") == "true" {
+		cmd := `git add .
+			git commit -m "New changes"
+			git push`
+
+		updateCommand := exec.Command("bash", "-c", cmd)
+
+		if runtime.GOOS == "windows" {
+			updateCommand = exec.Command("powershell.exe", "-Command", cmd)
+		}
+
+		updateCommand.Dir = constants.BotwayDirPath
+		updateCommand.Stdin = os.Stdin
+		updateCommand.Stdout = os.Stdout
+		updateCommand.Stderr = os.Stderr
+		err := updateCommand.Run()
+
+		if err != nil {
+			log.Printf("error: %v\n", err)
+		}
+
+		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
+		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" Configuration synced"))
+
 	}
 }

@@ -10,6 +10,7 @@ require (
 	github.com/abdfnx/resto v0.1.6
 	github.com/abdfnx/tran v0.1.43
 	github.com/botwayorg/gh v0.0.9
+	github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635
 	github.com/botwayorg/railway-api v0.0.4
 	github.com/briandowns/spinner v1.19.0
 	github.com/charmbracelet/bubbles v0.14.0
@@ -34,7 +35,6 @@ require (
 	github.com/alecthomas/chroma v0.10.0 // indirect
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
-	github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635 // indirect
 	github.com/charmbracelet/glamour v0.5.0 // indirect
 	github.com/chzyer/readline v1.5.1 // indirect
 	github.com/cli/browser v1.1.0 // indirect

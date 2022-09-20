@@ -9,6 +9,7 @@ import (
 
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/botway/internal/options"
+	"github.com/abdfnx/botway/internal/pipes/initx"
 	token_shared "github.com/abdfnx/botway/internal/pipes/token"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
@@ -95,6 +96,8 @@ func (m model) RemoveCmd() {
 	if newBotConfig != nil {
 		panic(newBotConfig)
 	}
+
+	initx.UpdateConfig()
 
 	if _, err := os.Stat(constants.BotwayConfigFile); err == nil {
 		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))

@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/internal/pipes/initx"
 	token_shared "github.com/abdfnx/botway/internal/pipes/token"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
@@ -41,6 +42,8 @@ func (m model) AddToken() {
 	if newBotConfig != nil {
 		panic(newBotConfig)
 	}
+
+	initx.UpdateConfig()
 
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.botName + " Telegram token is added successfully"))

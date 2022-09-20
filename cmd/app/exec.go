@@ -8,7 +8,7 @@ import (
 func ExecCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:                "exec",
-		Short:              "Execute a local command using variables from the active environment",
+		Short:              "Execute a local command using variables from the active environment (Only for bots that hosted on Railway)",
 		PreRun:             func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		RunE:               Contextualize(handler.Exec, handler.Panic),
 		DisableFlagParsing: true,

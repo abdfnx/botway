@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/internal/pipes/initx"
 	token_shared "github.com/abdfnx/botway/internal/pipes/token"
 	"github.com/abdfnx/botway/tools"
 	"github.com/charmbracelet/bubbles/textinput"
@@ -53,6 +54,8 @@ func (m model) AddToken() {
 	if botLang == "c" {
 		tools.GenerateCConfig(m.inputs[0].Value())
 	}
+
+	initx.UpdateConfig()
 
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render("You can add the guild ids of your discord server via the command") + token_shared.BoldStyle.Render(" "+"botway tokens add-guilds") + " 📁")
 }

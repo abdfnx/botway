@@ -83,7 +83,7 @@ func mainRun() exitCode {
 		return exitError
 	}
 
-	if config.Get("settings.check_updates") == "true" {
+	if config.Get("botway.settings.check_updates") == "true" {
 		checker.Check(version)
 	}
 

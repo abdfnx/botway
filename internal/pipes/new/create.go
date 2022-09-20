@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/abdfnx/botway/internal/config"
+	"github.com/abdfnx/botway/internal/pipes/initx"
 	"github.com/abdfnx/botway/templates"
 	"github.com/abdfnx/resto/core/api"
 	"github.com/spf13/viper"
@@ -164,4 +165,6 @@ func NewBot(m model, l string, platform, lang int) {
 	pwd = filepath.Join(pwd, opts.BotName)
 
 	AddBotToConfig(opts.BotName, BotType(m), pwd, BotLang(m), HostService(m))
+
+	initx.UpdateConfig()
 }
