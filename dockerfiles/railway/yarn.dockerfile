@@ -2,11 +2,9 @@ FROM node:alpine
 
 COPY . .
 
-ENV BOTWAY-DIR /root/.botway
+RUN mkdir /root/.botway
 
-RUN mkdir ${BOTWAY-DIR}
-
-COPY botway.json ${BOTWAY-DIR}
+COPY botway.json /root/.botway
 
 ENV PACKAGES "build-dependencies libtool autoconf automake gcc gcc-doc g++ make py3-pip py-pip zlib-dev python3 python3-dev libffi-dev build-base gcc git ffmpeg binutils openssl-dev zlib-dev boost boost-dev"
 

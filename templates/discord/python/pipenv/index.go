@@ -14,7 +14,7 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-func DiscordPythonPipenv(botName string) {
+func DiscordPythonPipenv(botName, hostService string) {
 	pythonPath := "python3"
 
 	if runtime.GOOS == "windows" {
@@ -55,7 +55,7 @@ func DiscordPythonPipenv(botName string) {
 			log.Printf("error: %v\n", err)
 		}
 
-		dockerFileContent := templates.Content("dockerfiles/pipenv.dockerfile", "botway", botName)
+		dockerFileContent := templates.Content(fmt.Sprintf("dockerfiles/%s/pipenv.dockerfile", hostService), "botway", botName)
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(dockerFileContent), 0644)

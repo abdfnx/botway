@@ -13,7 +13,7 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-func TelegramCpp(botName string) {
+func TelegramCpp(botName, hostService string) {
 	_, err := looker.LookPath("gcc")
 	_, cerr := looker.LookPath("cmake")
 
@@ -29,7 +29,7 @@ func TelegramCpp(botName string) {
 		cmakeListsFile := os.WriteFile(filepath.Join(botName, "CMakeLists.txt"), []byte(CmakeListsContent(botName)), 0644)
 		runPsFile := os.WriteFile(filepath.Join(botName, "run.ps1"), []byte(RunPsFileContent()), 0644)
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.cpp"), []byte(MainCppContent(botName)), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if botwayHeader != nil {

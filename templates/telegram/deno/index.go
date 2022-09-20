@@ -13,7 +13,7 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-func TelegramDeno(botName string) {
+func TelegramDeno(botName, hostService string) {
 	deno, err := looker.LookPath("deno")
 
 	if err != nil {
@@ -21,7 +21,7 @@ func TelegramDeno(botName string) {
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" deno is not installed"))
 	} else {
 		mainFile := os.WriteFile(filepath.Join(botName, "main.ts"), []byte(MainTsContent()), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if mainFile != nil {

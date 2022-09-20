@@ -14,7 +14,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func DiscordCpp(botName string) {
+func DiscordCpp(botName, hostService string) {
 	_, err := looker.LookPath("gcc")
 	_, cerr := looker.LookPath("cmake")
 
@@ -43,12 +43,12 @@ func DiscordCpp(botName string) {
 	} else {
 		findDPPCmakeFile := os.WriteFile(filepath.Join(botName, "cmake", "FindDPP.cmake"), []byte(FindDppCmakeContent()), 0644)
 		botwayHeader := os.WriteFile(filepath.Join(botName, "include", "botway", "botway.hpp"), []byte((BWCPPFileContent(botName))), 0644)
-		mainIncludeFile := os.WriteFile(filepath.Join(botName, "include", botName, botName + ".h"), []byte((MainIncludeFileContent())), 0644)
+		mainIncludeFile := os.WriteFile(filepath.Join(botName, "include", botName, botName+".h"), []byte((MainIncludeFileContent())), 0644)
 		dotDockerIgnoreFile := os.WriteFile(filepath.Join(botName, ".dockerignore"), []byte(DotDockerIgnoreContent()), 0644)
 		cmakeListsFile := os.WriteFile(filepath.Join(botName, "CMakeLists.txt"), []byte(CmakeListsContent(botName)), 0644)
 		runPsFile := os.WriteFile(filepath.Join(botName, "run.ps1"), []byte(RunPsFileContent()), 0644)
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.cpp"), []byte(MainCppContent(botName)), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if findDPPCmakeFile != nil {
@@ -101,7 +101,7 @@ func DiscordCpp(botName string) {
 				pos = "osx"
 			}
 
-			installCmd := exec.Command("bash", "-c", "curl -sL https://bit.ly/dpp-" + pos + " | bash")
+			installCmd := exec.Command("bash", "-c", "curl -sL https://bit.ly/dpp-"+pos+" | bash")
 
 			installCmd.Dir = botName
 			installCmd.Stdin = os.Stdin

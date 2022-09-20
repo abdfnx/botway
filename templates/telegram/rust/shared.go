@@ -25,7 +25,7 @@ func Resources() string {
 	return templates.Content("telegram/rust.md", "resources", "")
 }
 
-func TelegramRust(botName, pm string) {
+func TelegramRust(botName, pm, hostService string) {
 	_, err := looker.LookPath("cargo")
 	pmPath, perr := looker.LookPath(pm)
 
@@ -36,11 +36,11 @@ func TelegramRust(botName, pm string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" " + pm + "  is not installed"))
 	} else {
-		DockerfileContent := templates.Content("dockerfiles/"+pm+".dockerfile", "botway", botName)
+		dockerfileContent := templates.Content(fmt.Sprintf("dockerfiles/%s/%s.dockerfile", hostService, pm), "botway", botName)
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.rs"), []byte(MainRsContent()), 0644)
 		cargoFile := os.WriteFile(filepath.Join(botName, "Cargo.toml"), []byte(CargoFileContent(botName)), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(dockerfileContent), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if resourcesFile != nil {

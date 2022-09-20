@@ -1,9 +1,13 @@
 package ruby
 
-import "github.com/abdfnx/botway/templates"
+import (
+	"fmt"
 
-func DockerfileContent(botName string) string {
-	return templates.Content("dockerfiles/ruby.dockerfile", "botway", botName)
+	"github.com/abdfnx/botway/templates"
+)
+
+func DockerfileContent(botName, hostService string) string {
+	return templates.Content(fmt.Sprintf("dockerfiles/%s/ruby.dockerfile", hostService), "botway", botName)
 }
 
 func MainRbContent() string {

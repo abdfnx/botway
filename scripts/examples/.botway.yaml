@@ -8,7 +8,7 @@ bot:
   type: discord
 docker:
   cmds:
-    build: docker build -t docker/botx .
-    run: docker run -it docker/botx
+    build: docker build -t botway-local/botx .
+    run: docker run -it botway-local/botx
   enable_buildkit: true
-  image: docker/botx
+  image: botway-local/botx

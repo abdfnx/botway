@@ -2,11 +2,9 @@ FROM python:alpine
 
 COPY . .
 
-ENV BOTWAY-DIR /root/.botway
+RUN mkdir /root/.botway
 
-RUN mkdir ${BOTWAY-DIR}
-
-COPY botway.json ${BOTWAY-DIR}
+COPY botway.json /root/.botway
 
 ENV PACKAGES "build-dependencies build-base gcc abuild binutils binutils-doc gcc-doc py-pip jpeg-dev zlib-dev python3 python3-dev libffi-dev git boost boost-dev"
 

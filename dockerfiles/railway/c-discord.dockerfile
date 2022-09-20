@@ -2,11 +2,9 @@ FROM botwayorg/concord
 
 COPY . .
 
-ENV BOTWAY-DIR /root/.botway
+RUN mkdir /root/.botway
 
-RUN mkdir ${BOTWAY-DIR}
-
-COPY botway.json ${BOTWAY-DIR}
+COPY botway.json /root/.botway
 
 # To add more packages
 # RUN apk add PACKAGE_NAME

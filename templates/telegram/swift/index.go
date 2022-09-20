@@ -13,7 +13,7 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-func TelegramSwift(botName string) {
+func TelegramSwift(botName, hostService string) {
 	swiftPath, err := looker.LookPath("swift")
 
 	if err := os.Mkdir(filepath.Join(botName, "Sources"), os.ModePerm); err != nil {
@@ -31,7 +31,7 @@ func TelegramSwift(botName string) {
 		mainFile := os.WriteFile(filepath.Join(botName, "Sources", botName, "main.swift"), []byte(MainSwiftContent()), 0644)
 		botwaySwiftFile := os.WriteFile(filepath.Join(botName, "Sources", botName, "botway.swift"), []byte(BotwaySwiftContent(botName)), 0644)
 		packageSwiftFile := os.WriteFile(filepath.Join(botName, "Package.swift"), []byte(PackageSwiftFileContent(botName)), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if mainFile != nil {

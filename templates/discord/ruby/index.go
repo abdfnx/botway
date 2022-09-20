@@ -14,7 +14,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func DiscordRuby(botName string) {
+func DiscordRuby(botName, hostService string) {
 	_, err := looker.LookPath("ruby")
 	bundlePath, berr := looker.LookPath("bundle")
 	messageStyle := lipgloss.NewStyle().Foreground(constants.CYAN_COLOR)
@@ -54,7 +54,7 @@ You can add a folder to your '$LOAD_PAT'H either at runtime or via the -I comman
 		}
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.rb"), []byte(MainRbContent()), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if mainFile != nil {

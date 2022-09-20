@@ -2,11 +2,9 @@ FROM brainboxdotcc/dpp:latest
 
 COPY .botway.yaml .
 
-ENV BOTWAY-DIR /root/.botway
+RUN mkdir /root/.botway
 
-RUN mkdir ${BOTWAY-DIR}
-
-COPY botway.json ${BOTWAY-DIR}
+COPY botway.json /root/.botway
 
 WORKDIR /usr/src/{{.BotName}}
 

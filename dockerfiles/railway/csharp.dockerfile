@@ -2,11 +2,9 @@ FROM scratch AS bw
 
 COPY .botway.yaml .
 
-ENV BOTWAY-DIR /root/.botway
+RUN mkdir /root/.botway
 
-RUN mkdir ${BOTWAY-DIR}
-
-COPY botway.json ${BOTWAY-DIR}
+COPY botway.json /root/.botway
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
 

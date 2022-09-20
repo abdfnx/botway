@@ -1,9 +1,13 @@
 package c
 
-import "github.com/abdfnx/botway/templates"
+import (
+	"fmt"
 
-func DockerfileContent(botName string) string {
-	return templates.Content("dockerfiles/c-discord.dockerfile", "botway", botName)
+	"github.com/abdfnx/botway/templates"
+)
+
+func DockerfileContent(botName, hostService string) string {
+	return templates.Content(fmt.Sprintf("dockerfiles/%s/c-discord.dockerfile", hostService), "botway", botName)
 }
 
 func Resources() string {

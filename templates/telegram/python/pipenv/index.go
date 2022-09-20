@@ -14,7 +14,7 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-func TelegramPythonPipenv(botName string) {
+func TelegramPythonPipenv(botName, hostService string) {
 	pythonPath := "python3"
 
 	if runtime.GOOS == "windows" {
@@ -56,7 +56,7 @@ func TelegramPythonPipenv(botName string) {
 		}
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 
 		if mainFile != nil {
 			log.Fatal(mainFile)

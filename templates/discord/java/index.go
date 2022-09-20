@@ -43,7 +43,7 @@ func createDirs(botName string) {
 	}
 }
 
-func DiscordJava(botName string) {
+func DiscordJava(botName, hostService string) {
 	createDirs(botName)
 
 	gradle, err := looker.LookPath("gradle")
@@ -59,7 +59,7 @@ func DiscordJava(botName string) {
 		gradlewFile := os.WriteFile(filepath.Join(botName, "gradlew"), []byte(GradlewContent()), 0644)
 		gradlewBatFile := os.WriteFile(filepath.Join(botName, "gradlew.bat"), []byte(GradlewBatContent()), 0644)
 		settingsFile := os.WriteFile(filepath.Join(botName, "settings.gradle"), []byte(SettingsGradle()), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 		gitattributesFile := os.WriteFile(filepath.Join(botName, ".gitattributes"), []byte(DotGitattributesContent()), 0644)
 

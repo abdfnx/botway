@@ -170,7 +170,3 @@ func DockerInit() {
 
 	fmt.Println(constants.HEADING + constants.BOLD.Render("Done 🐋️"))
 }
-
-func RemoveConfig() {
-	os.Remove(filepath.Join("config", "botway-tokens.env"))
-}

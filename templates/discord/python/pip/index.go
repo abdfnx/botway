@@ -14,7 +14,7 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-func DiscordPythonPip(botName string) {
+func DiscordPythonPip(botName, hostService string) {
 	pip := "pip3"
 	pythonPath := "python3"
 
@@ -64,7 +64,7 @@ func DiscordPythonPip(botName string) {
 		}
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 		runtimeFile := os.WriteFile(filepath.Join(botName, "runtime.txt"), []byte("python-3.9.6"), 0644)
 
 		if mainFile != nil {

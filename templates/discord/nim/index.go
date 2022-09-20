@@ -13,7 +13,7 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-func DiscordNim(botName string) {
+func DiscordNim(botName, hostService string) {
 	_, err := looker.LookPath("nim")
 	nimblePath, nerr := looker.LookPath("nimble")
 
@@ -32,7 +32,7 @@ func DiscordNim(botName string) {
 		botnimFile := os.WriteFile(filepath.Join(botName, "src", "botnim.nim"), []byte(BotnimContent(botName)), 0644)
 		pngFile := os.WriteFile(filepath.Join(botName, "assets", "facepalm.png"), []byte(PngFileContent()), 0644)
 		nimbleFile := os.WriteFile(filepath.Join(botName, botName + ".nimble"), []byte(NimbleFileContent()), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if mainFile != nil {

@@ -2,11 +2,9 @@ FROM gradle:alpine
 
 COPY . .
 
-ENV BOTWAY-DIR /root/.botway
+RUN mkdir /root/.botway
 
-RUN mkdir ${BOTWAY-DIR}
-
-COPY botway.json ${BOTWAY-DIR}
+COPY botway.json /root/.botway
 
 ENV PACKAGES "build-dependencies build-base openssl openssl-dev musl-dev libressl-dev gcc git libsodium opus ffmpeg m4 binutils zlib-dev boost boost-dev"
 

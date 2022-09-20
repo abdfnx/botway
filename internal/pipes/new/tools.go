@@ -26,6 +26,16 @@ func checkbox(label string, checked bool) string {
 	return fmt.Sprintf("[ ] %s", label)
 }
 
+func HostServiceName(m model) string {
+	if m.HostServiceChoice == 0 {
+		return "railway"
+	} else if m.HostServiceChoice == 1 {
+		return "render"
+	}
+
+	return ""
+}
+
 func HostService(m model) string {
 	if m.HostServiceChoice == 0 {
 		return "railway.app"

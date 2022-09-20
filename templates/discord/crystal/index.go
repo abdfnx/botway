@@ -13,7 +13,7 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-func DiscordCrystal(botName string) {
+func DiscordCrystal(botName, hostService string) {
 	_, err := looker.LookPath("crystal")
 	shardsPath, serr := looker.LookPath("shards")
 
@@ -26,7 +26,7 @@ func DiscordCrystal(botName string) {
 	} else {
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.cr"), []byte(MainCrContent()), 0644)
 		shardFile := os.WriteFile(filepath.Join(botName, "shard.yml"), []byte(ShardFileContent(botName)), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if mainFile != nil {

@@ -13,7 +13,7 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-func DiscordDeno(botName string) {
+func DiscordDeno(botName, hostService string) {
 	if err := os.Mkdir(filepath.Join(botName, "src", "commands"), os.ModePerm); err != nil {
 		log.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func DiscordDeno(botName string) {
 		eventsReadyTsFile := os.WriteFile(filepath.Join(botName, "src", "events", "ready.ts"), []byte(EventsReadyTsContent()), 0644)
 		utilsHelpersTsFile := os.WriteFile(filepath.Join(botName, "src", "utils", "helpers.ts"), []byte(UtilsHelpersTsContent()), 0644)
 		utilsLoggerTsFile := os.WriteFile(filepath.Join(botName, "src", "utils", "logger.ts"), []byte(UtilsLoggerTsContent()), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if mainFile != nil {

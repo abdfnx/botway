@@ -13,7 +13,7 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-func TelegramPHP(botName string) {
+func TelegramPHP(botName, hostService string) {
 	_, err := looker.LookPath("php")
 	composerPath, serr := looker.LookPath("composer")
 
@@ -27,7 +27,7 @@ func TelegramPHP(botName string) {
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.php"), []byte(MainPHPContent()), 0644)
 		botwayFile := os.WriteFile(filepath.Join(botName, "src", "botway.php"), []byte(BotwayPHPContent()), 0644)
 		composerFile := os.WriteFile(filepath.Join(botName, "composer.json"), []byte(ComposerFileContent(botName)), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if mainFile != nil {

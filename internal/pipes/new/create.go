@@ -1,20 +1,18 @@
 package new
 
 import (
-	"bytes"
 	"fmt"
 	"log"
 	"os"
 	"path/filepath"
 
-	"github.com/abdfnx/botway/constants"
-	"github.com/abdfnx/botway/internal/pipes/new/config"
+	"github.com/abdfnx/botway/internal/config"
 	"github.com/abdfnx/botway/templates"
 	"github.com/abdfnx/resto/core/api"
 	"github.com/spf13/viper"
 )
 
-func DockerfileContent(botName string) string {
+func DockerfileContent(botName, hostService string) string {
 	return templates.Content("dockerfiles/blank.dockerfile", "botway", botName)
 }
 
@@ -35,11 +33,7 @@ func NewBot(m model, l string, platform, lang int) {
 		log.Fatal(err)
 	}
 
-	botwayConfig := viper.New()
 	botConfig := viper.New()
-
-	botwayConfig.SetConfigType("json")
-	botwayConfig.ReadConfig(bytes.NewBuffer(constants.BotwayConfig))
 
 	dockerImage := "botway-local/" + opts.BotName
 
@@ -47,7 +41,13 @@ func NewBot(m model, l string, platform, lang int) {
 	botConfig.SetConfigName(".botway")
 	botConfig.SetConfigType("yaml")
 
-	botConfig.SetDefault("author", botwayConfig.GetString("github.username"))
+	author := config.Get("github.username")
+
+	if author == "" {
+		author = "botway"
+	}
+
+	botConfig.SetDefault("author", author)
 	botConfig.SetDefault("bot.lang", BotLang(m))
 	botConfig.SetDefault("bot.name", opts.BotName)
 	botConfig.SetDefault("bot.host_service", HostService(m))
@@ -140,7 +140,7 @@ func NewBot(m model, l string, platform, lang int) {
 		TelegramHandler(m)
 		SlackHandler(m)
 	} else {
-		dockerFile := os.WriteFile(filepath.Join(opts.BotName, "Dockerfile"), []byte(DockerfileContent(opts.BotName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(opts.BotName, "Dockerfile"), []byte(DockerfileContent(opts.BotName, HostServiceName(m))), 0644)
 
 		if dockerFile != nil {
 			log.Fatal(dockerFile)
@@ -163,5 +163,5 @@ func NewBot(m model, l string, platform, lang int) {
 
 	pwd = filepath.Join(pwd, opts.BotName)
 
-	config.AddBotToConfig(opts.BotName, BotType(m), pwd, BotLang(m), HostService(m))
+	AddBotToConfig(opts.BotName, BotType(m), pwd, BotLang(m), HostService(m))
 }

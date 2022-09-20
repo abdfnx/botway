@@ -1,15 +1,14 @@
 package templates
 
 import (
-	"bytes"
 	"fmt"
 	"os"
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/internal/config"
 	"github.com/abdfnx/resto/core/api"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/spf13/viper"
 )
 
 func Content(arg, templateName, botName string) string {
@@ -31,6 +30,7 @@ func Content(arg, templateName, botName string) string {
 		os.Exit(0)
 	}
 
+	// TODO: fix botway c++ telegram template
 	if strings.Contains(respone, "#include <{{.BotName}}/{{.BotName}}.h>") && strings.Contains(templateName, "telegram") {
 		respone = strings.ReplaceAll(respone, "#include <{{.BotName}}/{{.BotName}}.h>", "")
 	} else if strings.Contains(respone, `#include "botway/botway.hpp"`) && strings.Contains(templateName, "telegram") {
@@ -41,11 +41,13 @@ func Content(arg, templateName, botName string) string {
 
 	respone = strings.ReplaceAll(respone, "{{.BotName}}", botName)
 
-	viper.SetConfigType("json")
+	author := config.Get("github.username")
 
-	viper.ReadConfig(bytes.NewBuffer(constants.BotwayConfig))
+	if author == "" {
+		author = "botway"
+	}
 
-	respone = strings.ReplaceAll(respone, "{{.Author}}", viper.GetString("github.username"))
+	respone = strings.ReplaceAll(respone, "{{.Author}}", author)
 
 	return respone
 }

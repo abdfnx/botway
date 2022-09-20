@@ -13,7 +13,7 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-func TelegramNim(botName string) {
+func TelegramNim(botName, hostService string) {
 	_, err := looker.LookPath("nim")
 	nimblePath, nerr := looker.LookPath("nimble")
 
@@ -26,8 +26,8 @@ func TelegramNim(botName string) {
 	} else {
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.nim"), []byte(MainNimContent()), 0644)
 		botnimFile := os.WriteFile(filepath.Join(botName, "src", "botnim.nim"), []byte(BotnimContent(botName)), 0644)
-		nimbleFile := os.WriteFile(filepath.Join(botName, botName + ".nimble"), []byte(NimbleFileContent()), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		nimbleFile := os.WriteFile(filepath.Join(botName, botName+".nimble"), []byte(NimbleFileContent()), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if mainFile != nil {

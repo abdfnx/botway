@@ -1,9 +1,13 @@
 package pip
 
-import "github.com/abdfnx/botway/templates"
+import (
+	"fmt"
 
-func DockerfileContent(botName string) string {
-	return templates.Content("dockerfiles/pip.dockerfile", "botway", botName)
+	"github.com/abdfnx/botway/templates"
+)
+
+func DockerfileContent(botName, hostService string) string {
+	return templates.Content(fmt.Sprintf("dockerfiles/%s/pip.dockerfile", hostService), "botway", botName)
 }
 
 func RequirementsContent() string {

@@ -1,11 +1,13 @@
 package tgo
 
 import (
+	"fmt"
+
 	"github.com/abdfnx/botway/templates"
 )
 
-func DockerfileContent(botName string) string {
-	return templates.Content("dockerfiles/go.dockerfile", "botway", botName)
+func DockerfileContent(botName, hostService string) string {
+	return templates.Content(fmt.Sprintf("dockerfiles/%s/go.dockerfile", hostService), "botway", botName)
 }
 
 func MainGoContent() string {

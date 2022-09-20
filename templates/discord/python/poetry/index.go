@@ -18,7 +18,7 @@ func PyProjectContent(botName string) string {
 	return templates.Content("pyproject.toml", "discord-python", botName)
 }
 
-func DiscordPythonPoetry(botName string) {
+func DiscordPythonPoetry(botName, hostService string) {
 	pythonPath := "python3"
 
 	if runtime.GOOS == "windows" {
@@ -35,7 +35,7 @@ func DiscordPythonPoetry(botName string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" poetry is not installed"))
 	} else {
-		dockerFileContent := templates.Content("dockerfiles/poetry.dockerfile", "botway", botName)
+		dockerFileContent := templates.Content(fmt.Sprintf("dockerfiles/%s/poetry.dockerfile", hostService), "botway", botName)
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)
 		pyprojectFile := os.WriteFile(filepath.Join(botName, "pyproject.toml"), []byte(PyProjectContent(botName)), 0644)

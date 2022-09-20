@@ -13,7 +13,7 @@ import (
 	"github.com/abdfnx/looker"
 )
 
-func DiscordDart(botName string) {
+func DiscordDart(botName, hostService string) {
 	dartPath, err := looker.LookPath("dart")
 
 	if err != nil {
@@ -22,7 +22,7 @@ func DiscordDart(botName string) {
 	} else {
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.dart"), []byte(MainDartContent()), 0644)
 		pubspecFile := os.WriteFile(filepath.Join(botName, "pubspec.yaml"), []byte(PubspecFileContent(botName)), 0644)
-		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName)), 0644)
+		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(DockerfileContent(botName, hostService)), 0644)
 		resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources()), 0644)
 
 		if mainFile != nil {

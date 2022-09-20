@@ -22,52 +22,52 @@ import (
 
 func TelegramHandler(m model) {
 	if m.PlatformChoice == 1 && m.LangChoice == 0 && m.PMChoice == 0 {
-		pip.TelegramPythonPip(opts.BotName)
+		pip.TelegramPythonPip(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 0 && m.PMChoice == 1 {
-		pipenv.TelegramPythonPipenv(opts.BotName)
+		pipenv.TelegramPythonPipenv(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 0 && m.PMChoice == 2 {
-		poetry.TelegramPythonPoetry(opts.BotName)
+		poetry.TelegramPythonPoetry(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 1 {
-		tgo.TelegramGo(opts.BotName)
+		tgo.TelegramGo(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMChoice == 0 {
-		nodejs.Nodejs(opts.BotName, "npm", "telegram")
+		nodejs.Nodejs(opts.BotName, "npm", "telegram", HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMChoice == 1 {
-		nodejs.Nodejs(opts.BotName, "yarn", "telegram")
+		nodejs.Nodejs(opts.BotName, "yarn", "telegram", HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMChoice == 2 {
-		nodejs.Nodejs(opts.BotName, "pnpm", "telegram")
+		nodejs.Nodejs(opts.BotName, "pnpm", "telegram", HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 2 && m.PMChoice == 3 {
-		nodejs.Nodejs(opts.BotName, "bun", "telegram")
+		nodejs.Nodejs(opts.BotName, "bun", "telegram", HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 3 && m.PMChoice == 0 {
-		ts.NodejsTS(opts.BotName, "npm", "telegram")
+		ts.NodejsTS(opts.BotName, "npm", "telegram", HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 3 && m.PMChoice == 1 {
-		ts.NodejsTS(opts.BotName, "yarn", "telegram")
+		ts.NodejsTS(opts.BotName, "yarn", "telegram", HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 3 && m.PMChoice == 2 {
-		ts.NodejsTS(opts.BotName, "pnpm", "telegram")
+		ts.NodejsTS(opts.BotName, "pnpm", "telegram", HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 3 && m.PMChoice == 3 {
-		ts.NodejsTS(opts.BotName, "bun", "telegram")
+		ts.NodejsTS(opts.BotName, "bun", "telegram", HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 4 {
-		ruby.TelegramRuby(opts.BotName)
+		ruby.TelegramRuby(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 5 && m.PMChoice == 0 {
-		rust.TelegramRust(opts.BotName, "cargo")
+		rust.TelegramRust(opts.BotName, "cargo", HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 5 && m.PMChoice == 1 {
-		rust.TelegramRust(opts.BotName, "fleet")
+		rust.TelegramRust(opts.BotName, "fleet", HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 6 {
-		deno.TelegramDeno(opts.BotName)
+		deno.TelegramDeno(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 7 {
-		csharp.TelegramCsharp(opts.BotName)
+		csharp.TelegramCsharp(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 8 {
-		dart.TelegramDart(opts.BotName)
+		dart.TelegramDart(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 9 {
-		php.TelegramPHP(opts.BotName)
+		php.TelegramPHP(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 10 {
-		kotlin.TelegramKotlin(opts.BotName)
+		kotlin.TelegramKotlin(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 11 {
-		java.TelegramJava(opts.BotName)
+		java.TelegramJava(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 12 {
-		cpp.TelegramCpp(opts.BotName)
+		cpp.TelegramCpp(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 13 {
-		nim.TelegramNim(opts.BotName)
+		nim.TelegramNim(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 1 && m.LangChoice == 14 {
-		swift.TelegramSwift(opts.BotName)
+		swift.TelegramSwift(opts.BotName, HostServiceName(m))
 	}
 }

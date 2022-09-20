@@ -1,9 +1,13 @@
 package deno
 
-import "github.com/abdfnx/botway/templates"
+import (
+	"fmt"
 
-func DockerfileContent(botName string) string {
-	return templates.Content("dockerfiles/deno.dockerfile", "botway", botName)
+	"github.com/abdfnx/botway/templates"
+)
+
+func DockerfileContent(botName, hostService string) string {
+	return templates.Content(fmt.Sprintf("dockerfiles/%s/deno.dockerfile", hostService), "botway", botName)
 }
 
 func Resources() string {

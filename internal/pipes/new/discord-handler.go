@@ -23,54 +23,54 @@ import (
 
 func DiscordHandler(m model) {
 	if m.PlatformChoice == 0 && m.LangChoice == 0 && m.PMChoice == 0 {
-		pip.DiscordPythonPip(opts.BotName)
+		pip.DiscordPythonPip(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 0 && m.PMChoice == 1 {
-		pipenv.DiscordPythonPipenv(opts.BotName)
+		pipenv.DiscordPythonPipenv(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 0 && m.PMChoice == 2 {
-		poetry.DiscordPythonPoetry(opts.BotName)
+		poetry.DiscordPythonPoetry(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 1 {
-		dgo.DiscordGo(opts.BotName)
+		dgo.DiscordGo(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 2 && m.PMChoice == 0 {
-		nodejs.Nodejs(opts.BotName, "npm", "discord")
+		nodejs.Nodejs(opts.BotName, "npm", "discord", HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 2 && m.PMChoice == 1 {
-		nodejs.Nodejs(opts.BotName, "yarn", "discord")
+		nodejs.Nodejs(opts.BotName, "yarn", "discord", HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 2 && m.PMChoice == 2 {
-		nodejs.Nodejs(opts.BotName, "pnpm", "discord")
+		nodejs.Nodejs(opts.BotName, "pnpm", "discord", HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 2 && m.PMChoice == 3 {
-		nodejs.Nodejs(opts.BotName, "bun", "discord")
+		nodejs.Nodejs(opts.BotName, "bun", "discord", HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 3 && m.PMChoice == 0 {
-		ts.NodejsTS(opts.BotName, "npm", "discord")
+		ts.NodejsTS(opts.BotName, "npm", "discord", HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 3 && m.PMChoice == 1 {
-		ts.NodejsTS(opts.BotName, "yarn", "discord")
+		ts.NodejsTS(opts.BotName, "yarn", "discord", HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 3 && m.PMChoice == 2 {
-		ts.NodejsTS(opts.BotName, "pnpm", "discord")
+		ts.NodejsTS(opts.BotName, "pnpm", "discord", HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 3 && m.PMChoice == 3 {
-		ts.NodejsTS(opts.BotName, "bun", "discord")
+		ts.NodejsTS(opts.BotName, "bun", "discord", HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 4 {
-		ruby.DiscordRuby(opts.BotName)
+		ruby.DiscordRuby(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 5 && m.PMChoice == 0 {
-		rust.DiscordRust(opts.BotName, "cargo")
+		rust.DiscordRust(opts.BotName, "cargo", HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 5 && m.PMChoice == 1 {
-		rust.DiscordRust(opts.BotName, "fleet")
+		rust.DiscordRust(opts.BotName, "fleet", HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 6 {
-		deno.DiscordDeno(opts.BotName)
+		deno.DiscordDeno(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 7 {
-		csharp.DiscordCsharp(opts.BotName)
+		csharp.DiscordCsharp(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 8 {
-		dart.DiscordDart(opts.BotName)
+		dart.DiscordDart(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 9 {
-		php.DiscordPHP(opts.BotName)
+		php.DiscordPHP(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 10 {
-		kotlin.DiscordKotlin(opts.BotName)
+		kotlin.DiscordKotlin(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 11 {
-		java.DiscordJava(opts.BotName)
+		java.DiscordJava(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 12 {
-		cpp.DiscordCpp(opts.BotName)
+		cpp.DiscordCpp(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 13 {
-		nim.DiscordNim(opts.BotName)
+		nim.DiscordNim(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 14 {
-		c.DiscordC(opts.BotName)
+		c.DiscordC(opts.BotName, HostServiceName(m))
 	} else if m.PlatformChoice == 0 && m.LangChoice == 15 {
-		crystal.DiscordCrystal(opts.BotName)
+		crystal.DiscordCrystal(opts.BotName, HostServiceName(m))
 	}
 }
