@@ -7,7 +7,6 @@ import (
 )
 
 var opts = options.InitOptions{
-	CopyFile: false,
 	NoRepo:   false,
 }
 
