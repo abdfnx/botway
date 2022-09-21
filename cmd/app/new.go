@@ -6,6 +6,7 @@ import (
 	"os/exec"
 	"runtime"
 
+	"github.com/abdfnx/botway/internal/config"
 	"github.com/abdfnx/botway/internal/options"
 	"github.com/abdfnx/botway/internal/pipes/new"
 	"github.com/abdfnx/botway/tools"
@@ -38,11 +39,14 @@ func NewCMD() *cobra.Command {
 				if !newOpts.NoRepo {
 					new.CreateRepo(newOpts, opts.BotName)
 				}
+
+				if config.GetBotInfoFromArg(args[0], "bot.host_service") == "railway.app" {
+					cmd.PostRunE = Contextualize(handler.Init, handler.Panic)
+				}
 			} else {
 				cmd.Help()
 			}
 		},
-		PostRunE: Contextualize(handler.Init, handler.Panic),
 		PersistentPostRun: func(cmd *cobra.Command, args []string) {
 			if runtime.GOOS != "windows" {
 				fmt.Println(messageStyle.Render("> Installing some required packages"))
@@ -54,7 +58,7 @@ func NewCMD() *cobra.Command {
 					if err != nil {
 						panic("error: brew is not installed")
 					} else {
-						cmd = brewPath+" install opus libsodium"
+						cmd = brewPath + " install opus libsodium"
 					}
 				}
 
