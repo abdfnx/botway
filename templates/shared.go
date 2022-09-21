@@ -11,6 +11,18 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+func BotSecrets(templateName string) string {
+	if strings.Contains(templateName, "discord") {
+		return "DISCORD_TOKEN DISCORD_CLIENT_ID\n# You can add guild ids of your servers by adding ARG SERVER_NAME_GUILD_ID"
+	} else if strings.Contains(templateName, "telegram") {
+		return "TELEGRAM_TOKEN"
+	} else if strings.Contains(templateName, "slack") {
+		return "SLACK_TOKEN SLACK_APP_TOKEN SLACK_SIGNING_SECRET"
+	}
+
+	return ""
+}
+
 func Content(arg, templateName, botName string) string {
 	org := "botwayorg"
 
@@ -48,6 +60,8 @@ func Content(arg, templateName, botName string) string {
 	}
 
 	respone = strings.ReplaceAll(respone, "{{.Author}}", author)
+
+	respone = strings.ReplaceAll(respone, "{{.BotSecrets}}", BotSecrets(templateName))
 
 	return respone
 }

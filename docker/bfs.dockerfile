@@ -11,9 +11,11 @@ RUN addgroup --gid 1000 botway \
 
 RUN go install github.com/go-task/task/v3/cmd/task@latest
 
-RUN git clone https://github.com/abdfnx/botway && \
-    cd botway && \
-    task bfs
+WORKDIR /botway-src
+
+COPY . .
+
+RUN task bfs
 
 COPY ./docker/entry.sh /usr/local/bin/docker-entrypoint.sh
 

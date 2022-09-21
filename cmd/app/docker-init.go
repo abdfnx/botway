@@ -9,7 +9,9 @@ func DockerInitCMD() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "docker-init",
 		Short: "Initialize ~/.botway for docker containers",
-		Run:   func(cmd *cobra.Command, args []string) { initx.DockerInit() },
+		Run: func(cmd *cobra.Command, args []string) {
+			initx.DockerInit()
+		},
 	}
 
 	return cmd

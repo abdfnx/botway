@@ -1,5 +1,7 @@
 FROM botwayorg/botway:latest AS bw
 
+ARG {{.BotSecrets}}
+
 COPY . .
 
 RUN botway docker-init
