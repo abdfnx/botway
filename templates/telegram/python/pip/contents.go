@@ -7,9 +7,9 @@ import (
 )
 
 func DockerfileContent(botName, hostService string) string {
-	return templates.Content(fmt.Sprintf("dockerfiles/%s/pip.dockerfile", hostService), "botway", botName)
+	return templates.Content(fmt.Sprintf("dockerfiles/%s/pip.dockerfile", hostService), "botway", botName, "telegram")
 }
 
 func RequirementsContent() string {
-	return templates.Content("requirements.txt", "telegram-python", "")
+	return templates.Content("requirements.txt", "telegram-python", "", "")
 }

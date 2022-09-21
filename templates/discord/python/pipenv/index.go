@@ -55,7 +55,7 @@ func DiscordPythonPipenv(botName, hostService string) {
 			log.Printf("error: %v\n", err)
 		}
 
-		dockerFileContent := templates.Content(fmt.Sprintf("dockerfiles/%s/pipenv.dockerfile", hostService), "botway", botName)
+		dockerFileContent := templates.Content(fmt.Sprintf("dockerfiles/%s/pipenv.dockerfile", hostService), "botway", botName, "discord")
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)
 		dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(dockerFileContent), 0644)

@@ -7,21 +7,21 @@ import (
 )
 
 func DockerfileContent(botName, hostService string) string {
-	return templates.Content(fmt.Sprintf("dockerfiles/%s/php.dockerfile", hostService), "botway", botName)
+	return templates.Content(fmt.Sprintf("dockerfiles/%s/php.dockerfile", hostService), "botway", botName, "telegram")
 }
 
 func MainPHPContent() string {
-	return templates.Content("src/main.php", "telegram-php", "")
+	return templates.Content("src/main.php", "telegram-php", "", "")
 }
 
 func BotwayPHPContent() string {
-	return templates.Content("packages/bw-php/main.php", "botway", "")
+	return templates.Content("packages/bw-php/main.php", "botway", "", "")
 }
 
 func Resources() string {
-	return templates.Content("telegram/php.md", "resources", "")
+	return templates.Content("telegram/php.md", "resources", "", "")
 }
 
 func ComposerFileContent(botName string) string {
-	return templates.Content("composer.json", "telegram-php", botName)
+	return templates.Content("composer.json", "telegram-php", botName, "")
 }

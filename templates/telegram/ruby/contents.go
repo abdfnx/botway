@@ -7,13 +7,13 @@ import (
 )
 
 func DockerfileContent(botName, hostService string) string {
-	return templates.Content(fmt.Sprintf("dockerfiles/%s/ruby.dockerfile", hostService), "botway", botName)
+	return templates.Content(fmt.Sprintf("dockerfiles/%s/ruby.dockerfile", hostService), "botway", botName, "telegram")
 }
 
 func MainRbContent() string {
-	return templates.Content("main.rb", "telegram-ruby", "")
+	return templates.Content("main.rb", "telegram-ruby", "", "")
 }
 
 func Resources() string {
-	return templates.Content("telegram/ruby.md", "resources", "")
+	return templates.Content("telegram/ruby.md", "resources", "", "")
 }

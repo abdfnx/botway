@@ -15,7 +15,7 @@ import (
 )
 
 func PyProjectContent(botName string) string {
-	return templates.Content("pyproject.toml", "discord-python", botName)
+	return templates.Content("pyproject.toml", "discord-python", botName, "")
 }
 
 func SlackPythonPoetry(botName, hostService string) {
@@ -35,7 +35,7 @@ func SlackPythonPoetry(botName, hostService string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" poetry is not installed"))
 	} else {
-		dockerFileContent := templates.Content(fmt.Sprintf("dockerfiles/%s/poetry.dockerfile", hostService), "botway", botName)
+		dockerFileContent := templates.Content(fmt.Sprintf("dockerfiles/%s/poetry.dockerfile", hostService), "botway", botName, "slack")
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.py"), []byte(python.MainPyContent()), 0644)
 		pyprojectFile := os.WriteFile(filepath.Join(botName, "pyproject.toml"), []byte(PyProjectContent(botName)), 0644)

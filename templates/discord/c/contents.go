@@ -7,21 +7,21 @@ import (
 )
 
 func DockerfileContent(botName, hostService string) string {
-	return templates.Content(fmt.Sprintf("dockerfiles/%s/c-discord.dockerfile", hostService), "botway", botName)
+	return templates.Content(fmt.Sprintf("dockerfiles/%s/c-discord.dockerfile", hostService), "botway", botName, "discord")
 }
 
 func Resources() string {
-	return templates.Content("discord/c.md", "resources", "")
+	return templates.Content("discord/c.md", "resources", "", "")
 }
 
 func MainCContent() string {
-	return templates.Content("src/main.c", "discord-c", "")
+	return templates.Content("src/main.c", "discord-c", "", "")
 }
 
 func BWCContent(botName string) string {
-	return templates.Content("packages/bwc/main.h", "botway", botName)
+	return templates.Content("packages/bwc/main.h", "botway", botName, "")
 }
 
 func RunPsFileContent() string {
-	return templates.Content("run.ps1", "discord-c", "")
+	return templates.Content("run.ps1", "discord-c", "", "")
 }

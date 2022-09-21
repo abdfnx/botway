@@ -7,17 +7,17 @@ import (
 )
 
 func DockerfileContent(botName, hostService string) string {
-	return templates.Content(fmt.Sprintf("dockerfiles/%s/crystal.dockerfile", hostService), "botway", botName)
+	return templates.Content(fmt.Sprintf("dockerfiles/%s/crystal.dockerfile", hostService), "botway", botName, "discord")
 }
 
 func Resources() string {
-	return templates.Content("discord/crystal.md", "resources", "")
+	return templates.Content("discord/crystal.md", "resources", "", "")
 }
 
 func MainCrContent() string {
-	return templates.Content("src/main.cr", "discord-crystal", "")
+	return templates.Content("src/main.cr", "discord-crystal", "", "")
 }
 
 func ShardFileContent(botName string) string {
-	return templates.Content("shard.yml", "discord-crystal", botName)
+	return templates.Content("shard.yml", "discord-crystal", botName, "")
 }

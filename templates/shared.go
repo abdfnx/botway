@@ -11,19 +11,19 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func BotSecrets(templateName string) string {
-	if strings.Contains(templateName, "discord") {
+func BotSecrets(platform string) string {
+	if strings.Contains(platform, "discord") {
 		return "DISCORD_TOKEN DISCORD_CLIENT_ID\n# You can add guild ids of your servers by adding ARG SERVER_NAME_GUILD_ID"
-	} else if strings.Contains(templateName, "telegram") {
+	} else if strings.Contains(platform, "telegram") {
 		return "TELEGRAM_TOKEN"
-	} else if strings.Contains(templateName, "slack") {
+	} else if strings.Contains(platform, "slack") {
 		return "SLACK_TOKEN SLACK_APP_TOKEN SLACK_SIGNING_SECRET"
 	}
 
-	return ""
+	return "" + platform
 }
 
-func Content(arg, templateName, botName string) string {
+func Content(arg, templateName, botName, platform string) string {
 	org := "botwayorg"
 
 	if templateName == "botway" {
@@ -43,9 +43,9 @@ func Content(arg, templateName, botName string) string {
 	}
 
 	// TODO: fix botway c++ telegram template
-	if strings.Contains(respone, "#include <{{.BotName}}/{{.BotName}}.h>") && strings.Contains(templateName, "telegram") {
+	if strings.Contains(respone, "#include <{{.BotName}}/{{.BotName}}.h>") && strings.Contains(platform, "telegram") {
 		respone = strings.ReplaceAll(respone, "#include <{{.BotName}}/{{.BotName}}.h>", "")
-	} else if strings.Contains(respone, `#include "botway/botway.hpp"`) && strings.Contains(templateName, "telegram") {
+	} else if strings.Contains(respone, `#include "botway/botway.hpp"`) && strings.Contains(platform, "telegram") {
 		respone = strings.ReplaceAll(respone, `#include "botway/botway.hpp"`, `#include "botway.hpp"`)
 	} else if strings.Contains(arg, "pubspec.yaml") {
 		respone = strings.ReplaceAll(respone, "{{.BotName}}", strings.ReplaceAll(botName, "-", ""))
@@ -61,7 +61,7 @@ func Content(arg, templateName, botName string) string {
 
 	respone = strings.ReplaceAll(respone, "{{.Author}}", author)
 
-	respone = strings.ReplaceAll(respone, "{{.BotSecrets}}", BotSecrets(templateName))
+	respone = strings.ReplaceAll(respone, "{{.BotSecrets}}", BotSecrets(platform))
 
 	return respone
 }

@@ -14,15 +14,15 @@ import (
 )
 
 func MainRsContent() string {
-	return templates.Content("src/main.rs", "telegram-rust", "")
+	return templates.Content("src/main.rs", "telegram-rust", "", "")
 }
 
 func CargoFileContent(botName string) string {
-	return templates.Content("Cargo.toml", "telegram-rust", botName)
+	return templates.Content("Cargo.toml", "telegram-rust", botName, "")
 }
 
 func Resources() string {
-	return templates.Content("telegram/rust.md", "resources", "")
+	return templates.Content("telegram/rust.md", "resources", "", "")
 }
 
 func TelegramRust(botName, pm, hostService string) {
@@ -36,7 +36,7 @@ func TelegramRust(botName, pm, hostService string) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" " + pm + "  is not installed"))
 	} else {
-		dockerfileContent := templates.Content(fmt.Sprintf("dockerfiles/%s/%s.dockerfile", hostService, pm), "botway", botName)
+		dockerfileContent := templates.Content(fmt.Sprintf("dockerfiles/%s/%s.dockerfile", hostService, pm), "botway", botName, "telegram")
 
 		mainFile := os.WriteFile(filepath.Join(botName, "src", "main.rs"), []byte(MainRsContent()), 0644)
 		cargoFile := os.WriteFile(filepath.Join(botName, "Cargo.toml"), []byte(CargoFileContent(botName)), 0644)

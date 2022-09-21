@@ -14,7 +14,7 @@ import (
 )
 
 func DockerfileContent(botName, hostService string) string {
-	return templates.Content("dockerfiles/blank.dockerfile", "botway", botName)
+	return templates.Content("dockerfiles/blank.dockerfile", "botway", botName, "")
 }
 
 func NewBot(m model, l string, platform, lang int) {
@@ -150,7 +150,7 @@ func NewBot(m model, l string, platform, lang int) {
 
 	dotGitIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".gitignore"), []byte(dotGitIgnoreFileContent), 0644)
 	dotGitKeepFile := os.WriteFile(filepath.Join(opts.BotName, "config", ".gitkeep"), []byte(""), 0644)
-	readmeFile := os.WriteFile(filepath.Join(opts.BotName, "README.md"), []byte(templates.Content("bot-readme.md", "resources", "")), 0644)
+	readmeFile := os.WriteFile(filepath.Join(opts.BotName, "README.md"), []byte(templates.Content("bot-readme.md", "resources", "", "")), 0644)
 
 	if dotGitIgnoreFile != nil {
 		log.Fatal(dotGitIgnoreFile)

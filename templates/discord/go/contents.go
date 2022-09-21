@@ -7,13 +7,13 @@ import (
 )
 
 func DockerfileContent(botName, hostService string) string {
-	return templates.Content(fmt.Sprintf("dockerfiles/%s/go.dockerfile", hostService), "botway", botName)
+	return templates.Content(fmt.Sprintf("dockerfiles/%s/go.dockerfile", hostService), "botway", botName, "discord")
 }
 
 func Resources() string {
-	return templates.Content("discord/go.md", "resources", "")
+	return templates.Content("discord/go.md", "resources", "", "")
 }
 
 func MainGoContent() string {
-	return templates.Content("main.go", "discord-go", "")
+	return templates.Content("main.go", "discord-go", "", "")
 }

@@ -14,11 +14,11 @@ import (
 )
 
 func MainTSContent(platform string) string {
-	return templates.Content("main.ts", platform+"-nodejs-ts", "")
+	return templates.Content("main.ts", platform+"-nodejs-ts", "", "")
 }
 
 func Resources(platform string) string {
-	return templates.Content(platform+"/nodejs.md", "resources", "")
+	return templates.Content(platform+"/nodejs.md", "resources", "", "")
 }
 
 func NodejsTS(botName, pm, platform, hostService string) {
@@ -33,13 +33,13 @@ func NodejsTS(botName, pm, platform, hostService string) {
 			fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 			fmt.Println(constants.FAIL_FOREGROUND.Render(" npm is not installed"))
 		} else {
-			dockerfileContent := templates.Content(fmt.Sprintf("dockerfiles/%s/%s.dockerfile", hostService, pm), "botway", botName)
+			dockerfileContent := templates.Content(fmt.Sprintf("dockerfiles/%s/%s.dockerfile", hostService, pm), "botway", botName, platform)
 
 			mainFile := os.WriteFile(filepath.Join(botName, "src", "main.ts"), []byte(MainTSContent(platform)), 0644)
 			dockerFile := os.WriteFile(filepath.Join(botName, "Dockerfile"), []byte(dockerfileContent), 0644)
 			resourcesFile := os.WriteFile(filepath.Join(botName, "resources.md"), []byte(Resources(platform)), 0644)
-			tsConfigFile := os.WriteFile(filepath.Join(botName, "tsconfig.json"), []byte(templates.Content("tsconfig.json", platform+"-nodejs-ts", "")), 0644)
-			packageFile := os.WriteFile(filepath.Join(botName, "package.json"), []byte(templates.Content("package.json", platform+"-nodejs-ts", "")), 0644)
+			tsConfigFile := os.WriteFile(filepath.Join(botName, "tsconfig.json"), []byte(templates.Content("tsconfig.json", platform+"-nodejs-ts", "", "")), 0644)
+			packageFile := os.WriteFile(filepath.Join(botName, "package.json"), []byte(templates.Content("package.json", platform+"-nodejs-ts", "", "")), 0644)
 
 			if resourcesFile != nil {
 				log.Fatal(resourcesFile)
