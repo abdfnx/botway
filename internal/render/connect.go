@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/internal/pipes/initx"
 	"github.com/abdfnx/botwaygo"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -80,10 +81,11 @@ func ConnectService() {
 	serviceSlug := gjson.Get(string(body), "0.service.slug").String()
 	serviceRepo := gjson.Get(string(body), "0.service.repo").String()
 
-	renderPath := "projects." + serviceSlug
+	renderPath := "projects." + serviceName
 
 	service, _ := sjson.Set(string(constants.RenderConfig), renderPath+".id", serviceId)
-	addRepoToservice, _ := sjson.Set(service, renderPath+".repo", serviceRepo)
+	addSlug, _ := sjson.Set(service, renderPath+".slug", serviceSlug)
+	addRepoToService, _ := sjson.Set(addSlug, renderPath+".repo", serviceRepo)
 
 	remove := os.Remove(constants.RenderConfigFile)
 
@@ -91,11 +93,12 @@ func ConnectService() {
 		log.Fatal(remove)
 	}
 
-	newBotConfig := os.WriteFile(constants.RenderConfigFile, []byte(addRepoToservice), 0644)
+	newBotConfig := os.WriteFile(constants.RenderConfigFile, []byte(addRepoToService), 0644)
 
 	if newBotConfig != nil {
 		panic(newBotConfig)
 	}
 
 	UpdateTokens(serviceId)
+	initx.UpdateConfig()
 }

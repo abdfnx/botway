@@ -149,15 +149,19 @@ func NewBot(m model, l string, platform, lang int) {
 	}
 
 	dotGitIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".gitignore"), []byte(dotGitIgnoreFileContent), 0644)
+	dotGitKeepFile := os.WriteFile(filepath.Join(opts.BotName, "config", ".gitkeep"), []byte(""), 0644)
+	readmeFile := os.WriteFile(filepath.Join(opts.BotName, "README.md"), []byte(templates.Content("bot-readme.md", "resources", "")), 0644)
 
 	if dotGitIgnoreFile != nil {
 		log.Fatal(dotGitIgnoreFile)
 	}
 
-	readmeFile := os.WriteFile(filepath.Join(opts.BotName, "README.md"), []byte(templates.Content("bot-readme.md", "resources", "")), 0644)
-
 	if readmeFile != nil {
 		log.Fatal(readmeFile)
+	}
+
+	if dotGitKeepFile != nil {
+		log.Fatal(dotGitKeepFile)
 	}
 
 	pwd, _ := os.Getwd()
