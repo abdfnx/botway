@@ -83,7 +83,7 @@ func ConfigCloneCMD() *cobra.Command {
 		Use:   "clone",
 		Short: "Clone your .botway repo",
 		Run: func(cmd *cobra.Command, args []string) {
-			clone := `botway gh-repo clone .botway ` + constants.HomeDir
+			clone := `botway gh-repo clone .botway ` + constants.BotwayDirPath
 
 			cloneCommand := exec.Command("bash", "-c", clone)
 
@@ -91,7 +91,6 @@ func ConfigCloneCMD() *cobra.Command {
 				cloneCommand = exec.Command("powershell.exe", "-Command", clone)
 			}
 
-			cloneCommand.Dir = constants.BotwayDirPath
 			cloneCommand.Stdin = os.Stdin
 			cloneCommand.Stdout = os.Stdout
 			cloneCommand.Stderr = os.Stderr

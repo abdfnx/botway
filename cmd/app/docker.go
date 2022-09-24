@@ -2,7 +2,6 @@ package app
 
 import (
 	build_image "github.com/abdfnx/botway/internal/pipes/docker/build-image"
-	"github.com/abdfnx/botway/internal/pipes/docker/publish"
 	"github.com/abdfnx/botway/internal/pipes/docker/run"
 	"github.com/abdfnx/botway/tools"
 	"github.com/spf13/cobra"
@@ -16,7 +15,6 @@ func DockerCMD() *cobra.Command {
 	}
 
 	cmd.AddCommand(DockerBuildCMD())
-	cmd.AddCommand(DockerPublishCMD())
 	cmd.AddCommand(DockerRunCMD())
 
 	return cmd
@@ -24,22 +22,10 @@ func DockerCMD() *cobra.Command {
 
 func DockerBuildCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "build",
-		Short:   "Build your bot docker image",
-		PreRun:  func(cmd *cobra.Command, args []string) { tools.CheckDir() },
-		Run:     func(cmd *cobra.Command, args []string) { build_image.DockerBuildImage() },
-		PostRun: func(cmd *cobra.Command, args []string) { tools.RemoveConfig() },
-	}
-
-	return cmd
-}
-
-func DockerPublishCMD() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:    "publish",
-		Short:  "Publish your bot docker image to docker registry",
+		Use:    "build",
+		Short:  "Build your bot docker image",
 		PreRun: func(cmd *cobra.Command, args []string) { tools.CheckDir() },
-		Run:    func(cmd *cobra.Command, args []string) { publish.DockerPublishImage() },
+		Run:    func(cmd *cobra.Command, args []string) { build_image.DockerBuildImage() },
 	}
 
 	return cmd

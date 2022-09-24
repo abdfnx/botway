@@ -8,7 +8,7 @@ import (
 
 	"github.com/abdfnx/botway/internal/config"
 	"github.com/abdfnx/botway/internal/pipes/initx"
-	"github.com/abdfnx/botway/templates"
+	"github.com/botwayorg/templates"
 	"github.com/abdfnx/resto/core/api"
 	"github.com/spf13/viper"
 )

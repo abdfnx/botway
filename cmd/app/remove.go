@@ -1,10 +1,10 @@
 package app
 
 import (
+	"github.com/abdfnx/botway/internal/config"
 	"github.com/abdfnx/botway/internal/options"
 	"github.com/abdfnx/botway/internal/pipes/remove"
 	"github.com/abdfnx/botway/internal/render"
-	"github.com/abdfnx/botwaygo"
 	"github.com/spf13/cobra"
 )
 
@@ -20,19 +20,17 @@ func RemoveCMD() *cobra.Command {
 					BotName: args[0],
 				}
 
-				remove.Remove(opts)
-
-				if botwaygo.GetBotInfo("bot.host_service") == "render.com" {
+				if config.GetBotInfoFromArg(args[0], "bot.host_service") == "render.com" {
 					render.DeleteRenderService(args[0])
+				} else if config.GetBotInfoFromArg(args[0], "bot.host_service") == "railway.app" {
+					cmd.PostRunE = Contextualize(handler.Delete, handler.Panic)
 				}
+
+				remove.Remove(opts)
 			} else {
 				cmd.Help()
 			}
 		},
-	}
-
-	if botwaygo.GetBotInfo("bot.host_service") == "railway.app" {
-		cmd.PostRunE = Contextualize(handler.Delete, handler.Panic)
 	}
 
 	return cmd

@@ -57,6 +57,8 @@ var (
 	BotwayDirPath          = filepath.Join(HomeDir, ".botway")
 	BotwayConfigFile       = filepath.Join(BotwayDirPath, "botway.json")
 	BotwayConfig, Berr     = ioutil.ReadFile(BotwayConfigFile)
+	BWBotsConfigFile       = filepath.Join(BotwayDirPath, "bw-bots.json")
+	BWBotsConfig, Werr     = ioutil.ReadFile(BWBotsConfigFile)
 	BotConfig, Oerr        = ioutil.ReadFile(".botway.yaml")
 	BotComposeConfig, Cerr = ioutil.ReadFile(".botway-compose.yaml")
 	Guilds, Gerr           = ioutil.ReadFile(filepath.Join("config", "guilds.json"))
