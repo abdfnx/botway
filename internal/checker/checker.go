@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/abdfnx/botway/api"
 	"github.com/abdfnx/botway/cmd/factory"
+	"github.com/botwayorg/get-latest/api"
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/looker"
 )
@@ -14,7 +14,7 @@ func Check(buildVersion string) {
 	cliFactory := factory.New()
 	stderr := cliFactory.IOStreams.ErrOut
 
-	latestVersion := api.GetLatest()
+	latestVersion := api.LatestWithArgs("abdfnx/botway", "", false)
 	isFromHomebrew := isUnderHomebrew()
 	isFromUsrBinDir := isUnderUsr()
 	isFromScoop := isUnderScoop()

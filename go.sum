@@ -60,14 +60,16 @@ github.com/aymanbagabas/go-osc52 v1.0.3 h1:DTwqENW7X9arYimJrPeGZcV0ln14sGMt3pHZs
 github.com/aymanbagabas/go-osc52 v1.0.3/go.mod h1:zT8H+Rk4VSabYN90pWyugflM3ZhpTZNC7cASDfUCdT4=
 github.com/aymerick/douceur v0.2.0 h1:Mv+mAeH1Q+n9Fr+oyamOlAkUNPWPlA8PPGR0QAaYuPk=
 github.com/aymerick/douceur v0.2.0/go.mod h1:wlT5vV2O3h55X9m7iVYN0TBM0NH/MmbLnd30/FjWUq4=
+github.com/botwayorg/get-latest v0.1.4 h1:Vb2g79rQphxUoUx186eKiw/I1CdQfYsJxKsbkufmvwQ=
+github.com/botwayorg/get-latest v0.1.4/go.mod h1:u8BHAgSr2tK/VZd2IurVI7bRKH2Adob/4zHS3/jFdQc=
 github.com/botwayorg/gh v0.0.9 h1:jHXglsDdAup+wNAhLvqeeXNILTR4DEL12gubyDcxEWs=
 github.com/botwayorg/gh v0.0.9/go.mod h1:E3dTBPLt3L9wogY7e4QPHqUYHAbWrlNnumKgu9tcglA=
 github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635 h1:AJLUr0Ef6avA5S2SXua7XG4yXI7vAjsZLBrZD5zCOk4=
 github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635/go.mod h1:XdqqKSxdEZz88SByHfT4Vwpl/b9gQK9tjZ/FQuwrM0g=
 github.com/botwayorg/railway-api v0.0.5 h1:6QpJfQrZjgXM1IaTFdNwyJmrubAD19m5MiAPPE6QdDE=
 github.com/botwayorg/railway-api v0.0.5/go.mod h1:oJjlseKXKSc2A7dlPTLtEfm42MIElTivzC8+uWmduAM=
-github.com/botwayorg/templates v0.0.1 h1:jzToQjkzQu4rTbjiWvo49YsxaI1pqwQpIIJU8H3+TZ4=
-github.com/botwayorg/templates v0.0.1/go.mod h1:F01dLoy/0W7LiBBqDiKaJhWgPDZHGicafXr+ZamyqDQ=
+github.com/botwayorg/templates v0.0.2 h1:N+Kwi4VGci60a4uPcF8MsMFZuO6JrSWSagmRNE9lLd8=
+github.com/botwayorg/templates v0.0.2/go.mod h1:F01dLoy/0W7LiBBqDiKaJhWgPDZHGicafXr+ZamyqDQ=
 github.com/briandowns/spinner v1.19.0 h1:s8aq38H+Qju89yhp89b4iIiMzMm8YN3p6vGpwyh/a8E=
 github.com/briandowns/spinner v1.19.0/go.mod h1:mQak9GHqbspjC/5iUx3qMlIho8xBS/ppAL/hX5SmPJU=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
@@ -202,6 +204,8 @@ github.com/googleapis/gax-go/v2 v2.0.5/go.mod h1:DWXyrwAJ9X0FpwwEdw+IPEYBICEFu5m
 github.com/googleapis/google-cloud-go-testing v0.0.0-20200911160855-bcd43fbb19e8/go.mod h1:dvDLG8qkwmyD9a/MJJN3XJcT3xFxOKAvTZGvuZmac9g=
 github.com/gorilla/css v1.0.0 h1:BQqNyPTi50JCFMTw/b67hByjMVXZRwGha6wxVGkeihY=
 github.com/gorilla/css v1.0.0/go.mod h1:Dn721qIggHpt4+EFCcTLTU/vk5ySda2ReITrtgBl60c=
+github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
+github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
 github.com/hashicorp/golang-lru v0.5.0/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
 github.com/hashicorp/golang-lru v0.5.1/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
 github.com/hashicorp/hcl v1.0.0 h1:0Anlzjpi4vEasTeNFn2mLJgTSwt0+6sfsiTG8qcWGx4=
