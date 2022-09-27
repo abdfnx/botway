@@ -37,8 +37,8 @@ func updatePlatforms(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "j", "down":
 			m.PlatformChoice += 1
-			if m.PlatformChoice > 2 {
-				m.PlatformChoice = 2
+			if m.PlatformChoice > 3 {
+				m.PlatformChoice = 3
 			}
 
 		case "k", "up":
@@ -67,14 +67,18 @@ func updateLangs(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 				if m.LangChoice > 2 {
 					m.LangChoice = 2
 				}
-			} else {
-				if m.PlatformChoice == 0 {
-					if m.LangChoice > 15 {
-						m.LangChoice = 15
-					}
+			} else if m.PlatformChoice == 3 {
+				if m.LangChoice > 5 {
+					m.LangChoice = 5
 				} else {
-					if m.LangChoice > 14 {
-						m.LangChoice = 14
+					if m.PlatformChoice == 0 {
+						if m.LangChoice > 15 {
+							m.LangChoice = 15
+						}
+					} else {
+						if m.LangChoice > 14 {
+							m.LangChoice = 14
+						}
 					}
 				}
 			}
@@ -154,9 +158,17 @@ func buildBot(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 	} else if m.LangChoice == 2 || m.LangChoice == 3 || m.LangChoice == 6 {
 		l = "Node"
 	} else if m.LangChoice == 4 {
-		l = "Ruby"
+		if m.PlatformChoice == 3 {
+			l = "Node"
+		} else {
+			l = "Ruby"
+		}
 	} else if m.LangChoice == 5 {
-		l = "Rust"
+		if m.PlatformChoice == 3 {
+			l = "Java"
+		} else {
+			l = "Rust"
+		}
 	} else if m.LangChoice == 7 {
 		l = "C#"
 	} else if m.LangChoice == 8 {

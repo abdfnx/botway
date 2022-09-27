@@ -10,10 +10,11 @@ func platformsView(m model) string {
 	tpl += subtle.Render("j/k, up/down: select") + dot + subtle.Render("enter: choose") + dot + subtle.Render("q, esc: quit")
 
 	choices := fmt.Sprintf(
-		"%s\n%s\n%s",
+		"%s\n%s\n%s\n%s",
 		checkbox("Discord", c == 0),
 		checkbox("Telegram", c == 1),
 		checkbox("Slack", c == 2),
+		checkbox("Twitch", c == 3),
 	)
 
 	return fmt.Sprintf(tpl, choices)
@@ -30,6 +31,8 @@ func langsView(m model) string {
 		c = "Telegram"
 	} else if m.PlatformChoice == 2 {
 		c = "Slack"
+	} else if m.PlatformChoice == 3 {
+		c = "Twitch"
 	}
 
 	tpl := "Choose language/framework for your " + c + " bot\n\n"
@@ -59,7 +62,7 @@ func langsView(m model) string {
 		n(),
 	)
 
-	if m.PlatformChoice != 2 {
+	if m.PlatformChoice != 2 && m.PlatformChoice != 3 {
 		l14 := "C"
 
 		if m.PlatformChoice == 1 {
@@ -79,6 +82,14 @@ func langsView(m model) string {
 			checkbox("C++", l == 12),
 			checkbox("Nim", l == 13),
 			checkbox(l14, l == 14),
+		)
+	}
+
+	if m.PlatformChoice == 3 {
+		langs += fmt.Sprintf(
+			"\n%s\n%s",
+			checkbox("Deno", l == 4),
+			checkbox("Java", l == 5),
 		)
 	}
 
@@ -106,9 +117,17 @@ func pmsView(m model) string {
 	} else if m.LangChoice == 3 {
 		l = "Node.js (TypeScript)"
 	} else if m.LangChoice == 4 {
-		l = "Ruby"
+		if m.PlatformChoice == 3 {
+			l = "Deno"
+		} else {
+			l = "Ruby"
+		}
 	} else if m.LangChoice == 5 {
-		l = "Rust"
+		if m.PlatformChoice == 3 {
+			l = "Java"
+		} else {
+			l = "Rust"
+		}
 	} else if m.LangChoice == 6 {
 		l = "Deno"
 	} else if m.LangChoice == 7 {
@@ -165,13 +184,21 @@ func pmsView(m model) string {
 	} else if m.LangChoice == 2 || m.LangChoice == 3 {
 		langs += nodePms
 	} else if m.LangChoice == 4 {
-		langs += rubyPM
+		if m.PlatformChoice == 3 {
+			langs += checkbox("deno", pm == 0)
+		} else {
+			langs += rubyPM
+		}
 	} else if m.LangChoice == 5 {
-		langs += fmt.Sprintf(
-			"%s\n%s",
-			checkbox("cargo", pm == 0),
-			checkbox("fleet", pm == 1),
-		)
+		if m.PlatformChoice == 3 {
+			langs += checkbox("gradle", pm == 0)
+		} else {
+			langs += fmt.Sprintf(
+				"%s\n%s",
+				checkbox("cargo", pm == 0),
+				checkbox("fleet", pm == 1),
+			)
+		}
 	} else if m.LangChoice == 6 {
 		langs += checkbox("deno", pm == 0)
 	} else if m.LangChoice == 7 {
@@ -243,6 +270,9 @@ func finalView(m model) string {
 
 	case 2:
 		platform = "Slack"
+
+	case 3:
+		platform = "Twitch"
 	}
 
 	switch m.HostServiceChoice {
@@ -313,18 +343,28 @@ func finalView(m model) string {
 		}
 
 	case 4:
-		lang = "Ruby"
-		pm = "bundler"
+		if m.PlatformChoice == 3 {
+			lang = "Deno"
+			pm = "deno"
+		} else {
+			lang = "Ruby"
+			pm = "bundler"
+		}
 
 	case 5:
-		lang = "Rust"
+		if m.PlatformChoice == 3 {
+			lang = "Java"
+			pm = "gradle"
+		} else {
+			lang = "Rust"
 
-		switch m.PMChoice {
-		case 0:
-			pm = "cargo"
+			switch m.PMChoice {
+			case 0:
+				pm = "cargo"
 
-		case 1:
-			pm = "fleet"
+			case 1:
+				pm = "fleet"
+			}
 		}
 
 	case 6:

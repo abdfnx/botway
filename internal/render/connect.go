@@ -22,6 +22,7 @@ func UpdateTokens(serviceId string) {
 
 	bot_token := ""
 	app_token := ""
+	secret_value := ""
 	payload_content := ""
 
 	if botType == "discord" {
@@ -31,10 +32,16 @@ func UpdateTokens(serviceId string) {
 	} else if botType == "slack" {
 		bot_token = "SLACK_TOKEN"
 		app_token = "SLACK_APP_TOKEN"
-		payload_content = fmt.Sprintf("[{\"key\":\"%s\",\"value\":\"%s\"},{\"key\":\"%s\",\"value\":\"%s\"},{\"key\":\"SIGNING_SECRET\",\"value\":\"%s\"}]", bot_token, botwaygo.GetToken(), app_token, botwaygo.GetAppId(), botwaygo.GetSigningSecret())
+		secret_value = "SIGNING_SECRET"
+		payload_content = fmt.Sprintf("[{\"key\":\"%s\",\"value\":\"%s\"},{\"key\":\"%s\",\"value\":\"%s\"},{\"key\":\"%s\",\"value\":\"%s\"}]", bot_token, botwaygo.GetToken(), app_token, botwaygo.GetAppId(), secret_value, botwaygo.GetSecret())
 	} else if botType == "telegram" {
 		bot_token = "TELEGRAM_TOKEN"
 		payload_content = fmt.Sprintf("[{\"key\":\"%s\",\"value\":\"%s\"}]", bot_token, botwaygo.GetToken())
+	} else if botType == "twitch" {
+		bot_token = "TWITCH_OAUTH_TOKEN"
+		app_token = "TWITCH_CLIENT_ID"
+		secret_value = "TWITCH_CLIENT_SECRET"
+		payload_content = fmt.Sprintf("[{\"key\":\"%s\",\"value\":\"%s\"},{\"key\":\"%s\",\"value\":\"%s\"},{\"key\":\"%s\",\"value\":\"%s\"}]", bot_token, botwaygo.GetToken(), app_token, botwaygo.GetAppId(), secret_value, botwaygo.GetSecret())
 	}
 
 	payload := strings.NewReader(payload_content)

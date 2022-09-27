@@ -11,6 +11,7 @@ import (
 	"github.com/abdfnx/botway/internal/pipes/token/discord/guilds"
 	slack_token "github.com/abdfnx/botway/internal/pipes/token/slack"
 	telegram_token "github.com/abdfnx/botway/internal/pipes/token/telegram"
+	twitch_token "github.com/abdfnx/botway/internal/pipes/token/twitch"
 	"github.com/spf13/cobra"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -36,6 +37,7 @@ func TokenSetCMD() *cobra.Command {
 		Discord:  false,
 		Slack:    false,
 		Telegram: false,
+		Twitch:   false,
 	}
 
 	cmd := &cobra.Command{
@@ -50,6 +52,8 @@ func TokenSetCMD() *cobra.Command {
 					slack_token.BotwaySlackTokenSetup(args[0])
 				} else if opts.Telegram {
 					telegram_token.BotwayTelegramTokenSetup(args[0])
+				} else if opts.Twitch {
+					twitch_token.BotwayTwitchTokenSetup(args[0])
 				} else {
 					fmt.Println("Bot Type is not found")
 				}
@@ -62,6 +66,7 @@ func TokenSetCMD() *cobra.Command {
 	cmd.Flags().BoolVarP(&opts.Discord, "discord", "d", false, "For discord bot tokens")
 	cmd.Flags().BoolVarP(&opts.Slack, "slack", "s", false, "For slack bot tokens")
 	cmd.Flags().BoolVarP(&opts.Telegram, "telegram", "t", false, "For telegram bot tokens")
+	cmd.Flags().BoolVarP(&opts.Twitch, "twitch", "w", false, "For twitch bot tokens")
 
 	return cmd
 }

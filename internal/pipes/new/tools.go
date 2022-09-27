@@ -53,9 +53,11 @@ func BotType(m model) string {
 		return "telegram"
 	} else if m.PlatformChoice == 2 {
 		return "slack"
+	} else if m.PlatformChoice == 3 {
+		return "twitch"
 	}
 
-	return "# You need to specify a platform (discord, telegram, slack)"
+	return "# You need to specify a platform (discord, telegram, slack, twitch)"
 }
 
 var blankLangMessage = "# You need to specify a language (python, go, nodejs, nodejs (typescript) ruby, rust, deno, csharp, dart, php, kotlin, java, crystal, c++, nim, c)"
@@ -74,9 +76,17 @@ func BotLang(m model) string {
 	} else if m.LangChoice == 3 {
 		return "typescript"
 	} else if m.LangChoice == 4 {
-		return "ruby"
+		if m.PlatformChoice == 3 {
+			return "deno"
+		} else {
+			return "ruby"
+		}
 	} else if m.LangChoice == 5 {
-		return "rust"
+		if m.PlatformChoice == 3 {
+			return "java"
+		} else {
+			return "rust"
+		}
 	} else if m.LangChoice == 6 {
 		return "deno"
 	} else if m.LangChoice == 7 {
@@ -108,6 +118,7 @@ func BotLang(m model) string {
 
 func BotStartCmd(m model) string {
 	nodeCmd := BotPM(m) + " src/main."
+	denoCmd := "deno run --allow-all main.ts"
 
 	if m.LangChoice == 0 && m.PMChoice == 0 {
 		if runtime.GOOS == "windows" {
@@ -138,11 +149,23 @@ func BotStartCmd(m model) string {
 	} else if m.LangChoice == 3 {
 		return nodeCmd + ".js"
 	} else if m.LangChoice == 4 {
-		return "bundle exec ruby src/main.rb"
+		if m.PlatformChoice == 3 {
+			return denoCmd
+		} else {
+			return "bundle exec ruby src/main.rb"
+		}
 	} else if m.LangChoice == 5 {
-		return "cargo run src/main.rs"
+		if m.PlatformChoice == 3 {
+			if runtime.GOOS == "windows" {
+				return `.\gradlew.bat run`
+			} else {
+				return "./gradlew run"
+			}
+		} else {
+			return "cargo run src/main.rs"
+		}
 	} else if m.LangChoice == 6 {
-		return "deno run --allow-all main.ts"
+		return denoCmd
 	} else if m.LangChoice == 7 {
 		return "dotnet run"
 	} else if m.LangChoice == 8 {

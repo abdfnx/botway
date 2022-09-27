@@ -23,33 +23,27 @@ type model struct {
 }
 
 func (m model) AddGuildId() {
-	botwayConfig, err := ioutil.ReadFile(token_shared.BotwayConfigPath)
-
-	if err != nil {
-		panic(err)
-	}
-
-	checkBotType := gjson.Get(string(botwayConfig), "botway.bots."+m.inputs[0].Value()+".type").String()
+	checkBotType := gjson.Get(string(constants.BotwayConfig), "botway.bots."+m.inputs[0].Value()+".type").String()
 
 	if checkBotType != "discord" {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" this command/feature only works with discord bots"))
 	} else {
-		newGuild, _ := sjson.Set(string(botwayConfig), "botway.bots."+m.inputs[0].Value()+".guilds."+m.inputs[1].Value()+".server_id", m.inputs[2].Value())
+		newGuild, _ := sjson.Set(string(constants.BotwayConfig), "botway.bots."+m.inputs[0].Value()+".guilds."+m.inputs[1].Value()+".server_id", m.inputs[2].Value())
 
-		remove := os.Remove(token_shared.BotwayConfigPath)
+		remove := os.Remove(constants.BotwayConfigFile)
 
 		if remove != nil {
 			log.Fatal(remove)
 		}
 
-		newBotwayConfig := os.WriteFile(token_shared.BotwayConfigPath, []byte(newGuild), 0644)
+		newBotwayConfig := os.WriteFile(constants.BotwayConfigFile, []byte(newGuild), 0644)
 
 		if newBotwayConfig != nil {
 			panic(newBotwayConfig)
 		}
 
-		bot_path := gjson.Get(string(botwayConfig), "botway.bots."+m.inputs[0].Value()+".path").String()
+		bot_path := gjson.Get(string(constants.BotwayConfig), "botway.bots."+m.inputs[0].Value()+".path").String()
 		guildsPath := filepath.Join(bot_path, "config", "guilds.json")
 		guildsFile, err := ioutil.ReadFile(guildsPath)
 

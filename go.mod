@@ -1,11 +1,11 @@
 module github.com/abdfnx/botway
 
-go 1.18
+go 1.19
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.6
 	github.com/MakeNowJust/heredoc v1.0.0
-	github.com/abdfnx/botwaygo v0.1.1
+	github.com/abdfnx/botwaygo v0.1.2
 	github.com/abdfnx/looker v0.1.0
 	github.com/abdfnx/resto v0.1.6
 	github.com/abdfnx/tran v0.1.43
@@ -13,7 +13,7 @@ require (
 	github.com/botwayorg/gh v0.0.9
 	github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635
 	github.com/botwayorg/railway-api v0.0.5
-	github.com/botwayorg/templates v0.0.2
+	github.com/botwayorg/templates v0.0.4
 	github.com/briandowns/spinner v1.19.0
 	github.com/charmbracelet/bubbles v0.14.0
 	github.com/charmbracelet/bubbletea v0.22.1
@@ -29,7 +29,7 @@ require (
 	github.com/spf13/viper v1.13.0
 	github.com/tidwall/gjson v1.14.3
 	github.com/tidwall/sjson v1.2.5
-	golang.org/x/sys v0.0.0-20220919091848-fb04ddd9f9c8
+	golang.org/x/sys v0.0.0-20220926163933-8cfa568d3c25
 	golang.org/x/term v0.0.0-20220919170432-7a66f970e087
 )
 
@@ -61,7 +61,7 @@ require (
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
 	github.com/itchyny/gojq v0.12.9 // indirect
 	github.com/itchyny/timefmt-go v0.1.4 // indirect
-	github.com/jedib0t/go-pretty/v6 v6.3.8 // indirect
+	github.com/jedib0t/go-pretty/v6 v6.3.9 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/logrusorgru/aurora v2.0.3+incompatible // indirect
@@ -96,9 +96,9 @@ require (
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/yosssi/gohtml v0.0.0-20201013000340-ee4748c638f4 // indirect
-	github.com/yuin/goldmark v1.4.15 // indirect
+	github.com/yuin/goldmark v1.5.2 // indirect
 	github.com/yuin/goldmark-emoji v1.0.1 // indirect
-	golang.org/x/net v0.0.0-20220923203811-8be639271d50 // indirect
+	golang.org/x/net v0.0.0-20220926192436-02166a98028e // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/tools v0.1.12 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect

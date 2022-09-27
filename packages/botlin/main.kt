@@ -51,3 +51,15 @@ fun GetGuildId(serverName: String): String {
         return sn.get("server_id").toString()
     }
 }
+
+fun GetSecret(): String {
+    var value = ""
+
+    if (getBotInfo("type") == "slack") {
+        value = "signing_secret"
+    } else if (getBotInfo("type") == "twitch") {
+        value = "bot_client_secret"
+    }
+
+    return bot.get(value).toString()
+}

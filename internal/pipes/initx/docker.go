@@ -33,32 +33,41 @@ func DockerInit() {
 	viper.SetConfigType("json")
 
 	botType := botwaygo.GetBotInfo("bot.type")
-	bot_token := ""
-	app_token := ""
-	signing_secret := "SLACK_SIGNING_SECRET"
+	field1 := ""
+	field2 := ""
+	field3 := ""
 	cid := ""
+	secret_value := ""
 
 	if botType == "discord" {
-		bot_token = "DISCORD_TOKEN"
-		app_token = "DISCORD_CLIENT_ID"
+		field1 = "DISCORD_TOKEN"
+		field2 = "DISCORD_CLIENT_ID"
 		cid = "bot_app_id"
 	} else if botType == "slack" {
-		bot_token = "SLACK_TOKEN"
-		app_token = "SLACK_APP_TOKEN"
+		field1 = "SLACK_TOKEN"
+		field2 = "SLACK_APP_TOKEN"
+		field3 = "SLACK_SIGNING_SECRET"
 		cid = "bot_app_token"
+		secret_value = "signing_secret"
 	} else if botType == "telegram" {
-		bot_token = "TELEGRAM_TOKEN"
+		field1 = "TELEGRAM_TOKEN"
+	} else if botType == "twitch" {
+		field1 = "TWITCH_OAUTH_TOKEN"
+		field2 = "TWITCH_CLIENT_ID"
+		field3 = "TWITCH_CLIENT_SECRET"
+		cid = "bot_client_id"
+		secret_value = "bot_client_secret"
 	}
 
-	viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+".bot_token", os.Getenv(bot_token))
+	viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+".bot_token", os.Getenv(field1))
 	viper.SetDefault("botway.bots_names", []string{botwaygo.GetBotInfo("bot.name")})
 
 	if botType != "telegram" {
-		viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+"."+cid, os.Getenv(app_token))
+		viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+"."+cid, os.Getenv(field2))
 	}
 
-	if botType == "slack" {
-		viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+".signing_secret", os.Getenv(signing_secret))
+	if botType == "slack" || botType == "twitch" {
+		viper.SetDefault("botway.bots."+botwaygo.GetBotInfo("bot.name")+"."+secret_value, os.Getenv(field3))
 	}
 
 	if botType == "discord" {

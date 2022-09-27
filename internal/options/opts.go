@@ -25,6 +25,7 @@ type TokenAddOptions struct {
 	Discord  bool
 	Slack    bool
 	Telegram bool
+	Twitch   bool
 }
 
 type LoginOptions struct {

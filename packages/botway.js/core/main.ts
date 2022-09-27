@@ -60,12 +60,20 @@ export const GetGuildId = (serverName: string) => {
   }
 };
 
-export const GetSigningSecret = () => {
+export const GetSecret = () => {
   if (getBotInfo("type") != "slack") {
     console.log("ERROR: This function/feature is only working with slack bots");
   } else {
     try {
-      return json["botway"]["bots"][getBotInfo("name")]["signing_secret"];
+      var value = "";
+
+      if (getBotInfo("type") == "slack") {
+        value = "signing_secret";
+      } else if (getBotInfo("type") == "twitch") {
+        value = "bot_client_secret";
+      }
+
+      return json["botway"]["bots"][getBotInfo("name")][value];
     } catch (err: any) {
       console.log(err.stack || String(err));
     }

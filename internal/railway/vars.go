@@ -259,9 +259,11 @@ func UpdateTokens(botPath, botType string) {
 	if botType == "discord" {
 		setVarCmd += "DISCORD_TOKEN=" + botwaygo.GetToken() + " DISCORD_CLIENT_ID=" + botwaygo.GetAppId()
 	} else if botType == "slack" {
-		setVarCmd += "SLACK_TOKEN=" + botwaygo.GetToken() + " SLACK_APP_TOKEN=" + botwaygo.GetAppId() + " SIGNING_SECRET=" + botwaygo.GetSigningSecret()
+		setVarCmd += "SLACK_TOKEN=" + botwaygo.GetToken() + " SLACK_APP_TOKEN=" + botwaygo.GetAppId() + " SIGNING_SECRET=" + botwaygo.GetSecret()
 	} else if botType == "telegram" {
 		setVarCmd += "TELEGRAM_TOKEN=" + botwaygo.GetToken()
+	} else if botType == "twitch" {
+		setVarCmd += "TWITCH_OAUTH_TOKEN=" + botwaygo.GetToken() + " TWITCH_CLIENT_ID=" + botwaygo.GetAppId() + " TWITCH_CLIENT_SECRET=" + botwaygo.GetSecret()
 	}
 
 	cmd := exec.Command("bash", "-c", setVarCmd)

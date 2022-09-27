@@ -2,7 +2,6 @@ package slack_token
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"strings"
@@ -22,24 +21,17 @@ type model struct {
 }
 
 func (m model) AddToken() {
-	botwayConfig, err := ioutil.ReadFile(token_shared.BotwayConfigPath)
-	// token, id := token_shared.EncryptTokens(m.inputs[0].Value(), m.inputs[1].Value())
-
-	if err != nil {
-		panic(err)
-	}
-
-	tokenContent, _ := sjson.Set(string(botwayConfig), "botway.bots."+m.botName+".bot_token", m.inputs[0].Value())
+	tokenContent, _ := sjson.Set(string(constants.BotwayConfig), "botway.bots."+m.botName+".bot_token", m.inputs[0].Value())
 	appTokenContent, _ := sjson.Set(tokenContent, "botway.bots."+m.botName+".bot_app_token", m.inputs[1].Value())
 	signingSecretContent, _ := sjson.Set(appTokenContent, "botway.bots."+m.botName+".signing_secret", m.inputs[1].Value())
 
-	remove := os.Remove(token_shared.BotwayConfigPath)
+	remove := os.Remove(constants.BotwayConfigFile)
 
 	if remove != nil {
 		log.Fatal(remove)
 	}
 
-	newBotConfig := os.WriteFile(token_shared.BotwayConfigPath, []byte(signingSecretContent), 0644)
+	newBotConfig := os.WriteFile(constants.BotwayConfigFile, []byte(signingSecretContent), 0644)
 
 	if newBotConfig != nil {
 		panic(newBotConfig)

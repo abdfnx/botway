@@ -7,12 +7,10 @@ import (
 	"fmt"
 	"io"
 	"math/rand"
-	"path/filepath"
 	"strings"
 	"time"
 
 	"github.com/abdfnx/botway/constants"
-	"github.com/abdfnx/tran/dfs"
 	"github.com/charmbracelet/lipgloss"
 )
 
@@ -24,10 +22,7 @@ var (
 	NoStyle       = lipgloss.NewStyle()
 	FocusedButton = FocusedStyle.Copy().Render("[ Done ]")
 	BlurredButton = fmt.Sprintf("[ %s ]", BlurredStyle.Render("Done"))
-
-	HomeDir, _       = dfs.GetHomeDirectory()
-	BotwayConfigPath = filepath.Join(HomeDir, ".botway", "botway.json")
-	UserSecret       = Generator()
+	UserSecret    = Generator()
 )
 
 func Generator() string {

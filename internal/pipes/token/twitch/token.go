@@ -1,4 +1,4 @@
-package telegram_token
+package twitch_token
 
 import (
 	"fmt"
@@ -22,6 +22,8 @@ type model struct {
 
 func (m model) AddToken() {
 	tokenContent, _ := sjson.Set(string(constants.BotwayConfig), "botway.bots."+m.botName+".bot_token", m.inputs[0].Value())
+	clientContent, _ := sjson.Set(tokenContent, "botway.bots."+m.botName+".bot_client_id", m.inputs[1].Value())
+	clientSecretContent, _ := sjson.Set(clientContent, "botway.bots."+m.botName+".bot_client_secret", m.inputs[1].Value())
 
 	remove := os.Remove(constants.BotwayConfigFile)
 
@@ -29,7 +31,7 @@ func (m model) AddToken() {
 		log.Fatal(remove)
 	}
 
-	newBotConfig := os.WriteFile(constants.BotwayConfigFile, []byte(tokenContent), 0644)
+	newBotConfig := os.WriteFile(constants.BotwayConfigFile, []byte(clientSecretContent), 0644)
 
 	if newBotConfig != nil {
 		panic(newBotConfig)
@@ -38,13 +40,13 @@ func (m model) AddToken() {
 	initx.UpdateConfig()
 
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
-	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.botName + " Telegram token is added successfully"))
+	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" " + m.botName + " Slack tokens're added successfully"))
 	// fmt.Println("Your Secret key -> " + token_shared.BoldStyle.Render(token_shared.UserSecret) + " Keep it in a safe place")
 }
 
 func initialModel(botName string) model {
 	m := model{
-		inputs:  make([]textinput.Model, 1),
+		inputs:  make([]textinput.Model, 3),
 		botName: botName,
 	}
 
@@ -56,11 +58,16 @@ func initialModel(botName string) model {
 
 		switch i {
 		case 0:
-			t.Placeholder = "Telegram Bot Token"
+			t.Placeholder = "OAuth Token"
 			t.Focus()
 			t.PromptStyle = token_shared.FocusedStyle
 			t.TextStyle = token_shared.FocusedStyle
-			t.CharLimit = 65
+
+		case 1:
+			t.Placeholder = "Client ID"
+
+		case 2:
+			t.Placeholder = "Client Secret"
 		}
 
 		m.inputs[i] = t
@@ -158,7 +165,7 @@ func (m model) View() string {
 	return b.String()
 }
 
-func BotwayTelegramTokenSetup(botName string) {
+func BotwayTwitchTokenSetup(botName string) {
 	if err := tea.NewProgram(initialModel(botName)).Start(); err != nil {
 		fmt.Printf("could not start program: %s\n", err)
 		os.Exit(1)

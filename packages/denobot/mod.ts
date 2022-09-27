@@ -53,16 +53,18 @@ export const getGuildId = (serverName: string) => {
   }
 };
 
-export const getSigningSecret = () => {
-  if (getBotInfo("type") != "slack") {
-    console.log("ERROR: This function/feature is only working with slack bots");
-  } else {
-    try {
-      return botwayConfig["botway"]["bots"][getBotInfo("name")][
-        "signing_secret"
-      ];
-    } catch (err: any) {
-      console.log(err.stack || String(err));
+export const getSecret = () => {
+  try {
+    var value = "";
+
+    if (getBotInfo("type") == "slack") {
+      value = "signing_secret";
+    } else if (getBotInfo("type") == "twitch") {
+      value = "bot_client_secret";
     }
+
+    return botwayConfig["botway"]["bots"][getBotInfo("name")][value];
+  } catch (err: any) {
+    console.log(err.stack || String(err));
   }
 };

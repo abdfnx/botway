@@ -2,7 +2,6 @@ package discord_token
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"strings"
@@ -24,23 +23,16 @@ type model struct {
 }
 
 func (m model) AddToken() {
-	botwayConfig, err := ioutil.ReadFile(token_shared.BotwayConfigPath)
-	// token, id := token_shared.EncryptTokens(m.inputs[0].Value(), m.inputs[1].Value())
-
-	if err != nil {
-		panic(err)
-	}
-
-	tokenContent, _ := sjson.Set(string(botwayConfig), "botway.bots."+m.botName+".bot_token", m.inputs[0].Value())
+	tokenContent, _ := sjson.Set(string(constants.BotwayConfig), "botway.bots."+m.botName+".bot_token", m.inputs[0].Value())
 	appIdContent, _ := sjson.Set(tokenContent, "botway.bots."+m.botName+".bot_app_id", m.inputs[1].Value())
 
-	remove := os.Remove(token_shared.BotwayConfigPath)
+	remove := os.Remove(constants.BotwayConfigFile)
 
 	if remove != nil {
 		log.Fatal(remove)
 	}
 
-	newBotConfig := os.WriteFile(token_shared.BotwayConfigPath, []byte(appIdContent), 0644)
+	newBotConfig := os.WriteFile(constants.BotwayConfigFile, []byte(appIdContent), 0644)
 
 	if newBotConfig != nil {
 		panic(newBotConfig)

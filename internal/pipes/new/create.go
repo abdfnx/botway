@@ -140,6 +140,7 @@ func NewBot(m model, l string, platform, lang int) {
 		DiscordHandler(m)
 		TelegramHandler(m)
 		SlackHandler(m)
+		TwitchHandler(m)
 	} else {
 		dockerFile := os.WriteFile(filepath.Join(opts.BotName, "Dockerfile"), []byte(DockerfileContent(opts.BotName, HostServiceName(m))), 0644)
 
