@@ -10,7 +10,7 @@ release:
 
 before:
   hooks:
-    - go mod tidy -compat=1.18
+    - go mod tidy
 
 builds:
   - <<: &build_defaults
@@ -66,7 +66,7 @@ nfpms:
     homepage: https://github.com/abdfnx/botway
     bindir: /usr
     file_name_template: "{{ .ProjectName }}_{{ .Tag }}_{{ .Arch }}"
-    description: "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack"
+    description: "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack, or even Twitch"
     formats:
       - apk
       - deb
@@ -78,7 +78,7 @@ brews:
       owner: abdfnx
       name: homebrew-tap
     homepage: "https://github.com/abdfnx/botway"
-    description: "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack"
+    description: "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack, or even Twitch"
     license: MIT
 
 scoop:
@@ -87,7 +87,7 @@ scoop:
     owner: abdfnx
     name: botway
   homepage: "https://botway.web.app"
-  description: "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack"
+  description: "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack, or even Twitch"
   license: MIT
 
 checksum:
