@@ -68,8 +68,8 @@ github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635 h1:AJLUr0Ef6avA5S2SX
 github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635/go.mod h1:XdqqKSxdEZz88SByHfT4Vwpl/b9gQK9tjZ/FQuwrM0g=
 github.com/botwayorg/railway-api v0.0.5 h1:6QpJfQrZjgXM1IaTFdNwyJmrubAD19m5MiAPPE6QdDE=
 github.com/botwayorg/railway-api v0.0.5/go.mod h1:oJjlseKXKSc2A7dlPTLtEfm42MIElTivzC8+uWmduAM=
-github.com/botwayorg/templates v0.0.2 h1:N+Kwi4VGci60a4uPcF8MsMFZuO6JrSWSagmRNE9lLd8=
-github.com/botwayorg/templates v0.0.2/go.mod h1:F01dLoy/0W7LiBBqDiKaJhWgPDZHGicafXr+ZamyqDQ=
+github.com/botwayorg/templates v0.0.3 h1:NqxXlt3Qi73//A9/F6DfleZeI8/bv4eUvMgQK9rYcqA=
+github.com/botwayorg/templates v0.0.3/go.mod h1:F01dLoy/0W7LiBBqDiKaJhWgPDZHGicafXr+ZamyqDQ=
 github.com/briandowns/spinner v1.19.0 h1:s8aq38H+Qju89yhp89b4iIiMzMm8YN3p6vGpwyh/a8E=
 github.com/briandowns/spinner v1.19.0/go.mod h1:mQak9GHqbspjC/5iUx3qMlIho8xBS/ppAL/hX5SmPJU=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
