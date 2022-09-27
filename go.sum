@@ -44,8 +44,8 @@ github.com/MakeNowJust/heredoc v1.0.0 h1:cXCdzVdstXyiTqTvfqk9SDHpKNjxuom+DOlyEeQ
 github.com/MakeNowJust/heredoc v1.0.0/go.mod h1:mG5amYoWBHf8vpLOuehzbGGw0EHxpZZ6lCpQ4fNJ8LE=
 github.com/Netflix/go-expect v0.0.0-20220104043353-73e0943537d2 h1:+vx7roKuyA63nhn5WAunQHLTznkw5W8b1Xc0dNjp83s=
 github.com/Netflix/go-expect v0.0.0-20220104043353-73e0943537d2/go.mod h1:HBCaDeC1lPdgDeDbhX8XFpy1jqjK0IBG8W5K+xYqA0w=
-github.com/abdfnx/botwaygo v0.1.1 h1:4PnLPORz6+JIX2nz9O67I6MeE9NEY2NdVI/wlOyPtWg=
-github.com/abdfnx/botwaygo v0.1.1/go.mod h1:e7OXOr7c6RF4GWiXQGRF2aOqBCVSB6SHxL/F+3tqSko=
+github.com/abdfnx/botwaygo v0.1.2 h1:9FPKpj6s7DtuCe5VatkchzxQhhi+129CNcdNjhIOsx0=
+github.com/abdfnx/botwaygo v0.1.2/go.mod h1:EaN+h8W7opTjb91pZxl2pLh2HuSTXsRaSegvsveMFUY=
 github.com/abdfnx/looker v0.1.0 h1:tMN7E0wKIgbydAPPQ1RkppJ1bGHn+B+y9PZy7mwa+3U=
 github.com/abdfnx/looker v0.1.0/go.mod h1:QVfPHnredPBUg4R+MtEkZbMBbqrgtoaj0JHO3KYkvyE=
 github.com/abdfnx/resto v0.1.6 h1:yOM9O9bpMP4lb2ox0U7/gcFXO78P5eUZBxWuKrfdrFA=
