@@ -44,4 +44,6 @@ func InitInDockerCompose(db string) {
 
 	fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 	fmt.Println(constants.SUCCESS_FOREGROUND.Render(" Initialized Successfully"))
+	fmt.Print(constants.INFO_BACKGROUND.Render("NEXT STEP"))
+	fmt.Println(constants.INFO_FOREGROUND.Render(" Add " + db + " SDK package to your bot 📦️"))
 }
