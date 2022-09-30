@@ -77,6 +77,5 @@ func UpdateConfig() {
 
 		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" Configuration synced"))
-
 	}
 }

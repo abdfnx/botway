@@ -88,6 +88,8 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 		app.GitHubCmd,
 		app.RailwayCMD(),
 		app.RenderCMD(),
+		app.PocketBaseCMD(),
+		app.SurrealCMD(),
 		versionCmd,
 	)
 

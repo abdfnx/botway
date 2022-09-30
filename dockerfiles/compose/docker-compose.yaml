@@ -1,0 +1,5 @@
+services:
+  mybot:
+    build: .
+    env_file:
+      - ./config/botway-tokens.env

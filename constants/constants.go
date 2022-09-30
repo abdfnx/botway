@@ -1,7 +1,7 @@
 package constants
 
 import (
-	"io/ioutil"
+	"os"
 	"path/filepath"
 
 	"github.com/abdfnx/tran/dfs"
@@ -56,18 +56,18 @@ var (
 	HomeDir, _             = dfs.GetHomeDirectory()
 	BotwayDirPath          = filepath.Join(HomeDir, ".botway")
 	BotwayConfigFile       = filepath.Join(BotwayDirPath, "botway.json")
-	BotwayConfig, Berr     = ioutil.ReadFile(BotwayConfigFile)
+	BotwayConfig, Berr     = os.ReadFile(BotwayConfigFile)
 	BWBotsConfigFile       = filepath.Join(BotwayDirPath, "bw-bots.json")
-	BWBotsConfig, Werr     = ioutil.ReadFile(BWBotsConfigFile)
-	BotConfig, Oerr        = ioutil.ReadFile(".botway.yaml")
-	BotComposeConfig, Cerr = ioutil.ReadFile(".botway-compose.yaml")
-	Guilds, Gerr           = ioutil.ReadFile(filepath.Join("config", "guilds.json"))
+	BWBotsConfig, Werr     = os.ReadFile(BWBotsConfigFile)
+	BotConfig, Oerr        = os.ReadFile(".botway.yaml")
+	BotComposeConfig, Cerr = os.ReadFile(".botway-compose.yaml")
+	Guilds, Gerr           = os.ReadFile(filepath.Join("config", "guilds.json"))
 
 	RailwayConfigFile   = filepath.Join(HomeDir, ".botway", "railway-config.json")
-	RailwayConfig, Rerr = ioutil.ReadFile(RailwayConfigFile)
+	RailwayConfig, Rerr = os.ReadFile(RailwayConfigFile)
 
 	RenderConfigFile   = filepath.Join(HomeDir, ".botway", "render-config.json")
-	RenderConfig, Nerr = ioutil.ReadFile(RenderConfigFile)
+	RenderConfig, Nerr = os.ReadFile(RenderConfigFile)
 
 	RAIL_PORT = 4411
 )

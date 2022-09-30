@@ -3,7 +3,6 @@ package railway
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"time"
 
@@ -119,7 +118,7 @@ func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error 
 		}
 	}
 
-	_, err = ioutil.ReadFile(".railwayignore")
+	_, err = os.ReadFile(".railwayignore")
 
 	if err == nil {
 		if isVerbose {

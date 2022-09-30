@@ -2,7 +2,6 @@ package guilds
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -45,7 +44,7 @@ func (m model) AddGuildId() {
 
 		bot_path := gjson.Get(string(constants.BotwayConfig), "botway.bots."+m.inputs[0].Value()+".path").String()
 		guildsPath := filepath.Join(bot_path, "config", "guilds.json")
-		guildsFile, err := ioutil.ReadFile(guildsPath)
+		guildsFile, err := os.ReadFile(guildsPath)
 
 		if err != nil {
 			panic(err)

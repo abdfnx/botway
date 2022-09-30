@@ -3,7 +3,7 @@ package dashboard
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 
 	"github.com/abdfnx/botway/constants"
@@ -95,7 +95,7 @@ func (b Bubble) botInfoView() string {
 		bot_config := viper.New()
 		bot_config.SetConfigType("yaml")
 
-		content, err := ioutil.ReadFile(filepath.Join(b.botInfo("path"), ".botway.yaml"))
+		content, err := os.ReadFile(filepath.Join(b.botInfo("path"), ".botway.yaml"))
 
 		if err != nil {
 			panic(err)

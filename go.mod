@@ -29,7 +29,7 @@ require (
 	github.com/spf13/viper v1.13.0
 	github.com/tidwall/gjson v1.14.3
 	github.com/tidwall/sjson v1.2.5
-	golang.org/x/sys v0.0.0-20220926163933-8cfa568d3c25
+	golang.org/x/sys v0.0.0-20220928140112-f11e5e49a4ec
 	golang.org/x/term v0.0.0-20220919170432-7a66f970e087
 )
 
@@ -43,7 +43,7 @@ require (
 	github.com/cli/browser v1.1.0 // indirect
 	github.com/cli/oauth v0.9.0 // indirect
 	github.com/cli/safeexec v1.0.0 // indirect
-	github.com/cli/shurcooL-graphql v0.0.1 // indirect
+	github.com/cli/shurcooL-graphql v0.0.2 // indirect
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dlclark/regexp2 v1.7.0 // indirect
@@ -98,7 +98,7 @@ require (
 	github.com/yosssi/gohtml v0.0.0-20201013000340-ee4748c638f4 // indirect
 	github.com/yuin/goldmark v1.5.2 // indirect
 	github.com/yuin/goldmark-emoji v1.0.1 // indirect
-	golang.org/x/net v0.0.0-20220926192436-02166a98028e // indirect
+	golang.org/x/net v0.0.0-20220927171203-f486391704dc // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/tools v0.1.12 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect

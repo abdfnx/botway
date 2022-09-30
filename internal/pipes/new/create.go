@@ -8,8 +8,8 @@ import (
 
 	"github.com/abdfnx/botway/internal/config"
 	"github.com/abdfnx/botway/internal/pipes/initx"
-	"github.com/botwayorg/templates"
 	"github.com/abdfnx/resto/core/api"
+	"github.com/botwayorg/templates"
 	"github.com/spf13/viper"
 )
 
@@ -131,7 +131,7 @@ func NewBot(m model, l string, platform, lang int) {
 /shard.lock`
 		}
 
-		dotGitIgnoreFileContent = respone + "\n*.lock\nbotway-tokens.env"
+		dotGitIgnoreFileContent = respone + "\n*.lock\nbotway-tokens.env\n/botway.json"
 
 		if BotLang(m) == "rust" && BotPM(m) == "fleet" {
 			dotGitIgnoreFileContent += "\nfleet.toml"
@@ -152,6 +152,7 @@ func NewBot(m model, l string, platform, lang int) {
 	dotGitIgnoreFile := os.WriteFile(filepath.Join(opts.BotName, ".gitignore"), []byte(dotGitIgnoreFileContent), 0644)
 	dotGitKeepFile := os.WriteFile(filepath.Join(opts.BotName, "config", ".gitkeep"), []byte(""), 0644)
 	readmeFile := os.WriteFile(filepath.Join(opts.BotName, "README.md"), []byte(templates.Content("bot-readme.md", "resources", "", "")), 0644)
+	dockerComposeFile := os.WriteFile(filepath.Join(opts.BotName, "docker-compose.yaml"), []byte(templates.Content("dockerfiles/compose/docker-compose.yaml", "botway", "", "")), 0644)
 
 	if dotGitIgnoreFile != nil {
 		log.Fatal(dotGitIgnoreFile)
@@ -163,6 +164,10 @@ func NewBot(m model, l string, platform, lang int) {
 
 	if dotGitKeepFile != nil {
 		log.Fatal(dotGitKeepFile)
+	}
+
+	if dockerComposeFile != nil {
+		log.Fatal(dockerComposeFile)
 	}
 
 	pwd, _ := os.Getwd()

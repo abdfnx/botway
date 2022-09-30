@@ -117,7 +117,7 @@ func BotLang(m model) string {
 }
 
 func BotStartCmd(m model) string {
-	nodeCmd := BotPM(m) + " src/main."
+	nodeCmd := BotPM(m) + " start"
 	denoCmd := "deno run --allow-all main.ts"
 
 	if m.LangChoice == 0 && m.PMChoice == 0 {
@@ -140,14 +140,14 @@ func BotStartCmd(m model) string {
 		}
 	} else if m.LangChoice == 1 {
 		if m.PlatformChoice == 2 {
-			return nodeCmd + ".js"
+			return nodeCmd
 		} else {
 			return "go run src/main.go"
 		}
 	} else if m.LangChoice == 2 {
-		return nodeCmd + ".js"
+		return nodeCmd
 	} else if m.LangChoice == 3 {
-		return nodeCmd + ".js"
+		return nodeCmd
 	} else if m.LangChoice == 4 {
 		if m.PlatformChoice == 3 {
 			return denoCmd
@@ -204,6 +204,26 @@ func BotStartCmd(m model) string {
 }
 
 func BotPM(m model) string {
+	var nodePMs = func () string {
+		if m.PMChoice == 1 {
+			return "yarn"
+		} else if m.PMChoice == 2 {
+			return "pnpm"
+		} else if m.PMChoice == 3 {
+			return "bun"
+		}
+
+		return "npm"
+	}
+
+	var rustPMs = func () string {
+		if m.PMChoice == 1 {
+			return "fleet"
+		}
+
+		return "cargo"
+	}
+
 	if m.LangChoice == 0 && m.PMChoice == 0 {
 		return "pip"
 	} else if m.LangChoice == 0 && m.PMChoice == 1 {
@@ -212,20 +232,20 @@ func BotPM(m model) string {
 		return "poetry"
 	} else if m.LangChoice == 1 {
 		return "go mod"
-	} else if m.LangChoice == 2 || m.LangChoice == 3 && m.PMChoice == 0 {
-		return "npm"
-	} else if m.LangChoice == 2 || m.LangChoice == 3 && m.PMChoice == 1 {
-		return "yarn"
-	} else if m.LangChoice == 2 || m.LangChoice == 3 && m.PMChoice == 2 {
-		return "pnpm"
-	} else if m.LangChoice == 2 || m.LangChoice == 3 && m.PMChoice == 3 {
-		return "bun"
+	} else if m.LangChoice == 2 || m.LangChoice == 3 {
+		nodePMs()
 	} else if m.LangChoice == 4 {
-		return "bundler"
-	} else if m.LangChoice == 5 && m.PMChoice == 0 {
-		return "cargo"
-	} else if m.LangChoice == 5 && m.PMChoice == 1 {
-		return "fleet"
+		if m.PlatformChoice == 3 {
+			return "deno"
+		} else {
+			return "bundler"
+		}
+	} else if m.LangChoice == 5 {
+		if m.PlatformChoice == 3 {
+			return "gradle"
+		} else {
+			rustPMs()
+		}
 	} else if m.LangChoice == 6 {
 		return "deno"
 	} else if m.LangChoice == 7 {

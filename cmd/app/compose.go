@@ -1,54 +1,68 @@
 package app
 
 import (
-	"github.com/abdfnx/botway/internal/pipes/compose"
+	"fmt"
+	"log"
+	"os"
+	"os/exec"
+
+	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/internal/pipes/initx"
+	"github.com/abdfnx/botway/tools"
+	"github.com/abdfnx/botwaygo"
+	"github.com/abdfnx/looker"
+	"github.com/botwayorg/templates"
 	"github.com/spf13/cobra"
 )
 
 func ComposeCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "compose",
-		Short: "Run and manage mulit-bots with botway compose",
-	}
-
-	cmd.AddCommand(ComposeUpCMD())
-	cmd.AddCommand(ComposeBuildCMD())
-	cmd.AddCommand(ComposeListCMD())
-
-	return cmd
-}
-
-func ComposeUpCMD() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "up",
-		Short: "Create and start bots compose",
+		Use:    "compose",
+		Short:  "Run and manage mulit-bots with docker compose",
+		PreRun: func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		Run: func(cmd *cobra.Command, args []string) {
-			compose.Compose(false, false)
+			_, err := looker.LookPath("docker")
+
+			if err != nil {
+				fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
+				panic(constants.FAIL_FOREGROUND.Render(" docker is not installed"))
+			}
+
+			tools.CreateEnvFile()
+
+			if botwaygo.GetBotInfo("bot.host_service") == "railway.app" {
+				initx.CopyConfig()
+			}
+
+			dockerCompose := exec.Command("docker-compose", args...)
+
+			dockerCompose.Stdin = os.Stdin
+			dockerCompose.Stdout = os.Stdout
+			dockerCompose.Stderr = os.Stderr
+			err = dockerCompose.Run()
+
+			if err != nil {
+				log.Printf("error: %v\n", err)
+			}
 		},
 	}
 
-	return cmd
-}
-
-func ComposeBuildCMD() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "build",
-		Short: "Build or rebuild bots",
-		Run: func(cmd *cobra.Command, args []string) {
-			compose.Compose(true, false)
-		},
-	}
+	cmd.AddCommand(ComposeInitCMD())
 
 	return cmd
 }
 
-func ComposeListCMD() *cobra.Command {
+func ComposeInitCMD() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls"},
-		Short:   "List bots services",
+		Use:    "init",
+		Short:  "Initialize `docker-compose.yaml`",
+		PreRun: func(cmd *cobra.Command, args []string) { tools.CheckDir() },
 		Run: func(cmd *cobra.Command, args []string) {
-			compose.Compose(false, true)
+			dockerComposeFile := os.WriteFile("docker-compose.yaml", []byte(templates.Content("dockerfiles/compose/docker-compose.yaml", "botway", "", "")), 0644)
+
+			if dockerComposeFile != nil {
+				log.Fatal(dockerComposeFile)
+			}
 		},
 	}
 

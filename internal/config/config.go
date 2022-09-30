@@ -2,7 +2,7 @@ package config
 
 import (
 	"bytes"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 
 	"github.com/abdfnx/botway/constants"
@@ -21,7 +21,7 @@ func GetBotInfoFromArg(botName, value string) string {
 
 	c.SetConfigType("yaml")
 
-	botConfig, err := ioutil.ReadFile(filepath.Join(botName, ".botway.yaml"))
+	botConfig, err := os.ReadFile(filepath.Join(botName, ".botway.yaml"))
 
 	if err != nil {
 		panic(err)
