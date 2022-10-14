@@ -84,6 +84,8 @@ github.com/botwayorg/railway-api v0.0.5 h1:6QpJfQrZjgXM1IaTFdNwyJmrubAD19m5MiAPP
 github.com/botwayorg/railway-api v0.0.5/go.mod h1:oJjlseKXKSc2A7dlPTLtEfm42MIElTivzC8+uWmduAM=
 github.com/botwayorg/railway-api v0.0.6 h1:92NlvgYyRLYK5JFnp7tEJFwEEBGMMhrBbX3nE+qaQdg=
 github.com/botwayorg/railway-api v0.0.6/go.mod h1:oJjlseKXKSc2A7dlPTLtEfm42MIElTivzC8+uWmduAM=
+github.com/botwayorg/railway-api v0.0.7 h1:KHrSyfaYY8rme5ghuL3kKcPEw56Z/MVgbv+0WbSkrMc=
+github.com/botwayorg/railway-api v0.0.7/go.mod h1:vCPUl6bIIrTREDW829hLqmI/eZP+4qKF2XqqQT0oQ1s=
 github.com/botwayorg/templates v0.0.4 h1:eZFp9bbeQiaNzCDKXfLUtsSnIcrgIOSlYwqV6fU1va0=
 github.com/botwayorg/templates v0.0.4/go.mod h1:F01dLoy/0W7LiBBqDiKaJhWgPDZHGicafXr+ZamyqDQ=
 github.com/briandowns/spinner v1.11.1/go.mod h1:QOuQk7x+EaDASo80FEXwlwiA+j/PPIcX3FScO+3/ZPQ=
