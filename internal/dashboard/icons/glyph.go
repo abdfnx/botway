@@ -33,5 +33,6 @@ var IconSet = map[string]*IconInfo{
 	"cpp":        {icon: "\ufb71", color: [3]uint8{2, 119, 189}},
 	"nim":        {icon: "\uf6a4", color: [3]uint8{255, 202, 61}},
 	"lua":        {icon: "\ue620", color: [3]uint8{66, 165, 245}},
+	"swift":      {icon: "\ufbe3", color: [3]uint8{249, 95, 63}},
 	"other":      {icon: "\ufba7", color: [3]uint8{249, 89, 63}},
 }
