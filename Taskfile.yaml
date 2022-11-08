@@ -31,7 +31,7 @@ tasks:
 
     vars:
       BUILD_DATE:
-        - sh: go run ./scripts/date.go
+        sh: go run ./scripts/date.go
 
   build:
     cmds:
@@ -40,9 +40,9 @@ tasks:
 
     vars:
       VERSION:
-        - sh: git describe --abbrev=0 --tags
+        sh: git describe --abbrev=0 --tags
       BUILD_DATE:
-        - sh: go run ./scripts/date.go
+        sh: go run ./scripts/date.go
 
   docker:
     cmds:
