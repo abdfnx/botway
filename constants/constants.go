@@ -21,11 +21,11 @@ var (
 	BOLD = lipgloss.NewStyle().Bold(true)
 
 	SUCCESS_BACKGROUND = lipgloss.NewStyle().
-				Bold(true).
-				Foreground(lipgloss.Color("#FFF")).
-				Background(lipgloss.Color(GREEN_COLOR)).
-				PaddingLeft(1).
-				PaddingRight(1)
+			Bold(true).
+			Foreground(lipgloss.Color("#FFF")).
+			Background(lipgloss.Color(GREEN_COLOR)).
+			PaddingLeft(1).
+			PaddingRight(1)
 	FAIL_BACKGROUND = lipgloss.NewStyle().
 			Bold(true).
 			Foreground(lipgloss.Color("#FFF")).

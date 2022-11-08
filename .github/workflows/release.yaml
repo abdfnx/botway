@@ -39,9 +39,6 @@ jobs:
         id: ghtag
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
-      - name: Set up Build Info
-        run: task setup
-
       - name: Build
         run: |
           task release

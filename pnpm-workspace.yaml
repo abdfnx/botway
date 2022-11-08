@@ -1,4 +1,5 @@
 packages:
   # - "web"
   - "installer/assets"
+  - "core/frontend"
   - "packages/botway.js"

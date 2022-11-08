@@ -34,6 +34,6 @@
   },
   "packageManager": "pnpm@7.9.0",
   "devDependencies": {
-    "turbo": "^1.4.7"
+    "turbo": "^1.6.3"
   }
 }

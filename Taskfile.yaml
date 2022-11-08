@@ -13,34 +13,36 @@ tasks:
 
   bfs:
     cmds:
-      - task: remove
+      # - task: remove
       - task: build
       - task: install
 
-  setup:
-    cmds:
-      - '{{if eq OS "windows"}}if (Test-Path "date.txt") { Remove-Item -Path date.txt -Recurse -Force }{{else}}if [ -f "date.txt" ]; then rm date.txt; fi{{end}}'
-      - '{{if eq OS "windows"}}if (Test-Path "tag.txt") { Remove-Item -Path tag.txt -Recurse -Force }{{else}}if [ -f "tag.txt" ]; then rm tag.txt; fi{{end}}'
-      - go run ./scripts/date.go >> date.txt
-      - git describe --abbrev=0 --tags >> tag.txt
-
   remove:
     cmds:
-      - '{{if eq OS "windows"}}Remove-Item -Path "{{ .BOTWAY_WINDOWS_PATH }}" -Recurse -Force{{else}}sudo rm -rf "{{ .BOTWAY_UNIX_PATH }}"/botway{{end}}'
+      - '{{if eq OS "windows"}}if (Test-Path "{{ .BOTWAY_WINDOWS_PATH }}") { Remove-Item -Path "{{ .BOTWAY_WINDOWS_PATH }}" -Recurse -Force }{{else}}if [ -f "{{ .BOTWAY_WINDOWS_PATH }}" ]; then rm "{{ .BOTWAY_WINDOWS_PATH }}"; fi{{end}}'
 
   install:
     cmds:
-      - '{{if eq OS "windows"}}Copy-Item -Path botway.exe -Destination "{{ .BOTWAY_WINDOWS_PATH }}" -Recurse -Force{{else}}sudo cp botway "{{ .BOTWAY_UNIX_PATH }}"{{end}}'
+      - '{{if eq OS "windows"}}cp -Path botway.exe -Destination "{{ .BOTWAY_WINDOWS_PATH }}" -Recurse -Force{{else}}sudo cp botway "{{ .BOTWAY_UNIX_PATH }}"{{end}}'
 
   release:
     cmds:
-      - BuildDate="$(cat date.txt)" goreleaser release --rm-dist --timeout 100m
+      - BuildDate="{{.BUILD_DATE}}" goreleaser release --rm-dist --timeout 100m
+
+    vars:
+      BUILD_DATE:
+        - sh: go run ./scripts/date.go
 
   build:
     cmds:
-      - task: setup
       - go mod tidy
-      - go build -ldflags "-X main.version=$(cat tag.txt) -X main.buildDate=$(cat date.txt)" -o botway{{exeExt}}
+      - go build -ldflags "-X main.version={{.VERSION}} -X main.buildDate={{.BUILD_DATE}}" -o botway{{exeExt}}
+
+    vars:
+      VERSION:
+        - sh: git describe --abbrev=0 --tags
+      BUILD_DATE:
+        - sh: go run ./scripts/date.go
 
   docker:
     cmds:
