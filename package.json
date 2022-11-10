@@ -18,8 +18,7 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "postinstall": "node ./install.js"
+    "dev": "turbo run dev --parallel"
   },
   "files": [
     "bin",
@@ -32,7 +31,7 @@
     "node-stream-zip": "^1.15.0",
     "stream": "^0.0.2"
   },
-  "packageManager": "pnpm@7.9.0",
+  "packageManager": "pnpm@7.15.0",
   "devDependencies": {
     "turbo": "^1.6.3"
   }

@@ -1,10 +1,20 @@
 FROM scratch
+### If you're going to use railway.app as host service
 
-COPY . .
+# COPY . .
 
-RUN mkdir /root/.botway
+# RUN mkdir /root/.botway
 
-COPY botway.json /root/.botway
+# COPY botway.json /root/.botway
+
+######################################################
+### If you're going to use render.com as host service
+
+# FROM botwayorg/botway:latest AS bw
+
+# COPY . .
+
+# RUN botway docker-init
 
 ### Replace `scratch` with the linux distribution you want to use ###
 ### Example: FROM alpine:latest ###
