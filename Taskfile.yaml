@@ -19,7 +19,7 @@ tasks:
 
   remove:
     cmds:
-      - if [ -f {{ .BOTWAY_UNIX_PATH }} ]; then rm {{ .BOTWAY_UNIX_PATH }}; fi{{end}}
+      - if [ -f {{ .BOTWAY_UNIX_PATH }} ]; then rm {{ .BOTWAY_UNIX_PATH }}; fi
 
   install:
     cmds:
