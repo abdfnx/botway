@@ -21,11 +21,11 @@ var (
 	BOLD = lipgloss.NewStyle().Bold(true)
 
 	SUCCESS_BACKGROUND = lipgloss.NewStyle().
-			Bold(true).
-			Foreground(lipgloss.Color("#FFF")).
-			Background(lipgloss.Color(GREEN_COLOR)).
-			PaddingLeft(1).
-			PaddingRight(1)
+				Bold(true).
+				Foreground(lipgloss.Color("#FFF")).
+				Background(lipgloss.Color(GREEN_COLOR)).
+				PaddingLeft(1).
+				PaddingRight(1)
 	FAIL_BACKGROUND = lipgloss.NewStyle().
 			Bold(true).
 			Foreground(lipgloss.Color("#FFF")).
@@ -57,8 +57,8 @@ var (
 	BotwayDirPath          = filepath.Join(HomeDir, ".botway")
 	BotwayConfigFile       = filepath.Join(BotwayDirPath, "botway.json")
 	BotwayConfig, Berr     = os.ReadFile(BotwayConfigFile)
-	BWBotsConfigFile       = filepath.Join(BotwayDirPath, "bw-bots.json")
-	BWBotsConfig, Werr     = os.ReadFile(BWBotsConfigFile)
+	BWDBConfigFile         = filepath.Join(BotwayDirPath, "bwdb.json")
+	BWDBConfig, Derr       = os.ReadFile(BWDBConfigFile)
 	BotConfig, Oerr        = os.ReadFile(".botway.yaml")
 	BotComposeConfig, Cerr = os.ReadFile(".botway-compose.yaml")
 	Guilds, Gerr           = os.ReadFile(filepath.Join("config", "guilds.json"))

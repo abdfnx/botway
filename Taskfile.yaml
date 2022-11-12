@@ -13,17 +13,17 @@ tasks:
 
   bfs:
     cmds:
-      # - task: remove
+      - task: remove
       - task: build
       - task: install
 
   remove:
     cmds:
-      - '{{if eq OS "windows"}}if (Test-Path "{{ .BOTWAY_WINDOWS_PATH }}") { Remove-Item -Path "{{ .BOTWAY_WINDOWS_PATH }}" -Recurse -Force }{{else}}if [ -f "{{ .BOTWAY_WINDOWS_PATH }}" ]; then rm "{{ .BOTWAY_WINDOWS_PATH }}"; fi{{end}}'
+      - if [ -f {{ .BOTWAY_UNIX_PATH }} ]; then rm {{ .BOTWAY_UNIX_PATH }}; fi{{end}}
 
   install:
     cmds:
-      - '{{if eq OS "windows"}}cp -Path botway.exe -Destination "{{ .BOTWAY_WINDOWS_PATH }}" -Recurse -Force{{else}}sudo cp botway "{{ .BOTWAY_UNIX_PATH }}"{{end}}'
+      - sudo cp botway {{ .BOTWAY_UNIX_PATH }}
 
   release:
     cmds:
@@ -34,6 +34,7 @@ tasks:
         sh: go run ./scripts/date.go
 
   build:
+    aliases: [b]
     cmds:
       - go mod tidy
       - go build -ldflags "-X main.version={{.VERSION}} -X main.buildDate={{.BUILD_DATE}}" -o botway{{exeExt}}
