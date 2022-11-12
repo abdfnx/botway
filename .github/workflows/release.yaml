@@ -43,6 +43,7 @@ jobs:
         run: |
           task release
           task upload-scoop-manifest
+          npx prettier botway.json -w
           git config --local user.email "${{ env.GITHUB_ACTIONS_EMAIL }}"
           git config --local user.name "${{ env.GITHUB_ACTIONS_NAME }}"
           git diff --cached
@@ -53,3 +54,4 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.ACCESS_TOKEN }}
+e
