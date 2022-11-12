@@ -71,3 +71,7 @@ tasks:
       - '{{if eq OS "windows"}}python -m twine check dist/*{{else}}python3 -m twine check dist/*{{end}}'
       - '{{if eq OS "windows"}}python -m twine upload dist/*{{else}}python3 -m twine upload dist/*{{end}}'
       - '{{if eq OS "windows"}}Remove-Item -Path dist *.egg-info -Recurse -Force{{else}}rm -rf dist *.egg-info{{end}}'
+
+  clone-submodules:
+    cmds:
+      - git submodule update --init --recursive

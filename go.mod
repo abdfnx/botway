@@ -5,11 +5,11 @@ go 1.19
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.6
 	github.com/MakeNowJust/heredoc v1.0.0
-	github.com/abdfnx/botwaygo v0.1.2
+	github.com/abdfnx/botwaygo v0.1.3
 	github.com/abdfnx/looker v0.1.0
 	github.com/abdfnx/resto v0.1.6
 	github.com/abdfnx/tran v0.1.43
-	github.com/botwayorg/get-latest v0.1.4
+	github.com/botwayorg/get-latest v0.1.5
 	github.com/botwayorg/gh v0.1.0
 	github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635
 	github.com/botwayorg/railway-api v0.0.7
