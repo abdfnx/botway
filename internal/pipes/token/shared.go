@@ -6,7 +6,9 @@ import (
 	crand "crypto/rand"
 	"fmt"
 	"io"
+	"log"
 	"math/rand"
+	"os/user"
 	"strings"
 	"time"
 
@@ -22,16 +24,15 @@ var (
 	NoStyle       = lipgloss.NewStyle()
 	FocusedButton = FocusedStyle.Copy().Render("[ Done ]")
 	BlurredButton = fmt.Sprintf("[ %s ]", BlurredStyle.Render("Done"))
-	UserSecret    = Generator()
 )
 
-func Generator() string {
+func Generator(secret string) string {
 	rand.Seed(time.Now().Unix())
-	charSet := []rune("abcdedfghijklmnopqrstABCDEFGHIJKLMNOP1234567890")
+	charSet := []rune("abcdedfghijklmnopqrstABCDEFGHIJKLMNOP1234567890" + secret)
 
 	var output strings.Builder
 
-	for i := 0; i < 32; i++ {
+	for i := 0; i < 16; i++ {
 		random := rand.Intn(len(charSet))
 		randomChar := charSet[random]
 		output.WriteRune(randomChar)
@@ -40,10 +41,16 @@ func Generator() string {
 	return output.String()
 }
 
-func EncryptTokens(token, id string) (string, string) {
+func EncryptTokens() (string, string) {
+	username, err := user.Current()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	var encryptAES = func(data string) string {
 		text := []byte(data)
-		key := []byte(UserSecret)
+		key := []byte(Generator(username.Username))
 
 		c, err := aes.NewCipher(key)
 
@@ -65,5 +72,5 @@ func EncryptTokens(token, id string) (string, string) {
 		return fmt.Sprintf("%x", gcm.Seal(nonce, nonce, text, nil))
 	}
 
-	return encryptAES(token), encryptAES(id)
+	return encryptAES("Access Token for " + username.Username), encryptAES("Refresh Token for " + username.Username)
 }

@@ -17,7 +17,7 @@ func InitCMD() *cobra.Command {
 		Aliases: []string{"."},
 		Run: func(cmd *cobra.Command, args []string) {
 			initx.Init()
-			initx.InitBWBots()
+			initx.InitBWDB()
 
 			if !opts.NoRepo {
 				initx.SetupGitRepo()

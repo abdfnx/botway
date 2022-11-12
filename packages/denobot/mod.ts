@@ -1,7 +1,7 @@
 import { parse } from "https://deno.land/std/encoding/yaml.ts";
-import { readJson } from "./json.ts";
+import { readJson } from "https://deno.land/x/deno_json/mod.ts";
 
-let botwayConfigPath: any = Deno.env.get("HOME") + "/.botway" + "/botway.json";
+let botwayConfigPath = Deno.env.get("HOME") + "/.botway" + "/botway.json";
 
 if (Deno.build.os == "windows") {
   botwayConfigPath =
@@ -18,7 +18,7 @@ const getBotInfo = (value: string) => {
 export const getToken = () => {
   try {
     return botwayConfig["botway"]["bots"][getBotInfo("name")]["bot_token"];
-  } catch (err: any) {
+  } catch (err) {
     console.log(err.stack || String(err));
   }
 };
@@ -32,7 +32,7 @@ export const getAppId = () => {
     } else {
       return botwayConfig["botway"]["bots"][getBotInfo("name")]["bot_app_id"];
     }
-  } catch (err: any) {
+  } catch (err) {
     console.log(err.stack || String(err));
   }
 };
@@ -47,7 +47,7 @@ export const getGuildId = (serverName: string) => {
       return botwayConfig["botway"]["bots"][getBotInfo("name")]["guilds"][
         serverName
       ]["server_id"];
-    } catch (err: any) {
+    } catch (err) {
       console.log(err.stack || String(err));
     }
   }
@@ -55,7 +55,7 @@ export const getGuildId = (serverName: string) => {
 
 export const getSecret = () => {
   try {
-    var value = "";
+    let value = "";
 
     if (getBotInfo("type") == "slack") {
       value = "signing_secret";
@@ -64,7 +64,7 @@ export const getSecret = () => {
     }
 
     return botwayConfig["botway"]["bots"][getBotInfo("name")][value];
-  } catch (err: any) {
+  } catch (err) {
     console.log(err.stack || String(err));
   }
 };

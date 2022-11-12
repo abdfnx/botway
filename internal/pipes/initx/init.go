@@ -8,34 +8,19 @@ import (
 	"path/filepath"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/botway/internal/pipes/token"
 	"github.com/abdfnx/tran/dfs"
 	"github.com/spf13/viper"
 )
 
-func InitBWBots() {
-	viper.AddConfigPath(constants.BotwayDirPath)
-	viper.SetConfigName("bw-bots")
-	viper.SetConfigType("json")
+func InitBWDB() {
+	bwdbConfig := os.WriteFile(constants.BWDBConfigFile, []byte("[]"), 0644)
 
-	viper.Set("bots", []string{})
-
-	if err := viper.SafeWriteConfig(); err != nil {
-		if os.IsNotExist(err) {
-			err = viper.WriteConfig()
-
-			if err != nil {
-				log.Fatal(err)
-			}
-		}
+	if bwdbConfig != nil {
+		panic(bwdbConfig)
 	}
 
-	if err := viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			log.Fatal(err)
-		}
-	}
-
-	if _, err := os.Stat(constants.BWBotsConfigFile); err == nil {
+	if _, err := os.Stat(constants.BWDBConfigFile); err == nil {
 		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
 	}
 }
@@ -47,6 +32,8 @@ func Init() {
 		log.Fatal(err)
 	}
 
+	access_token, refresh_token := token.EncryptTokens()
+
 	botwayConfig := viper.New()
 
 	botwayConfig.AddConfigPath(constants.BotwayDirPath)
@@ -57,6 +44,9 @@ func Init() {
 	botwayConfig.SetDefault("botway.settings.auto_sync", true)
 	botwayConfig.SetDefault("botway.settings.check_updates", true)
 	botwayConfig.SetDefault("botway.bots_names", []string{})
+	botwayConfig.SetDefault("user.token", token.Generator(access_token + refresh_token))
+	botwayConfig.SetDefault("user.access_token", access_token)
+	botwayConfig.SetDefault("user.refresh_token", refresh_token)
 
 	if err := botwayConfig.SafeWriteConfig(); err != nil {
 		if os.IsNotExist(err) {
@@ -79,7 +69,7 @@ func Init() {
 		fmt.Println(constants.SUCCESS_FOREGROUND.Render(" Initialization Successful"))
 		fmt.Print(constants.INFO_BACKGROUND.Render("NEXT STEP"))
 		fmt.Println(constants.INFO_FOREGROUND.Render(" You can login into github by running " + constants.COMMAND_FOREGROUND.Render("`botway gh login`")))
-		fmt.Println(constants.INFO_FOREGROUND.Render(" Or You can get started and create your first bot by running " + constants.COMMAND_FOREGROUND.Render("`botway new BOT_NAME`")))
+		fmt.Println(constants.INFO_FOREGROUND.Render("Or You can get started and create your first bot by running " + constants.COMMAND_FOREGROUND.Render("`botway new BOT_NAME`")))
 	} else if errors.Is(err, os.ErrNotExist) {
 		fmt.Print(constants.FAIL_BACKGROUND.Render("ERROR"))
 		fmt.Println(constants.FAIL_FOREGROUND.Render(" Initialization Failed, try again"))
