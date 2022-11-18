@@ -37,7 +37,7 @@ RUN cd ./botway/installer && \
 	cp ${DARWIN_TARGET_PATH}/botway-installer ./installer-macos && \
  	cp ./installer-macos ./assets/public/installers
 
-FROM node:alpine
+FROM node:latest
 
 ENV INSTALLERS_DIR_PATH="./public/installers"
 
