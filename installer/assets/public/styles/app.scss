@@ -1,0 +1,127 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap&display=swap");
+
+@import "config/vars.scss";
+@import "messages/messages.scss";
+@import "text/text.scss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  scroll-behavior: smooth;
+  font-size: 1rem;
+  font-family: "Inter";
+  font-weight: 400;
+  line-height: 1.5;
+  color: $c-gray-400;
+  background: $bg;
+}
+
+.trsn {
+  transition-property: background-color, border-color, color, fill, stroke,
+    opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+a {
+  text-decoration: none;
+  color: $c-primary;
+}
+
+::-webkit-scrollbar {
+  width: 5px !important;
+  height: 5px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: $c-dark-60 !important;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px !important;
+  background: #bbbbbb !important;
+}
+
+::-webkit-scrollbar-corner {
+  background: #e1e1e1 !important;
+}
+
+.button {
+  @apply inline-flex px-2.5 py-1.5 text-xs text-center items-center justify-center border border-transparent font-medium shadow-sm text-white bg-black focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-gray-800;
+  @apply disabled:bg-opacity-80;
+  @apply rounded-md;
+}
+
+.button__round {
+  @apply rounded-full #{!important};
+}
+
+.button__secondary {
+  @apply bg-white text-black;
+}
+
+.button__third {
+  @apply bg-black text-white;
+}
+
+.button__sm {
+  @apply px-2.5 py-1.5 text-xs;
+}
+
+.button__md {
+  @apply px-3 py-2 text-sm;
+  background: $c-primary;
+}
+
+.button__lg {
+  @apply px-4 py-2 text-sm;
+}
+
+.button__xl {
+  @apply px-6 py-3 text-base;
+}
+
+blockquote {
+  @apply my-6 p-2;
+  @apply overflow-auto break-words;
+}
+
+/* input {
+  @apply bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+} */
+
+.text-small {
+  font-size: 12px;
+}
+
+.logo-animated .logo-load {
+  animation: scale-in 0.5s;
+  animation-duration: 0.5s;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running;
+  animation-name: scale-in;
+}

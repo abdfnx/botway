@@ -4,6 +4,9 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	crand "crypto/rand"
+	"crypto/rsa"
+	"crypto/x509"
+	"encoding/pem"
 	"fmt"
 	"io"
 	"log"
@@ -73,4 +76,35 @@ func EncryptTokens() (string, string) {
 	}
 
 	return encryptAES("Access Token for " + username.Username), encryptAES("Refresh Token for " + username.Username)
+}
+
+func CreateRSATokens() (string, string) {
+	bitSize := 4096
+
+	// Generate RSA key.
+	key, err := rsa.GenerateKey(crand.Reader, bitSize)
+	if err != nil {
+		panic(err)
+	}
+
+	// Extract public component.
+	pub := key.Public()
+
+	// Encode private key to PKCS#1 ASN.1 PEM.
+	keyPEM := pem.EncodeToMemory(
+		&pem.Block{
+			Type:  "RSA PRIVATE KEY",
+			Bytes: x509.MarshalPKCS1PrivateKey(key),
+		},
+	)
+
+	// Encode public key to PKCS#1 ASN.1 PEM.
+	pubPEM := pem.EncodeToMemory(
+		&pem.Block{
+			Type:  "PUBLIC KEY",
+			Bytes: x509.MarshalPKCS1PublicKey(pub.(*rsa.PublicKey)),
+		},
+	)
+
+	return string(pubPEM), string(keyPEM)
 }

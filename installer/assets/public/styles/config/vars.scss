@@ -1,0 +1,38 @@
+$c-primary: #1e90ff;
+$c-primary-dark: #1e90ff;
+$c-secondary: #00ffd1;
+$c-link: #4d91ff;
+$c-success: #6af499;
+$c-danger: #ff5151;
+$c-black: black;
+$c-gray-400: #151c27;
+$c-text: black;
+$bg: hsl(250, 24%, 9%);
+$bg-secondary: hsl(220, 55%, 10%);
+
+$c-dark-20: #e3e3e3;
+$c-dark-30: #8b93a1;
+$c-dark-40: #151c27;
+$c-dark-50: #0a0f17;
+$c-dark-60: #06070a;
+
+$fade: 120ms;
+$transition: 120ms !default;
+
+$f-base: 14px;
+$f-sm: 12px;
+$f-md: 16px;
+$f-heading: 24px;
+$f-heading-md: 32px;
+$f-heading-large: 48px;
+$f-hero-md: 40px;
+$f-hero: 64px;
+$f-bold: 600;
+
+.bg {
+  background: $bg;
+}
+
+.bg-secondary {
+  background: $bg-secondary;
+}

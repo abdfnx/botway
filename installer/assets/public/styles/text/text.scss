@@ -1,0 +1,37 @@
+.hero {
+  font-size: $f-hero;
+}
+
+.heroMd {
+  font-size: $f-hero-md;
+  font-weight: 700;
+}
+
+.heading {
+  font-size: $f-heading;
+}
+
+.medium {
+  font-size: $f-md;
+  font-weight: 500;
+}
+
+.regular {
+  font-size: $f-base;
+}
+
+.small {
+  font-size: $f-sm;
+}
+
+.text {
+  color: $c-text;
+
+  &:global(.fancy) {
+    background: linear-gradient(45deg, #00ffd1 10%, #fff 100%);
+    background: -webkit-linear-gradient(45deg, #00ffd1 10%, #fff 100%);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

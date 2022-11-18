@@ -1,14 +1,16 @@
-import { LogoSection } from "./logo";
+import LogoSection from "../components/Logo";
 
 function App() {
   return (
     <>
-      <main className="flex flex-col md:flex-row-reverse md:h-screen sm:pt-20">
+      <main className="flex flex-col md:flex-row-reverse md:h-screen">
         <LogoSection />
 
-        <section className="justify-center px-4 md:px-0 md:flex md:w-2/3">
+        <section className="justify-center px-4 md:px-0 md:flex md:w-2/3 md:border-r border-gray-800">
           <div className="w-full max-w-sm py-4 mx-auto my-auto min-w-min md:py-9 md:w-7/12">
-            <p className="text-lg pt-2 text-gray-400">abdfnx/botway 🤖</p>
+            <h3 className="font-medium md:text-xl pt-3 text-white">
+              Botway Assets CDN 📦
+            </h3>
           </div>
         </section>
       </main>
