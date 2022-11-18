@@ -14,7 +14,6 @@ func main() {
 	gitCommit()
 	gitTag(os.Args[1])
 	gitPushOrigin(os.Args[1])
-	publishOnNPM()
 }
 
 func updateVersionOnPackageJSON(version string) {
@@ -71,21 +70,6 @@ func gitTag(version string) {
 
 func gitPushOrigin(version string) {
 	cmd := "git push origin " + version
-	runCmd := exec.Command("bash", "-c", cmd)
-
-	runCmd.Stdin = os.Stdin
-	runCmd.Stdout = os.Stdout
-	runCmd.Stderr = os.Stderr
-	err := runCmd.Run()
-
-	if err != nil {
-		log.Printf("error: %v\n", err)
-	}
-}
-
-func publishOnNPM() {
-	cmd := "pnpm publish"
-
 	runCmd := exec.Command("bash", "-c", cmd)
 
 	runCmd.Stdin = os.Stdin
