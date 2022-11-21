@@ -1,3 +1,0 @@
-# Botway cdn assets website
-
-📦
