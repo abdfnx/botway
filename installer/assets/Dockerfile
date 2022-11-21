@@ -13,7 +13,7 @@ ENV LINUX_TARGET_PATH="./target/release"
 RUN cd ./botway/installer && \
 	cargo build --release && \
 	cp ${LINUX_TARGET_PATH}/botway-installer ./installer-linux && \
- 	cp ./installer-linux ./assets/cdn/installers
+ 	cp ./installer-linux ./assets/static/installers
 
 # Build macos target
 ENV DARWIN_TARGET_PATH="./target/x86_64-apple-darwin/release"
@@ -35,11 +35,11 @@ RUN cd ./botway/installer && \
 	LIBZ_SYS_STATIC=1 \
 	cargo build --release --target x86_64-apple-darwin && \
 	cp ${DARWIN_TARGET_PATH}/botway-installer ./installer-macos && \
- 	cp ./installer-macos ./assets/cdn/installers
+ 	cp ./installer-macos ./assets/static/installers
 
 FROM denoland/deno:alpine
 
-ENV INSTALLERS_DIR_PATH="./cdn/installers"
+ENV INSTALLERS_DIR_PATH="./static/installers"
 
 COPY . .
 
@@ -47,6 +47,6 @@ RUN rm -rf ${INSTALLERS_DIR_PATH}
 
 COPY --from=rs ./botway/installer/assets/${INSTALLERS_DIR_PATH} ${INSTALLERS_DIR_PATH}
 
-ENTRYPOINT ["deno", "run", "--allow-all", "server.ts"]
+ENTRYPOINT ["deno", "task", "start"]
 
 EXPOSE 8000
