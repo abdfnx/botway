@@ -2,9 +2,9 @@ name: Botway CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
@@ -35,7 +35,7 @@ jobs:
         run: botway -v
 
   from-script:
-    needs: [ bfs ]
+    needs: [bfs]
 
     runs-on: ubuntu-latest
 
@@ -46,7 +46,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install from script
-        run: curl -sL https://bit.ly/botway | bash
+        run: curl -sL https://dub.sh/botway | bash
 
       - name: Run Version
         run: botway -v
@@ -62,14 +62,14 @@ jobs:
 
       - name: Install from script
         run: |
-          irm https://bit.ly/bw-win | iex
+          irm https://dub.sh/bw-win | iex
           echo "::add-path::C:\Users\runneradmin\AppData\Local\botway\bin\;"
 
       - name: Run Version
         run: botway -v
 
   homebrew:
-    needs: [ bfs ]
+    needs: [bfs]
 
     runs-on: macos-latest
 
@@ -86,7 +86,7 @@ jobs:
         run: botway -v
 
   docker:
-    needs: [ bfs, from-script ]
+    needs: [bfs, from-script]
 
     runs-on: ubuntu-latest
 

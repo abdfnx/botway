@@ -26,13 +26,13 @@ Botway uses [Railway][rw] and [Render][rnd] to host your bot code and database.
 - Shell
 
 ```bash
-curl -sL https://bit.ly/botway | bash
+curl -sL https://dub.sh/botway | bash
 ```
 
 - PowerShell
 
 ```powershell
-irm https://bit.ly/bw-win | iex
+irm https://dub.sh/bw-win | iex
 ```
 
 **then restart your powershell**

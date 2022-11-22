@@ -40,7 +40,7 @@ RUN adduser -D bw \
 RUN npm i -g npm@latest yarn@latest pnpm@latest
 
 ### botway ###
-RUN curl -sL bit.ly/botway | bash
+RUN curl -sL dub.sh/botway | bash
 
 ENV HOME="/home/bw"
 WORKDIR $HOME

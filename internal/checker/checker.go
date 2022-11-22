@@ -5,9 +5,9 @@ import (
 	"strings"
 
 	"github.com/abdfnx/botway/cmd/factory"
-	"github.com/botwayorg/get-latest/api"
 	"github.com/abdfnx/botway/constants"
 	"github.com/abdfnx/looker"
+	"github.com/botwayorg/get-latest/api"
 )
 
 func Check(buildVersion string) {
@@ -24,11 +24,11 @@ func Check(buildVersion string) {
 		if isFromHomebrew {
 			return "brew upgrade botway"
 		} else if isFromUsrBinDir {
-			return "curl -sL https://bit.ly/botway | bash"
+			return "curl -sL https://dub.sh/botway | bash"
 		} else if isFromScoop {
 			return "scoop update botway"
 		} else if isFromAppData {
-			return "irm https://bit.ly/bw-win | iex"
+			return "irm https://dub.sh/bw-win | iex"
 		}
 
 		return ""
