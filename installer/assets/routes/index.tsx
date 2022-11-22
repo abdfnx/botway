@@ -1,4 +1,4 @@
-import LogoSection from "../components/Logo/index.tsx";
+import LogoSection from "../components/Logo.tsx";
 import { Head } from "$fresh/runtime.ts";
 
 function App() {

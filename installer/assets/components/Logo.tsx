@@ -1,5 +1,3 @@
-import { JSX } from "preact";
-
 export default function LogoSection() {
   return (
     <section className="flex items-start w-full px-4 mx-auto md:px-0 md:items-center md:w-1/3">
