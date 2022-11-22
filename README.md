@@ -11,7 +11,7 @@ With botway, you can focus on your bot's logic and don't worry about the infrast
 Botway uses [Railway][rw] and [Render][rnd] to host your bot code and database.
 
 <p align="center">
-  <img src="https://github.com/abdfnx/botway/raw/main/installer/assets/public/screenshots/deploy.svg" alt="Botway Screenshot" width="1400">
+  <img src="https://cdn-botway.up.railway.app/screenshots/deploy.svg" alt="Botway Screenshot" width="1400">
 </p>
 
 ## Requirements

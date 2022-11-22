@@ -32,7 +32,7 @@ func Init() {
 		log.Fatal(err)
 	}
 
-	public_key, private_key := token.CreateRSATokens()
+	token.CreateRSATokens()
 
 	botwayConfig := viper.New()
 
@@ -44,8 +44,6 @@ func Init() {
 	botwayConfig.SetDefault("botway.settings.auto_sync", true)
 	botwayConfig.SetDefault("botway.settings.check_updates", true)
 	botwayConfig.SetDefault("botway.bots_names", []string{})
-	botwayConfig.SetDefault("user.public_key", public_key)
-	botwayConfig.SetDefault("user.private_key", private_key)
 
 	if err := botwayConfig.SafeWriteConfig(); err != nil {
 		if os.IsNotExist(err) {

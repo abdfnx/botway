@@ -11,11 +11,14 @@ import (
 	"io"
 	"log"
 	"math/rand"
+	"os"
 	"os/user"
+	"path/filepath"
 	"strings"
 	"time"
 
 	"github.com/abdfnx/botway/constants"
+	"github.com/abdfnx/tran/dfs"
 	"github.com/charmbracelet/lipgloss"
 )
 
@@ -78,33 +81,68 @@ func EncryptTokens() (string, string) {
 	return encryptAES("Access Token for " + username.Username), encryptAES("Refresh Token for " + username.Username)
 }
 
-func CreateRSATokens() (string, string) {
-	bitSize := 4096
+func CreateRSATokens() {
+	privatekey, err := rsa.GenerateKey(crand.Reader, 1024)
 
-	// Generate RSA key.
-	key, err := rsa.GenerateKey(crand.Reader, bitSize)
 	if err != nil {
-		panic(err)
+		fmt.Printf("Cannot generate RSA key\n")
+		os.Exit(1)
 	}
 
-	// Extract public component.
-	pub := key.Public()
+	keysDir := dfs.CreateDirectory(filepath.Join(constants.BotwayDirPath, "keys"))
 
-	// Encode private key to PKCS#1 ASN.1 PEM.
-	keyPEM := pem.EncodeToMemory(
-		&pem.Block{
-			Type:  "RSA PRIVATE KEY",
-			Bytes: x509.MarshalPKCS1PrivateKey(key),
-		},
-	)
+	if keysDir != nil {
+		log.Fatal(keysDir)
+	}
 
-	// Encode public key to PKCS#1 ASN.1 PEM.
-	pubPEM := pem.EncodeToMemory(
-		&pem.Block{
-			Type:  "PUBLIC KEY",
-			Bytes: x509.MarshalPKCS1PublicKey(pub.(*rsa.PublicKey)),
-		},
-	)
+	publickey := &privatekey.PublicKey
 
-	return string(pubPEM), string(keyPEM)
+	// dump private key to file
+	var privateKeyBytes []byte = x509.MarshalPKCS1PrivateKey(privatekey)
+
+	privateKeyBlock := &pem.Block{
+		Type:  "RSA PRIVATE KEY",
+		Bytes: privateKeyBytes,
+	}
+
+	privatePem, err := os.Create(filepath.Join(constants.BotwayDirPath, "keys", "bwrsa.rsa"))
+
+	if err != nil {
+		fmt.Printf("error when create private.pem: %s \n", err)
+		os.Exit(1)
+	}
+
+	err = pem.Encode(privatePem, privateKeyBlock)
+
+	if err != nil {
+		fmt.Printf("error when encode private pem: %s \n", err)
+		os.Exit(1)
+	}
+
+	// dump public key to file
+	publicKeyBytes, err := x509.MarshalPKIXPublicKey(publickey)
+
+	if err != nil {
+		fmt.Printf("error when dumping publickey: %s \n", err)
+		os.Exit(1)
+	}
+
+	publicKeyBlock := &pem.Block{
+		Type:  "PUBLIC KEY",
+		Bytes: publicKeyBytes,
+	}
+
+	publicPem, err := os.Create(filepath.Join(constants.BotwayDirPath, "keys", "bwrsa-pub.rsa"))
+
+	if err != nil {
+		fmt.Printf("error when create public.pem: %s \n", err)
+		os.Exit(1)
+	}
+
+	err = pem.Encode(publicPem, publicKeyBlock)
+
+	if err != nil {
+		fmt.Printf("error when encode public pem: %s \n", err)
+		os.Exit(1)
+	}
 }
