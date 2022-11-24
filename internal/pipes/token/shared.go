@@ -44,7 +44,7 @@ func Generator() string {
 }
 
 func CreateRSATokens() {
-	privatekey, err := rsa.GenerateKey(crand.Reader, 1024)
+	privatekey, err := rsa.GenerateKey(crand.Reader, 2048)
 
 	if err != nil {
 		fmt.Printf("Cannot generate RSA key\n")
