@@ -63,8 +63,8 @@ github.com/aymerick/douceur v0.2.0 h1:Mv+mAeH1Q+n9Fr+oyamOlAkUNPWPlA8PPGR0QAaYuP
 github.com/aymerick/douceur v0.2.0/go.mod h1:wlT5vV2O3h55X9m7iVYN0TBM0NH/MmbLnd30/FjWUq4=
 github.com/botwayorg/get-latest v0.1.5 h1:7JiWTNlpNBLOO7K036+jFTcP542pKkDLoNhHxQKyxnU=
 github.com/botwayorg/get-latest v0.1.5/go.mod h1:6KMpl8vRtIG0UssFSqC02I9VzFHElL8eipiO964LWi8=
-github.com/botwayorg/gh v0.1.0 h1:pxb3kHMH8mIkJopNMJT1U7bfHHojG63Mc/IT+x7RLtE=
-github.com/botwayorg/gh v0.1.0/go.mod h1:k3wuPLY7uH1k6RQv7G1BqmdCfF7w8e+CXEbS+ipzy6w=
+github.com/botwayorg/gh v0.1.1 h1:L37mF+DCwQ80JV6O8WvX9LuSD0z8MxktJ3lwymgKZf8=
+github.com/botwayorg/gh v0.1.1/go.mod h1:V9hJtLl+2KJIpcaQEpfTTTWygBvqe3Y6sohkh+fUrP0=
 github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635 h1:AJLUr0Ef6avA5S2SXua7XG4yXI7vAjsZLBrZD5zCOk4=
 github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635/go.mod h1:XdqqKSxdEZz88SByHfT4Vwpl/b9gQK9tjZ/FQuwrM0g=
 github.com/botwayorg/railway-api v0.0.7 h1:KHrSyfaYY8rme5ghuL3kKcPEw56Z/MVgbv+0WbSkrMc=
