@@ -44,6 +44,7 @@ func Init() {
 	botwayConfig.SetDefault("botway.settings.auto_sync", true)
 	botwayConfig.SetDefault("botway.settings.check_updates", true)
 	botwayConfig.SetDefault("botway.bots_names", []string{})
+	botwayConfig.SetDefault("user.token", token.Generator())
 
 	if err := botwayConfig.SafeWriteConfig(); err != nil {
 		if os.IsNotExist(err) {
