@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 
+	"github.com/abdfnx/botway/constants"
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -15,7 +16,7 @@ var (
 	titleStyle        = lipgloss.NewStyle().Bold(true)
 	questionStyle     = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("#04B575"))
 	itemStyle         = lipgloss.NewStyle().PaddingLeft(2)
-	selectedItemStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#1E90FF"))
+	selectedItemStyle = lipgloss.NewStyle().Foreground(constants.PRIMARY_COLOR)
 	paginationStyle   = list.DefaultStyles().PaginationStyle
 )
 
