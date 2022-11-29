@@ -1,8 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap&display=swap");
 
 @import "config/vars.scss";
-@import "messages/messages.scss";
-@import "text/text.scss";
 
 @tailwind base;
 @tailwind components;
@@ -27,7 +25,6 @@ body {
   font-family: "Inter";
   font-weight: 400;
   line-height: 1.5;
-  color: $c-gray-400;
   background: $bg;
 }
 
@@ -51,10 +48,6 @@ a {
 ::-webkit-scrollbar {
   width: 5px !important;
   height: 5px !important;
-}
-
-::-webkit-scrollbar-track {
-  background: $c-dark-60 !important;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -92,7 +85,3 @@ blockquote {
 /* input {
   @apply bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
 } */
-
-.text-small {
-  font-size: 12px;
-}
