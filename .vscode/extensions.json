@@ -1,0 +1,22 @@
+{
+  "recommendations": [
+    "aaron-bond.better-comments",
+    "bradlc.vscode-tailwindcss",
+    "dsznajder.es7-react-js-snippets",
+    "esbenp.prettier-vscode",
+    "fwcd.kotlin",
+    "georgewfraser.vscode-javac",
+    "github.github-vscode-theme",
+    "kasik96.swift",
+    "mathiasfrohlich.kotlin",
+    "miguelsolorio.symbols",
+    "ms-azuretools.vscode-docker",
+    "ms-dotnettools.csharp",
+    "ms-python.python",
+    "nimsaem.nimvscode",
+    "pkief.material-icon-theme",
+    "rangav.vscode-thunder-client",
+    "rebornix.ruby",
+    "vscjava.vscode-gradle"
+  ]
+}

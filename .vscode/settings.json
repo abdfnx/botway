@@ -1,0 +1,15 @@
+{
+  "search.exclude": {
+    "node_modules/**": true,
+    ".next/**": true
+  },
+  "go.toolsManagement.checkForUpdates": "local",
+  "go.useLanguageServer": true,
+  "editor.formatOnSave": true,
+  "editor.fontLigatures": true,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "compile-hero.disable-compile-files-on-did-save-code": true
+}

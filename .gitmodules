@@ -14,3 +14,7 @@
 	path = runner
 	url = https://github.com/botwayorg/runner
 	branch = main
+[submodule "templates"]
+	path = templates
+	url = https://github.com/botwayorg/templates
+	branch = main

@@ -13,26 +13,12 @@ import (
 	"github.com/spf13/viper"
 )
 
-func InitBWDB() {
-	bwdbConfig := os.WriteFile(constants.BWDBConfigFile, []byte("[]"), 0644)
-
-	if bwdbConfig != nil {
-		panic(bwdbConfig)
-	}
-
-	if _, err := os.Stat(constants.BWDBConfigFile); err == nil {
-		fmt.Print(constants.SUCCESS_BACKGROUND.Render("SUCCESS"))
-	}
-}
-
 func Init() {
 	err := dfs.CreateDirectory(filepath.Join(constants.HomeDir, ".botway"))
 
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	token.CreateRSATokens()
 
 	botwayConfig := viper.New()
 
