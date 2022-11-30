@@ -23,26 +23,27 @@ jobs:
           PACKAGES: "libxml2 libpq-dev build-essential openssl cmake libssl-dev musl-dev gcc lld clang patch fts libgmp-dev libmpfr-dev mpc perl libsodium-dev ffmpeg libopus-dev autoconf automake libtool bash"
           LINUX_TARGET_PATH: "./target/release"
           DARWIN_TARGET_PATH: "./target/x86_64-apple-darwin/release"
-          PATH: "/osxcross/target/bin:$PATH"
           INSTALLERS_DIR_PATH: "./static/installers"
         run: |
           sudo apt-get update -y && sudo apt-get upgrade -y
           sudo apt-get install $PACKAGES -y
 
           # Build Botway Linux Installer
-          cd ./botway/installer && cargo build --release && \
-          cp $LINUX_TARGET_PATH/botway-installer ./installer-linux && \
-          cp ./installer-linux ./assets/static/installers && \
+          cd ./botway/installer
+          cargo build --release
+          cp $LINUX_TARGET_PATH/botway-installer ./installer-linux
+          cp ./installer-linux ./assets/static/installers
           cd ../..
 
           # Build Botway OSX Installer
-          git clone https://github.com/abdfnx/osxcross-alpine osxcross && \
-          cd osxcross && \
-          wget -nc https://s3.dockerproject.org/darwin/v2/MacOSX10.10.sdk.tar.xz && \
-          mv MacOSX10.10.sdk.tar.xz tarballs/ && \
+          git clone https://github.com/abdfnx/osxcross-alpine osxcross
+          cd osxcross
+          wget -nc https://s3.dockerproject.org/darwin/v2/MacOSX10.10.sdk.tar.xz
+          mv MacOSX10.10.sdk.tar.xz tarballs/
           UNATTENDED=yes OSX_VERSION_MIN=10.7 ./build.sh
           rustup target add x86_64-apple-darwin
-          cd ./botway/installer && \
+          export PATH="/osxcross/target/bin:$PATH"
+          cd ./botway/installer
           PATH="$(pwd)/osxcross/target/bin:$PATH" \
           CC=o64-clang \
           CXX=o64-clang++ \
