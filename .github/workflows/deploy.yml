@@ -20,7 +20,7 @@ jobs:
 
       - name: Build Botway CLI installers
         env:
-          PACKAGES: "libxml2 libpq-dev build-essential openssl cmake libssl-dev musl-dev gcc lld clang patch fts libgmp-dev libmpfr-dev mpc perl libsodium-dev ffmpeg libopus-dev autoconf automake libtool bash"
+          PACKAGES: "libxml2 libpq-dev build-essential openssl cmake libssl-dev musl-dev gcc lld clang patch libgmp-dev libmpfr-dev mpc perl libsodium-dev ffmpeg libopus-dev autoconf automake libtool bash"
           LINUX_TARGET_PATH: "./target/release"
           DARWIN_TARGET_PATH: "./target/x86_64-apple-darwin/release"
           INSTALLERS_DIR_PATH: "./static/installers"
