@@ -76,7 +76,7 @@ const Layout = ({ children, title }: any) => {
                 <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
                   <button
                     type="button"
-                    className="text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 "
+                    className="text-gray-400 outline-none"
                   >
                     <img
                       className="h-11 w-11 pt-1 mx-auto"
@@ -136,7 +136,7 @@ const Layout = ({ children, title }: any) => {
                         <p
                           className={clsx(
                             item.href === currentPath
-                              ? "border-indigo-500"
+                              ? "border-blue-700"
                               : "border-transparent hover:border-gray-800 transition text-gray-400 ",
                             "border-b text-gray-400 group flex items-center px-2 py-2 cursor-pointer text-sm leading-6 font-medium"
                           )}

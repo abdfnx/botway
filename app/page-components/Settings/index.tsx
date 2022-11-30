@@ -4,6 +4,8 @@ import { LoadingDots } from "@/components/LoadingDots";
 import { fetcher } from "@/lib/fetch";
 import { useCurrentUser } from "@/lib/user";
 import { bg } from "@/tools/colors";
+import clsx from "clsx";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
@@ -12,6 +14,23 @@ export const AccountInfo = ({ user, mutate }: any) => {
   const usernameRef: any = useRef();
   const nameRef: any = useRef();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const currentPath = router.pathname;
+  const NAV_ITEMS = [
+    {
+      title: "Account Information",
+      href: "/settings",
+    },
+    {
+      title: "Admin Settings",
+      href: "/settings/admin",
+    },
+    {
+      title: "Change Password",
+      href: "/settings/change-password",
+    },
+  ];
 
   const onSubmit = useCallback(
     async (e: any) => {
@@ -67,76 +86,31 @@ export const AccountInfo = ({ user, mutate }: any) => {
           <div className="flex h-full flex-col lg:flex-row">
             <div className="w-full shrink-0 lg:w-1/5">
               <div className="-mt-1 hidden flex-col pr-2 lg:flex">
-                <a
-                  className="py-1 hover:text-primary font-semibold text-primary"
-                  href="/abdfn/settings"
-                >
-                  General
-                </a>
-                <a
-                  className="py-1 hover:text-primary text-secondary"
-                  href="/abdfn/settings/audit-log"
-                >
-                  Audit log
-                </a>
-                <a
-                  className="py-1 hover:text-primary text-secondary"
-                  href="/abdfn/settings/beta-features"
-                >
-                  Beta features
-                </a>
-                <a
-                  className="py-1 hover:text-primary text-secondary"
-                  href="/abdfn/settings/integrations"
-                >
-                  Integrations
-                </a>
-                <a
-                  className="py-1 hover:text-primary text-secondary"
-                  href="/abdfn/settings/members"
-                >
-                  Members
-                </a>
-                <a
-                  className="py-1 hover:text-primary text-secondary"
-                  href="/abdfn/settings/service-tokens"
-                >
-                  Service tokens
-                </a>
-                <a
-                  className="py-1 hover:text-primary text-secondary"
-                  href="/abdfn/settings/teams"
-                >
-                  Teams
-                </a>
-                <a
-                  className="py-1 hover:text-primary text-secondary"
-                  href="/abdfn/settings/billing"
-                >
-                  Usage and billing
-                </a>
+                {NAV_ITEMS.map((item) => (
+                  <Link key={item.title} href={item.href}>
+                    <p
+                      className={clsx(
+                        item.href === currentPath
+                          ? "text-blue-700"
+                          : "text-gray-400 ",
+                        "py-1 transition font-semibold"
+                      )}
+                      aria-current={
+                        item.href === currentPath ? "page" : undefined
+                      }
+                    >
+                      {item.title}
+                    </p>
+                  </Link>
+                ))}
               </div>
               <select
-                name="side_nav"
                 aria-label="Navigation items"
-                className="focus-ring inline-block rounded border border-secondary bg-primary py-0 pl-1.5 pr-4 shadow-sm h-4 mb-4 font-semibold lg:hidden"
+                className="inline-block rounded border border-gray-800 border-secondary bg-secondary pl-1.5 pr-4 h-6 mb-4 font-semibold lg:hidden"
               >
-                <option value="/abdfn/settings">General</option>
-                <option value="/abdfn/settings/audit-log">Audit log</option>
-                <option value="/abdfn/settings/beta-features">
-                  Beta features
-                </option>
-                <option value="/abdfn/settings/integrations">
-                  Integrations
-                </option>
-                <option value="/abdfn/settings/members">Members</option>
-                <option value="/abdfn/settings/service-tokens">
-                  Service tokens
-                </option>
-                <option value="/abdfn/settings/teams">Teams</option>
-                <option value="/abdfn/settings/billing">
-                  Usage and billing
-                </option>
+                {NAV_ITEMS.map((item) => (
+                  <option value={item.href}>{item.title}</option>
+                ))}
               </select>
             </div>
             <div className="flex-1">

@@ -53,18 +53,31 @@ handler.post(
       return;
     }
 
-    const user = await insertUser(db, {
-      email,
-      originalPassword: password,
-      name,
-      username,
-    });
+    let isAdmin = false;
 
-    req.logIn(user, (err: any) => {
-      if (err) throw err;
+    db.collection("users").count(async function (err: any, count: any) {
+      if (!err && count === 0) {
+        isAdmin = true;
+      } else {
+        isAdmin = false;
+      }
 
-      res.status(201).json({
-        user,
+      console.log(count);
+
+      const user = await insertUser(db, {
+        email,
+        originalPassword: password,
+        name,
+        username,
+        isAdmin,
+      });
+
+      req.logIn(user, (err: any) => {
+        if (err) throw err;
+
+        res.status(201).json({
+          user,
+        });
       });
     });
   }
