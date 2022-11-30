@@ -26,8 +26,8 @@ jobs:
           PATH: "/osxcross/target/bin:$PATH"
           INSTALLERS_DIR_PATH: "./static/installers"
         run: |
-          apt-get update -y && apt-get upgrade -y
-          apt-get install $PACKAGES -y
+          apt update -y && apt upgrade -y
+          apt install $PACKAGES -y
 
           # Build Botway Linux Installer
           cd ./botway/installer && cargo build --release && \
