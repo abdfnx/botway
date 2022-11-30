@@ -54,4 +54,5 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "cdn-botway"
-          entrypoint: "./installer/assets/main.ts"
+          entrypoint: "./main.ts"
+          root: ./installer/assets
