@@ -6,13 +6,11 @@ env:
 
 jobs:
   deploy-botway-cdn:
-    name: Deploy
-
-    runs-on: ubuntu-latest
-
     permissions:
       id-token: write
       contents: read
+
+    runs-on: ubuntu-latest
 
     steps:
       - name: Clone repository
