@@ -42,7 +42,6 @@ jobs:
           mv MacOSX10.10.sdk.tar.xz tarballs/
           UNATTENDED=yes OSX_VERSION_MIN=10.7 ./build.sh
           rustup target add x86_64-apple-darwin
-          export PATH="/osxcross/target/bin:$PATH"
           cd ./botway/installer
           PATH="$(pwd)/osxcross/target/bin:$PATH" \
           CC=o64-clang \
