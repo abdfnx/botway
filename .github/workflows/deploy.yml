@@ -6,10 +6,6 @@ env:
 
 jobs:
   deploy-botway-cdn:
-    permissions:
-      id-token: write
-      contents: read
-
     runs-on: ubuntu-latest
 
     steps:
@@ -24,8 +20,8 @@ jobs:
           PATH: "/osxcross/target/bin:$PATH"
           INSTALLERS_DIR_PATH: "./static/installers"
         run: |
-          apt update -y && apt upgrade -y
-          apt install $PACKAGES -y
+          sudo apt-get update -y && sudo apt-get upgrade -y
+          sudo apt-get install $PACKAGES -y
 
           # Build Botway Linux Installer
           cd ./botway/installer && cargo build --release && \
