@@ -25,7 +25,8 @@
       "@/page-components/*": ["page-components/*"],
       "@/lib/*": ["lib/*"],
       "@/api/*": ["api/*"],
-      "@/assets/*": ["assets/*"]
+      "@/assets/*": ["assets/*"],
+      "@/tools/*": ["tools/*"]
     }
   },
   "include": [
@@ -34,7 +35,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "api/mongodb.js"
-, "page-components/Settings/index.tsx"  ],
+    "api/mongodb.js",
+    "lib/fetch.js"
+  ],
   "exclude": ["node_modules"]
 }

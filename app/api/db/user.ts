@@ -61,11 +61,10 @@ export async function updateUserById(db: any, id: any, data: any) {
 
 export async function insertUser(
   db: any,
-  { email, originalPassword, name, profilePicture, username }: any
+  { email, originalPassword, name, username }: any
 ) {
   const user: any = {
     emailVerified: false,
-    profilePicture,
     email,
     name,
     username,

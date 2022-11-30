@@ -4,6 +4,7 @@ import { auths, validateBody } from "@/api/middlewares";
 import { getMongoDb } from "@/api/mongodb";
 import { ncOpts } from "@/api/nc";
 import { slugUsername } from "@/lib/user";
+import multer from "multer";
 import nc from "next-connect";
 
 const handler = nc(ncOpts);
@@ -17,6 +18,7 @@ handler.get(async (req: any, res: any) => {
 });
 
 handler.patch(
+  multer({ dest: "/tmp" }).single("data"),
   validateBody({
     type: "object",
     properties: {
@@ -25,7 +27,7 @@ handler.patch(
     },
     additionalProperties: true,
   }),
-  async (req: any, res: any) => {
+  async (req, res) => {
     if (!req.user) {
       req.status(401).end();
 
@@ -48,7 +50,6 @@ handler.patch(
         res
           .status(403)
           .json({ error: { message: "The username has already been taken." } });
-
         return;
       }
     }

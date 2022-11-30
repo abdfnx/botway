@@ -9,19 +9,29 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get install software-properties-common curl -y
 
 # Install Node.js
-RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
+SHELL ["/bin/bash", "--login", "-i", "-c"]
+
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+
+RUN source /root/.bashrc && nvm install 18
+
+SHELL ["/bin/bash", "--login", "-c"]
 
 # Install pnpm
-RUN su userx -c "npm i -g pnpm"
+RUN npm i -g npm@latest pnpm@latest
 
 # Install Botway CLI
-RUN su userx -c "curl -sL https://dub.sh/botway | bash"
+RUN curl -sL https://dub.sh/botway | bash
 
 # Initialize `~/.botway`
 RUN botway init --no-repo
 
-# Install Deps
-RUN pnpm i
+# Install Homebrew
+RUN git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew \
+    && mkdir ~/.linuxbrew/bin \
+    && ln -s ../Homebrew/bin/brew ~/.linuxbrew/bin \
+    && echo 'eval $(~/.linuxbrew/bin/brew shellenv)' >> /root/.bashrc && \
+    source /root/.bashrc
 
-# Install go-task
-RUN go install github.com/go-task/task/v3/cmd/task@latest
+# Install deno and go-task
+RUN brew install deno go-task/tap/go-task

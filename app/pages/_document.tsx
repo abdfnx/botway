@@ -15,7 +15,7 @@ class MyDocument extends Document {
           <link
             rel="icon"
             type="image/svg"
-            href="https://botway-cdn.onrender.com/icon.svg"
+            href="https://cdn-botway.deno.dev/icon.svg"
           />
         </Head>
         <body>

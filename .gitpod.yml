@@ -2,4 +2,16 @@ image:
   file: .gitpod/Dockerfile
 
 tasks:
-  - command: gomo
+  - name: Setup Botway
+    init: gomo
+    command: gomo update
+  
+  - name: Setup Botway UI
+    init: pnpm i
+    command: pnpm dev
+
+ports:
+  - port: 3000
+    onOpen: open-browser
+    name: Botway UI
+    description: Botway UI Preview

@@ -5,7 +5,7 @@ export default function LogoSection() {
         <div className="logo-animated flex items-center space-x-1">
           <img
             alt="Botway Logo"
-            src="https://botway-cdn.onrender.com/botway.svg"
+            src="https://cdn-botway.deno.dev/botway.svg"
             className="block w-56"
           />
         </div>

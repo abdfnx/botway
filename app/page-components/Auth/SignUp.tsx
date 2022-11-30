@@ -2,6 +2,7 @@ import { Button } from "@/components/Button";
 import LogoSection from "@/components/Logo";
 import { fetcher } from "@/lib/fetch";
 import { useCurrentUser } from "@/lib/user";
+import { bg } from "@/tools/colors";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useRef, useState } from "react";
@@ -39,8 +40,9 @@ const SignUp = () => {
         toast.success("Your account has been created", {
           style: {
             borderRadius: "10px",
+            backgroundColor: bg,
+            color: "#fff",
           },
-          className: "bg-secondary",
         });
 
         router.replace("/");
@@ -48,8 +50,9 @@ const SignUp = () => {
         toast.error(e.message, {
           style: {
             borderRadius: "10px",
+            backgroundColor: bg,
+            color: "#fff",
           },
-          className: "bg-secondary",
         });
       } finally {
         setIsLoading(false);

@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://botway.web.app" target="_blank">
-    <img src="https://botway-cdn.onrender.com/botway.svg" alt="Botway" width="300">
+    <img src="https://cdn-botway.deno.dev/botway.svg" alt="Botway" width="300">
   </a>
 </p>
 
@@ -11,7 +11,7 @@ With botway, you can focus on your bot's logic and don't worry about the infrast
 Botway uses [Railway][rw] and [Render][rnd] to host your bot code and database.
 
 <p align="center">
-  <img src="https://botway-cdn.onrender.com/screenshots/deploy.svg" alt="Botway Screenshot" width="1400">
+  <img src="https://cdn-botway.deno.dev/screenshots/deploy.svg" alt="Botway Screenshot" width="1400">
 </p>
 
 ## Requirements
