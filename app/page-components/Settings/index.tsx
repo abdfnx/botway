@@ -25,13 +25,6 @@ export const SettingsLayout = ({ children, user }: any) => {
     },
   ];
 
-  if (user.isAdmin) {
-    NAV_ITEMS.push({
-      title: "Admin Settings",
-      href: "/settings/admin",
-    });
-  }
-
   return (
     <main className="mx-auto w-full flex-1 px-3 py-4 sm:py-6 sm:px-6 lg:px-8">
       <div className="mx-auto h-full max-w-7xl">

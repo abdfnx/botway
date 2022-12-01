@@ -22,10 +22,6 @@ const Layout = ({ children, title }: any) => {
       title: "Overview",
       href: "/",
     },
-    {
-      title: "Settings",
-      href: "/settings",
-    },
   ];
 
   const PushToSignIn = () => {
@@ -104,7 +100,45 @@ const Layout = ({ children, title }: any) => {
                           leaveFrom="transform opacity-100 scale-100"
                           leaveTo="transform opacity-0 scale-95"
                         >
-                          <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 border border-gray-800 ring-1 ring-gray-800 ring-opacity-5 focus:outline-none z-10">
+                          <Menu.Items className="origin-top-right bg absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 border border-gray-800 ring-1 ring-gray-800 ring-opacity-5 focus:outline-none z-10">
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  href={"/settings"}
+                                  className={clsx(
+                                    active ? "bg-secondary" : "",
+                                    "transition block mx-2 my-1 rounded-md cursor-pointer px-4 py-2 text-sm text-gray-400"
+                                  )}
+                                >
+                                  Settings
+                                </a>
+                              )}
+                            </Menu.Item>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  href={"https://botway.deno.dev/docs/ui"}
+                                  className={clsx(
+                                    active ? "bg-secondary" : "",
+                                    "transition block mx-2 my-1 rounded-md cursor-pointer px-4 py-2 text-sm text-gray-400"
+                                  )}
+                                >
+                                  Docs
+                                </a>
+                              )}
+                            </Menu.Item>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  className={clsx(
+                                    active ? "bg-secondary" : "",
+                                    "transition block mx-2 my-1 rounded-md cursor-pointer px-4 py-2 text-sm text-gray-400"
+                                  )}
+                                >
+                                  Command Palette
+                                </a>
+                              )}
+                            </Menu.Item>
                             <Menu.Item>
                               {({ active }) => (
                                 <a
@@ -132,13 +166,17 @@ const Layout = ({ children, title }: any) => {
                       <Link key={item.title} href={item.href}>
                         <p
                           className={clsx(
-                            item.href === currentPath
+                            item.href === currentPath ||
+                              item.href.includes("/settings")
                               ? "border-blue-700"
                               : "border-transparent hover:border-gray-800 transition text-gray-400 ",
                             "border-b text-gray-400 group flex items-center px-2 py-2 cursor-pointer text-sm leading-6 font-medium"
                           )}
                           aria-current={
-                            item.href === currentPath ? "page" : undefined
+                            item.href === currentPath ||
+                            item.href.includes("/settings")
+                              ? "page"
+                              : undefined
                           }
                         >
                           {item.title}
