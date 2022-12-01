@@ -53,16 +53,14 @@ handler.post(
       return;
     }
 
-    let isAdmin = false;
-
     db.collection("users").count(async function (err: any, count: any) {
+      let isAdmin = false;
+
       if (!err && count === 0) {
         isAdmin = true;
       } else {
         isAdmin = false;
       }
-
-      console.log(count);
 
       const user = await insertUser(db, {
         email,

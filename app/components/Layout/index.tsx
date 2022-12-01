@@ -7,7 +7,7 @@ import { Fragment, useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { UserAvatar } from "@/page-components/UserAvatar";
+import { UserAvatar } from "@/components/UserAvatar";
 import clsx from "clsx";
 import { bg } from "@/tools/colors";
 
@@ -74,10 +74,7 @@ const Layout = ({ children, title }: any) => {
             <div className="border-b border-gray-800">
               <div className="relative flex-shrink-0 flex h-16 ">
                 <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
-                  <button
-                    type="button"
-                    className="text-gray-400 outline-none"
-                  >
+                  <button type="button" className="text-gray-400 outline-none">
                     <img
                       className="h-11 w-11 pt-1 mx-auto"
                       src="https://cdn-botway.deno.dev/icon.svg"

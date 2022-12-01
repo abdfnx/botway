@@ -1,7 +1,7 @@
 import { LoadingDots } from "@/components/LoadingDots";
 import { useCurrentUser } from "@/lib/user";
 import Layout from "@/components/Layout";
-import { UserAvatar } from "../UserAvatar";
+import { UserAvatar } from "../../components/UserAvatar";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -28,7 +28,9 @@ const Index = () => {
         <Layout title="Dashboard">
           <span className="flex items-center">
             <UserAvatar data={data.user.email} size={30} />
-            <span className="text-gray-400 text-2xl pl-2">{data.user.name}</span>
+            <span className="text-gray-400 text-2xl pl-2">
+              {data.user.name}
+            </span>
           </span>
         </Layout>
       ) : (
