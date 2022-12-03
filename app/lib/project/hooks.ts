@@ -9,6 +9,7 @@ export function useProjectPages({ creatorId, limit = 10 }: any = {}) {
         return null;
 
       const searchParams = new URLSearchParams();
+
       searchParams.set("limit", limit);
 
       if (creatorId) searchParams.set("by", creatorId);

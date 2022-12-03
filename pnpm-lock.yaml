@@ -12,6 +12,7 @@ importers:
       "@headlessui/react": ^1.7.4
       "@heroicons/react": ^1.0.6
       "@lukeed/ms": ^2.0.1
+      "@primer/octicons-react": ^17.9.0
       "@types/bcryptjs": ^2.4.2
       "@types/multer": ^1.4.7
       "@types/node": ^18.11.9
@@ -55,6 +56,7 @@ importers:
       "@headlessui/react": 1.7.4_biqbaboplfbrettd7655fr4n2y
       "@heroicons/react": 1.0.6_react@18.2.0
       "@lukeed/ms": 2.0.1
+      "@primer/octicons-react": 17.9.0_react@18.2.0
       ajv: 8.11.2
       bcryptjs: 2.4.3
       boring-avatars: 1.7.0
@@ -1327,6 +1329,18 @@ packages:
     dependencies:
       "@nodelib/fs.scandir": 2.1.5
       fastq: 1.13.0
+    dev: false
+
+  /@primer/octicons-react/17.9.0_react@18.2.0:
+    resolution:
+      {
+        integrity: sha512-fx2abdGfzzHqB8DOSq6FqNgusjkeDHfPFTa8DjSaugCFccEO2vIfM2ZY1sg4c5SpOQEQAbOEC4/gqWDulIRHzA==,
+      }
+    engines: { node: ">=8" }
+    peerDependencies:
+      react: ">=15"
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /@swc/helpers/0.4.14:

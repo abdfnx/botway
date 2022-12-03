@@ -10,7 +10,7 @@ export const ValidateProps = {
     name: { type: "string", minLength: 1, maxLength: 350 },
     platform: { type: "string", minLength: 5, maxLength: 8 },
     lang: { type: "string", minLength: 1, maxLength: 50 },
-    package_manager: { type: "string", minLength: 1, maxLength: 50 },
-    host_service: { type: "string", minLength: 1, maxLength: 50 },
+    packageManager: { type: "string", minLength: 1, maxLength: 50 },
+    hostService: { type: "string", minLength: 1, maxLength: 50 },
   },
 };

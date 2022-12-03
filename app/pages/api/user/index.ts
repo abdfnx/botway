@@ -3,7 +3,7 @@ import { findUserByUsername, updateUserById } from "@/api/db";
 import { auths, validateBody } from "@/api/middlewares";
 import { getMongoDb } from "@/api/mongodb";
 import { ncOpts } from "@/api/nc";
-import { slugUsername } from "@/lib/user";
+import { slugger } from "@/lib/user";
 import multer from "multer";
 import nc from "next-connect";
 
@@ -41,7 +41,7 @@ handler.patch(
     let username;
 
     if (req.body.username) {
-      username = slugUsername(req.body.username);
+      username = slugger(req.body.username);
 
       if (
         username !== req.user.username &&

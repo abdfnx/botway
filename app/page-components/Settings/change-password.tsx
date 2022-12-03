@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { fetcher } from "@/lib/fetch";
 import toast from "react-hot-toast";
-import { bg } from "@/tools/colors";
+import { bgSecondary } from "@/tools/colors";
 import { SettingsLayout } from ".";
 import { Button } from "@/components/Button";
 import { useCurrentUser } from "@/lib/user";
@@ -35,7 +35,7 @@ export const ChangePassword = () => {
       toast.success("Your password has been updated", {
         style: {
           borderRadius: "10px",
-          backgroundColor: bg,
+          backgroundColor: bgSecondary,
           color: "#fff",
         },
       });
@@ -43,7 +43,7 @@ export const ChangePassword = () => {
       toast.error(e.message, {
         style: {
           borderRadius: "10px",
-          backgroundColor: bg,
+          backgroundColor: bgSecondary,
           color: "#fff",
         },
       });

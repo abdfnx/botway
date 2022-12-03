@@ -1,3 +1,3 @@
 import slug from "slug";
 
-export const slugUsername = (username: any) => slug(username, "_");
+export const slugger = (username: any) => slug(username, "_");

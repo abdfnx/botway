@@ -36,7 +36,6 @@ export async function findProjects(db: any, before: any, by: any, limit = 10) {
         },
       },
       { $sort: { _id: -1 } },
-      { $limit: limit },
       {
         $lookup: {
           from: "users",
@@ -51,10 +50,17 @@ export async function findProjects(db: any, before: any, by: any, limit = 10) {
     .toArray();
 }
 
-export async function insertProject(db: any, { content, creatorId }: any) {
+export async function insertProject(
+  db: any,
+  { name, platform, lang, packageManager, hostService, creatorId }: any
+) {
   const project: any = {
-    content,
     creatorId,
+    name,
+    platform,
+    lang,
+    packageManager,
+    hostService,
     createdAt: new Date(),
   };
 

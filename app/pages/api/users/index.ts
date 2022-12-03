@@ -3,7 +3,7 @@ import { findUserByEmail, findUserByUsername, insertUser } from "@/api/db";
 import { auths, validateBody } from "@/api/middlewares";
 import { getMongoDb } from "@/api/mongodb";
 import { ncOpts } from "@/api/nc";
-import { slugUsername } from "@/lib/user";
+import { slugger } from "@/lib/user";
 import nc from "next-connect";
 import isEmail from "validator/lib/isEmail";
 import normalizeEmail from "validator/lib/normalizeEmail";
@@ -28,7 +28,7 @@ handler.post(
 
     let { username, name, email, password } = req.body;
 
-    username = slugUsername(req.body.username);
+    username = slugger(req.body.username);
     email = normalizeEmail(req.body.email);
 
     if (!isEmail(email)) {

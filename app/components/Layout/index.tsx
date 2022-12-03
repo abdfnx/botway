@@ -9,7 +9,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { UserAvatar } from "@/components/UserAvatar";
 import clsx from "clsx";
-import { bg } from "@/tools/colors";
+import { bgSecondary } from "@/tools/colors";
 
 const Layout = ({ children, title }: any) => {
   const { data, error, mutate } = useCurrentUser();
@@ -43,7 +43,7 @@ const Layout = ({ children, title }: any) => {
       toast.success("You have been signed out", {
         style: {
           borderRadius: "10px",
-          backgroundColor: bg,
+          backgroundColor: bgSecondary,
           color: "#fff",
         },
       });
@@ -53,7 +53,7 @@ const Layout = ({ children, title }: any) => {
       toast.error(e.message, {
         style: {
           borderRadius: "10px",
-          backgroundColor: bg,
+          backgroundColor: bgSecondary,
           color: "#fff",
         },
       });

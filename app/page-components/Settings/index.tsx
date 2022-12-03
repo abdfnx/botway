@@ -3,14 +3,14 @@ import Layout from "@/components/Layout";
 import { LoadingDots } from "@/components/LoadingDots";
 import { fetcher } from "@/lib/fetch";
 import { useCurrentUser } from "@/lib/user";
-import { bg } from "@/tools/colors";
+import { bgSecondary } from "@/tools/colors";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
-export const SettingsLayout = ({ children, user }: any) => {
+export const SettingsLayout = ({ children }: any) => {
   const router = useRouter();
 
   const currentPath = router.pathname;
@@ -95,7 +95,7 @@ export const AccountInfo = ({ user, mutate }: any) => {
         toast.success("Your profile has been updated", {
           style: {
             borderRadius: "10px",
-            backgroundColor: bg,
+            backgroundColor: bgSecondary,
             color: "#fff",
           },
         });
@@ -103,7 +103,7 @@ export const AccountInfo = ({ user, mutate }: any) => {
         toast.error(e.message, {
           style: {
             borderRadius: "10px",
-            backgroundColor: bg,
+            backgroundColor: bgSecondary,
             color: "#fff",
           },
         });

@@ -2,7 +2,7 @@ import { Button } from "@/components/Button";
 import LogoSection from "@/components/Logo";
 import { fetcher } from "@/lib/fetch";
 import { useCurrentUser } from "@/lib/user";
-import { bg } from "@/tools/colors";
+import { bgSecondary } from "@/tools/colors";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -42,7 +42,7 @@ const SignIn = () => {
         toast.success("You have been logged in.", {
           style: {
             borderRadius: "10px",
-            backgroundColor: bg,
+            backgroundColor: bgSecondary,
             color: "#fff",
           },
         });
@@ -50,7 +50,7 @@ const SignIn = () => {
         toast.error("Incorrect email or password.", {
           style: {
             borderRadius: "10px",
-            backgroundColor: bg,
+            backgroundColor: bgSecondary,
             color: "#fff",
           },
         });
