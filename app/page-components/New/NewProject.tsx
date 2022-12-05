@@ -1,6 +1,6 @@
 import { fetcher } from "@/lib/fetch";
 import { useProjectPages } from "@/lib/project";
-import { Transition, Listbox } from "@headlessui/react";
+import { Transition, Menu, Listbox } from "@headlessui/react";
 import { Fragment, useCallback, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/solid";
@@ -19,6 +19,19 @@ const NewProjectHandler = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { mutate } = useProjectPages();
+
+  let [platformSelected, setPlatformSelected]: any = useState({
+    name: "Discord",
+    slug: "discord",
+  });
+
+  let [langSelected, setLangSelected] = useState(
+    langs(platformSelected.name)[0]
+  );
+  let [hostServiceSelected, setHostServiceSelected] = useState(hostServices[0]);
+  let [pmSelected, setPMSelected] = useState(
+    packageManagers(langSelected.name)[0]
+  );
 
   const onSubmit = useCallback(
     async (e: any) => {
@@ -52,17 +65,6 @@ const NewProjectHandler = () => {
     [mutate]
   );
 
-  const [platformSelected, setPlatformSelected] = useState(platforms[0]);
-  const [langSelected, setLangSelected] = useState(
-    langs(platformSelected.name)[0]
-  );
-  const [hostServiceSelected, setHostServiceSelected] = useState(
-    hostServices[0]
-  );
-  const [pmSelected, setPMSelected] = useState(
-    packageManagers(langSelected.name)[0]
-  );
-
   return (
     <form onSubmit={onSubmit}>
       <input type="hidden" name="_method" value="PATCH" />
@@ -78,8 +80,8 @@ const NewProjectHandler = () => {
           <div className="pt-2 mb-6">
             <Listbox
               value={platformSelected}
-              refName={platformRef}
               onChange={setPlatformSelected}
+              name="platform"
             >
               {({ open }) => (
                 <>
@@ -114,6 +116,7 @@ const NewProjectHandler = () => {
                         {platforms.map((platform) => (
                           <Listbox.Option
                             key={platform.name}
+                            onChange={() => setPlatformSelected(platform)}
                             className={({ active }) =>
                               clsx(
                                 active
@@ -168,6 +171,12 @@ const NewProjectHandler = () => {
                 </>
               )}
             </Listbox>
+            <input
+              type="hidden"
+              name="platform[name]"
+              value={platformSelected.slug}
+              ref={platformRef}
+            />
           </div>
         </div>
         <div className="max-w-md">
@@ -175,7 +184,7 @@ const NewProjectHandler = () => {
             htmlFor="language"
             className="block text-gray-500 text-sm font-semibold"
           >
-            Bot Programming Language
+            Programming Language
           </label>
           <div className="pt-2 mb-6">
             <Listbox value={langSelected} onChange={setLangSelected}>
@@ -266,6 +275,13 @@ const NewProjectHandler = () => {
                 </>
               )}
             </Listbox>
+
+            <input
+              type="hidden"
+              name="lang[name]"
+              value={langSelected.slug}
+              ref={langRef}
+            />
           </div>
         </div>
 
@@ -369,6 +385,13 @@ const NewProjectHandler = () => {
                 </>
               )}
             </Listbox>
+
+            <input
+              type="hidden"
+              name="pm[name]"
+              value={pmSelected.name}
+              ref={packageManagerRef}
+            />
           </div>
         </div>
 
@@ -472,6 +495,13 @@ const NewProjectHandler = () => {
                 </>
               )}
             </Listbox>
+
+            <input
+              type="hidden"
+              name="hostService[name]"
+              value={hostServiceSelected.name}
+              ref={hostServiceRef}
+            />
           </div>
         </div>
 
@@ -500,6 +530,54 @@ const NewProjectHandler = () => {
     </form>
   );
 };
+
+export function Platforms({ onChange }: any) {
+  return (
+    <div className="fixed top-16 w-56 text-right">
+      <Menu
+        as="div"
+        className="relative inline-block text-left"
+        onChange={onChange}
+      >
+        <div>
+          <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+            Options
+            <ChevronDownIcon
+              className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
+              aria-hidden="true"
+            />
+          </Menu.Button>
+        </div>
+        <Transition
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+          <Menu.Items>
+            {platforms.map((platform) => (
+              /* Use the `active` state to conditionally style the active item. */
+              <Menu.Item key={platform.name} as={Fragment}>
+                {({ active }) => (
+                  <a
+                    className={`${
+                      active ? "bg-blue-500 text-white" : "bg-white text-black"
+                    }`}
+                  >
+                    {platform.name}
+                  </a>
+                )}
+              </Menu.Item>
+            ))}
+          </Menu.Items>
+        </Transition>
+      </Menu>
+    </div>
+  );
+}
 
 export function NewProject() {
   return (

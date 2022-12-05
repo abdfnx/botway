@@ -68,7 +68,7 @@ export const ChangePassword = () => {
   return (
     <>
       {loading ? (
-        <LoadingDots>Loading</LoadingDots>
+        <LoadingDots className="fixed inset-0 flex items-center justify-center" />
       ) : data?.user ? (
         <Layout title="General Settings">
           <span className="flex items-center">

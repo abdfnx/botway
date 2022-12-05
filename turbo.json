@@ -13,7 +13,7 @@
       "cache": true
     },
     "start": {
-      "cache": true
+      "cache": false
     }
   }
 }

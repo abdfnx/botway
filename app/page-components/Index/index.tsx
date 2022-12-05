@@ -38,7 +38,7 @@ const Index = () => {
   return (
     <>
       {loading ? (
-        <LoadingDots>Loading</LoadingDots>
+        <LoadingDots className="fixed inset-0 flex items-center justify-center" />
       ) : data?.user ? (
         <Layout title="Dashboard">
           <div className="flex items-center justify-between gap-4">
