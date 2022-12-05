@@ -63,7 +63,7 @@ const Layout = ({ children, title }: any) => {
   return (
     <>
       {loading ? (
-        <LoadingDots>Loading</LoadingDots>
+        <LoadingDots className="fixed inset-0 flex items-center justify-center" />
       ) : data?.user ? (
         <div className="min-h-screen bg">
           <div className="flex flex-col flex-1">

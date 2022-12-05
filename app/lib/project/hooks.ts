@@ -39,20 +39,18 @@ export function useProjectPages({ creatorId, limit = 10 }: any = {}) {
   );
 
   const isLoadingInitialData = !data && !error;
-  const isLoadingMore =
+  const isLoading =
     isLoadingInitialData ||
     (size > 0 && data && typeof data[size - 1] === "undefined");
 
   const isEmpty = data?.[0]?.length === 0;
-  const isReachingEnd =
-    isEmpty || (data && data[data.length - 1]?.projects?.length < limit);
 
   return {
     data,
     error,
     size,
-    isLoadingMore,
-    isReachingEnd,
+    isLoading,
+    isEmpty,
     ...props,
   };
 }
