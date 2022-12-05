@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { Button } from "@/components/Button";
 import { platforms, langs, hostServices, packageManagers } from "./Options";
 import { NewProjectModal } from "./NewProjectModal";
+import { bgSecondary } from "@/tools/colors";
 
 const NewProjectHandler = () => {
   const nameRef: any = useRef();
@@ -20,10 +21,7 @@ const NewProjectHandler = () => {
 
   const { mutate } = useProjectPages();
 
-  let [platformSelected, setPlatformSelected]: any = useState({
-    name: "Discord",
-    slug: "discord",
-  });
+  let [platformSelected, setPlatformSelected]: any = useState(platforms[0]);
 
   let [langSelected, setLangSelected] = useState(
     langs(platformSelected.name)[0]
@@ -52,7 +50,14 @@ const NewProjectHandler = () => {
           }),
         });
 
-        toast.success("You have posted successfully");
+        toast.success("You have successfully created a new bot project", {
+          style: {
+            borderRadius: "10px",
+            backgroundColor: bgSecondary,
+            color: "#fff",
+          },
+          position: "bottom-right",
+        });
 
         // refresh projects lists
         mutate();
