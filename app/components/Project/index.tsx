@@ -16,12 +16,14 @@ export const Project = ({ project }: any) => {
           <img
             src={`https://cdn-botway.deno.dev/icons/${project.platform}.svg`}
             alt={`${project.platform} icon`}
+            width={16}
           />
           {project.platform}
 
           <img
             src={`https://cdn-botway.deno.dev/icons/${project.lang}.svg`}
             alt={`${project.lang} icon`}
+            width={16}
           />
           {project.lang}
         </p>

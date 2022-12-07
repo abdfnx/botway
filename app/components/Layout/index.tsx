@@ -1,7 +1,6 @@
 import { LoadingDots } from "@/components/LoadingDots";
 import { fetcher } from "@/lib/fetch";
 import { useCurrentUser } from "@/lib/user";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -15,14 +14,6 @@ const Layout = ({ children, title }: any) => {
   const { data, error, mutate } = useCurrentUser();
   const loading = !data && !error;
   const router = useRouter();
-
-  const currentPath = router.pathname;
-  const NAV_ITEMS = [
-    {
-      title: "Overview",
-      href: "/",
-    },
-  ];
 
   const PushToSignIn = () => {
     useEffect(() => {
@@ -75,6 +66,7 @@ const Layout = ({ children, title }: any) => {
                       className="h-11 w-11 pt-1 mx-auto"
                       src="https://cdn-botway.deno.dev/icon.svg"
                       alt="Botway Logo"
+                      onClick={() => router.push("/")}
                     />
                   </button>
                   <div className="flex-1 flex"></div>
@@ -159,32 +151,8 @@ const Layout = ({ children, title }: any) => {
                   </div>
                 </div>
               </div>
-              <div className="relative flex-shrink-0 flex h-16">
-                <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
-                  <div className="flex flex-1 ">
-                    {NAV_ITEMS.map((item) => (
-                      <Link key={item.title} href={item.href}>
-                        <p
-                          className={clsx(
-                            item.href === currentPath ||
-                              item.href.includes("/settings")
-                              ? "border-blue-700"
-                              : "border-transparent hover:border-gray-800 transition text-gray-400 ",
-                            "border-b text-gray-400 group flex items-center px-2 py-2 cursor-pointer text-sm leading-6 font-medium"
-                          )}
-                          aria-current={
-                            item.href === currentPath ||
-                            item.href.includes("/settings")
-                              ? "page"
-                              : undefined
-                          }
-                        >
-                          {item.title}
-                        </p>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
+              <div className="relative flex-shrink-0 flex h-1.5">
+                <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8" />
               </div>
             </div>
             <main className="flex-1 pb-8">
