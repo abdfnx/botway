@@ -18,11 +18,9 @@ const NewProjectHandler = () => {
   const hostServiceRef: any = useRef();
 
   const [isLoading, setIsLoading] = useState(false);
-
   const { mutate } = useProjectPages();
 
   let [platformSelected, setPlatformSelected]: any = useState(platforms[0]);
-
   let [langSelected, setLangSelected] = useState(
     langs(platformSelected.name)[0]
   );
@@ -72,8 +70,6 @@ const NewProjectHandler = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <input type="hidden" name="_method" value="PATCH" />
-
       <div className="lg:grid lg:gap-2 lg:grid-cols-2 lg:grid-rows-2 p-6">
         <div className="max-w-md">
           <label
@@ -536,58 +532,10 @@ const NewProjectHandler = () => {
   );
 };
 
-export function Platforms({ onChange }: any) {
-  return (
-    <div className="fixed top-16 w-56 text-right">
-      <Menu
-        as="div"
-        className="relative inline-block text-left"
-        onChange={onChange}
-      >
-        <div>
-          <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-            Options
-            <ChevronDownIcon
-              className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
-              aria-hidden="true"
-            />
-          </Menu.Button>
-        </div>
-        <Transition
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        >
-          <Menu.Items>
-            {platforms.map((platform) => (
-              /* Use the `active` state to conditionally style the active item. */
-              <Menu.Item key={platform.name} as={Fragment}>
-                {({ active }) => (
-                  <a
-                    className={`${
-                      active ? "bg-blue-500 text-white" : "bg-white text-black"
-                    }`}
-                  >
-                    {platform.name}
-                  </a>
-                )}
-              </Menu.Item>
-            ))}
-          </Menu.Items>
-        </Transition>
-      </Menu>
-    </div>
-  );
-}
-
-export function NewProject() {
+export const NewProject = () => {
   return (
     <NewProjectModal>
       <NewProjectHandler />
     </NewProjectModal>
   );
-}
+};

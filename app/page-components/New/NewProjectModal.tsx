@@ -2,16 +2,16 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ZapIcon } from "@primer/octicons-react";
 import { Fragment, useState } from "react";
 
-export function NewProjectModal({ children }: any) {
-  let [isOpen, setIsOpen] = useState(false);
+export const NewProjectModal = ({ children }: any) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  function closeModal() {
+  const closeModal = () => {
     setIsOpen(false);
-  }
+  };
 
-  function openModal() {
+  const openModal = () => {
     setIsOpen(true);
-  }
+  };
 
   return (
     <>
@@ -58,4 +58,4 @@ export function NewProjectModal({ children }: any) {
       </Transition>
     </>
   );
-}
+};

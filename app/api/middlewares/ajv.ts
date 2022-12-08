@@ -1,6 +1,6 @@
 import Ajv from "ajv";
 
-export function validateBody(schema: any) {
+export const validateBody = (schema: any) => {
   const ajv = new Ajv();
 
   const validate: any = ajv.compile(schema);
@@ -20,4 +20,4 @@ export function validateBody(schema: any) {
       });
     }
   };
-}
+};

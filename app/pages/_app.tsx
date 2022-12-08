@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import "@/assets/app.scss";
 import { Toaster } from "react-hot-toast";
+import "@/assets/app.scss";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (

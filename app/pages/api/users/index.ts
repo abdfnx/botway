@@ -53,7 +53,7 @@ handler.post(
       return;
     }
 
-    db.collection("users").count(async function (err: any, count: any) {
+    db.collection("users").count(async (err: any, count: any) => {
       let isAdmin = false;
 
       if (!err && count === 0) {
