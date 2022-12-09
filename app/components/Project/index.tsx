@@ -41,40 +41,6 @@ export const Project = ({ project }: any) => {
         </div>
       </div>
 
-      {/* <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex max-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-full max-h-full border-2 border-dashed border-gray-800 transform overflow-hidden rounded-2xl bg p-6 text-left align-middle shadow-xl transition-all">
-                  <ProjectMain project={project} />
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition> */}
-
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -86,12 +52,12 @@ export const Project = ({ project }: any) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-secondary bg-opacity-75 transition-opacity" />
+            <div className="fixed inset-0" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-hidden max-w-full">
             <div className="absolute inset-0 overflow-hidden">
-              <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full max-h-full pl-20">
+              <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full max-h-full pl-16">
                 <Transition.Child
                   as={Fragment}
                   enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -101,7 +67,7 @@ export const Project = ({ project }: any) => {
                   leaveFrom="translate-x-0"
                   leaveTo="translate-x-full"
                 >
-                  <Dialog.Panel className="pointer-events-auto relative w-screen max-w-full">
+                  <Dialog.Panel className="pointer-events-auto pt-16 relative w-screen max-w-full lg:pl-32">
                     <Transition.Child
                       as={Fragment}
                       enter="ease-in-out duration-500"
@@ -111,21 +77,12 @@ export const Project = ({ project }: any) => {
                       leaveFrom="opacity-100"
                       leaveTo="opacity-0"
                     >
-                      <div className="absolute top-0 left-0 -ml-8 flex pt-4 pr-2 sm:-ml-10 sm:pr-4">
-                        <button
-                          type="button"
-                          className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                          onClick={closeModal}
-                        >
-                          <span className="sr-only">Close panel</span>
-                          {/* <XMarkIcon className="h-6 w-6" aria-hidden="true" /> */}
-                        </button>
-                      </div>
+                      <div className="absolute top-0 left-0 -ml-20 flex pt-4 pr-2 sm:-ml-20 sm:pr-4" />
                     </Transition.Child>
-                    <div className="flex h-full w-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                    <div className="flex h-full w-full flex-col overflow-y-scroll bg py-6 shadow-xl rounded-tl-xl border-l-2 border-t-2 border-dashed border-l-gray-800 border-t-gray-800">
                       <div className="px-4 sm:px-6">
-                        <Dialog.Title className="text-lg font-medium text-gray-900">
-                          Panel title
+                        <Dialog.Title className="text-lg font-medium text-white">
+                          {project.name}
                         </Dialog.Title>
                       </div>
                       <div className="relative mt-6 flex-1 px-4 sm:px-6">
