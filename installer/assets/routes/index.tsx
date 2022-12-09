@@ -9,11 +9,7 @@ function App() {
 
         <meta content="width=device-width, initial-scale=1" name="viewport" />
 
-        <link
-          rel="icon"
-          type="image/svg"
-          href="/icon.svg"
-        />
+        <link rel="icon" type="image/svg" href="/icon.svg" />
 
         <title>📦 Botway CDN</title>
       </Head>

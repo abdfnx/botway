@@ -4,8 +4,8 @@
 
 ## Dependencies
 
-* Ruby >= 2.6 supported
-* An installed build system for native extensions (on Windows, make sure you download the "Ruby+Devkit" version of [RubyInstaller](https://rubyinstaller.org/downloads/))
+- Ruby >= 2.6 supported
+- An installed build system for native extensions (on Windows, make sure you download the "Ruby+Devkit" version of [RubyInstaller](https://rubyinstaller.org/downloads/))
 
 ## Installation
 
@@ -28,6 +28,7 @@ Alternatively, while Bundler is the recommended option, you can also install bwr
 #### Windows
 
 > **Make sure you have the DevKit installed!**
+
     gem install bwrb --platform=ruby
 
 ```ruby
