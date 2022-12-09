@@ -8,7 +8,7 @@ tasks:
   
   - name: Setup Botway UI
     init: pnpm i
-    command: pnpm dev
+    command: pnpm start
 
 ports:
   - port: 3000
