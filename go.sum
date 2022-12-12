@@ -310,6 +310,10 @@ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZN
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
 github.com/rivo/tview v0.0.0-20221128165837-db36428c92d9 h1:ccTgRxA37ypj3q8zB8G4k3xGPfBbIaMwrf3Yw6k50NY=
 github.com/rivo/tview v0.0.0-20221128165837-db36428c92d9/go.mod h1:YX2wUZOcJGOIycErz2s9KvDaP0jnWwRCirQMPLPpQ+Y=
+github.com/rivo/tview v0.0.0-20221210235652-e6cd7110ac63 h1:4kfxHWea5BNbvgK2+branQdsSFld55Veww8wac8utK4=
+github.com/rivo/tview v0.0.0-20221210235652-e6cd7110ac63/go.mod h1:YX2wUZOcJGOIycErz2s9KvDaP0jnWwRCirQMPLPpQ+Y=
+github.com/rivo/tview v0.0.0-20221211160934-55d1ca9d3392 h1:i/HMUEM1IhzKypjDoNQsXCIpdaqfX9t9qalD1j7TdNc=
+github.com/rivo/tview v0.0.0-20221211160934-55d1ca9d3392/go.mod h1:YX2wUZOcJGOIycErz2s9KvDaP0jnWwRCirQMPLPpQ+Y=
 github.com/rivo/uniseg v0.1.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=
 github.com/rivo/uniseg v0.2.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=
 github.com/rivo/uniseg v0.4.3 h1:utMvzDsuh3suAEnhH0RdHmoPbU648o6CvXxTx4SBMOw=

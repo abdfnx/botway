@@ -35,13 +35,7 @@ const InfoIcon = ({ value }: any) => {
 };
 
 export const ProjectMain = ({ project }: any) => {
-  let [navs] = useState([
-    "Overview",
-    "Config",
-    "Vars",
-    "Deployments",
-    "Settings",
-  ]);
+  let [navs] = useState(["Overview", "Config", "Deployments", "Settings"]);
 
   return (
     <div className="w-full max-w-full max-h-md px-1 py-1 sm:py-1">
@@ -112,7 +106,7 @@ const Content = ({ nav, project }: any) => {
       <>
         <div className="overflow-hidden sm:rounded-lg">
           <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg font-medium leading-6 text-gray-900">
+            <h3 className="text-lg font-medium leading-6 text-gray-400">
               Bot Information
             </h3>
           </div>
@@ -124,7 +118,7 @@ const Content = ({ nav, project }: any) => {
                     <dt className="text-sm font-medium text-gray-400">
                       {e.title}
                     </dt>
-                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <dd className="mt-1 text-sm text-gray-400 sm:col-span-2 sm:mt-0">
                       {e.icon ? (
                         <>
                           <div className="flex items-center">
@@ -149,6 +143,8 @@ const Content = ({ nav, project }: any) => {
         </div>
       </>
     );
+  } else if (nav == "Config") {
+    return <></>;
   }
 
   return <></>;
