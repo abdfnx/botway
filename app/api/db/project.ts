@@ -25,7 +25,14 @@ export async function findProjectById(db: any, id: any) {
   return projects[0];
 }
 
-export async function findProjects(db: any, before: any, by: any, limit = 10) {
+export async function findProjectByName(db: any, name: any) {
+  return db
+    .collection("projects")
+    .findOne({ name })
+    .then((prj: any) => prj || null);
+}
+
+export async function findProjects(db: any, before: any, by: any) {
   return db
     .collection("projects")
     .aggregate([
@@ -52,7 +59,17 @@ export async function findProjects(db: any, before: any, by: any, limit = 10) {
 
 export async function insertProject(
   db: any,
-  { name, platform, lang, packageManager, hostService, creatorId }: any
+  {
+    name,
+    platform,
+    lang,
+    packageManager,
+    hostService,
+    creatorId,
+    botToken,
+    botAppToken,
+    botSecretToken,
+  }: any
 ) {
   const project: any = {
     creatorId,
@@ -61,6 +78,9 @@ export async function insertProject(
     lang,
     packageManager,
     hostService,
+    botToken,
+    botAppToken,
+    botSecretToken,
     createdAt: new Date(),
   };
 
@@ -69,4 +89,15 @@ export async function insertProject(
   project._id = insertedId;
 
   return project;
+}
+
+export async function updateProject(db: any, id: any, data: any) {
+  return db
+    .collection("projects")
+    .findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: data },
+      { returnDocument: "after" }
+    )
+    .then(({ value }: any) => value);
 }

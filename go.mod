@@ -42,7 +42,7 @@ require (
 	github.com/chzyer/readline v1.5.1 // indirect
 	github.com/cli/browser v1.1.0 // indirect
 	github.com/cli/oauth v0.9.0 // indirect
-	github.com/cli/safeexec v1.0.0 // indirect
+	github.com/cli/safeexec v1.0.1 // indirect
 	github.com/cli/shurcooL-graphql v0.0.2 // indirect
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -80,7 +80,7 @@ require (
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/rivo/tview v0.0.0-20221211160934-55d1ca9d3392 // indirect
+	github.com/rivo/tview v0.0.0-20221212150847-19d943d59543 // indirect
 	github.com/rivo/uniseg v0.4.3 // indirect
 	github.com/sahilm/fuzzy v0.1.0 // indirect
 	github.com/scmn-dev/browser v0.1.3 // indirect

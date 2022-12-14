@@ -12,5 +12,8 @@ export const ValidateProps = {
     lang: { type: "string", minLength: 1, maxLength: 50 },
     packageManager: { type: "string", minLength: 1, maxLength: 50 },
     hostService: { type: "string", minLength: 1, maxLength: 50 },
+    botToken: { type: "string", minLength: 0, maxLength: 100 },
+    botAppToken: { type: "string", minLength: 0, maxLength: 100 },
+    botSecretToken: { type: "string", minLength: 0, maxLength: 100 },
   },
 };

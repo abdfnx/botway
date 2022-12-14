@@ -8,18 +8,6 @@ import { ZapIcon } from "@primer/octicons-react";
 import { ProjectList } from "./ProjectList";
 import { NewProject } from "../New/NewProject";
 
-export const NewProjectButton = () => {
-  return (
-    <a
-      className="h-9 px-2 py-3.5 rounded-md border border-gray-800 inline-flex flex-shrink-0 whitespace-nowrap items-center gap-2 transition-colors duration-200 ease-in-out leading-none border-1 cursor-pointer text-white hover:color-primary hover:bg-secondary"
-      href="/new"
-      aria-current="page"
-    >
-      <ZapIcon size={16} className="fill-blue-700" /> New Project
-    </a>
-  );
-};
-
 const Index = () => {
   const { data, error } = useCurrentUser();
   const loading = !data && !error;

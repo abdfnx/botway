@@ -23,7 +23,7 @@ type model struct {
 func (m model) AddToken() {
 	tokenContent, _ := sjson.Set(string(constants.BotwayConfig), "botway.bots."+m.botName+".bot_token", m.inputs[0].Value())
 	clientContent, _ := sjson.Set(tokenContent, "botway.bots."+m.botName+".bot_client_id", m.inputs[1].Value())
-	clientSecretContent, _ := sjson.Set(clientContent, "botway.bots."+m.botName+".bot_client_secret", m.inputs[1].Value())
+	clientSecretContent, _ := sjson.Set(clientContent, "botway.bots."+m.botName+".bot_client_secret", m.inputs[2].Value())
 
 	remove := os.Remove(constants.BotwayConfigFile)
 

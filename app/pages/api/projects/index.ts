@@ -29,6 +29,9 @@ handler.post(
       lang: ValidateProps.project.lang,
       packageManager: ValidateProps.project.packageManager,
       hostService: ValidateProps.project.hostService,
+      botToken: ValidateProps.project.botToken,
+      botAppToken: ValidateProps.project.botAppToken,
+      botSecretToken: ValidateProps.project.botSecretToken,
     },
     additionalProperties: false,
   }),
@@ -46,6 +49,9 @@ handler.post(
       lang: req.body.lang,
       packageManager: req.body.packageManager,
       hostService: req.body.hostService,
+      botToken: req.body.botToken,
+      botAppToken: req.body.botAppToken,
+      botSecretToken: req.body.botSecretToken,
     });
 
     return res.json({ project });

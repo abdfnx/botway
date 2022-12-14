@@ -1,6 +1,10 @@
+import { fetcher } from "@/lib/fetch";
+import { bgSecondary } from "@/tools/colors";
 import { Tab } from "@headlessui/react";
 import clsx from "clsx";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "react-hot-toast";
+import { Button } from "../Button";
 
 const InfoIcon = ({ value }: any) => {
   let iconURL;
@@ -34,7 +38,7 @@ const InfoIcon = ({ value }: any) => {
   );
 };
 
-export const ProjectMain = ({ project }: any) => {
+export const ProjectMain = ({ project, mutate }: any) => {
   let [navs] = useState(["Overview", "Config", "Deployments", "Settings"]);
 
   return (
@@ -63,7 +67,7 @@ export const ProjectMain = ({ project }: any) => {
               key={nav}
               className="rounded-xl bg-secondary outline-none p-3"
             >
-              <Content nav={nav} project={project} />
+              <Content nav={nav} project={project} mutate={mutate} />
             </Tab.Panel>
           ))}
         </Tab.Panels>
@@ -72,7 +76,7 @@ export const ProjectMain = ({ project }: any) => {
   );
 };
 
-const Content = ({ nav, project }: any) => {
+const Content = ({ nav, project, mutate }: any) => {
   if (nav == "Overview") {
     const elements = [
       {
@@ -144,7 +148,161 @@ const Content = ({ nav, project }: any) => {
       </>
     );
   } else if (nav == "Config") {
-    return <></>;
+    const capitalizeFirstLetter = (text: String) => {
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    };
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const botTokenRef: any = useRef();
+    const botAppTokenRef: any = useRef();
+    const botSecretTokenRef: any = useRef();
+
+    const onSubmit = useCallback(
+      async (e: any) => {
+        e.preventDefault();
+
+        try {
+          setIsLoading(true);
+
+          const formData = new FormData();
+
+          formData.append("id", project._id);
+          formData.append("name", project.name);
+          formData.append("platform", project.platform);
+          formData.append("botToken", botTokenRef.current.value);
+
+          if (project.platform != "telegram") {
+            formData.append("botAppToken", botAppTokenRef.current.value);
+          }
+
+          if (project.platform == "slack" || project.platform == "twitch") {
+            formData.append("botSecretToken", botSecretTokenRef.current.value);
+          }
+
+          await fetcher("/api/projects/update", {
+            method: "PATCH",
+            body: formData,
+          });
+
+          toast.success("Your project has been updated", {
+            style: {
+              borderRadius: "10px",
+              backgroundColor: bgSecondary,
+              color: "#fff",
+            },
+          });
+        } catch (e: any) {
+          toast.error(e.message, {
+            style: {
+              borderRadius: "10px",
+              backgroundColor: bgSecondary,
+              color: "#fff",
+            },
+          });
+        } finally {
+          setIsLoading(false);
+        }
+      },
+      [mutate]
+    );
+
+    useEffect(() => {
+      botTokenRef.current.value = project.botToken;
+      botAppTokenRef.current.value = project.botAppToken;
+      botSecretTokenRef.current.value = project.botSecretToken;
+    }, [project]);
+
+    return (
+      <div className="overflow-hidden sm:rounded-lg">
+        <div className="px-4 py-5 sm:px-6">
+          <h3 className="text-lg font-medium leading-6 text-gray-400">
+            Bot Configuration
+          </h3>
+        </div>
+        <form onSubmit={onSubmit}>
+          <div className="grid lg:grid-cols-2 sm:grid-cols-1 lt-md:!grid-cols-1 gap-3">
+            <div className="px-4 py-5 sm:px-6">
+              <label
+                htmlFor={`${project.platform}-bot-token`}
+                className="block text-gray-500 text-sm font-semibold"
+              >
+                {capitalizeFirstLetter(project.platform)} Bot Token
+              </label>
+              <div className="pt-2">
+                <input
+                  className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                  ref={botTokenRef}
+                  type="password"
+                  required
+                />
+              </div>
+            </div>
+
+            {project.platform != "telegram" ? (
+              <div className="px-4 py-5 sm:px-6">
+                <label
+                  htmlFor={`${project.platform}-app-id`}
+                  className="block text-gray-500 text-sm font-semibold"
+                >
+                  {capitalizeFirstLetter(project.platform)}{" "}
+                  {project.platform != "twitch"
+                    ? `Bot App ${
+                        project.platform == "discord" ? "ID" : "Token"
+                      }`
+                    : "Bot Client ID"}
+                </label>
+                <div className="pt-2">
+                  <input
+                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                    ref={botAppTokenRef}
+                    type="password"
+                    required
+                  />
+                </div>
+              </div>
+            ) : (
+              <input ref={botAppTokenRef} hidden />
+            )}
+
+            {project.platform == "slack" || project.platform == "twitch" ? (
+              <div className="px-4 py-5 sm:px-6">
+                <label
+                  htmlFor={`${project.platform}-app-id`}
+                  className="block text-gray-500 text-sm font-semibold"
+                >
+                  {capitalizeFirstLetter(project.platform)}{" "}
+                  {project.platform == "twitch"
+                    ? "Bot Client Secret"
+                    : "Bot Signing Secret"}
+                </label>
+                <div className="pt-2">
+                  <input
+                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                    ref={botSecretTokenRef}
+                    type="password"
+                    required
+                  />
+                </div>
+              </div>
+            ) : (
+              <input ref={botSecretTokenRef} hidden />
+            )}
+          </div>
+
+          <div className="mb-6 space-y-2 flex justify-center">
+            <Button
+              type="success"
+              htmlType="submit"
+              loading={isLoading}
+              className="button w-full p-2"
+            >
+              Update
+            </Button>
+          </div>
+        </form>
+      </div>
+    );
   }
 
   return <></>;

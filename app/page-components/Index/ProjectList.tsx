@@ -5,7 +5,7 @@ import { useCurrentUser } from "@/lib/user";
 import { NewProject } from "../New/NewProject";
 
 export const ProjectList = () => {
-  const { data, error } = useProjectPages();
+  const { data, error, mutate } = useProjectPages();
   const projects = data
     ? data.reduce((acc, val) => [...acc, ...val.projects], [])
     : [];
@@ -19,7 +19,7 @@ export const ProjectList = () => {
         <div className="mt-10 grid lg:grid-cols-3 sm:grid-cols-2 lt-md:!grid-cols-1 gap-3">
           {projects.map((project: any) =>
             project.creatorId == user._id ? (
-              <Project project={project} />
+              <Project project={project} mutate={mutate} />
             ) : (
               <></>
             )

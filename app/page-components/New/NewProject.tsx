@@ -45,6 +45,9 @@ const NewProjectHandler = () => {
             lang: langRef.current.value,
             packageManager: packageManagerRef.current.value,
             hostService: hostServiceRef.current.value,
+            botToken: "",
+            botAppToken: "",
+            botSecretToken: "",
           }),
         });
 
