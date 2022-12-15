@@ -1,14 +1,14 @@
 import { fetcher } from "@/lib/fetch";
 import { useProjectPages } from "@/lib/project";
-import { Transition, Menu, Listbox } from "@headlessui/react";
+import { Transition, Listbox } from "@headlessui/react";
 import { Fragment, useCallback, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { CheckIcon, ChevronDownIcon } from "@heroicons/react/solid";
 import clsx from "clsx";
 import { Button } from "@/components/Button";
 import { platforms, langs, hostServices, packageManagers } from "./Options";
 import { NewProjectModal } from "./NewProjectModal";
 import { bgSecondary } from "@/tools/colors";
+import { CheckIcon, ChevronDownIcon } from "@primer/octicons-react";
 
 const NewProjectHandler = () => {
   const nameRef: any = useRef();

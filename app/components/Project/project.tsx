@@ -303,6 +303,8 @@ const Content = ({ nav, project, mutate }: any) => {
         </form>
       </div>
     );
+  } else if (nav == "Deployments") {
+  } else if (nav == "Settings") {
   }
 
   return <></>;

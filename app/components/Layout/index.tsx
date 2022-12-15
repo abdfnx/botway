@@ -5,10 +5,15 @@ import { useRouter } from "next/router";
 import { Fragment, useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
 import { UserAvatar } from "@/components/UserAvatar";
 import clsx from "clsx";
 import { bgSecondary } from "@/tools/colors";
+import {
+  ChevronDownIcon,
+  RocketIcon,
+  SignOutIcon,
+  SlidersIcon,
+} from "@primer/octicons-react";
 
 const Layout = ({ children, title }: any) => {
   const { data, error, mutate } = useCurrentUser();
@@ -101,6 +106,7 @@ const Layout = ({ children, title }: any) => {
                                   "transition block mx-2 my-1 rounded-md cursor-pointer px-4 py-2 text-sm text-gray-400"
                                 )}
                               >
+                                <SlidersIcon size={18} className="pr-1" />{" "}
                                 Settings
                               </a>
                             )}
@@ -114,19 +120,7 @@ const Layout = ({ children, title }: any) => {
                                   "transition block mx-2 my-1 rounded-md cursor-pointer px-4 py-2 text-sm text-gray-400"
                                 )}
                               >
-                                Docs
-                              </a>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                className={clsx(
-                                  active ? "bg-secondary" : "",
-                                  "transition block mx-2 my-1 rounded-md cursor-pointer px-4 py-2 text-sm text-gray-400"
-                                )}
-                              >
-                                Command Palette
+                                <RocketIcon size={18} className="pr-1" /> Docs
                               </a>
                             )}
                           </Menu.Item>
@@ -136,10 +130,11 @@ const Layout = ({ children, title }: any) => {
                                 onClick={onSignOut}
                                 className={clsx(
                                   active ? "bg-secondary" : "",
-                                  "transition block mx-2 my-1 rounded-md cursor-pointer px-4 py-2 text-sm text-gray-400"
+                                  "transition text-red-600 block mx-2 my-1 rounded-md cursor-pointer px-4 py-2 text-sm"
                                 )}
                               >
-                                Sign Out
+                                <SignOutIcon size={18} className="pr-1" /> Sign
+                                Out
                               </a>
                             )}
                           </Menu.Item>
