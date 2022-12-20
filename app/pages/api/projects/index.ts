@@ -3,6 +3,7 @@ import { findProjects, insertProject } from "@/api/db";
 import { auths, validateBody } from "@/api/middlewares";
 import { getMongoDb } from "@/api/mongodb";
 import { ncOpts } from "@/api/nc";
+import { fetcher } from "@/lib/fetch";
 import nc from "next-connect";
 
 const handler = nc(ncOpts);
@@ -33,7 +34,7 @@ handler.post(
       botAppToken: ValidateProps.project.botAppToken,
       botSecretToken: ValidateProps.project.botSecretToken,
     },
-    additionalProperties: false,
+    additionalProperties: true,
   }),
   async (req, res) => {
     if (!req.user) {
@@ -42,16 +43,41 @@ handler.post(
 
     const db = await getMongoDb();
 
+    const {
+      name,
+      platform,
+      lang,
+      packageManager,
+      hostService,
+      botToken,
+      botAppToken,
+      botSecretToken,
+    } = req.body;
+
+    const rw = await fetcher("https://backboard.railway.app/graphql/v2", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: req.body.apiToken,
+      },
+      body: JSON.stringify({
+        operationName: "projectCreate",
+        query: `mutation projectCreate { projectCreate(input: { name: "${req.body.name}" }) { id }}`,
+      }),
+    });
+
     const project = await insertProject(db, {
       creatorId: req.user._id,
-      name: req.body.name,
-      platform: req.body.platform,
-      lang: req.body.lang,
-      packageManager: req.body.packageManager,
-      hostService: req.body.hostService,
-      botToken: req.body.botToken,
-      botAppToken: req.body.botAppToken,
-      botSecretToken: req.body.botSecretToken,
+      name,
+      platform,
+      lang,
+      packageManager,
+      hostService,
+      botToken,
+      botAppToken,
+      botSecretToken,
+      railwayProjectId: rw.data.projectCreate.id,
+      renderProjectId: "",
     });
 
     return res.json({ project });

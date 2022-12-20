@@ -10,12 +10,6 @@ const handler = nc(ncOpts);
 
 handler.use(...auths);
 
-handler.get(async (req: any, res: any) => {
-  if (!req.user) return res.json({ user: null });
-
-  return res.json({ user: req.user });
-});
-
 handler.patch(
   multer({ dest: "/tmp" }).single("data"),
   validateBody({
@@ -26,6 +20,8 @@ handler.patch(
       botToken: ValidateProps.project.botToken,
       botAppToken: ValidateProps.project.botAppToken,
       botSecretToken: ValidateProps.project.botSecretToken,
+      railwayProjectId: ValidateProps.project.railwayProjectId,
+      renderProjectId: ValidateProps.project.renderProjectId,
     },
     additionalProperties: true,
   }),
@@ -38,12 +34,22 @@ handler.patch(
 
     const db = await getMongoDb();
 
-    let { id, name, botToken, platform, botAppToken, botSecretToken } =
-      req.body;
+    let {
+      id,
+      name,
+      botToken,
+      platform,
+      botAppToken,
+      botSecretToken,
+      railwayProjectId,
+      renderProjectId,
+    } = req.body;
 
     let payload = {
       ...(name && { name }),
       botToken,
+      railwayProjectId,
+      renderProjectId,
     };
 
     if (platform != "telegram") {
@@ -51,6 +57,8 @@ handler.patch(
         ...(name && { name }),
         botToken,
         botAppToken,
+        railwayProjectId,
+        renderProjectId,
       };
     } else if (platform == "slack" || platform == "twitch") {
       payload = {
@@ -58,6 +66,8 @@ handler.patch(
         botToken,
         botAppToken,
         botSecretToken,
+        railwayProjectId,
+        renderProjectId,
       };
     }
 

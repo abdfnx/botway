@@ -1,6 +1,5 @@
 linters:
-  enable:
-    [ gofmt ]
+  enable: [gofmt]
 
 issues:
   max-issues-per-linter: 0

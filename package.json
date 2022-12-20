@@ -13,7 +13,7 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "start": "pnpm build && turbo run start --parallel",
-    "format": "prettier * -w"
+    "format": "prettier *.json *.yaml *.md ./app -w"
   },
   "packageManager": "pnpm@7.17.1",
   "devDependencies": {

@@ -21,27 +21,27 @@ builds:
         - -X main.buildDate={{ .Env.BuildDate }}
 
     id: macos
-    goos: [ darwin ]
-    goarch: [ amd64, arm64, arm ]
+    goos: [darwin]
+    goarch: [amd64, arm64, arm]
 
   - <<: *build_defaults
     id: linux
-    goos: [ linux ]
-    goarch: [ amd64, arm64, arm, 386 ]
+    goos: [linux]
+    goarch: [amd64, arm64, arm, 386]
 
   - <<: *build_defaults
     id: windows
-    goos: [ windows ]
-    goarch: [ amd64, arm64, arm, 386 ]
+    goos: [windows]
+    goarch: [amd64, arm64, arm, 386]
 
   - <<: *build_defaults
     id: freebsd
-    goos: [ freebsd ]
-    goarch: [ amd64, arm64, arm, 386 ]
+    goos: [freebsd]
+    goarch: [amd64, arm64, arm, 386]
 
 archives:
   - id: unix
-    builds: [ macos, linux, freebsd ]
+    builds: [macos, linux, freebsd]
     <<: &archive_defaults
       name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Tag }}_{{ .Arch }}"
 

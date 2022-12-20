@@ -9,8 +9,11 @@ import { platforms, langs, hostServices, packageManagers } from "./Options";
 import { NewProjectModal } from "./NewProjectModal";
 import { bgSecondary } from "@/tools/colors";
 import { CheckIcon, ChevronDownIcon } from "@primer/octicons-react";
+import { useCurrentUser } from "@/lib/user";
 
 const NewProjectHandler = () => {
+  const { data: { user } = {} } = useCurrentUser();
+
   const nameRef: any = useRef();
   const platformRef: any = useRef();
   const langRef: any = useRef();
@@ -40,6 +43,7 @@ const NewProjectHandler = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
+            apiToken: `Bearer ${user.railwayApiToken}`,
             name: nameRef.current.value,
             platform: platformRef.current.value,
             lang: langRef.current.value,
@@ -49,15 +53,15 @@ const NewProjectHandler = () => {
             botAppToken: "",
             botSecretToken: "",
           }),
-        });
-
-        toast.success("You have successfully created a new bot project", {
-          style: {
-            borderRadius: "10px",
-            backgroundColor: bgSecondary,
-            color: "#fff",
-          },
-          position: "bottom-right",
+        }).then(async () => {
+          toast.success("You have successfully created a new bot project", {
+            style: {
+              borderRadius: "10px",
+              backgroundColor: bgSecondary,
+              color: "#fff",
+            },
+            position: "bottom-right",
+          });
         });
 
         // refresh projects lists

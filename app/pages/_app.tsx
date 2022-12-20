@@ -8,7 +8,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <title>🤖 Botway</title>
+        <title>Botway</title>
       </Head>
       <Component {...pageProps} />
       <Toaster />

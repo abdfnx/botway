@@ -4,8 +4,9 @@ import { auths, validateBody } from "@/api/middlewares";
 import { getMongoDb } from "@/api/mongodb";
 import { ncOpts } from "@/api/nc";
 import nc from "next-connect";
+import { NextApiRequest, NextApiResponse } from "next";
 
-const handler = nc(ncOpts);
+const handler = nc<NextApiRequest, NextApiResponse>(ncOpts);
 
 handler.use(...auths);
 

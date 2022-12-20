@@ -61,7 +61,17 @@ export async function updateUserById(db: any, id: any, data: any) {
 
 export async function insertUser(
   db: any,
-  { email, originalPassword, name, username, isAdmin }: any
+  {
+    email,
+    originalPassword,
+    name,
+    username,
+    isAdmin,
+    githubApiToken,
+    railwayApiToken,
+    renderApiToken,
+    renderUserEmail,
+  }: any
 ) {
   let user: any = {
     emailVerified: false,
@@ -69,6 +79,10 @@ export async function insertUser(
     name,
     username,
     isAdmin,
+    githubApiToken,
+    railwayApiToken,
+    renderApiToken,
+    renderUserEmail,
   };
 
   const password = await bcrypt.hash(originalPassword, 10);

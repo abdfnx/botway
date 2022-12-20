@@ -69,6 +69,8 @@ export async function insertProject(
     botToken,
     botAppToken,
     botSecretToken,
+    railwayProjectId,
+    renderProjectId,
   }: any
 ) {
   const project: any = {
@@ -81,6 +83,8 @@ export async function insertProject(
     botToken,
     botAppToken,
     botSecretToken,
+    railwayProjectId,
+    renderProjectId,
     createdAt: new Date(),
   };
 

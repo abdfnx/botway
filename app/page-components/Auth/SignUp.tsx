@@ -32,6 +32,10 @@ const SignUp = () => {
             name: nameRef.current.value,
             password: passwordRef.current.value,
             username: usernameRef.current.value,
+            githubApiToken: "",
+            railwayApiToken: "",
+            renderApiToken: "",
+            renderUserEmail: "",
           }),
         });
 

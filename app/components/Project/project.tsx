@@ -34,7 +34,11 @@ const InfoIcon = ({ value }: any) => {
   }
 
   return (
-    <img src={`https://cdn-botway.deno.dev/icons/${iconURL}`} width={20} />
+    <img
+      alt="Icon"
+      src={`https://cdn-botway.deno.dev/icons/${iconURL}`}
+      width={20}
+    />
   );
 };
 

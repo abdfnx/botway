@@ -1,12 +1,3 @@
 node_modules/*
 .next
 LICENSE
-**/cmd
-**/constants
-**/internal
-**/ios
-**/runner
-**/templates
-**/tools
-go.*
-*.go

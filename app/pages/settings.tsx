@@ -5,7 +5,7 @@ const SettingPage = () => {
   return (
     <>
       <Head>
-        <title>🤖 Botway - Settings</title>
+        <title>Botway - Settings</title>
       </Head>
       <Settings />
     </>

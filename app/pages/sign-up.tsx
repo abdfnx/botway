@@ -5,7 +5,7 @@ const SignupPage = () => {
   return (
     <>
       <Head>
-        <title>🤖 Botway - Sign up</title>
+        <title>Botway - Sign up</title>
       </Head>
       <SignUp />
     </>

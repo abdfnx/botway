@@ -5,7 +5,7 @@ tasks:
   - name: Setup Botway
     init: gomo
     command: gomo update
-  
+
   - name: Setup Botway UI
     init: pnpm i
     command: pnpm start

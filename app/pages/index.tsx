@@ -5,7 +5,7 @@ const IndexPage = () => {
   return (
     <>
       <Head>
-        <title>🤖 Botway - Dashboard</title>
+        <title>Botway - Dashboard</title>
       </Head>
       <Index />
     </>

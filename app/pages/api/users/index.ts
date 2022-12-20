@@ -7,8 +7,9 @@ import { slugger } from "@/lib/user";
 import nc from "next-connect";
 import isEmail from "validator/lib/isEmail";
 import normalizeEmail from "validator/lib/normalizeEmail";
+import { NextApiRequest, NextApiResponse } from "next";
 
-const handler = nc(ncOpts);
+const handler = nc<NextApiRequest, NextApiResponse>(ncOpts);
 
 handler.post(
   validateBody({
@@ -18,6 +19,10 @@ handler.post(
       name: ValidateProps.user.name,
       password: ValidateProps.user.password,
       email: ValidateProps.user.email,
+      githubApiToken: ValidateProps.user.githubApiToken,
+      railwayApiToken: ValidateProps.user.railwayApiToken,
+      renderApiToken: ValidateProps.user.renderApiToken,
+      renderUserEmail: ValidateProps.user.renderUserEmail,
     },
     required: ["username", "name", "password", "email"],
     additionalProperties: false,
@@ -26,7 +31,16 @@ handler.post(
   async (req: any, res: any) => {
     const db = await getMongoDb();
 
-    let { username, name, email, password } = req.body;
+    let {
+      username,
+      name,
+      email,
+      password,
+      githubApiToken,
+      railwayApiToken,
+      renderApiToken,
+      renderUserEmail,
+    } = req.body;
 
     username = slugger(req.body.username);
     email = normalizeEmail(req.body.email);
@@ -68,6 +82,10 @@ handler.post(
         name,
         username,
         isAdmin,
+        githubApiToken,
+        railwayApiToken,
+        renderApiToken,
+        renderUserEmail,
       });
 
       req.logIn(user, (err: any) => {
