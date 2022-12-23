@@ -10,9 +10,9 @@
 	path = packages/botway-lua
 	url = https://github.com/abdfnx/botway-lua
 	branch = main
-[submodule "runner"]
-	path = runner
-	url = https://github.com/botwayorg/runner
+[submodule "create-botway-bot"]
+	path = create-botway-bot
+	url = https://github.com/abdfnx/create-botway-bot
 	branch = main
 [submodule "templates"]
 	path = templates
