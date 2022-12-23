@@ -17,11 +17,22 @@ export const platforms = [
   },
 ];
 
+export const visibilityOptions = [
+  {
+    typeName: "Public",
+    type: "public",
+  },
+  {
+    typeName: "Private",
+    type: "private",
+  },
+];
+
 export const langs = (platform: any) => {
   const bwLangs = [
     {
-      name: "JavaScript",
-      slug: "javascript",
+      name: "Node.js",
+      slug: "nodejs",
     },
     {
       name: "C++",
@@ -87,8 +98,8 @@ export const langs = (platform: any) => {
 
   const discordLangs = [
     {
-      name: "JavaScript",
-      slug: "javascript",
+      name: "Node.js",
+      slug: "nodejs",
     },
     {
       name: "C",
@@ -154,8 +165,8 @@ export const langs = (platform: any) => {
 
   const telegramLangs = [
     {
-      name: "JavaScript",
-      slug: "javascript",
+      name: "Node.js",
+      slug: "nodejs",
     },
     {
       name: "C++",
@@ -221,8 +232,8 @@ export const langs = (platform: any) => {
 
   const slackLangs = [
     {
-      name: "JavaScript",
-      slug: "javascript",
+      name: "Node.js",
+      slug: "nodejs",
     },
     {
       name: "Python",
@@ -236,8 +247,8 @@ export const langs = (platform: any) => {
 
   const twitchLangs = [
     {
-      name: "JavaScript",
-      slug: "javascript",
+      name: "Node.js",
+      slug: "nodejs",
     },
 
     {
@@ -418,7 +429,7 @@ export const packageManagers = (lang: any) => {
   ];
 
   switch (lang) {
-    case "JavaScript":
+    case "Node.js":
     case "TypeScript":
       return nodePMs;
 

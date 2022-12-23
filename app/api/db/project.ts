@@ -61,6 +61,7 @@ export async function insertProject(
   db: any,
   {
     name,
+    visibility,
     platform,
     lang,
     packageManager,
@@ -70,12 +71,15 @@ export async function insertProject(
     botAppToken,
     botSecretToken,
     railwayProjectId,
+    railwayServiceId,
+    railwayEnvId,
     renderProjectId,
   }: any
 ) {
   const project: any = {
     creatorId,
     name,
+    visibility,
     platform,
     lang,
     packageManager,
@@ -84,6 +88,8 @@ export async function insertProject(
     botAppToken,
     botSecretToken,
     railwayProjectId,
+    railwayServiceId,
+    railwayEnvId,
     renderProjectId,
     createdAt: new Date(),
   };

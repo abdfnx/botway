@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 const AccountInfo = ({ user, mutate }: any) => {
   const usernameRef: any = useRef();
   const nameRef: any = useRef();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(
@@ -290,7 +291,7 @@ const Tokens = ({ user, mutate }: any) => {
 
   return (
     <>
-      <div className="flex-1shadow-sm p-5 mb-8">
+      <div className="flex-1 shadow-sm p-5 mb-8">
         <div className="mb-4">
           <h1 className="text-xl text-gray-400 font-semibold">API Tokens</h1>
         </div>
@@ -298,10 +299,10 @@ const Tokens = ({ user, mutate }: any) => {
           <div className="lg:grid lg:gap-2 lg:grid-cols-2 lg:grid-rows-2">
             <div className="max-w-md">
               <label
-                htmlFor="github-token"
+                htmlFor="github-api-token"
                 className="block text-gray-500 text-sm font-semibold"
               >
-                GitHub Token
+                GitHub API Token
               </label>
               <div className="pt-2 mb-6">
                 <input

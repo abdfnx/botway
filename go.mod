@@ -41,7 +41,7 @@ require (
 	github.com/charmbracelet/glamour v0.6.0 // indirect
 	github.com/chzyer/readline v1.5.1 // indirect
 	github.com/cli/browser v1.1.0 // indirect
-	github.com/cli/oauth v0.9.0 // indirect
+	github.com/cli/oauth v1.0.0 // indirect
 	github.com/cli/safeexec v1.0.1 // indirect
 	github.com/cli/shurcooL-graphql v0.0.2 // indirect
 	github.com/containerd/console v1.0.3 // indirect
@@ -80,7 +80,7 @@ require (
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/rivo/tview v0.0.0-20221214142745-4802e03c3898 // indirect
+	github.com/rivo/tview v0.0.0-20221221172820-02e38ea9604c // indirect
 	github.com/rivo/uniseg v0.4.3 // indirect
 	github.com/sahilm/fuzzy v0.1.0 // indirect
 	github.com/scmn-dev/browser v0.1.3 // indirect

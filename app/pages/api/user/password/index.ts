@@ -20,7 +20,7 @@ handler.put(
     required: ["oldPassword", "newPassword"],
     additionalProperties: false,
   }),
-  async (req: any, res: any) => {
+  async (req, res) => {
     if (!req.user) {
       res.json(401).end();
 

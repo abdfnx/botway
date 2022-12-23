@@ -5,6 +5,7 @@ import { getMongoDb } from "@/api/mongodb";
 import { ncOpts } from "@/api/nc";
 import { fetcher } from "@/lib/fetch";
 import nc from "next-connect";
+import { Octokit } from "octokit";
 
 const handler = nc(ncOpts);
 
@@ -26,6 +27,7 @@ handler.post(
     type: "object",
     properties: {
       name: ValidateProps.project.name,
+      visibility: ValidateProps.project.visibility,
       platform: ValidateProps.project.platform,
       lang: ValidateProps.project.lang,
       packageManager: ValidateProps.project.packageManager,
@@ -45,6 +47,7 @@ handler.post(
 
     const {
       name,
+      visibility,
       platform,
       lang,
       packageManager,
@@ -54,21 +57,44 @@ handler.post(
       botSecretToken,
     } = req.body;
 
-    const rw = await fetcher("https://backboard.railway.app/graphql/v2", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: req.body.apiToken,
-      },
-      body: JSON.stringify({
-        operationName: "projectCreate",
-        query: `mutation projectCreate { projectCreate(input: { name: "${req.body.name}" }) { id }}`,
-      }),
-    });
+    const createRailwayProject = await fetcher(
+      "https://backboard.railway.app/graphql/v2",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: req.body.apiToken,
+        },
+        body: JSON.stringify({
+          operationName: "projectCreate",
+          query: `mutation projectCreate { projectCreate(input: { name: "${req.body.name}" }) { id }}`,
+        }),
+      }
+    );
+
+    const createService = await fetcher(
+      "https://backboard.railway.app/graphql/v2",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: req.body.apiToken,
+        },
+        body: JSON.stringify({
+          operationName: "serviceCreate",
+          query: `mutation serviceCreate { serviceCreate(input: { name: "${
+            req.body.name + "-main"
+          }", projectId: "${
+            createRailwayProject.data.projectCreate.id
+          }" }) { id }}`,
+        }),
+      }
+    );
 
     const project = await insertProject(db, {
       creatorId: req.user._id,
       name,
+      visibility,
       platform,
       lang,
       packageManager,
@@ -76,8 +102,40 @@ handler.post(
       botToken,
       botAppToken,
       botSecretToken,
-      railwayProjectId: rw.data.projectCreate.id,
+      railwayProjectId: createRailwayProject.data.projectCreate.id,
+      railwayServiceId: createService.data.serviceCreate.id,
+      railwayEnvId: "",
       renderProjectId: "",
+    });
+
+    const octokit = new Octokit({
+      auth: req.body.ghToken,
+    });
+
+    const ghu = await (await octokit.request("GET /user", {})).data;
+
+    await octokit.request("POST /user/repos", {
+      name,
+      description: "My Awesome botway bot.",
+      private: visibility != "public",
+    });
+
+    await fetcher("https://create-botway-bot.up.railway.app/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: req.body.ghToken,
+      },
+      body: JSON.stringify({
+        name,
+        visibility,
+        platform,
+        lang,
+        packageManager,
+        hostService,
+        username: ghu.login,
+        email: ghu.email,
+      }),
     });
 
     return res.json({ project });

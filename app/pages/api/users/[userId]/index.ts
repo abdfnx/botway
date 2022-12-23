@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = nc<NextApiRequest, NextApiResponse>(ncOpts);
 
-handler.get(async (req: any, res: any) => {
+handler.get(async (req, res) => {
   const db = await getMongoDb();
   const user = await findUserById(db, req.query.userId);
 
