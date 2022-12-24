@@ -19,7 +19,7 @@ export const ProjectList = () => {
         <div className="mt-10 grid lg:grid-cols-3 sm:grid-cols-2 lt-md:!grid-cols-1 gap-3">
           {projects.map((project: any) =>
             project.creatorId == user._id ? (
-              <Project project={project} mutate={mutate} />
+              <Project project={project} mutate={mutate} user={user} />
             ) : (
               <></>
             )

@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { ProjectMain } from "./project";
 
-export const Project = ({ project, mutate }: any) => {
+export const Project = ({ project, mutate, user }: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => {
@@ -86,7 +86,11 @@ export const Project = ({ project, mutate }: any) => {
                         </Dialog.Title>
                       </div>
                       <div className="relative mt-6 flex-1 px-4 sm:px-6">
-                        <ProjectMain project={project} mutate={mutate} />
+                        <ProjectMain
+                          project={project}
+                          mutate={mutate}
+                          user={user}
+                        />
                       </div>
                     </div>
                   </Dialog.Panel>

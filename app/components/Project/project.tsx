@@ -42,7 +42,11 @@ const InfoIcon = ({ value }: any) => {
   );
 };
 
-export const ProjectMain = ({ project, mutate }: any) => {
+const capitalizeFirstLetter = (text: String) => {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};
+
+export const ProjectMain = ({ project, mutate, user }: any) => {
   let [navs] = useState(["Overview", "Config", "Deployments", "Settings"]);
 
   return (
@@ -71,7 +75,12 @@ export const ProjectMain = ({ project, mutate }: any) => {
               key={nav}
               className="rounded-xl bg-secondary outline-none p-3"
             >
-              <Content nav={nav} project={project} mutate={mutate} />
+              <Content
+                nav={nav}
+                project={project}
+                mutate={mutate}
+                user={user}
+              />
             </Tab.Panel>
           ))}
         </Tab.Panels>
@@ -80,7 +89,7 @@ export const ProjectMain = ({ project, mutate }: any) => {
   );
 };
 
-const Content = ({ nav, project, mutate }: any) => {
+const Content = ({ nav, project, mutate, user }: any) => {
   if (nav == "Overview") {
     const elements = [
       {
@@ -124,7 +133,7 @@ const Content = ({ nav, project, mutate }: any) => {
                 <>
                   <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt className="text-sm font-medium text-gray-400">
-                      {e.title}
+                      {capitalizeFirstLetter(e.title)}
                     </dt>
                     <dd className="mt-1 text-sm text-gray-400 sm:col-span-2 sm:mt-0">
                       {e.icon ? (
@@ -152,10 +161,6 @@ const Content = ({ nav, project, mutate }: any) => {
       </>
     );
   } else if (nav == "Config") {
-    const capitalizeFirstLetter = (text: String) => {
-      return text.charAt(0).toUpperCase() + text.slice(1);
-    };
-
     const [isLoading, setIsLoading] = useState(false);
 
     const botTokenRef: any = useRef();
@@ -175,6 +180,10 @@ const Content = ({ nav, project, mutate }: any) => {
           formData.append("name", project.name);
           formData.append("platform", project.platform);
           formData.append("botToken", botTokenRef.current.value);
+          formData.append("ghToken", user.githubApiToken);
+          formData.append("railwayApiToken", user.railwayApiToken);
+          formData.append("railwayProjectId", project.railwayProjectId);
+          formData.append("railwayServiceId", project.railwayServiceId);
 
           if (project.platform != "telegram") {
             formData.append("botAppToken", botAppTokenRef.current.value);
