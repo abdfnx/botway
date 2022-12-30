@@ -83,6 +83,7 @@ export async function insertUser(
     railwayApiToken,
     renderApiToken,
     renderUserEmail,
+    projects: [],
   };
 
   const password = await bcrypt.hash(originalPassword, 10);

@@ -7,9 +7,8 @@ import { slugger } from "@/lib/user";
 import nc from "next-connect";
 import isEmail from "validator/lib/isEmail";
 import normalizeEmail from "validator/lib/normalizeEmail";
-import { NextApiRequest, NextApiResponse } from "next";
 
-const handler = nc<NextApiRequest, NextApiResponse>(ncOpts);
+const handler = nc(ncOpts);
 
 handler.post(
   validateBody({

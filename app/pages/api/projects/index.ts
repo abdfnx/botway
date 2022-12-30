@@ -1,5 +1,5 @@
 import { ValidateProps } from "@/api/constants";
-import { findProjects, insertProject } from "@/api/db";
+import { insertProject } from "@/api/db";
 import { auths, validateBody } from "@/api/middlewares";
 import { getMongoDb } from "@/api/mongodb";
 import { ncOpts } from "@/api/nc";
@@ -8,18 +8,6 @@ import nc from "next-connect";
 import { Octokit } from "octokit";
 
 const handler = nc(ncOpts);
-
-handler.get(async (req, res) => {
-  const db = await getMongoDb();
-
-  const projects = await findProjects(
-    db,
-    req.query.before ? new Date(req.query.before) : undefined,
-    req.query.by
-  );
-
-  res.json({ projects });
-});
 
 handler.post(
   ...auths,
@@ -46,6 +34,7 @@ handler.post(
     const db = await getMongoDb();
 
     const {
+      userId,
       name,
       visibility,
       platform,
@@ -91,17 +80,16 @@ handler.post(
       }
     );
 
-    const project = await insertProject(db, {
-      creatorId: req.user._id,
+    const project = await insertProject(db, userId, {
       name,
-      visibility,
-      platform,
-      lang,
-      packageManager,
-      hostService,
       botToken,
       botAppToken,
       botSecretToken,
+      platform,
+      lang,
+      packageManager,
+      visibility,
+      hostService,
       railwayProjectId: createRailwayProject.data.projectCreate.id,
       railwayServiceId: createService.data.serviceCreate.id,
       railwayEnvId: "",

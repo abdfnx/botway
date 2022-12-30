@@ -117,6 +117,11 @@ const Content = ({ nav, project, mutate, user }: any) => {
         value: project.hostService,
         icon: true,
       },
+      {
+        title: "Builder",
+        value: "docker",
+        icon: true,
+      },
     ];
 
     return (
@@ -167,7 +172,22 @@ const Content = ({ nav, project, mutate, user }: any) => {
     const botAppTokenRef: any = useRef();
     const botSecretTokenRef: any = useRef();
 
-    const onSubmit = useCallback(
+    const plugins = [
+      {
+        name: "PostgreSQL",
+      },
+      {
+        name: "Redis",
+      },
+      {
+        name: "MongoDB",
+      },
+      {
+        name: "MySQL",
+      },
+    ];
+
+    const TokensOnSubmit = useCallback(
       async (e: any) => {
         e.preventDefault();
 
@@ -176,14 +196,20 @@ const Content = ({ nav, project, mutate, user }: any) => {
 
           const formData = new FormData();
 
-          formData.append("id", project._id);
+          formData.append("id", project.id);
           formData.append("name", project.name);
+          formData.append("userId", user._id);
+          formData.append("visibility", project.visibility);
           formData.append("platform", project.platform);
+          formData.append("lang", project.lang);
+          formData.append("packageManager", project.packageManager);
+          formData.append("hostService", project.hostService);
           formData.append("botToken", botTokenRef.current.value);
           formData.append("ghToken", user.githubApiToken);
           formData.append("railwayApiToken", user.railwayApiToken);
           formData.append("railwayProjectId", project.railwayProjectId);
           formData.append("railwayServiceId", project.railwayServiceId);
+          formData.append("renderProjectId", project.renderProjectId);
 
           if (project.platform != "telegram") {
             formData.append("botAppToken", botAppTokenRef.current.value);
@@ -228,92 +254,136 @@ const Content = ({ nav, project, mutate, user }: any) => {
 
     return (
       <div className="overflow-hidden sm:rounded-lg">
-        <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg font-medium leading-6 text-gray-400">
-            Bot Configuration
-          </h3>
-        </div>
-        <form onSubmit={onSubmit}>
-          <div className="grid lg:grid-cols-2 sm:grid-cols-1 lt-md:!grid-cols-1 gap-3">
-            <div className="px-4 py-5 sm:px-6">
-              <label
-                htmlFor={`${project.platform}-bot-token`}
-                className="block text-gray-500 text-sm font-semibold"
-              >
-                {capitalizeFirstLetter(project.platform)} Bot Token
-              </label>
-              <div className="pt-2">
-                <input
-                  className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
-                  ref={botTokenRef}
-                  type="password"
-                  required
-                />
+        <div>
+          <div className="px-4 py-5 sm:px-6">
+            <h3 className="text-lg font-medium leading-6 text-gray-400">
+              Bot Configuration
+            </h3>
+          </div>
+          <form onSubmit={TokensOnSubmit}>
+            <div className="grid lg:grid-cols-2 sm:grid-cols-1 lt-md:!grid-cols-1 gap-3">
+              <div className="px-4 py-5 sm:px-6">
+                <label
+                  htmlFor={`${project.platform}-bot-token`}
+                  className="block text-gray-500 text-sm font-semibold"
+                >
+                  {capitalizeFirstLetter(project.platform)} Bot Token
+                </label>
+                <div className="pt-2">
+                  <input
+                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                    ref={botTokenRef}
+                    type="password"
+                    required
+                  />
+                </div>
               </div>
+
+              {project.platform != "telegram" ? (
+                <div className="px-4 py-5 sm:px-6">
+                  <label
+                    htmlFor={`${project.platform}-app-id`}
+                    className="block text-gray-500 text-sm font-semibold"
+                  >
+                    {capitalizeFirstLetter(project.platform)}{" "}
+                    {project.platform != "twitch"
+                      ? `Bot App ${
+                          project.platform == "discord" ? "ID" : "Token"
+                        }`
+                      : "Bot Client ID"}
+                  </label>
+                  <div className="pt-2">
+                    <input
+                      className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                      ref={botAppTokenRef}
+                      type="password"
+                      required
+                    />
+                  </div>
+                </div>
+              ) : (
+                <input ref={botAppTokenRef} hidden />
+              )}
+
+              {project.platform == "slack" || project.platform == "twitch" ? (
+                <div className="px-4 py-5 sm:px-6">
+                  <label
+                    htmlFor={`${project.platform}-app-id`}
+                    className="block text-gray-500 text-sm font-semibold"
+                  >
+                    {capitalizeFirstLetter(project.platform)}{" "}
+                    {project.platform == "twitch"
+                      ? "Bot Client Secret"
+                      : "Bot Signing Secret"}
+                  </label>
+                  <div className="pt-2">
+                    <input
+                      className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                      ref={botSecretTokenRef}
+                      type="password"
+                      required
+                    />
+                  </div>
+                </div>
+              ) : (
+                <input ref={botSecretTokenRef} hidden />
+              )}
             </div>
 
-            {project.platform != "telegram" ? (
-              <div className="px-4 py-5 sm:px-6">
-                <label
-                  htmlFor={`${project.platform}-app-id`}
-                  className="block text-gray-500 text-sm font-semibold"
-                >
-                  {capitalizeFirstLetter(project.platform)}{" "}
-                  {project.platform != "twitch"
-                    ? `Bot App ${
-                        project.platform == "discord" ? "ID" : "Token"
-                      }`
-                    : "Bot Client ID"}
-                </label>
-                <div className="pt-2">
-                  <input
-                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
-                    ref={botAppTokenRef}
-                    type="password"
-                    required
-                  />
-                </div>
-              </div>
-            ) : (
-              <input ref={botAppTokenRef} hidden />
-            )}
-
-            {project.platform == "slack" || project.platform == "twitch" ? (
-              <div className="px-4 py-5 sm:px-6">
-                <label
-                  htmlFor={`${project.platform}-app-id`}
-                  className="block text-gray-500 text-sm font-semibold"
-                >
-                  {capitalizeFirstLetter(project.platform)}{" "}
-                  {project.platform == "twitch"
-                    ? "Bot Client Secret"
-                    : "Bot Signing Secret"}
-                </label>
-                <div className="pt-2">
-                  <input
-                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
-                    ref={botSecretTokenRef}
-                    type="password"
-                    required
-                  />
-                </div>
-              </div>
-            ) : (
-              <input ref={botSecretTokenRef} hidden />
-            )}
+            <div className="mb-2 space-y-2 flex justify-center border-b border-gray-800">
+              <Button
+                type="success"
+                htmlType="submit"
+                loading={isLoading}
+                className="button w-full p-2 mb-6"
+              >
+                Update
+              </Button>
+            </div>
+          </form>
+        </div>
+        <div className="overflow-hidden sm:rounded-lg">
+          <div className="px-4 py-5 sm:px-6">
+            <h3 className="text-lg font-medium leading-6 text-gray-400">
+              Bot Plugins (Databases)
+            </h3>
+            <div className="pt-2">
+              {project.hostService == "railway" ?? (
+                <p>
+                  Railway has a are built in Database Management Interface, this
+                  allows you to perform common actions on your Database such as
+                  viewing and editing the contents of your database services in
+                  Railway. The interface is available for all database services
+                  deployed within a project.
+                </p>
+              )}
+            </div>
           </div>
 
-          <div className="mb-6 space-y-2 flex justify-center">
-            <Button
-              type="success"
-              htmlType="submit"
-              loading={isLoading}
-              className="button w-full p-2"
-            >
-              Update
-            </Button>
+          <div className="px-4 py-5 sm:px-6">
+            <div className="mt-10 grid lg:grid-cols-4 sm:grid-cols-2 lt-md:!grid-cols-1 gap-4">
+              {plugins.map((plugin: any) => (
+                <div className="flex items-center justify-between gap-4 px-5 py-0 rounded-lg border-2 border-dashed border-gray-800 hover:bg-secondary transition-colors duration-200">
+                  <div className="block flex-1 py-5 cursor-pointer">
+                    <h2>
+                      <strong className="text-base text-white leading-tight font-medium align-middle">
+                        {plugin.name}
+                      </strong>
+                    </h2>
+                    <br />
+                    <p className="flex items-center gap-1.5 mt-1.5 text-sm text-gray-500">
+                      <img
+                        src={`https://cdn-botway.deno.dev/icons/${plugin.name.toLowerCase()}.svg`}
+                        alt={`${plugin.name.toLowerCase()} icon`}
+                        className="h-8 w-h-8 max-h-8 max-w-h-8"
+                      />
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </form>
+        </div>
       </div>
     );
   } else if (nav == "Deployments") {

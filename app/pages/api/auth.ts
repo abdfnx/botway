@@ -2,9 +2,8 @@ import { passport } from "@/api/auth";
 import { auths } from "@/api/middlewares";
 import { ncOpts } from "@/api/nc";
 import nc from "next-connect";
-import { NextApiRequest, NextApiResponse } from "next";
 
-const handler = nc<NextApiRequest, NextApiResponse>(ncOpts);
+const handler = nc(ncOpts);
 
 handler.use(...auths);
 

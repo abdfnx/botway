@@ -39,7 +39,12 @@ handler.patch(
     let {
       id,
       name,
+      userId,
       ghToken,
+      visibility,
+      lang,
+      packageManager,
+      hostService,
       botToken,
       platform,
       botAppToken,
@@ -47,6 +52,7 @@ handler.patch(
       railwayApiToken,
       railwayProjectId,
       railwayServiceId,
+      renderProjectId,
     } = req.body;
 
     const getEnvId = await fetcher("https://backboard.railway.app/graphql/v2", {
@@ -95,29 +101,56 @@ handler.patch(
     });
 
     let payload = {
+      id,
       ...(name && { name }),
       botToken,
+      platform,
+      lang,
+      packageManager,
+      visibility,
+      hostService,
+      railwayProjectId,
+      railwayServiceId,
       railwayEnvId: envId,
+      renderProjectId,
     };
 
     if (platform != "telegram") {
       payload = {
+        id,
         ...(name && { name }),
         botToken,
         botAppToken,
+        platform,
+        lang,
+        packageManager,
+        visibility,
+        hostService,
+        railwayProjectId,
+        railwayServiceId,
         railwayEnvId: envId,
+        renderProjectId,
       };
     } else if (platform == "slack" || platform == "twitch") {
       payload = {
+        id,
         ...(name && { name }),
         botToken,
         botAppToken,
         botSecretToken,
+        platform,
+        lang,
+        packageManager,
+        visibility,
+        hostService,
+        railwayProjectId,
+        railwayServiceId,
         railwayEnvId: envId,
+        renderProjectId,
       };
     }
 
-    const prj = await updateProject(db, id, payload);
+    const prj = await updateProject(db, userId, id, payload);
 
     res.json({ prj });
   }

@@ -9,6 +9,7 @@ export const ValidateProps = {
     renderApiToken: { type: "string", minLength: 0, maxLength: 32 },
     renderUserEmail: { type: "string", minLength: 0 },
     isAdmin: { type: "boolean" },
+    projects: { type: "array" },
   },
   project: {
     name: { type: "string", minLength: 1, maxLength: 350 },
@@ -20,9 +21,9 @@ export const ValidateProps = {
     botToken: { type: "string", minLength: 0, maxLength: 100 },
     botAppToken: { type: "string", minLength: 0, maxLength: 100 },
     botSecretToken: { type: "string", minLength: 0, maxLength: 100 },
-    railwayProjectId: { type: "string", minLength: 0, maxLength: 38 },
-    railwayServiceId: { type: "string", minLength: 0, maxLength: 38 },
-    railwayEnvId: { type: "string", minLength: 0, maxLength: 38 },
+    railwayProjectId: { type: "string", minLength: 0, maxLength: 100 },
+    railwayServiceId: { type: "string", minLength: 0, maxLength: 100 },
+    railwayEnvId: { type: "string", minLength: 0, maxLength: 100 },
     renderProjectId: { type: "string", minLength: 0, maxLength: 24 },
   },
 };
