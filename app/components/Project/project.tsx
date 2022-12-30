@@ -1,8 +1,8 @@
 import { fetcher } from "@/lib/fetch";
 import { bgSecondary } from "@/tools/colors";
-import { Tab } from "@headlessui/react";
+import { Dialog, Tab, Transition } from "@headlessui/react";
 import clsx from "clsx";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Button } from "../Button";
 
@@ -73,7 +73,7 @@ export const ProjectMain = ({ project, mutate, user }: any) => {
           {navs.map((nav) => (
             <Tab.Panel
               key={nav}
-              className="rounded-xl bg-secondary outline-none p-3"
+              className="rounded-2xl bg-secondary outline-none p-3"
             >
               <Content
                 nav={nav}
@@ -171,6 +171,18 @@ const Content = ({ nav, project, mutate, user }: any) => {
     const botTokenRef: any = useRef();
     const botAppTokenRef: any = useRef();
     const botSecretTokenRef: any = useRef();
+
+    let [isOpen, setIsOpen] = useState(false);
+    let [pluginx, setPluginx] = useState("PostgreSQL");
+
+    const closeModal = () => {
+      setIsOpen(false);
+    };
+
+    const openModal = (plugin: any) => {
+      setPluginx(plugin);
+      setIsOpen(true);
+    };
 
     const plugins = [
       {
@@ -347,40 +359,99 @@ const Content = ({ nav, project, mutate, user }: any) => {
             <h3 className="text-lg font-medium leading-6 text-gray-400">
               Bot Plugins (Databases)
             </h3>
-            <div className="pt-2">
-              {project.hostService == "railway" ?? (
-                <p>
-                  Railway has a are built in Database Management Interface, this
-                  allows you to perform common actions on your Database such as
-                  viewing and editing the contents of your database services in
-                  Railway. The interface is available for all database services
-                  deployed within a project.
-                </p>
-              )}
-            </div>
           </div>
 
           <div className="px-4 py-5 sm:px-6">
+            <p>
+              Railway has a are built in Database Management Interface, this
+              allows you to perform common actions on your Database such as
+              viewing and editing the contents of your database services in
+              Railway. The interface is available for all database services
+              deployed within a project.
+            </p>
             <div className="mt-10 grid lg:grid-cols-4 sm:grid-cols-2 lt-md:!grid-cols-1 gap-4">
-              {plugins.map((plugin: any) => (
-                <div className="flex items-center justify-between gap-4 px-5 py-0 rounded-lg border-2 border-dashed border-gray-800 hover:bg-secondary transition-colors duration-200">
+              {plugins.map((plugin) => (
+                <div
+                  onClick={() => openModal(plugin.name)}
+                  className="flex items-center justify-between gap-4 px-5 py-0 rounded-lg border-2 border-dashed border-gray-800 hover:bg-secondary transition-colors duration-200"
+                >
                   <div className="block flex-1 py-5 cursor-pointer">
-                    <h2>
-                      <strong className="text-base text-white leading-tight font-medium align-middle">
-                        {plugin.name}
-                      </strong>
-                    </h2>
-                    <br />
-                    <p className="flex items-center gap-1.5 mt-1.5 text-sm text-gray-500">
+                    <p className="flex items-center gap-1.5 text-sm text-gray-500">
+                      <h2>
+                        <strong className="text-base text-white leading-tight font-medium align-middle">
+                          {plugin.name}
+                        </strong>
+                      </h2>
                       <img
                         src={`https://cdn-botway.deno.dev/icons/${plugin.name.toLowerCase()}.svg`}
                         alt={`${plugin.name.toLowerCase()} icon`}
-                        className="h-8 w-h-8 max-h-8 max-w-h-8"
+                        className="h-6 w-h-6 max-h-6 max-w-h-6 ml-1 mt-1"
                       />
                     </p>
                   </div>
                 </div>
               ))}
+
+              <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <div className="fixed inset-0 bg-black bg-opacity-25" />
+                  </Transition.Child>
+
+                  <div className="fixed inset-0 overflow-y-auto">
+                    <div className="flex min-h-full items-center justify-center p-4 text-center">
+                      <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0 scale-95"
+                        enterTo="opacity-100 scale-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100 scale-100"
+                        leaveTo="opacity-0 scale-95"
+                      >
+                        <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg p-6 text-left align-middle shadow-xl transition-all border border-gray-800">
+                          <Dialog.Title
+                            as="h3"
+                            className="text-lg font-medium leading-6 text-gray-400"
+                          >
+                            How to Create {pluginx} Database Plugin
+                          </Dialog.Title>
+                          <div className="mt-2">
+                            <p className="text-sm text-gray-500">
+                              1. Press <a className="font-mono">New</a> button
+                              then choose database choice
+                              <br />
+                              <img
+                                src={`https://cdn-botway.deno.dev/screenshots/db/db.svg`}
+                                alt={`db icon`}
+                              />
+                              <br />
+                              2. Choose {pluginx} choice
+                              <br />
+                              <img
+                                src={`https://cdn-botway.deno.dev/screenshots/db/${pluginx.toLowerCase()}.svg`}
+                                alt={`${pluginx.toLowerCase()} icon`}
+                              />
+                            </p>
+                          </div>
+
+                          <div className="mt-4">
+                            <Button onClick={closeModal}>Got it</Button>
+                          </div>
+                        </Dialog.Panel>
+                      </Transition.Child>
+                    </div>
+                  </div>
+                </Dialog>
+              </Transition>
             </div>
           </div>
         </div>
