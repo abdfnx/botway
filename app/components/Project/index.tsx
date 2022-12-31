@@ -20,6 +20,9 @@ export const Project = ({ project, mutate, user }: any) => {
           <h2>
             <strong className="text-base text-white leading-tight font-medium align-middle">
               {project.name}
+              {project.icon != "" ?? (
+                <img src={project.icon} alt="project icon" width={16} />
+              )}
             </strong>
           </h2>
           <br />

@@ -6,6 +6,7 @@ export async function insertProject(
   userId: any,
   {
     name,
+    repo,
     visibility,
     platform,
     lang,
@@ -17,16 +18,17 @@ export async function insertProject(
     railwayProjectId,
     railwayServiceId,
     railwayEnvId,
-    redisPluginId,
-    mysqlPluginId,
-    postgresqlPluginId,
-    mongodbPluginId,
     renderProjectId,
+    icon,
+    buildCommand,
+    startCommand,
+    rootDirectory,
   }: any
 ) {
   const project: any = {
     id: randomUUID(),
     name,
+    repo,
     visibility,
     platform,
     lang,
@@ -39,10 +41,10 @@ export async function insertProject(
     railwayServiceId,
     railwayEnvId,
     renderProjectId,
-    redisPluginId,
-    mysqlPluginId,
-    postgresqlPluginId,
-    mongodbPluginId,
+    icon,
+    buildCommand,
+    startCommand,
+    rootDirectory,
     createdAt: new Date(),
   };
 

@@ -236,7 +236,7 @@ const Content = ({ nav, project, mutate, user }: any) => {
             body: formData,
           });
 
-          toast.success("Your project has been updated", {
+          toast.success("Your project config has been updated", {
             style: {
               borderRadius: "10px",
               backgroundColor: bgSecondary,
@@ -459,6 +459,212 @@ const Content = ({ nav, project, mutate, user }: any) => {
     );
   } else if (nav == "Deployments") {
   } else if (nav == "Settings") {
+    const [isLoading, setIsLoading] = useState(false);
+
+    const nameRef: any = useRef();
+    const iconRef: any = useRef();
+    const repoRef: any = useRef();
+    const buildCommandRef: any = useRef();
+    const startCommandRef: any = useRef();
+    const rootDirectoryRef: any = useRef();
+
+    const SettingsOnSubmit = useCallback(
+      async (e: any) => {
+        e.preventDefault();
+
+        try {
+          setIsLoading(true);
+
+          const formData = new FormData();
+
+          formData.append("id", project.id);
+          formData.append("userId", user._id);
+          formData.append("visibility", project.visibility);
+          formData.append("platform", project.platform);
+          formData.append("lang", project.lang);
+          formData.append("packageManager", project.packageManager);
+          formData.append("hostService", project.hostService);
+          formData.append("botToken", project.botToken);
+          formData.append("railwayApiToken", user.railwayApiToken);
+          formData.append("railwayProjectId", project.railwayProjectId);
+          formData.append("railwayEnvId", project.railwayEnvId);
+          formData.append("railwayServiceId", project.railwayServiceId);
+          formData.append("name", nameRef.current.value);
+          formData.append("repo", repoRef.current.value);
+          formData.append("icon", iconRef.current.value);
+          formData.append("buildCommand", buildCommandRef.current.value);
+          formData.append("startCommand", startCommandRef.current.value);
+          formData.append("rootDirectory", rootDirectoryRef.current.value);
+
+          if (project.platform != "telegram") {
+            formData.append("botAppToken", project.botAppToken);
+          }
+
+          if (project.platform == "slack" || project.platform == "twitch") {
+            formData.append("botSecretToken", project.botSecretToken);
+          }
+
+          await fetcher("/api/graphql/projects/settings", {
+            method: "PATCH",
+            body: formData,
+          });
+
+          toast.success("Your project settings has been updated", {
+            style: {
+              borderRadius: "10px",
+              backgroundColor: bgSecondary,
+              color: "#fff",
+            },
+          });
+        } catch (e: any) {
+          toast.error(e.message, {
+            style: {
+              borderRadius: "10px",
+              backgroundColor: bgSecondary,
+              color: "#fff",
+            },
+          });
+        } finally {
+          setIsLoading(false);
+        }
+      },
+      [mutate]
+    );
+
+    useEffect(() => {
+      nameRef.current.value = project.name;
+      iconRef.current.value = project.icon;
+      repoRef.current.value = project.repo;
+      buildCommandRef.current.value = project.buildCommand;
+      startCommandRef.current.value = project.startCommand;
+      rootDirectoryRef.current.value = project.rootDirectory;
+    }, [project]);
+
+    return (
+      <div className="overflow-hidden sm:rounded-lg">
+        <div>
+          <div className="px-4 py-5 sm:px-6">
+            <h3 className="text-lg font-medium leading-6 text-gray-400">
+              Bot Settings
+            </h3>
+          </div>
+          <form onSubmit={SettingsOnSubmit}>
+            <div className="grid lg:grid-cols-2 sm:grid-cols-1 lt-md:!grid-cols-1 gap-3">
+              <div className="px-4 py-5 sm:px-6">
+                <label
+                  htmlFor="bot-name"
+                  className="block text-gray-500 text-sm font-semibold"
+                >
+                  Bot Name
+                </label>
+                <div className="pt-2">
+                  <input
+                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                    ref={nameRef}
+                    type="text"
+                  />
+                </div>
+              </div>
+
+              <div className="px-4 py-5 sm:px-6">
+                <label
+                  htmlFor="bot-icon"
+                  className="block text-gray-500 text-sm font-semibold"
+                >
+                  Bot Icon
+                </label>
+                <div className="pt-2">
+                  <input
+                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                    ref={iconRef}
+                    type="text"
+                  />
+                </div>
+              </div>
+
+              <div className="px-4 py-5 sm:px-6">
+                <label
+                  htmlFor="github-repo"
+                  className="block text-gray-500 text-sm font-semibold"
+                >
+                  GitHub Repo
+                </label>
+                <div className="pt-2">
+                  <input
+                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                    ref={repoRef}
+                    placeholder={`user/repoName`}
+                    type="text"
+                  />
+                </div>
+              </div>
+
+              <div className="px-4 py-5 sm:px-6">
+                <label
+                  htmlFor="root-directory"
+                  className="block text-gray-500 text-sm font-semibold"
+                >
+                  Root Directory
+                </label>
+                <div className="pt-2">
+                  <input
+                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                    ref={rootDirectoryRef}
+                    placeholder="./"
+                    type="text"
+                  />
+                </div>
+              </div>
+
+              <div className="px-4 py-5 sm:px-6">
+                <label
+                  htmlFor="build-command"
+                  className="block text-gray-500 text-sm font-semibold"
+                >
+                  Build Command
+                </label>
+                <div className="pt-2">
+                  <input
+                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                    ref={buildCommandRef}
+                    placeholder="default"
+                    type="text"
+                  />
+                </div>
+              </div>
+
+              <div className="px-4 py-5 sm:px-6">
+                <label
+                  htmlFor="start-command"
+                  className="block text-gray-500 text-sm font-semibold"
+                >
+                  Start Command
+                </label>
+                <div className="pt-2">
+                  <input
+                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                    ref={startCommandRef}
+                    placeholder="default"
+                    type="text"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="mb-2 space-y-2 flex justify-center">
+              <Button
+                type="success"
+                htmlType="submit"
+                loading={isLoading}
+                className="button w-full p-2"
+              >
+                Update
+              </Button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
   }
 
   return <></>;

@@ -4,7 +4,6 @@ import Layout from "@/components/Layout";
 import { UserAvatar } from "../../components/UserAvatar";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { ZapIcon } from "@primer/octicons-react";
 import { ProjectList } from "./ProjectList";
 import { NewProject } from "../New/NewProject";
 

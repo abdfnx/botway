@@ -18,7 +18,15 @@ handler.patch(
     type: "object",
     properties: {
       name: ValidateProps.project.name,
+      icon: ValidateProps.project.icon,
+      buildCommand: ValidateProps.project.buildCommand,
+      startCommand: ValidateProps.project.startCommand,
+      rootDirectory: ValidateProps.project.rootDirectory,
+      visibility: ValidateProps.project.visibility,
       platform: ValidateProps.project.platform,
+      lang: ValidateProps.project.lang,
+      packageManager: ValidateProps.project.packageManager,
+      hostService: ValidateProps.project.hostService,
       botToken: ValidateProps.project.botToken,
       botAppToken: ValidateProps.project.botAppToken,
       botSecretToken: ValidateProps.project.botSecretToken,
@@ -39,6 +47,7 @@ handler.patch(
     let {
       id,
       name,
+      repo,
       userId,
       ghToken,
       visibility,
@@ -53,6 +62,10 @@ handler.patch(
       railwayProjectId,
       railwayServiceId,
       renderProjectId,
+      icon,
+      buildCommand,
+      startCommand,
+      rootDirectory,
     } = req.body;
 
     const getEnvId = await fetcher("https://backboard.railway.app/graphql/v2", {
@@ -88,6 +101,14 @@ handler.patch(
 
     const ghu = await (await octokit.request("GET /user", {})).data;
 
+    if (!repo.includes(ghu.login))
+      return res.json({ message: `Repo owner must be ${ghu.login}` });
+
+    const repoBody =
+      repo != ""
+        ? `source: { repo: "${repo}" }`
+        : `source: { repo: "${ghu.login}/${name}" }`;
+
     await fetcher("https://backboard.railway.app/graphql/v2", {
       method: "POST",
       headers: {
@@ -96,13 +117,14 @@ handler.patch(
       },
       body: JSON.stringify({
         operationName: "setTokens",
-        query: `mutation setTokens { variableCollectionUpsert(input: { projectId: "${railwayProjectId}", environmentId: "${envId}", serviceId: "${railwayServiceId}", variables: { ${vars} } }) serviceUpdate(id: "${railwayServiceId}", input: { source: { repo: "${ghu.login}/${name}" } }) { source { repo } } }`,
+        query: `mutation setTokens { variableCollectionUpsert(input: { projectId: "${railwayProjectId}", environmentId: "${envId}", serviceId: "${railwayServiceId}", variables: { ${vars} } }) serviceUpdate(id: "${railwayServiceId}", input: { ${repoBody} }) { source { repo } } }`,
       }),
     });
 
     let payload = {
       id,
       ...(name && { name }),
+      repo,
       botToken,
       platform,
       lang,
@@ -113,41 +135,19 @@ handler.patch(
       railwayServiceId,
       railwayEnvId: envId,
       renderProjectId,
+      icon,
+      buildCommand,
+      startCommand,
+      rootDirectory,
     };
 
     if (platform != "telegram") {
-      payload = {
-        id,
-        ...(name && { name }),
-        botToken,
-        botAppToken,
-        platform,
-        lang,
-        packageManager,
-        visibility,
-        hostService,
-        railwayProjectId,
-        railwayServiceId,
-        railwayEnvId: envId,
-        renderProjectId,
-      };
+      payload["botToken"] = botToken;
+      payload["botAppToken"] = botAppToken;
     } else if (platform == "slack" || platform == "twitch") {
-      payload = {
-        id,
-        ...(name && { name }),
-        botToken,
-        botAppToken,
-        botSecretToken,
-        platform,
-        lang,
-        packageManager,
-        visibility,
-        hostService,
-        railwayProjectId,
-        railwayServiceId,
-        railwayEnvId: envId,
-        renderProjectId,
-      };
+      payload["botToken"] = botToken;
+      payload["botAppToken"] = botAppToken;
+      payload["botSecretToken"] = botSecretToken;
     }
 
     const prj = await updateProject(db, userId, id, payload);

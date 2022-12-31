@@ -15,6 +15,7 @@ import { NewProjectModal } from "./NewProjectModal";
 import { bgSecondary } from "@/tools/colors";
 import { CheckIcon, ChevronDownIcon } from "@primer/octicons-react";
 import { useCurrentUser } from "@/lib/user";
+import { Octokit } from "octokit";
 
 const NewProjectHandler = () => {
   const { data: { user } = {}, mutate } = useCurrentUser();
@@ -40,47 +41,55 @@ const NewProjectHandler = () => {
     packageManagers(langSelected.name)[0]
   );
 
-  const onSubmit = useCallback(async (e: any) => {
-    e.preventDefault();
+  const onSubmit = useCallback(
+    async (e: any) => {
+      e.preventDefault();
 
-    try {
-      setIsLoading(true);
+      try {
+        setIsLoading(true);
 
-      await fetcher("/api/projects", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          apiToken: `Bearer ${user.railwayApiToken}`,
-          ghToken: user.githubApiToken,
-          userId: user._id,
-          name: nameRef.current.value,
-          botToken: "",
-          botAppToken: "",
-          botSecretToken: "",
-          visibility: visibilityRef.current.value,
-          platform: platformRef.current.value,
-          lang: langRef.current.value,
-          packageManager: packageManagerRef.current.value,
-          hostService: hostServiceRef.current.value,
-        }),
-      }).then(async () => {
-        toast.success("You have successfully created a new bot project", {
-          style: {
-            borderRadius: "10px",
-            backgroundColor: bgSecondary,
-            color: "#fff",
-          },
-          position: "bottom-right",
+        const octokit = new Octokit({
+          auth: user.githubApiToken,
         });
-      });
 
-      // refresh projects lists
-      mutate();
-    } catch (e: any) {
-      toast.error(e.message);
-    } finally {
-      setIsLoading(false);
-    }
+        const ghu = await (await octokit.request("GET /user", {})).data;
+
+        await fetcher("/api/projects", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            apiToken: `Bearer ${user.railwayApiToken}`,
+            ghToken: user.githubApiToken,
+            userId: user._id,
+            name: nameRef.current.value,
+            botToken: "",
+            botAppToken: "",
+            botSecretToken: "",
+            visibility: visibilityRef.current.value,
+            platform: platformRef.current.value,
+            lang: langRef.current.value,
+            packageManager: packageManagerRef.current.value,
+            hostService: hostServiceRef.current.value,
+            repo: `${ghu.login}/${nameRef.current.value}`,
+          }),
+        }).then(async () => {
+          toast.success("You have successfully created a new bot project", {
+            style: {
+              borderRadius: "10px",
+              backgroundColor: bgSecondary,
+              color: "#fff",
+            },
+            position: "bottom-right",
+          });
+        });
+
+        // refresh projects lists
+        mutate();
+      } catch (e: any) {
+        toast.error(e.message);
+      } finally {
+        setIsLoading(false);
+      }
     },
     [mutate]
   );

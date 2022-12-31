@@ -15,6 +15,11 @@ handler.post(
     type: "object",
     properties: {
       name: ValidateProps.project.name,
+      icon: ValidateProps.project.icon,
+      repo: ValidateProps.project.repo,
+      buildCommand: ValidateProps.project.buildCommand,
+      startCommand: ValidateProps.project.startCommand,
+      rootDirectory: ValidateProps.project.rootDirectory,
       visibility: ValidateProps.project.visibility,
       platform: ValidateProps.project.platform,
       lang: ValidateProps.project.lang,
@@ -36,6 +41,7 @@ handler.post(
     const {
       userId,
       name,
+      repo,
       visibility,
       platform,
       lang,
@@ -82,6 +88,7 @@ handler.post(
 
     const project = await insertProject(db, userId, {
       name,
+      repo,
       botToken,
       botAppToken,
       botSecretToken,
@@ -94,6 +101,10 @@ handler.post(
       railwayServiceId: createService.data.serviceCreate.id,
       railwayEnvId: "",
       renderProjectId: "",
+      icon: "",
+      buildCommand: "",
+      startCommand: "",
+      rootDirectory: "",
     });
 
     const octokit = new Octokit({
@@ -104,7 +115,7 @@ handler.post(
 
     await octokit.request("POST /user/repos", {
       name,
-      description: "My Awesome botway bot.",
+      description: `My Awesome ${platform} botway bot.`,
       private: visibility != "public",
     });
 
