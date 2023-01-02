@@ -703,6 +703,17 @@ const Content = ({ nav, project, mutate, user }: any) => {
               </div>
             </div>
 
+            <div className="mb-2 space-y-2 flex justify-center">
+              <Button
+                type="success"
+                htmlType="submit"
+                loading={isLoadingUpdate}
+                className="p-2"
+              >
+                Update
+              </Button>
+            </div>
+
             <div className="px-4 py-5 sm:px-6">
               <label
                 htmlFor="danger-zone"
@@ -711,7 +722,7 @@ const Content = ({ nav, project, mutate, user }: any) => {
                 <AlertIcon size={16} className="mr-1" /> DANGER ZONE
               </label>
               <div className="rounded-2xl overflow-hidden p-5 bg-ultralight mt-5 border border-gray-800 bg-bwdefualt">
-                <header className="flex gap-3 justify-between my-4">
+                <header className="flex gap-3 justify-between my-2">
                   <hgroup>
                     <h2 className="font-medium text-lg !leading-none text-black">
                       Delete Project
@@ -735,17 +746,6 @@ const Content = ({ nav, project, mutate, user }: any) => {
                   Delete Project
                 </Button>
               </div>
-            </div>
-
-            <div className="mb-2 space-y-2 flex justify-center">
-              <Button
-                type="success"
-                htmlType="submit"
-                loading={isLoadingUpdate}
-                className="button w-full p-2"
-              >
-                Update
-              </Button>
             </div>
           </form>
         </div>
