@@ -101,7 +101,7 @@ handler.patch(
 
     const ghu = await (await octokit.request("GET /user", {})).data;
 
-    if (!repo.includes(ghu.login))
+    if (!repo.toString().includes(ghu.login))
       return res.json({ message: `Repo owner must be ${ghu.login}` });
 
     const repoBody =

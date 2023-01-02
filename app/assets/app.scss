@@ -52,17 +52,17 @@ a {
 
 ::-webkit-scrollbar-thumb {
   border-radius: 3px !important;
-  background: #bbbbbb !important;
+  @apply bg-secondary;
 }
 
 ::-webkit-scrollbar-corner {
-  background: #e1e1e1 !important;
+  @apply bg-secondary;
 }
 
 .button {
   display: block;
   border-radius: 5px;
-  @apply bg-blue-700 px-3 py-2 text-sm;
+  @apply px-3 py-2 text-sm;
   font-weight: 500;
   padding: 0 12px;
   display: flex;

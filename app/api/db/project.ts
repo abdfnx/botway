@@ -62,6 +62,31 @@ export async function insertProject(
     .then(({ value }: any) => value);
 }
 
+export async function deleteProject(
+  db: any,
+  userId: any,
+  id: any,
+  { name }: any
+) {
+  const project: any = {
+    id,
+    name,
+  };
+
+  return db
+    .collection("users")
+    .findOneAndUpdate(
+      { _id: new ObjectId(userId) },
+      {
+        $pull: {
+          projects: project,
+        },
+      },
+      { returnDocument: "after", projection: { password: 0 } }
+    )
+    .then(({ value }: any) => value);
+}
+
 export async function updateProject(db: any, userId: any, id: any, data: any) {
   return db
     .collection("users")

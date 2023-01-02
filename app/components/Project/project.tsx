@@ -1,6 +1,8 @@
 import { fetcher } from "@/lib/fetch";
+import { CheckAPITokens } from "@/tools/api-tokens";
 import { bgSecondary } from "@/tools/colors";
 import { Dialog, Tab, Transition } from "@headlessui/react";
+import { AlertIcon } from "@primer/octicons-react";
 import clsx from "clsx";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -211,6 +213,7 @@ const Content = ({ nav, project, mutate, user }: any) => {
           formData.append("id", project.id);
           formData.append("name", project.name);
           formData.append("userId", user._id);
+          formData.append("repo", project.repo);
           formData.append("visibility", project.visibility);
           formData.append("platform", project.platform);
           formData.append("lang", project.lang);
@@ -459,7 +462,8 @@ const Content = ({ nav, project, mutate, user }: any) => {
     );
   } else if (nav == "Deployments") {
   } else if (nav == "Settings") {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
+    const [isLoadingDelete, setIsLoadingDelete] = useState(false);
 
     const nameRef: any = useRef();
     const iconRef: any = useRef();
@@ -473,7 +477,9 @@ const Content = ({ nav, project, mutate, user }: any) => {
         e.preventDefault();
 
         try {
-          setIsLoading(true);
+          setIsLoadingUpdate(true);
+
+          CheckAPITokens(user);
 
           const formData = new FormData();
 
@@ -525,7 +531,53 @@ const Content = ({ nav, project, mutate, user }: any) => {
             },
           });
         } finally {
-          setIsLoading(false);
+          setIsLoadingUpdate(false);
+        }
+      },
+      [mutate]
+    );
+
+    const DeleteProject = useCallback(
+      async (e: any) => {
+        e.preventDefault();
+
+        try {
+          setIsLoadingDelete(true);
+
+          CheckAPITokens(user);
+
+          const formData = new FormData();
+
+          formData.append("id", project.id);
+          formData.append("userId", user._id);
+          formData.append("name", project.name);
+          formData.append("railwayApiToken", user.railwayApiToken);
+          formData.append("railwayProjectId", project.railwayProjectId);
+
+          await fetcher("/api/projects/delete", {
+            method: "PATCH",
+            body: formData,
+          });
+
+          toast.success("Your project has been deleted", {
+            style: {
+              borderRadius: "10px",
+              backgroundColor: bgSecondary,
+              color: "#fff",
+            },
+          });
+
+          mutate();
+        } catch (e: any) {
+          toast.error(e.message, {
+            style: {
+              borderRadius: "10px",
+              backgroundColor: bgSecondary,
+              color: "#fff",
+            },
+          });
+        } finally {
+          setIsLoadingDelete(false);
         }
       },
       [mutate]
@@ -651,11 +703,45 @@ const Content = ({ nav, project, mutate, user }: any) => {
               </div>
             </div>
 
+            <div className="px-4 py-5 sm:px-6">
+              <label
+                htmlFor="danger-zone"
+                className="block text-red-500 text-sm font-semibold"
+              >
+                <AlertIcon size={16} className="mr-1" /> DANGER ZONE
+              </label>
+              <div className="rounded-2xl overflow-hidden p-5 bg-ultralight mt-5 border border-gray-800 bg-bwdefualt">
+                <header className="flex gap-3 justify-between my-4">
+                  <hgroup>
+                    <h2 className="font-medium text-lg !leading-none text-black">
+                      Delete Project
+                    </h2>
+                    <br />
+                    <h3 className="text-gray-500 mt-1 !leading-tight">
+                      Delete {project.name} and delete it on railway. This
+                      action is not reversible, so continue with extreme
+                      caution.
+                    </h3>
+                  </hgroup>
+                  <div></div>
+                </header>
+
+                <Button
+                  type="delete"
+                  loading={isLoadingDelete}
+                  onClick={DeleteProject}
+                  className="button p-2"
+                >
+                  Delete Project
+                </Button>
+              </div>
+            </div>
+
             <div className="mb-2 space-y-2 flex justify-center">
               <Button
                 type="success"
                 htmlType="submit"
-                loading={isLoading}
+                loading={isLoadingUpdate}
                 className="button w-full p-2"
               >
                 Update

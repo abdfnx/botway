@@ -16,6 +16,7 @@ import { bgSecondary } from "@/tools/colors";
 import { CheckIcon, ChevronDownIcon } from "@primer/octicons-react";
 import { useCurrentUser } from "@/lib/user";
 import { Octokit } from "octokit";
+import { CheckAPITokens } from "@/tools/api-tokens";
 
 const NewProjectHandler = () => {
   const { data: { user } = {}, mutate } = useCurrentUser();
@@ -47,6 +48,8 @@ const NewProjectHandler = () => {
 
       try {
         setIsLoading(true);
+
+        CheckAPITokens(user);
 
         const octokit = new Octokit({
           auth: user.githubApiToken,

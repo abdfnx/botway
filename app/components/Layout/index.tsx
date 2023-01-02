@@ -119,6 +119,7 @@ const Layout = ({ children, title }: any) => {
                                   active ? "bg-secondary" : "",
                                   "transition block mx-2 my-1 rounded-md cursor-pointer px-4 py-2 text-sm text-gray-400"
                                 )}
+                                target="_blank"
                               >
                                 <RocketIcon size={18} className="pr-1" /> Docs
                               </a>
