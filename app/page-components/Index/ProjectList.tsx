@@ -14,7 +14,7 @@ export const ProjectList = () => {
           ))}
         </div>
       ) : (
-        <div className="rounded-lg mt-8 overflow-hidden p-5 cursor-pointer border-2 border-dashed border-gray-800 hover:border-gray-600 shadow-lg transition-shadow duration-500 ease-in-out w-full h-60 flex flex-col items-center justify-center gap-4">
+        <div className="rounded-lg mt-8 overflow-hidden p-5 cursor-pointer border-2 border-dashed border-gray-800 hover:border-gray-600 shadow-lg transition duration-300 ease-in-out w-full h-60 flex flex-col items-center justify-center gap-4">
           <h2 className="text-md text-gray-400 text-center">
             Create a New Project
           </h2>
