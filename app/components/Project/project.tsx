@@ -472,7 +472,7 @@ const Content = ({ nav, project, mutate, user }: any) => {
   } else if (nav == "Deployments") {
     const formData = new FormData();
 
-    const fetcher = (url: any) =>
+    const deploymentsFetcher = (url: any) =>
       fetch(url, {
         method: "PATCH",
         body: formData,
@@ -483,7 +483,7 @@ const Content = ({ nav, project, mutate, user }: any) => {
 
     const { data, error } = useSWR(
       "/api/graphql/projects/deployments",
-      fetcher
+      deploymentsFetcher
     );
 
     if (!data && !error) return <LoadingDots className="mb-3" />;
@@ -851,11 +851,11 @@ const Content = ({ nav, project, mutate, user }: any) => {
                 loading={isLoadingUpdate}
                 className="p-2"
               >
-                Update
+                Update Settings
               </Button>
             </div>
 
-            <div className="px-4 py-5 sm:px-6">
+            <div className="px-4 py-5 mb-2 sm:px-6">
               <label
                 htmlFor="danger-zone"
                 className="block text-red-500 text-sm font-semibold"

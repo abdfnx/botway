@@ -61,7 +61,7 @@ handler.patch(multer({ dest: "/tmp" }).single("data"), async (req, res) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: railwayApiToken,
+      Authorization: `Bearer ${railwayApiToken}`,
     },
     body: JSON.stringify({
       operationName: "settingsUpdate",

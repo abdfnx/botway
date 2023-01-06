@@ -39,6 +39,7 @@ handler.post(
     const db = await getMongoDb();
 
     const {
+      railwayApiToken,
       userId,
       name,
       repo,
@@ -58,7 +59,7 @@ handler.post(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: req.body.apiToken,
+          Authorization: `Bearer ${railwayApiToken}`,
         },
         body: JSON.stringify({
           operationName: "projectCreate",
@@ -73,7 +74,7 @@ handler.post(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: req.body.apiToken,
+          Authorization: `Bearer ${railwayApiToken}`,
         },
         body: JSON.stringify({
           operationName: "serviceCreate",

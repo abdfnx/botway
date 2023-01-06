@@ -224,7 +224,7 @@ const ChangePassword = () => {
         </div>
         <div className="mb-5">
           <Button htmlType="submit" type="success" loading={isLoading}>
-            Update Configuration
+            Update Password
           </Button>
         </div>
       </form>
@@ -364,7 +364,7 @@ const Tokens = ({ user, mutate }: any) => {
           </div>
           <div className="mb-5">
             <Button htmlType="submit" type="success" loading={isLoading}>
-              Update Information
+              Update Configuration
             </Button>
           </div>
         </form>

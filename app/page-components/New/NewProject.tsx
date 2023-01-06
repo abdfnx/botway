@@ -61,7 +61,7 @@ const NewProjectHandler = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            apiToken: `Bearer ${user.railwayApiToken}`,
+            railwayApiToken: `Bearer ${user.railwayApiToken}`,
             ghToken: user.githubApiToken,
             userId: user._id,
             name: nameRef.current.value,
