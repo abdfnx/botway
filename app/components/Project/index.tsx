@@ -6,6 +6,7 @@ export const Project = ({ project, mutate, user }: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => {
+    mutate();
     setIsOpen(false);
   };
 

@@ -31,7 +31,10 @@ handler.patch(
       botAppToken: ValidateProps.project.botAppToken,
       botSecretToken: ValidateProps.project.botSecretToken,
       railwayProjectId: ValidateProps.project.railwayProjectId,
-      renderProjectId: ValidateProps.project.renderProjectId,
+      renderServiceId: ValidateProps.project.renderServiceId,
+      repoBranch: ValidateProps.project.repoBranch,
+      pullRequestPreviewsEnabled:
+        ValidateProps.project.pullRequestPreviewsEnabled,
     },
     additionalProperties: true,
   }),
@@ -61,39 +64,15 @@ handler.patch(
       railwayApiToken,
       railwayProjectId,
       railwayServiceId,
-      renderProjectId,
+      renderServiceId,
+      renderApiToken,
       icon,
       buildCommand,
       startCommand,
       rootDirectory,
+      repoBranch,
+      pullRequestPreviewsEnabled,
     } = req.body;
-
-    const getEnvId = await fetcher("https://backboard.railway.app/graphql/v2", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${railwayApiToken}`,
-      },
-      body: JSON.stringify({
-        query: `query { project(id: "${railwayProjectId}") { environments { edges { node { name, id } } } } }`,
-      }),
-    });
-
-    const envId = getEnvId.data.project.environments.edges.find(
-      (env: any) => env.node.name == "production"
-    ).node.id;
-
-    let vars;
-
-    if (platform == "discord") {
-      vars = `DISCORD_TOKEN: "${botToken}", DISCORD_CLIENT_ID: "${botAppToken}"`;
-    } else if (platform == "slack") {
-      vars = `SLACK_TOKEN: "${botToken}", SLACK_APP_TOKEN: "${botAppToken}", SLACK_SIGNING_SECRET: "${botSecretToken}"`;
-    } else if (platform == "telegram") {
-      vars = `TELEGRAM_TOKEN: "${botToken}"`;
-    } else if (platform == "twitch") {
-      vars = `TWITCH_OAUTH_TOKEN: "${botToken}", TWITCH_CLIENT_ID: "${botAppToken}", TWITCH_CLIENT_SECRET: "${botSecretToken}"`;
-    }
 
     const octokit = new Octokit({
       auth: ghToken,
@@ -103,23 +82,6 @@ handler.patch(
 
     if (!repo.toString().includes(ghu.login))
       return res.json({ message: `Repo owner must be ${ghu.login}` });
-
-    const repoBody =
-      repo != ""
-        ? `source: { repo: "${repo}" }`
-        : `source: { repo: "${ghu.login}/${name}" }`;
-
-    await fetcher("https://backboard.railway.app/graphql/v2", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${railwayApiToken}`,
-      },
-      body: JSON.stringify({
-        operationName: "setTokens",
-        query: `mutation setTokens { variableCollectionUpsert(input: { projectId: "${railwayProjectId}", environmentId: "${envId}", serviceId: "${railwayServiceId}", variables: { ${vars} } }) serviceUpdate(id: "${railwayServiceId}", input: { ${repoBody} }) { source { repo } } }`,
-      }),
-    });
 
     let payload = {
       id,
@@ -133,13 +95,101 @@ handler.patch(
       hostService,
       railwayProjectId,
       railwayServiceId,
-      railwayEnvId: envId,
-      renderProjectId,
+      renderServiceId,
       icon,
       buildCommand,
       startCommand,
       rootDirectory,
+      repoBranch,
+      pullRequestPreviewsEnabled,
     };
+
+    if (hostService == "railway") {
+      const getEnvId = await fetcher(
+        "https://backboard.railway.app/graphql/v2",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${railwayApiToken}`,
+          },
+          body: JSON.stringify({
+            query: `query { project(id: "${railwayProjectId}") { environments { edges { node { name, id } } } } }`,
+          }),
+        }
+      );
+
+      const envId = getEnvId.data.project.environments.edges.find(
+        (env: any) => env.node.name == "production"
+      ).node.id;
+
+      let vars;
+
+      if (platform == "discord") {
+        vars = `DISCORD_TOKEN: "${botToken}", DISCORD_CLIENT_ID: "${botAppToken}"`;
+      } else if (platform == "slack") {
+        vars = `SLACK_TOKEN: "${botToken}", SLACK_APP_TOKEN: "${botAppToken}", SLACK_SIGNING_SECRET: "${botSecretToken}"`;
+      } else if (platform == "telegram") {
+        vars = `TELEGRAM_TOKEN: "${botToken}"`;
+      } else if (platform == "twitch") {
+        vars = `TWITCH_OAUTH_TOKEN: "${botToken}", TWITCH_CLIENT_ID: "${botAppToken}", TWITCH_CLIENT_SECRET: "${botSecretToken}"`;
+      }
+
+      const repoBody =
+        repo != ""
+          ? `source: { repo: "${repo}" }`
+          : `source: { repo: "${ghu.login}/${name}" }`;
+
+      await fetcher("https://backboard.railway.app/graphql/v2", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${railwayApiToken}`,
+        },
+        body: JSON.stringify({
+          operationName: "setTokens",
+          query: `mutation setTokens { variableCollectionUpsert(input: { projectId: "${railwayProjectId}", environmentId: "${envId}", serviceId: "${railwayServiceId}", variables: { ${vars} } }) serviceUpdate(id: "${railwayServiceId}", input: { ${repoBody} }) { source { repo } } }`,
+        }),
+      });
+
+      payload["railwayEnvId"] = envId;
+    } else if (hostService == "render") {
+      let vars;
+
+      if (platform == "discord") {
+        vars = [
+          { key: "DISCORD_TOKEN", value: botToken },
+          { key: "DISCORD_CLIENT_ID", value: botAppToken },
+        ];
+      } else if (platform == "slack") {
+        vars = [
+          { key: "SLACK_TOKEN", value: botToken },
+          { key: "SLACK_APP_TOKEN", value: botAppToken },
+          { key: "SLACK_SIGNING_SECRET", value: botSecretToken },
+        ];
+      } else if (platform == "telegram") {
+        vars = [{ key: "TELEGRAM_TOKEN", value: botToken }];
+      } else if (platform == "twitch") {
+        vars = [
+          { key: "TWITCH_OAUTH_TOKEN", value: botToken },
+          { key: "TWITCH_CLIENT_ID", value: botAppToken },
+          { key: "TWITCH_CLIENT_SECRET", value: botSecretToken },
+        ];
+      }
+
+      await fetcher(
+        `https://api.render.com/v1/services/${renderServiceId}/env-vars`,
+        {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${renderApiToken}`,
+          },
+          body: JSON.stringify(vars),
+        }
+      );
+    }
 
     if (platform != "telegram") {
       payload["botToken"] = botToken;

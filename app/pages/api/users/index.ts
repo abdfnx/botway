@@ -21,7 +21,6 @@ handler.post(
       githubApiToken: ValidateProps.user.githubApiToken,
       railwayApiToken: ValidateProps.user.railwayApiToken,
       renderApiToken: ValidateProps.user.renderApiToken,
-      renderUserEmail: ValidateProps.user.renderUserEmail,
     },
     required: ["username", "name", "password", "email"],
     additionalProperties: false,
@@ -38,7 +37,6 @@ handler.post(
       githubApiToken,
       railwayApiToken,
       renderApiToken,
-      renderUserEmail,
     } = req.body;
 
     username = slugger(req.body.username);
@@ -84,7 +82,6 @@ handler.post(
         githubApiToken,
         railwayApiToken,
         renderApiToken,
-        renderUserEmail,
       });
 
       req.logIn(user, (err: any) => {

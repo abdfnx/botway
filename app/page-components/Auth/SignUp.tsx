@@ -35,7 +35,6 @@ const SignUp = () => {
             githubApiToken: "",
             railwayApiToken: "",
             renderApiToken: "",
-            renderUserEmail: "",
           }),
         });
 

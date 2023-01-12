@@ -18,11 +18,13 @@ export async function insertProject(
     railwayProjectId,
     railwayServiceId,
     railwayEnvId,
-    renderProjectId,
+    renderServiceId,
     icon,
     buildCommand,
     startCommand,
     rootDirectory,
+    repoBranch,
+    pullRequestPreviewsEnabled,
   }: any
 ) {
   const project: any = {
@@ -40,11 +42,13 @@ export async function insertProject(
     railwayProjectId,
     railwayServiceId,
     railwayEnvId,
-    renderProjectId,
+    renderServiceId,
     icon,
     buildCommand,
     startCommand,
     rootDirectory,
+    repoBranch,
+    pullRequestPreviewsEnabled,
     createdAt: new Date(),
   };
 

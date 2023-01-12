@@ -28,6 +28,9 @@ handler.post(
       botToken: ValidateProps.project.botToken,
       botAppToken: ValidateProps.project.botAppToken,
       botSecretToken: ValidateProps.project.botSecretToken,
+      repoBranch: ValidateProps.project.repoBranch,
+      pullRequestPreviewsEnabled:
+        ValidateProps.project.pullRequestPreviewsEnabled,
     },
     additionalProperties: true,
   }),
@@ -39,6 +42,7 @@ handler.post(
     const db = await getMongoDb();
 
     const {
+      ghToken,
       railwayApiToken,
       userId,
       name,
@@ -51,43 +55,11 @@ handler.post(
       botToken,
       botAppToken,
       botSecretToken,
+      repoBranch,
+      pullRequestPreviewsEnabled,
     } = req.body;
 
-    const createRailwayProject = await fetcher(
-      "https://backboard.railway.app/graphql/v2",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${railwayApiToken}`,
-        },
-        body: JSON.stringify({
-          operationName: "projectCreate",
-          query: `mutation projectCreate { projectCreate(input: { name: "${req.body.name}" }) { id }}`,
-        }),
-      }
-    );
-
-    const createService = await fetcher(
-      "https://backboard.railway.app/graphql/v2",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${railwayApiToken}`,
-        },
-        body: JSON.stringify({
-          operationName: "serviceCreate",
-          query: `mutation serviceCreate { serviceCreate(input: { name: "${
-            req.body.name + "-main"
-          }", projectId: "${
-            createRailwayProject.data.projectCreate.id
-          }" }) { id }}`,
-        }),
-      }
-    );
-
-    const project = await insertProject(db, userId, {
+    let prj = {
       name,
       repo,
       botToken,
@@ -98,18 +70,61 @@ handler.post(
       packageManager,
       visibility,
       hostService,
-      railwayProjectId: createRailwayProject.data.projectCreate.id,
-      railwayServiceId: createService.data.serviceCreate.id,
+      railwayProjectId: "",
+      railwayServiceId: "",
       railwayEnvId: "",
-      renderProjectId: "",
+      renderServiceId: "",
       icon: "",
       buildCommand: "",
       startCommand: "",
       rootDirectory: "",
-    });
+      repoBranch,
+      pullRequestPreviewsEnabled,
+    };
+
+    if (hostService == "railway") {
+      const createRailwayProject = await fetcher(
+        "https://backboard.railway.app/graphql/v2",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${railwayApiToken}`,
+          },
+          body: JSON.stringify({
+            operationName: "projectCreate",
+            query: `mutation projectCreate { projectCreate(input: { name: "${name}" }) { id }}`,
+          }),
+        }
+      );
+
+      const createService = await fetcher(
+        "https://backboard.railway.app/graphql/v2",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${railwayApiToken}`,
+          },
+          body: JSON.stringify({
+            operationName: "serviceCreate",
+            query: `mutation serviceCreate { serviceCreate(input: { name: "${
+              name + "-main"
+            }", projectId: "${
+              createRailwayProject.data.projectCreate.id
+            }" }) { id }}`,
+          }),
+        }
+      );
+
+      prj["railwayProjectId"] = createRailwayProject.data.projectCreate.id;
+      prj["railwayServiceId"] = createService.data.serviceCreate.id;
+    }
+
+    const project = await insertProject(db, userId, prj);
 
     const octokit = new Octokit({
-      auth: req.body.ghToken,
+      auth: ghToken,
     });
 
     const ghu = await (await octokit.request("GET /user", {})).data;

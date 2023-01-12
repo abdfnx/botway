@@ -27,7 +27,6 @@ handler.patch(
       githubApiToken: ValidateProps.user.githubApiToken,
       railwayApiToken: ValidateProps.user.railwayApiToken,
       renderApiToken: ValidateProps.user.renderApiToken,
-      renderUserEmail: ValidateProps.user.renderUserEmail,
     },
     additionalProperties: true,
   }),
@@ -40,13 +39,7 @@ handler.patch(
 
     const db = await getMongoDb();
 
-    const {
-      name,
-      githubApiToken,
-      railwayApiToken,
-      renderApiToken,
-      renderUserEmail,
-    } = req.body;
+    const { name, githubApiToken, railwayApiToken, renderApiToken } = req.body;
 
     let username;
 
@@ -70,7 +63,6 @@ handler.patch(
       githubApiToken,
       railwayApiToken,
       renderApiToken,
-      renderUserEmail,
     });
 
     res.json({ user });

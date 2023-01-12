@@ -33,41 +33,62 @@ handler.patch(multer({ dest: "/tmp" }).single("data"), async (req, res) => {
     railwayApiToken,
     railwayProjectId,
     railwayServiceId,
-    renderProjectId,
+    renderServiceId,
+    renderApiToken,
     railwayEnvId,
     icon,
     buildCommand,
     startCommand,
     rootDirectory,
+    repoBranch,
+    pullRequestPreviewsEnabled,
   } = req.body;
 
-  const nameBody =
-    name != ""
-      ? `projectUpdate(id: "${railwayProjectId}", input: { name: "${name}" }) { id }`
-      : "";
-  const serviceNameBody = name != "" ? `name: "${name}-main"` : "";
-  const iconBody = icon != "" ? `icon: "${icon}"` : "";
-  const repoBody = repo != "" ? `source { repo: "${repo}" }` : "";
-  const buildCommandBody =
-    buildCommand != "" ? `buildCommand: "${buildCommand}"` : "";
-  const rootDirectoryBody =
-    rootDirectory != "" ? `rootDirectory: "${rootDirectory}"` : "";
-  const startCommandBody =
-    startCommand != "" ? `startCommand: "${startCommand}"` : "";
+  if (hostService == "railway") {
+    const nameBody =
+      name != ""
+        ? `projectUpdate(id: "${railwayProjectId}", input: { name: "${name}" }) { id }`
+        : "";
+    const serviceNameBody = name != "" ? `name: "${name}-main"` : "";
+    const iconBody = icon != "" ? `icon: "${icon}"` : "";
+    const repoBody = repo != "" ? `source: { repo: "${repo}" }` : "";
+    const buildCommandBody =
+      buildCommand != "" ? `buildCommand: "${buildCommand}"` : "";
+    const rootDirectoryBody =
+      rootDirectory != "" ? `rootDirectory: "${rootDirectory}"` : "";
+    const startCommandBody =
+      startCommand != "" ? `startCommand: "${startCommand}"` : "";
 
-  const query = `mutation settingsUpdate { ${nameBody} serviceUpdate(id: "${railwayServiceId}", input: { ${serviceNameBody} ${iconBody} ${buildCommandBody} ${rootDirectoryBody} ${startCommandBody} ${repoBody} }) { id }}`;
+    const query = `mutation settingsUpdate { ${nameBody} serviceUpdate(id: "${railwayServiceId}", input: { ${serviceNameBody} ${iconBody} ${buildCommandBody} ${rootDirectoryBody} ${startCommandBody} ${repoBody} }) { id }}`;
 
-  await fetcher("https://backboard.railway.app/graphql/v2", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${railwayApiToken}`,
-    },
-    body: JSON.stringify({
-      operationName: "settingsUpdate",
-      query,
-    }),
-  });
+    await fetcher("https://backboard.railway.app/graphql/v2", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${railwayApiToken}`,
+      },
+      body: JSON.stringify({
+        operationName: "settingsUpdate",
+        query,
+      }),
+    });
+  } else if (hostService == "render") {
+    const body = JSON.stringify({
+      serviceDetails: { pullRequestPreviewsEnabled },
+      branch: repoBranch,
+      name,
+    });
+
+    await fetcher(`https://api.render.com/v1/services/${renderServiceId}`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${renderApiToken}`,
+      },
+      body,
+    });
+  }
 
   let payload = {
     id,
@@ -82,11 +103,13 @@ handler.patch(multer({ dest: "/tmp" }).single("data"), async (req, res) => {
     railwayProjectId,
     railwayServiceId,
     railwayEnvId,
-    renderProjectId,
+    renderServiceId,
     icon,
     buildCommand,
     startCommand,
     rootDirectory,
+    repoBranch,
+    pullRequestPreviewsEnabled,
   };
 
   if (platform != "telegram") {

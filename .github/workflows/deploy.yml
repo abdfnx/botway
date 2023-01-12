@@ -32,7 +32,7 @@ jobs:
           cd ./installer
           cargo build --release
           cp $LINUX_TARGET_PATH/botway-installer ./installer-linux
-          cp ./installer-linux ./assets/static/installers
+          cp ./installer-linux ../assets/static/installers
 
           # Build Botway OSX Installer
           git clone https://github.com/abdfnx/osxcross-alpine osxcross
@@ -48,7 +48,7 @@ jobs:
           LIBZ_SYS_STATIC=1 \
           cargo build --release --target x86_64-apple-darwin && \
           cp $DARWIN_TARGET_PATH/botway-installer ./installer-macos && \
-          cp ./installer-macos ./assets/static/installers
+          cp ./installer-macos ../assets/static/installers
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1

@@ -49,7 +49,7 @@ const NewProjectHandler = () => {
       try {
         setIsLoading(true);
 
-        CheckAPITokens(user);
+        CheckAPITokens(user, "");
 
         const octokit = new Octokit({
           auth: user.githubApiToken,
@@ -57,24 +57,33 @@ const NewProjectHandler = () => {
 
         const ghu = await (await octokit.request("GET /user", {})).data;
 
+        let body = {
+          railwayApiToken: user.railwayApiToken,
+          ghToken: user.githubApiToken,
+          userId: user._id,
+          name: nameRef.current.value,
+          botToken: "",
+          botAppToken: "",
+          botSecretToken: "",
+          visibility: visibilityRef.current.value,
+          platform: platformRef.current.value,
+          lang: langRef.current.value,
+          packageManager: packageManagerRef.current.value,
+          hostService: hostServiceRef.current.value,
+          repo: `${ghu.login}/${nameRef.current.value}`,
+          repoBranch: "",
+          pullRequestPreviewsEnabled: "",
+        };
+
+        if (hostServiceRef.current.value == "render") {
+          body["repoBranch"] = "main";
+          body["pullRequestPreviewsEnabled"] = "no";
+        }
+
         await fetcher("/api/projects", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            railwayApiToken: `Bearer ${user.railwayApiToken}`,
-            ghToken: user.githubApiToken,
-            userId: user._id,
-            name: nameRef.current.value,
-            botToken: "",
-            botAppToken: "",
-            botSecretToken: "",
-            visibility: visibilityRef.current.value,
-            platform: platformRef.current.value,
-            lang: langRef.current.value,
-            packageManager: packageManagerRef.current.value,
-            hostService: hostServiceRef.current.value,
-            repo: `${ghu.login}/${nameRef.current.value}`,
-          }),
+          body: JSON.stringify(body),
         }).then(async () => {
           toast.success("You have successfully created a new bot project", {
             style: {

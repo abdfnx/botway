@@ -4,7 +4,9 @@ import { bgSecondary } from "@/tools/colors";
 import { Dialog, Tab, Transition } from "@headlessui/react";
 import {
   AlertIcon,
+  ArchiveIcon,
   CheckCircleIcon,
+  ClockIcon,
   FileDirectoryIcon,
   GitMergeIcon,
   XCircleIcon,
@@ -13,14 +15,14 @@ import clsx from "clsx";
 import Link from "next/link";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { Button } from "../Button";
 import { LoadingDots } from "../LoadingDots";
 
 const InfoIcon = ({ value }: any) => {
   let iconURL;
 
-  if (value == "Render") {
+  if (value == "render") {
     iconURL = "render.png";
   } else if (value == "default") {
     iconURL = "c.svg";
@@ -182,6 +184,7 @@ const Content = ({ nav, project, mutate, user }: any) => {
     const botTokenRef: any = useRef();
     const botAppTokenRef: any = useRef();
     const botSecretTokenRef: any = useRef();
+    const renderServiceIdRef: any = useRef();
 
     let [isOpen, setIsOpen] = useState(false);
     let [pluginx, setPluginx] = useState("PostgreSQL");
@@ -202,13 +205,18 @@ const Content = ({ nav, project, mutate, user }: any) => {
       {
         name: "Redis",
       },
-      {
-        name: "MongoDB",
-      },
-      {
-        name: "MySQL",
-      },
     ];
+
+    if (project.hostService == "railway") {
+      plugins.push(
+        {
+          name: "MongoDB",
+        },
+        {
+          name: "MySQL",
+        }
+      );
+    }
 
     const TokensOnSubmit = useCallback(
       async (e: any) => {
@@ -233,7 +241,13 @@ const Content = ({ nav, project, mutate, user }: any) => {
           formData.append("railwayApiToken", user.railwayApiToken);
           formData.append("railwayProjectId", project.railwayProjectId);
           formData.append("railwayServiceId", project.railwayServiceId);
-          formData.append("renderProjectId", project.renderProjectId);
+          formData.append("renderServiceId", renderServiceIdRef.current.value);
+          formData.append("renderApiToken", user.renderApiToken);
+          formData.append("repoBranch", project.repoBranch);
+          formData.append(
+            "pullRequestPreviewsEnabled",
+            project.pullRequestPreviewsEnabled
+          );
 
           if (project.platform != "telegram") {
             formData.append("botAppToken", botAppTokenRef.current.value);
@@ -274,6 +288,7 @@ const Content = ({ nav, project, mutate, user }: any) => {
       botTokenRef.current.value = project.botToken;
       botAppTokenRef.current.value = project.botAppToken;
       botSecretTokenRef.current.value = project.botSecretToken;
+      renderServiceIdRef.current.value = project.renderServiceId;
     }, [project]);
 
     return (
@@ -352,6 +367,27 @@ const Content = ({ nav, project, mutate, user }: any) => {
               ) : (
                 <input ref={botSecretTokenRef} hidden />
               )}
+
+              {project.hostService == "render" ? (
+                <div className="px-4 py-5 sm:px-6">
+                  <label
+                    htmlFor="render-service-id"
+                    className="block text-gray-500 text-sm font-semibold"
+                  >
+                    Render Service ID
+                  </label>
+                  <div className="pt-2">
+                    <input
+                      className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                      ref={renderServiceIdRef}
+                      type="password"
+                      required
+                    />
+                  </div>
+                </div>
+              ) : (
+                <input ref={renderServiceIdRef} hidden />
+              )}
             </div>
 
             <div className="mb-2 space-y-2 flex justify-center border-b border-gray-800">
@@ -361,7 +397,7 @@ const Content = ({ nav, project, mutate, user }: any) => {
                 loading={isLoading}
                 className="button w-full p-2 mb-6"
               >
-                Update
+                Update Configuration
               </Button>
             </div>
           </form>
@@ -375,11 +411,13 @@ const Content = ({ nav, project, mutate, user }: any) => {
 
           <div className="px-4 py-5 sm:px-6">
             <p>
-              Railway has a are built in Database Management Interface, this
-              allows you to perform common actions on your Database such as
-              viewing and editing the contents of your database services in
-              Railway. The interface is available for all database services
-              deployed within a project.
+              {project.hostService == "railway"
+                ? `Railway has a are built in Database Management Interface, this
+                allows you to perform common actions on your Database such as
+                viewing and editing the contents of your database services in
+                Railway. The interface is available for all database services
+                deployed within a project.`
+                : `Stateless services are simple and scalable, but most complex services eventually end up needing persistent state. Fortunately, you can store state in a fully managed PostgreSQL or Redis instance on Render.`}
             </p>
             <div className="mt-10 grid lg:grid-cols-4 sm:grid-cols-2 lt-md:!grid-cols-1 gap-4">
               {plugins.map((plugin) => (
@@ -437,22 +475,34 @@ const Content = ({ nav, project, mutate, user }: any) => {
                             How to Create {pluginx} Database Plugin
                           </Dialog.Title>
                           <div className="mt-2">
-                            <p className="text-sm text-gray-500">
-                              1. Press <a className="font-mono">New</a> button
-                              then choose database choice
-                              <br />
-                              <img
-                                src={`https://cdn-botway.deno.dev/screenshots/db/db.svg`}
-                                alt={`db icon`}
-                              />
-                              <br />
-                              2. Choose {pluginx} choice
-                              <br />
-                              <img
-                                src={`https://cdn-botway.deno.dev/screenshots/db/${pluginx.toLowerCase()}.svg`}
-                                alt={`${pluginx.toLowerCase()} icon`}
-                              />
-                            </p>
+                            {project.hostService == "railway" ? (
+                              <p className="text-sm text-gray-500">
+                                1. Press <a className="font-mono">New</a> button
+                                then choose database choice
+                                <br />
+                                <img
+                                  src={`https://cdn-botway.deno.dev/screenshots/db/railway/db.svg`}
+                                  alt={`db icon`}
+                                />
+                                <br />
+                                2. Choose {pluginx} choice
+                                <br />
+                                <img
+                                  src={`https://cdn-botway.deno.dev/screenshots/db/railway/${pluginx.toLowerCase()}.svg`}
+                                  alt={`${pluginx.toLowerCase()} icon`}
+                                />
+                              </p>
+                            ) : (
+                              <p className="text-sm text-gray-500">
+                                1. Press <a className="font-mono">New</a> button
+                                then choose {pluginx} choice
+                                <br />
+                                <img
+                                  src={`https://cdn-botway.deno.dev/screenshots/db/render/${pluginx.toLowerCase()}.svg`}
+                                  alt={`${pluginx} icon`}
+                                />
+                              </p>
+                            )}
                           </div>
 
                           <div className="mt-4">
@@ -470,38 +520,68 @@ const Content = ({ nav, project, mutate, user }: any) => {
       </div>
     );
   } else if (nav == "Deployments") {
-    const formData = new FormData();
-
-    const deploymentsFetcher = (url: any) =>
-      fetch(url, {
-        method: "PATCH",
-        body: formData,
-      }).then((res) => res.json());
-
-    formData.append("railwayApiToken", user.railwayApiToken);
-    formData.append("railwayProjectId", project.railwayProjectId);
-
-    const { data, error } = useSWR(
-      "/api/graphql/projects/deployments",
-      deploymentsFetcher
-    );
-
-    if (!data && !error) return <LoadingDots className="mb-3" />;
-
-    const status = (deployStatus: any) => {
-      switch (deployStatus) {
-        case "FAILED":
-          return "text-red-700";
-
-        case "SUCCESS":
-          return "text-green-700";
-      }
-
-      return "text-gray-400";
+    const NoDeploys = () => {
+      return (
+        <div className="rounded-2xl overflow-hidden p-5 cursor-pointer border-2 border-dashed border-gray-800 hover:border-gray-600 shadow-lg transition duration-300 ease-in-out w-full h-60 flex flex-col items-center justify-center gap-4">
+          <h2 className="text-md text-gray-400 text-center">
+            Your project has no deploys
+          </h2>
+        </div>
+      );
     };
 
-    return (
-      <>
+    if (project.hostService == "railway" || project.renderServiceId) {
+      const formData = new FormData();
+
+      formData.append("hostService", project.hostService);
+      formData.append("railwayApiToken", user.railwayApiToken);
+      formData.append("railwayProjectId", project.railwayProjectId);
+      formData.append("renderApiToken", user.renderApiToken);
+      formData.append("renderServiceId", project.renderServiceId);
+
+      const deploymentsFetcher = (url: any) =>
+        fetch(url, {
+          method: "PATCH",
+          body: formData,
+        }).then((res) => res.json());
+
+      const { data, error } = useSWR(
+        `/api/graphql/projects/deployments/${project.hostService}`,
+        deploymentsFetcher,
+        {
+          refreshWhenOffline: false,
+          refreshWhenHidden: false,
+          refreshInterval: 0,
+        }
+      );
+
+      if (!data && !error) return <LoadingDots className="mb-3" />;
+
+      const status = (deployStatus: any) => {
+        switch (deployStatus) {
+          case "FAILED":
+          case "update_failed":
+            return "text-red-700";
+
+          case "SUCCESS":
+          case "live":
+            return "text-green-700";
+        }
+
+        return "text-gray-400";
+      };
+
+      const logsURL = (hostService: any, deploy: any) => {
+        if (hostService == "railway") {
+          return `https://railway.app/project/${project.railwayProjectId}/service/${project.railwayServiceId}?id=${deploy.node.id}`;
+        } else if (hostService == "render") {
+          return `https://dashboard.render.com/web/${project.renderServiceId}/logs`;
+        }
+
+        return "";
+      };
+
+      return (
         <div className="overflow-hidden sm:rounded-lg">
           <div>
             <div className="px-4 py-5 sm:px-6">
@@ -515,26 +595,44 @@ const Content = ({ nav, project, mutate, user }: any) => {
                       <header className="flex gap-3 justify-between mb-4">
                         <hgroup>
                           <h2 className="font-medium text-lg !leading-none text-black">
-                            {deploy.node.url ? (
-                              <Link href={deploy.node.url} target="_blank">
-                                {deploy.node.url}
-                              </Link>
+                            {project.hostService == "railway" ? (
+                              deploy.node.url ? (
+                                <Link href={deploy.node.url} target="_blank">
+                                  {deploy.node.url}
+                                </Link>
+                              ) : (
+                                <span className={status(deploy.node.status)}>
+                                  {deploy.node.status}
+                                </span>
+                              )
                             ) : (
-                              <span className={status(deploy.node.status)}>
-                                {deploy.node.status}
+                              <span className={status(deploy.deploy.status)}>
+                                {deploy.deploy.status == "update_failed"
+                                  ? "FAILED"
+                                  : deploy.deploy.status.toUpperCase()}
                               </span>
                             )}
                           </h2>
                           <h3 className="text-gray-500 mt-1 !leading-tight">
-                            {deploy.node.status == "SUCCESS"
+                            {project.hostService == "railway"
+                              ? deploy.node.status == "SUCCESS"
+                                ? "The deployment that is live on your production domains."
+                                : deploy.node.status == "FAILED"
+                                ? "The deployment is failed."
+                                : deploy.node.status == "REMOVED"
+                                ? "The deployment is removed."
+                                : "Waiting..."
+                              : deploy.deploy.status == "live"
                               ? "The deployment that is live on your production domains."
-                              : "The deployment is failed."}
+                              : deploy.deploy.status == "update_failed"
+                              ? "The deployment is failed."
+                              : "The deployment is deactivated."}
                           </h3>
                         </hgroup>
                         <Link
                           target="_blank"
                           className="h-8 px-3.5 rounded-md inline-flex flex-shrink-0 bg-secondary whitespace-nowrap items-center gap-2 transition-colors duration-150 ease-in-out leading-none border border-gray-800 hover:border-gray-700 cursor-pointer"
-                          href={`https://railway.app/project/${project.railwayProjectId}/service/${project.railwayServiceId}?id=${deploy.node.id}`}
+                          href={logsURL(project.hostService, deploy)}
                           aria-current="page"
                         >
                           Logs
@@ -546,8 +644,39 @@ const Content = ({ nav, project, mutate, user }: any) => {
                       </label>
                       <div className="flex items-center gap-3 mt-2">
                         <span className="w-5 h-5 inline-flex items-center justify-center rounded-full flex-shrink-0 bg-fresh/15">
-                          {deploy.node.status != "SUCCESS" ? (
-                            <XCircleIcon className="fill-red-700" size={16} />
+                          {(project.hostService == "railway" &&
+                            deploy.node.status != "SUCCESS") ||
+                          (project.hostService == "render" &&
+                            deploy.deploy.status != "live") ? (
+                            project.hostService == "railway" ||
+                            deploy.deploy.status == "update_failed" ? (
+                              project.hostService == "railway" &&
+                              deploy.node.status == "REMOVED" ? (
+                                <ArchiveIcon
+                                  className="fill-red-700"
+                                  size={16}
+                                />
+                              ) : project.hostService == "railway" &&
+                                deploy.node.status == "FAILED" ? (
+                                <XCircleIcon
+                                  className="fill-red-700"
+                                  size={16}
+                                />
+                              ) : project.hostService == "render" &&
+                                deploy.deploy.status == "update_failed" ? (
+                                <XCircleIcon
+                                  className="fill-red-700"
+                                  size={16}
+                                />
+                              ) : (
+                                <ClockIcon
+                                  className="fill-gray-400"
+                                  size={16}
+                                />
+                              )
+                            ) : (
+                              <ArchiveIcon className="fill-red-700" size={16} />
+                            )
                           ) : (
                             <CheckCircleIcon
                               className="fill-green-700"
@@ -562,46 +691,74 @@ const Content = ({ nav, project, mutate, user }: any) => {
                             className="mr-1"
                           />
                         </span>
-                        <span className="flex items-center gap-1">
-                          <FileDirectoryIcon
-                            size={16}
-                            className="fill-gray-600 mr-1 font-mono"
-                          />
-                          {deploy.node.meta.rootDirectory}
-                        </span>
+                        {project.hostService == "railway" ? (
+                          <span className="flex items-center gap-1">
+                            <FileDirectoryIcon
+                              size={16}
+                              className="fill-gray-600 mr-1 font-mono"
+                            />
+                            {deploy.node.meta.rootDirectory}
+                          </span>
+                        ) : (
+                          <></>
+                        )}
                         <span className="flex items-center gap-1">
                           <GitMergeIcon
                             size={16}
                             className="fill-gray-600 mr-1"
                           />
-                          {deploy.node.meta.branch}
+                          {project.hostService == "railway"
+                            ? deploy.node.meta.branch
+                            : project.repoBranch}
                         </span>
                         <span className="inline-flex items-center gap-2 max-w-100">
-                          <Link
-                            className="text-gray-400 text-sm hover:text-gray-900 hover:underline truncate"
-                            href={`https://github.com/${deploy.node.meta.repo}/commit/${deploy.node.meta.commitHash}`}
-                            target="_blank"
-                            title={deploy.node.meta.commitMessage}
-                          >
-                            {deploy.node.meta.commitMessage}
-                          </Link>
+                          {project.hostService == "railway" ? (
+                            <Link
+                              className="text-gray-400 text-sm hover:text-gray-900 hover:underline truncate"
+                              href={`https://github.com/${deploy.node.meta.repo}/commit/${deploy.node.meta.commitHash}`}
+                              target="_blank"
+                              title={deploy.node.meta.commitMessage}
+                            >
+                              {deploy.node.meta.commitMessage}
+                            </Link>
+                          ) : (
+                            <Link
+                              className="text-gray-400 text-sm hover:text-gray-900 hover:underline truncate"
+                              href={`https://github.com/${project.repo}/commit/${deploy.deploy.commit.id}`}
+                              target="_blank"
+                              title={deploy.deploy.commit.message}
+                            >
+                              {deploy.deploy.commit.message}
+                            </Link>
+                          )}
                         </span>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="rounded-2xl overflow-hidden p-5 cursor-pointer border-2 border-dashed border-gray-800 hover:border-gray-600 shadow-lg transition duration-300 ease-in-out w-full h-60 flex flex-col items-center justify-center gap-4">
-                    <h2 className="text-md text-gray-400 text-center">
-                      Your project has no deploys
-                    </h2>
-                  </div>
+                  <NoDeploys />
                 )}
               </div>
             </div>
           </div>
         </div>
-      </>
-    );
+      );
+    } else {
+      return (
+        <div className="overflow-hidden sm:rounded-lg">
+          <div>
+            <div className="px-4 py-5 sm:px-6">
+              <h3 className="text-lg font-medium leading-6 text-gray-400">
+                Bot Deployments
+              </h3>
+              <div className="py-11">
+                <NoDeploys />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
   } else if (nav == "Settings") {
     const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
     const [isLoadingDelete, setIsLoadingDelete] = useState(false);
@@ -612,6 +769,8 @@ const Content = ({ nav, project, mutate, user }: any) => {
     const buildCommandRef: any = useRef();
     const startCommandRef: any = useRef();
     const rootDirectoryRef: any = useRef();
+    const repoBranchRef: any = useRef();
+    const pullRequestPreviewsEnabledRef: any = useRef();
 
     const SettingsOnSubmit = useCallback(
       async (e: any) => {
@@ -620,7 +779,7 @@ const Content = ({ nav, project, mutate, user }: any) => {
         try {
           setIsLoadingUpdate(true);
 
-          CheckAPITokens(user);
+          CheckAPITokens(user, project.hostService);
 
           const formData = new FormData();
 
@@ -636,12 +795,19 @@ const Content = ({ nav, project, mutate, user }: any) => {
           formData.append("railwayProjectId", project.railwayProjectId);
           formData.append("railwayEnvId", project.railwayEnvId);
           formData.append("railwayServiceId", project.railwayServiceId);
+          formData.append("renderApiToken", user.renderApiToken);
+          formData.append("renderServiceId", project.renderServiceId);
           formData.append("name", nameRef.current.value);
           formData.append("repo", repoRef.current.value);
           formData.append("icon", iconRef.current.value);
           formData.append("buildCommand", buildCommandRef.current.value);
           formData.append("startCommand", startCommandRef.current.value);
           formData.append("rootDirectory", rootDirectoryRef.current.value);
+          formData.append("repoBranch", repoBranchRef.current.value);
+          formData.append(
+            "pullRequestPreviewsEnabled",
+            pullRequestPreviewsEnabledRef.current.value
+          );
 
           if (project.platform != "telegram") {
             formData.append("botAppToken", project.botAppToken);
@@ -655,6 +821,8 @@ const Content = ({ nav, project, mutate, user }: any) => {
             method: "PATCH",
             body: formData,
           });
+
+          mutate();
 
           toast.success("Your project settings has been updated", {
             style: {
@@ -685,15 +853,18 @@ const Content = ({ nav, project, mutate, user }: any) => {
         try {
           setIsLoadingDelete(true);
 
-          CheckAPITokens(user);
+          CheckAPITokens(user, project.hostService);
 
           const formData = new FormData();
 
           formData.append("id", project.id);
           formData.append("userId", user._id);
           formData.append("name", project.name);
+          formData.append("hostService", project.hostService);
           formData.append("railwayApiToken", user.railwayApiToken);
           formData.append("railwayProjectId", project.railwayProjectId);
+          formData.append("renderServiceId", project.renderServiceId);
+          formData.append("renderApiToken", user.renderApiToken);
 
           await fetcher("/api/projects/delete", {
             method: "PATCH",
@@ -725,13 +896,228 @@ const Content = ({ nav, project, mutate, user }: any) => {
     );
 
     useEffect(() => {
-      nameRef.current.value = project.name;
-      iconRef.current.value = project.icon;
-      repoRef.current.value = project.repo;
-      buildCommandRef.current.value = project.buildCommand;
-      startCommandRef.current.value = project.startCommand;
-      rootDirectoryRef.current.value = project.rootDirectory;
+      if (project.hostService == "railway" || project.renderServiceId) {
+        nameRef.current.value = project.name;
+        iconRef.current.value = project.icon;
+        repoRef.current.value = project.repo;
+        buildCommandRef.current.value = project.buildCommand;
+        startCommandRef.current.value = project.startCommand;
+        rootDirectoryRef.current.value = project.rootDirectory;
+        repoBranchRef.current.value = project.repoBranch;
+        pullRequestPreviewsEnabledRef.current.value =
+          project.pullRequestPreviewsEnabled;
+      }
     }, [project]);
+
+    const SettingsForm = () => {
+      return (
+        <form onSubmit={SettingsOnSubmit}>
+          <div className="grid lg:grid-cols-2 sm:grid-cols-1 lt-md:!grid-cols-1 gap-3">
+            <div className="px-4 py-5 sm:px-6">
+              <label
+                htmlFor="bot-name"
+                className="block text-gray-500 text-sm font-semibold"
+              >
+                Bot Name
+              </label>
+              <div className="pt-2">
+                <input
+                  className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                  ref={nameRef}
+                  type="text"
+                />
+              </div>
+            </div>
+
+            {project.hostService == "railway" ? (
+              <>
+                <div className="px-4 py-5 sm:px-6">
+                  <label
+                    htmlFor="bot-icon"
+                    className="block text-gray-500 text-sm font-semibold"
+                  >
+                    Bot Icon
+                  </label>
+                  <div className="pt-2">
+                    <input
+                      className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                      ref={iconRef}
+                      type="text"
+                    />
+                  </div>
+                </div>
+
+                <div className="px-4 py-5 sm:px-6">
+                  <label
+                    htmlFor="github-repo"
+                    className="block text-gray-500 text-sm font-semibold"
+                  >
+                    GitHub Repo
+                  </label>
+                  <div className="pt-2">
+                    <input
+                      className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                      ref={repoRef}
+                      placeholder={`user/repoName`}
+                      type="text"
+                    />
+                  </div>
+                </div>
+
+                <div className="px-4 py-5 sm:px-6">
+                  <label
+                    htmlFor="build-command"
+                    className="block text-gray-500 text-sm font-semibold"
+                  >
+                    Build Command
+                  </label>
+                  <div className="pt-2">
+                    <input
+                      className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                      ref={buildCommandRef}
+                      placeholder="default"
+                      type="text"
+                    />
+                  </div>
+                </div>
+
+                <div className="px-4 py-5 sm:px-6">
+                  <label
+                    htmlFor="start-command"
+                    className="block text-gray-500 text-sm font-semibold"
+                  >
+                    Start Command
+                  </label>
+                  <div className="pt-2">
+                    <input
+                      className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                      ref={startCommandRef}
+                      placeholder="default"
+                      type="text"
+                    />
+                  </div>
+                </div>
+
+                <div className="px-4 py-5 sm:px-6">
+                  <label
+                    htmlFor="root-directory"
+                    className="block text-gray-500 text-sm font-semibold"
+                  >
+                    Root Directory
+                  </label>
+                  <div className="pt-2">
+                    <input
+                      className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                      ref={rootDirectoryRef}
+                      placeholder="./"
+                      type="text"
+                    />
+                  </div>
+                </div>
+
+                <input ref={repoBranchRef} hidden />
+                <input ref={pullRequestPreviewsEnabledRef} hidden />
+              </>
+            ) : project.renderServiceId ? (
+              <>
+                <input ref={iconRef} hidden />
+                <input ref={repoRef} hidden />
+                <input ref={buildCommandRef} hidden />
+                <input ref={startCommandRef} hidden />
+                <input ref={rootDirectoryRef} hidden />
+
+                <div className="px-4 py-5 sm:px-6">
+                  <label
+                    htmlFor="repo-branch"
+                    className="block text-gray-500 text-sm font-semibold"
+                  >
+                    Repo Branch
+                  </label>
+                  <div className="pt-2">
+                    <input
+                      className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                      ref={repoBranchRef}
+                      type="text"
+                    />
+                  </div>
+                </div>
+
+                <div className="px-4 py-5 sm:px-6">
+                  <label
+                    htmlFor="pull-request-previews-enabled"
+                    className="block text-gray-500 text-sm font-semibold"
+                  >
+                    Pull Request Previews Enabled
+                  </label>
+                  <div className="pt-2">
+                    <input
+                      className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                      ref={pullRequestPreviewsEnabledRef}
+                      placeholder="yes | no"
+                      type="text"
+                    />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <input ref={iconRef} hidden />
+                <input ref={repoRef} hidden />
+                <input ref={buildCommandRef} hidden />
+                <input ref={startCommandRef} hidden />
+                <input ref={rootDirectoryRef} hidden />
+                <input ref={repoBranchRef} hidden />
+                <input ref={pullRequestPreviewsEnabledRef} hidden />
+              </>
+            )}
+          </div>
+
+          <div className="mb-2 space-y-2 flex justify-center">
+            <Button
+              type="success"
+              htmlType="submit"
+              loading={isLoadingUpdate}
+              className="p-2"
+            >
+              Update Settings
+            </Button>
+          </div>
+
+          <div className="px-4 py-5 mb-2 sm:px-6">
+            <label
+              htmlFor="danger-zone"
+              className="block text-red-500 text-sm font-semibold"
+            >
+              <AlertIcon size={16} className="mr-1" /> DANGER ZONE
+            </label>
+            <div className="rounded-2xl overflow-hidden p-5 bg-ultralight mt-5 border border-gray-800 bg-bwdefualt">
+              <header className="flex gap-3 justify-between my-2">
+                <hgroup>
+                  <h2 className="font-medium text-lg !leading-none text-black">
+                    Delete Project
+                  </h2>
+                  <br />
+                  <h3 className="text-gray-500 mt-1 !leading-tight">
+                    Delete {project.name} and delete it on railway. This action
+                    is not reversible, so continue with extreme caution.
+                  </h3>
+                </hgroup>
+                <div></div>
+              </header>
+
+              <Button
+                type="delete"
+                loading={isLoadingDelete}
+                onClick={DeleteProject}
+                className="button p-2"
+              >
+                Delete Project
+              </Button>
+            </div>
+          </div>
+        </form>
+      );
+    };
 
     return (
       <div className="overflow-hidden sm:rounded-lg">
@@ -741,155 +1127,22 @@ const Content = ({ nav, project, mutate, user }: any) => {
               Bot Settings
             </h3>
           </div>
-          <form onSubmit={SettingsOnSubmit}>
-            <div className="grid lg:grid-cols-2 sm:grid-cols-1 lt-md:!grid-cols-1 gap-3">
-              <div className="px-4 py-5 sm:px-6">
-                <label
-                  htmlFor="bot-name"
-                  className="block text-gray-500 text-sm font-semibold"
-                >
-                  Bot Name
-                </label>
-                <div className="pt-2">
-                  <input
-                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
-                    ref={nameRef}
-                    type="text"
-                  />
-                </div>
-              </div>
-
-              <div className="px-4 py-5 sm:px-6">
-                <label
-                  htmlFor="bot-icon"
-                  className="block text-gray-500 text-sm font-semibold"
-                >
-                  Bot Icon
-                </label>
-                <div className="pt-2">
-                  <input
-                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
-                    ref={iconRef}
-                    type="text"
-                  />
-                </div>
-              </div>
-
-              <div className="px-4 py-5 sm:px-6">
-                <label
-                  htmlFor="github-repo"
-                  className="block text-gray-500 text-sm font-semibold"
-                >
-                  GitHub Repo
-                </label>
-                <div className="pt-2">
-                  <input
-                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
-                    ref={repoRef}
-                    placeholder={`user/repoName`}
-                    type="text"
-                  />
-                </div>
-              </div>
-
-              <div className="px-4 py-5 sm:px-6">
-                <label
-                  htmlFor="root-directory"
-                  className="block text-gray-500 text-sm font-semibold"
-                >
-                  Root Directory
-                </label>
-                <div className="pt-2">
-                  <input
-                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
-                    ref={rootDirectoryRef}
-                    placeholder="./"
-                    type="text"
-                  />
-                </div>
-              </div>
-
-              <div className="px-4 py-5 sm:px-6">
-                <label
-                  htmlFor="build-command"
-                  className="block text-gray-500 text-sm font-semibold"
-                >
-                  Build Command
-                </label>
-                <div className="pt-2">
-                  <input
-                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
-                    ref={buildCommandRef}
-                    placeholder="default"
-                    type="text"
-                  />
-                </div>
-              </div>
-
-              <div className="px-4 py-5 sm:px-6">
-                <label
-                  htmlFor="start-command"
-                  className="block text-gray-500 text-sm font-semibold"
-                >
-                  Start Command
-                </label>
-                <div className="pt-2">
-                  <input
-                    className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
-                    ref={startCommandRef}
-                    placeholder="default"
-                    type="text"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-2 space-y-2 flex justify-center">
-              <Button
-                type="success"
-                htmlType="submit"
-                loading={isLoadingUpdate}
-                className="p-2"
-              >
-                Update Settings
-              </Button>
-            </div>
-
-            <div className="px-4 py-5 mb-2 sm:px-6">
-              <label
-                htmlFor="danger-zone"
-                className="block text-red-500 text-sm font-semibold"
-              >
-                <AlertIcon size={16} className="mr-1" /> DANGER ZONE
-              </label>
-              <div className="rounded-2xl overflow-hidden p-5 bg-ultralight mt-5 border border-gray-800 bg-bwdefualt">
-                <header className="flex gap-3 justify-between my-2">
-                  <hgroup>
-                    <h2 className="font-medium text-lg !leading-none text-black">
-                      Delete Project
-                    </h2>
-                    <br />
-                    <h3 className="text-gray-500 mt-1 !leading-tight">
-                      Delete {project.name} and delete it on railway. This
-                      action is not reversible, so continue with extreme
-                      caution.
-                    </h3>
-                  </hgroup>
-                  <div></div>
-                </header>
-
-                <Button
-                  type="delete"
-                  loading={isLoadingDelete}
-                  onClick={DeleteProject}
-                  className="button p-2"
-                >
-                  Delete Project
-                </Button>
-              </div>
-            </div>
-          </form>
         </div>
+        {project.hostService == "render" ? (
+          project.renderServiceId ? (
+            <SettingsForm />
+          ) : (
+            <div className="py-11">
+              <div className="rounded-2xl overflow-hidden p-5 cursor-pointer border-2 border-dashed border-gray-800 hover:border-gray-600 shadow-lg transition duration-300 ease-in-out w-full h-60 flex flex-col items-center justify-center gap-4">
+                <h2 className="text-md text-yellow-500 text-center">
+                  You need to set Render Service Id for this project
+                </h2>
+              </div>
+            </div>
+          )
+        ) : (
+          <SettingsForm />
+        )}
       </div>
     );
   }

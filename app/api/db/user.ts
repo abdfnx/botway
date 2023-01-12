@@ -70,7 +70,6 @@ export async function insertUser(
     githubApiToken,
     railwayApiToken,
     renderApiToken,
-    renderUserEmail,
   }: any
 ) {
   let user: any = {
@@ -82,7 +81,6 @@ export async function insertUser(
     githubApiToken,
     railwayApiToken,
     renderApiToken,
-    renderUserEmail,
     projects: [],
   };
 

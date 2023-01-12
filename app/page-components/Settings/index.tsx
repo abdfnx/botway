@@ -236,7 +236,6 @@ const Tokens = ({ user, mutate }: any) => {
   const githubApiTokenRef: any = useRef();
   const railwayApiTokenRef: any = useRef();
   const renderApiTokenRef: any = useRef();
-  const renderUserEmailRef: any = useRef();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(
@@ -251,7 +250,6 @@ const Tokens = ({ user, mutate }: any) => {
         formData.append("githubApiToken", githubApiTokenRef.current.value);
         formData.append("railwayApiToken", railwayApiTokenRef.current.value);
         formData.append("renderApiToken", renderApiTokenRef.current.value);
-        formData.append("renderUserEmail", renderUserEmailRef.current.value);
 
         const response = await fetcher("/api/user", {
           method: "PATCH",
@@ -286,7 +284,6 @@ const Tokens = ({ user, mutate }: any) => {
     githubApiTokenRef.current.value = user.githubApiToken;
     railwayApiTokenRef.current.value = user.railwayApiToken;
     renderApiTokenRef.current.value = user.renderApiToken;
-    renderUserEmailRef.current.value = user.renderUserEmail;
   }, [user]);
 
   return (
@@ -342,22 +339,6 @@ const Tokens = ({ user, mutate }: any) => {
                   ref={renderApiTokenRef}
                   placeholder="render api token"
                   type="password"
-                />
-              </div>
-            </div>
-            <div className="max-w-md lg:pl-6">
-              <label
-                htmlFor="render-user-email"
-                className="block text-gray-500 text-sm font-semibold"
-              >
-                Render User Email
-              </label>
-              <div className="pt-2">
-                <input
-                  className="w-full border px-1.5 bg-secondary trsn bg border-gray-800 placeholder:text-gray-400 placeholder:pl-1 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block p-2"
-                  ref={renderUserEmailRef}
-                  placeholder="render user email"
-                  type="email"
                 />
               </div>
             </div>

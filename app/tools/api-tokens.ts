@@ -1,28 +1,27 @@
 import { toast } from "react-hot-toast";
 import { bgSecondary } from "./colors";
 
-export const CheckAPITokens = (user: any) => {
-  if (!user.railwayApiToken) {
-    toast.error(
-      "Your Railway API Token is not set, please set your railway api token in the settings page",
-      {
-        style: {
-          borderRadius: "10px",
-          backgroundColor: bgSecondary,
-          color: "#fff",
-        },
-      }
-    );
+const message = (msg: string) => {
+  return toast.error(
+    `Your ${msg} is not set, please set your ${msg.toLowerCase()} in the settings page`,
+    {
+      style: {
+        borderRadius: "10px",
+        backgroundColor: bgSecondary,
+        color: "#fff",
+      },
+    }
+  );
+};
+
+export const CheckAPITokens = (user: any, hostService: any) => {
+  if (hostService) {
+    if (hostService == "railway" && !user.railwayApiToken) {
+      message("Railway API Token");
+    } else if (hostService == "render" && !user.renderApiToken) {
+      message("Render API Token");
+    }
   } else if (!user.githubApiToken) {
-    toast.error(
-      "Your GitHub Token is not set, please set your github token in the settings page",
-      {
-        style: {
-          borderRadius: "10px",
-          backgroundColor: bgSecondary,
-          color: "#fff",
-        },
-      }
-    );
+    message("GitHub Token");
   }
 };
