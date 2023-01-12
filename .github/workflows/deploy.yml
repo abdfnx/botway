@@ -55,4 +55,4 @@ jobs:
         with:
           project: "cdn-botway"
           entrypoint: ./main.ts
-          root: ./installer/assets
+          root: ./assets
