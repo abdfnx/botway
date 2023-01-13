@@ -25,7 +25,7 @@ jobs:
           DARWIN_TARGET_PATH: "./target/x86_64-apple-darwin/release"
           INSTALLERS_DIR_PATH: "./static/installers"
         run: |
-          sudo apt-get update -y && sudo apt-get upgrade -y
+          sudo apt-get update -y --fix-missing && sudo apt-get upgrade -y --fix-missing
           sudo apt-get install $PACKAGES -y
 
           # Build Botway Linux Installer
