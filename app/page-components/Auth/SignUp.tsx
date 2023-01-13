@@ -2,7 +2,7 @@ import { Button } from "@/components/Button";
 import LogoSection from "@/components/Logo";
 import { fetcher } from "@/lib/fetch";
 import { useCurrentUser } from "@/lib/user";
-import { bgSecondary } from "@/tools/colors";
+import { toastStyle } from "@/tools/toast-style";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useRef, useState } from "react";
@@ -40,23 +40,11 @@ const SignUp = () => {
 
         mutate({ user: response.user }, false);
 
-        toast.success("Your account has been created", {
-          style: {
-            borderRadius: "10px",
-            backgroundColor: bgSecondary,
-            color: "#fff",
-          },
-        });
+        toast.success("Your account has been created", toastStyle);
 
         router.replace("/");
       } catch (e: any) {
-        toast.error(e.message, {
-          style: {
-            borderRadius: "10px",
-            backgroundColor: bgSecondary,
-            color: "#fff",
-          },
-        });
+        toast.error(e.message, toastStyle);
       } finally {
         setIsLoading(false);
       }

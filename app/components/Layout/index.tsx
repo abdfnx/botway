@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { Menu, Transition } from "@headlessui/react";
 import { UserAvatar } from "@/components/UserAvatar";
 import clsx from "clsx";
-import { bgSecondary } from "@/tools/colors";
+import { toastStyle } from "@/tools/toast-style";
 import {
   ChevronDownIcon,
   RocketIcon,
@@ -36,23 +36,11 @@ const Layout = ({ children, title }: any) => {
         method: "DELETE",
       });
 
-      toast.success("You have been signed out", {
-        style: {
-          borderRadius: "10px",
-          backgroundColor: bgSecondary,
-          color: "#fff",
-        },
-      });
+      toast.success("You have been signed out", toastStyle);
 
       mutate({ user: null });
     } catch (e: any) {
-      toast.error(e.message, {
-        style: {
-          borderRadius: "10px",
-          backgroundColor: bgSecondary,
-          color: "#fff",
-        },
-      });
+      toast.error(e.message, toastStyle);
     }
   }, [mutate]);
 

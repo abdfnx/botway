@@ -12,11 +12,11 @@ import {
   visibilityOptions,
 } from "./Options";
 import { NewProjectModal } from "./NewProjectModal";
-import { bgSecondary } from "@/tools/colors";
 import { CheckIcon, ChevronDownIcon } from "@primer/octicons-react";
 import { useCurrentUser } from "@/lib/user";
 import { Octokit } from "octokit";
 import { CheckAPITokens } from "@/tools/api-tokens";
+import { toastStyle } from "@/tools/toast-style";
 
 const NewProjectHandler = () => {
   const { data: { user } = {}, mutate } = useCurrentUser();
@@ -85,14 +85,10 @@ const NewProjectHandler = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
         }).then(async () => {
-          toast.success("You have successfully created a new bot project", {
-            style: {
-              borderRadius: "10px",
-              backgroundColor: bgSecondary,
-              color: "#fff",
-            },
-            position: "bottom-right",
-          });
+          toast.success(
+            "You have successfully created a new bot project",
+            toastStyle
+          );
         });
 
         // refresh projects lists

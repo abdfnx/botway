@@ -1,6 +1,6 @@
 import { fetcher } from "@/lib/fetch";
 import { CheckAPITokens } from "@/tools/api-tokens";
-import { bgSecondary } from "@/tools/colors";
+import { toastStyle } from "@/tools/toast-style";
 import { Dialog, Tab, Transition } from "@headlessui/react";
 import {
   AlertIcon,
@@ -15,7 +15,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
-import useSWR, { useSWRConfig } from "swr";
+import useSWR from "swr";
 import { Button } from "../Button";
 import { LoadingDots } from "../LoadingDots";
 
@@ -262,21 +262,9 @@ const Content = ({ nav, project, mutate, user }: any) => {
             body: formData,
           });
 
-          toast.success("Your project config has been updated", {
-            style: {
-              borderRadius: "10px",
-              backgroundColor: bgSecondary,
-              color: "#fff",
-            },
-          });
+          toast.success("Your project config has been updated", toastStyle);
         } catch (e: any) {
-          toast.error(e.message, {
-            style: {
-              borderRadius: "10px",
-              backgroundColor: bgSecondary,
-              color: "#fff",
-            },
-          });
+          toast.error(e.message, toastStyle);
         } finally {
           setIsLoading(false);
         }
@@ -824,21 +812,9 @@ const Content = ({ nav, project, mutate, user }: any) => {
 
           mutate();
 
-          toast.success("Your project settings has been updated", {
-            style: {
-              borderRadius: "10px",
-              backgroundColor: bgSecondary,
-              color: "#fff",
-            },
-          });
+          toast.success("Your project settings has been updated", toastStyle);
         } catch (e: any) {
-          toast.error(e.message, {
-            style: {
-              borderRadius: "10px",
-              backgroundColor: bgSecondary,
-              color: "#fff",
-            },
-          });
+          toast.error(e.message, toastStyle);
         } finally {
           setIsLoadingUpdate(false);
         }
@@ -871,23 +847,11 @@ const Content = ({ nav, project, mutate, user }: any) => {
             body: formData,
           });
 
-          toast.success("Your project has been deleted", {
-            style: {
-              borderRadius: "10px",
-              backgroundColor: bgSecondary,
-              color: "#fff",
-            },
-          });
+          toast.success("Your project has been deleted", toastStyle);
 
           mutate();
         } catch (e: any) {
-          toast.error(e.message, {
-            style: {
-              borderRadius: "10px",
-              backgroundColor: bgSecondary,
-              color: "#fff",
-            },
-          });
+          toast.error(e.message, toastStyle);
         } finally {
           setIsLoadingDelete(false);
         }

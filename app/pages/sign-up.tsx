@@ -1,7 +1,7 @@
 import { SignUp } from "@/page-components/Auth";
 import Head from "next/head";
 
-const SignupPage = () => {
+const SignUpPage = () => {
   return (
     <>
       <Head>
@@ -12,4 +12,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default SignUpPage;

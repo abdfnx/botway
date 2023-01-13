@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import { LoadingDots } from "@/components/LoadingDots";
 import { fetcher } from "@/lib/fetch";
 import { useCurrentUser } from "@/lib/user";
-import { bgSecondary } from "@/tools/colors";
+import { toastStyle } from "@/tools/toast-style";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
@@ -33,21 +33,9 @@ const AccountInfo = ({ user, mutate }: any) => {
 
         mutate({ user: response.user }, false);
 
-        toast.success("Your profile has been updated", {
-          style: {
-            borderRadius: "10px",
-            backgroundColor: bgSecondary,
-            color: "#fff",
-          },
-        });
+        toast.success("Your profile has been updated", toastStyle);
       } catch (e: any) {
-        toast.error(e.message, {
-          style: {
-            borderRadius: "10px",
-            backgroundColor: bgSecondary,
-            color: "#fff",
-          },
-        });
+        toast.error(e.message, toastStyle);
       } finally {
         setIsLoading(false);
       }
@@ -155,21 +143,9 @@ const ChangePassword = () => {
         }),
       });
 
-      toast.success("Your password has been updated", {
-        style: {
-          borderRadius: "10px",
-          backgroundColor: bgSecondary,
-          color: "#fff",
-        },
-      });
+      toast.success("Your password has been updated", toastStyle);
     } catch (e: any) {
-      toast.error(e.message, {
-        style: {
-          borderRadius: "10px",
-          backgroundColor: bgSecondary,
-          color: "#fff",
-        },
-      });
+      toast.error(e.message, toastStyle);
     } finally {
       setIsLoading(false);
 
@@ -258,21 +234,9 @@ const Tokens = ({ user, mutate }: any) => {
 
         mutate({ user: response.user }, false);
 
-        toast.success("Your account tokens has been updated", {
-          style: {
-            borderRadius: "10px",
-            backgroundColor: bgSecondary,
-            color: "#fff",
-          },
-        });
+        toast.success("Your account tokens has been updated", toastStyle);
       } catch (e: any) {
-        toast.error(e.message, {
-          style: {
-            borderRadius: "10px",
-            backgroundColor: bgSecondary,
-            color: "#fff",
-          },
-        });
+        toast.error(e.message, toastStyle);
       } finally {
         setIsLoading(false);
       }

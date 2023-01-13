@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Toaster } from "react-hot-toast";
 import "@/assets/app.scss";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function _App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>

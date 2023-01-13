@@ -1,16 +1,10 @@
 import { toast } from "react-hot-toast";
-import { bgSecondary } from "./colors";
+import { toastStyle } from "./toast-style";
 
 const message = (msg: string) => {
   return toast.error(
     `Your ${msg} is not set, please set your ${msg.toLowerCase()} in the settings page`,
-    {
-      style: {
-        borderRadius: "10px",
-        backgroundColor: bgSecondary,
-        color: "#fff",
-      },
-    }
+    toastStyle
   );
 };
 
