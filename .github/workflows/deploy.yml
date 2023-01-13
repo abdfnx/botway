@@ -26,7 +26,7 @@ jobs:
           INSTALLERS_DIR_PATH: "./static/installers"
         run: |
           sudo apt-get update -y --fix-missing && sudo apt-get upgrade -y --fix-missing
-          sudo apt-get install $PACKAGES -y
+          sudo apt-get install $PACKAGES -y --fix-missing
 
           # Build Botway Linux Installer
           cd ./installer

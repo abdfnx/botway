@@ -57,3 +57,5 @@ osxcross
 .turbo
 
 web
+
+.env

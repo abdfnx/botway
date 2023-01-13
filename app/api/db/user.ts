@@ -135,5 +135,8 @@ export function dbProjectionUsers(prefix = "") {
     [`${prefix}password`]: 0,
     [`${prefix}email`]: 0,
     [`${prefix}emailVerified`]: 0,
+    [`${prefix}githubApiToken`]: 0,
+    [`${prefix}railwayApiToken`]: 0,
+    [`${prefix}renderApiToken`]: 0,
   };
 }

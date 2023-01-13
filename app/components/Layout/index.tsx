@@ -13,6 +13,7 @@ import {
   RocketIcon,
   SignOutIcon,
   SlidersIcon,
+  VersionsIcon,
 } from "@primer/octicons-react";
 
 const Layout = ({ children, title }: any) => {
@@ -110,6 +111,21 @@ const Layout = ({ children, title }: any) => {
                                 target="_blank"
                               >
                                 <RocketIcon size={18} className="pr-1" /> Docs
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href={"https://botway.deno.dev/changelog"}
+                                className={clsx(
+                                  active ? "bg-secondary" : "",
+                                  "transition block mx-2 my-1 rounded-md cursor-pointer px-4 py-2 text-sm text-gray-400"
+                                )}
+                                target="_blank"
+                              >
+                                <VersionsIcon size={18} className="pr-1" />{" "}
+                                Changelog
                               </a>
                             )}
                           </Menu.Item>

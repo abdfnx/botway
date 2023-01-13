@@ -11,8 +11,11 @@ import toast from "react-hot-toast";
 const SignIn = () => {
   const emailRef: any = useRef();
   const passwordRef: any = useRef();
+
   const [isLoading, setIsLoading] = useState(false);
+
   const { data: { user } = {}, mutate, isValidating } = useCurrentUser();
+
   const router = useRouter();
 
   useEffect(() => {
@@ -62,9 +65,20 @@ const SignIn = () => {
           <p className="text-sm text-gray-500 pt-1 cursor-pointer">
             You don't have an Account?{" "}
             <Link href="/sign-up" className="text-blue-700">
-              Sign up for an account.
+              Sign up for an account
             </Link>
           </p>
+
+          {process.env.NEXT_PUBLIC_FULL == "true" ? (
+            <p className="text-sm text-gray-500 pt-1 cursor-pointer">
+              Forget Password?{" "}
+              <Link href="/forget-password" className="text-blue-700">
+                Reset
+              </Link>
+            </p>
+          ) : (
+            <></>
+          )}
 
           <div className="my-2 mb-2">
             <form onSubmit={onSubmit}>
