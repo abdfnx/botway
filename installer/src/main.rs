@@ -13,7 +13,7 @@ pub fn install() {
     let arch = arch.trim_end();
 
     let releases_api_url="https://github.com/abdfnx/botway/releases/download";
-    let latest_version_cmd = Command::new("curl").arg("--silent").arg("https://get-latest.up.railway.app/abdfnx/botway").output().unwrap();
+    let latest_version_cmd = Command::new("curl").arg("--silent").arg("https://get-latest.deno.dev/abdfnx/botway").output().unwrap();
     let latest_version = String::from_utf8(latest_version_cmd.stdout).unwrap();
 
     let mut name = "botway_linux_".to_owned() + &latest_version + "_amd64";
