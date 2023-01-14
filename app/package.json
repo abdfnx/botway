@@ -26,6 +26,7 @@
     "express-session": "^1.17.3",
     "graphql": "^16.6.0",
     "graphql-request": "^5.1.0",
+    "jose": "^4.11.2",
     "modern-normalize": "^1.1.0",
     "mongodb": "^4.13.0",
     "multer": "1.4.5-lts.1",

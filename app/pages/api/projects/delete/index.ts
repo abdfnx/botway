@@ -5,6 +5,8 @@ import { ncOpts } from "@/api/nc";
 import { fetcher } from "@/lib/fetch";
 import multer from "multer";
 import nc from "next-connect";
+import { jwtDecrypt } from "jose";
+import { BW_SECRET_KEY } from "@/tools/api-tokens";
 
 const handler = nc(ncOpts);
 
@@ -17,7 +19,7 @@ handler.patch(multer({ dest: "/tmp" }).single("data"), async (req, res) => {
 
   const db = await getMongoDb();
 
-  const {
+  let {
     id,
     userId,
     name,
@@ -29,24 +31,42 @@ handler.patch(multer({ dest: "/tmp" }).single("data"), async (req, res) => {
   } = req.body;
 
   if (hostService == "railway") {
+    const { payload: rwApiToken } = await jwtDecrypt(
+      railwayApiToken,
+      BW_SECRET_KEY
+    );
+    const { payload: rwProjectId } = await jwtDecrypt(
+      railwayProjectId,
+      BW_SECRET_KEY
+    );
+
     await fetcher("https://backboard.railway.app/graphql/v2", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${railwayApiToken}`,
+        Authorization: `Bearer ${rwApiToken.data}`,
       },
       body: JSON.stringify({
         operationName: "projectDelete",
-        query: `mutation projectDelete { projectDelete(id: "${railwayProjectId}") }`,
+        query: `mutation projectDelete { projectDelete(id: "${rwProjectId.data}") }`,
       }),
     });
   } else if (hostService == "render") {
-    await fetcher(`https://api.render.com/v1/services/${renderServiceId}`, {
+    const { payload: rndApiToken } = await jwtDecrypt(
+      renderApiToken,
+      BW_SECRET_KEY
+    );
+    const { payload: rndServiceId } = await jwtDecrypt(
+      renderServiceId,
+      BW_SECRET_KEY
+    );
+
+    await fetcher(`https://api.render.com/v1/services/${rndServiceId.data}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${renderApiToken}`,
+        Authorization: `Bearer ${rndApiToken.data}`,
       },
     });
   }

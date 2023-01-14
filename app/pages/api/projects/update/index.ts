@@ -4,9 +4,11 @@ import { auths, validateBody } from "@/api/middlewares";
 import { getMongoDb } from "@/api/mongodb";
 import { ncOpts } from "@/api/nc";
 import { fetcher } from "@/lib/fetch";
+import { BW_SECRET_KEY } from "@/tools/api-tokens";
 import multer from "multer";
 import nc from "next-connect";
 import { Octokit } from "octokit";
+import { EncryptJWT, jwtDecrypt } from "jose";
 
 const handler = nc(ncOpts);
 
@@ -64,6 +66,7 @@ handler.patch(
       railwayApiToken,
       railwayProjectId,
       railwayServiceId,
+      rwEnvId,
       renderServiceId,
       renderApiToken,
       icon,
@@ -74,8 +77,10 @@ handler.patch(
       pullRequestPreviewsEnabled,
     } = req.body;
 
+    const { payload: ghApiToken } = await jwtDecrypt(ghToken, BW_SECRET_KEY);
+
     const octokit = new Octokit({
-      auth: ghToken,
+      auth: ghApiToken.data,
     });
 
     const ghu = await (await octokit.request("GET /user", {})).data;
@@ -104,17 +109,50 @@ handler.patch(
       pullRequestPreviewsEnabled,
     };
 
+    const { payload: bt } = await jwtDecrypt(botToken, BW_SECRET_KEY);
+
+    let bat: any, bst: any;
+
+    if (botAppToken) {
+      const { payload } = await jwtDecrypt(botAppToken, BW_SECRET_KEY);
+
+      bat = payload;
+    } else {
+      bat = "not";
+    }
+
+    if (botSecretToken) {
+      const { payload } = await jwtDecrypt(botSecretToken, BW_SECRET_KEY);
+
+      bst = payload;
+    } else {
+      bst = "not";
+    }
+
     if (hostService == "railway") {
+      const { payload: rwApiToken } = await jwtDecrypt(
+        railwayApiToken,
+        BW_SECRET_KEY
+      );
+      const { payload: rwProjectId } = await jwtDecrypt(
+        railwayProjectId,
+        BW_SECRET_KEY
+      );
+      const { payload: rwServiceId } = await jwtDecrypt(
+        railwayServiceId,
+        BW_SECRET_KEY
+      );
+
       const getEnvId = await fetcher(
         "https://backboard.railway.app/graphql/v2",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${railwayApiToken}`,
+            Authorization: `Bearer ${rwApiToken.data}`,
           },
           body: JSON.stringify({
-            query: `query { project(id: "${railwayProjectId}") { environments { edges { node { name, id } } } } }`,
+            query: `query { project(id: "${rwProjectId.data}") { environments { edges { node { name, id } } } } }`,
           }),
         }
       );
@@ -126,13 +164,13 @@ handler.patch(
       let vars;
 
       if (platform == "discord") {
-        vars = `DISCORD_TOKEN: "${botToken}", DISCORD_CLIENT_ID: "${botAppToken}"`;
+        vars = `DISCORD_TOKEN: "${bt.data}", DISCORD_CLIENT_ID: "${bat.data}"`;
       } else if (platform == "slack") {
-        vars = `SLACK_TOKEN: "${botToken}", SLACK_APP_TOKEN: "${botAppToken}", SLACK_SIGNING_SECRET: "${botSecretToken}"`;
+        vars = `SLACK_TOKEN: "${bt.data}", SLACK_APP_TOKEN: "${bat.data}", SLACK_SIGNING_SECRET: "${bst.data}"`;
       } else if (platform == "telegram") {
-        vars = `TELEGRAM_TOKEN: "${botToken}"`;
+        vars = `TELEGRAM_TOKEN: "${bt.data}"`;
       } else if (platform == "twitch") {
-        vars = `TWITCH_OAUTH_TOKEN: "${botToken}", TWITCH_CLIENT_ID: "${botAppToken}", TWITCH_CLIENT_SECRET: "${botSecretToken}"`;
+        vars = `TWITCH_OAUTH_TOKEN: "${bt.data}", TWITCH_CLIENT_ID: "${bat.data}", TWITCH_CLIENT_SECRET: "${bst.data}"`;
       }
 
       const repoBody =
@@ -144,47 +182,62 @@ handler.patch(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${railwayApiToken}`,
+          Authorization: `Bearer ${rwApiToken.data}`,
         },
         body: JSON.stringify({
           operationName: "setTokens",
-          query: `mutation setTokens { variableCollectionUpsert(input: { projectId: "${railwayProjectId}", environmentId: "${envId}", serviceId: "${railwayServiceId}", variables: { ${vars} } }) serviceUpdate(id: "${railwayServiceId}", input: { ${repoBody} }) { source { repo } } }`,
+          query: `mutation setTokens { variableCollectionUpsert(input: { projectId: "${rwProjectId.data}", environmentId: "${envId}", serviceId: "${rwServiceId.data}", variables: { ${vars} } }) serviceUpdate(id: "${rwServiceId.data}", input: { ${repoBody} }) { source { repo } } }`,
         }),
       });
 
-      payload["railwayEnvId"] = envId;
+      const railwayEnvId = await new EncryptJWT({
+        data: envId,
+      })
+        .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+        .encrypt(BW_SECRET_KEY);
+
+      payload["railwayEnvId"] = railwayEnvId;
     } else if (hostService == "render") {
+      const { payload: rndApiToken } = await jwtDecrypt(
+        renderApiToken,
+        BW_SECRET_KEY
+      );
+      const { payload: rndServiceId } = await jwtDecrypt(
+        renderServiceId,
+        BW_SECRET_KEY
+      );
+
       let vars;
 
       if (platform == "discord") {
         vars = [
-          { key: "DISCORD_TOKEN", value: botToken },
-          { key: "DISCORD_CLIENT_ID", value: botAppToken },
+          { key: "DISCORD_TOKEN", value: bt.data },
+          { key: "DISCORD_CLIENT_ID", value: bat.data },
         ];
       } else if (platform == "slack") {
         vars = [
-          { key: "SLACK_TOKEN", value: botToken },
-          { key: "SLACK_APP_TOKEN", value: botAppToken },
-          { key: "SLACK_SIGNING_SECRET", value: botSecretToken },
+          { key: "SLACK_TOKEN", value: bt.data },
+          { key: "SLACK_APP_TOKEN", value: bat.data },
+          { key: "SLACK_SIGNING_SECRET", value: bst.data },
         ];
       } else if (platform == "telegram") {
-        vars = [{ key: "TELEGRAM_TOKEN", value: botToken }];
+        vars = [{ key: "TELEGRAM_TOKEN", value: bt.data }];
       } else if (platform == "twitch") {
         vars = [
-          { key: "TWITCH_OAUTH_TOKEN", value: botToken },
-          { key: "TWITCH_CLIENT_ID", value: botAppToken },
-          { key: "TWITCH_CLIENT_SECRET", value: botSecretToken },
+          { key: "TWITCH_OAUTH_TOKEN", value: bt.data },
+          { key: "TWITCH_CLIENT_ID", value: bat.data },
+          { key: "TWITCH_CLIENT_SECRET", value: bst.data },
         ];
       }
 
       await fetcher(
-        `https://api.render.com/v1/services/${renderServiceId}/env-vars`,
+        `https://api.render.com/v1/services/${rndServiceId.data}/env-vars`,
         {
           method: "PUT",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${renderApiToken}`,
+            Authorization: `Bearer ${rndApiToken.data}`,
           },
           body: JSON.stringify(vars),
         }
@@ -192,12 +245,12 @@ handler.patch(
     }
 
     if (platform != "telegram") {
-      payload["botToken"] = botToken;
-      payload["botAppToken"] = botAppToken;
+      payload["botToken"] = bt.data;
+      payload["botAppToken"] = bat.data;
     } else if (platform == "slack" || platform == "twitch") {
-      payload["botToken"] = botToken;
-      payload["botAppToken"] = botAppToken;
-      payload["botSecretToken"] = botSecretToken;
+      payload["botToken"] = bt.data;
+      payload["botAppToken"] = bat.data;
+      payload["botSecretToken"] = bst.data;
     }
 
     const prj = await updateProject(db, userId, id, payload);

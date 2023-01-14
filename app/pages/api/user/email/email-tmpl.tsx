@@ -15,9 +15,9 @@ export const EmailTemplate = (
   }
 
   if (webURL.includes("localhost")) {
-    protocol = "http"
+    protocol = "http";
   } else {
-    protocol = "https"
+    protocol = "https";
   }
 
   return `<div>
@@ -54,6 +54,7 @@ export const EmailTemplate = (
                               <td align="center">
                                 <img
                                   src="https://cdn-botway.deno.dev/icon.png"
+                                  width="40px"
                                   alt="Botway"
                                 />
                                 <h1 style="${shared} 24px; font-weight: normal; margin: 30px 0; padding: 0;">

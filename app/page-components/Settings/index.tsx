@@ -7,6 +7,8 @@ import { toastStyle } from "@/tools/toast-style";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { base64url, EncryptJWT, jwtDecrypt } from "jose";
+import { BW_SECRET_KEY } from "@/tools/api-tokens";
 
 const AccountInfo = ({ user, mutate }: any) => {
   const usernameRef: any = useRef();
@@ -223,9 +225,25 @@ const Tokens = ({ user, mutate }: any) => {
 
         const formData = new FormData();
 
-        formData.append("githubApiToken", githubApiTokenRef.current.value);
-        formData.append("railwayApiToken", railwayApiTokenRef.current.value);
-        formData.append("renderApiToken", renderApiTokenRef.current.value);
+        const githubApiToken = await new EncryptJWT({
+          data: githubApiTokenRef.current.value,
+        })
+          .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+          .encrypt(BW_SECRET_KEY);
+        const railwayApiToken = await new EncryptJWT({
+          data: railwayApiTokenRef.current.value,
+        })
+          .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+          .encrypt(BW_SECRET_KEY);
+        const renderApiToken = await new EncryptJWT({
+          data: renderApiTokenRef.current.value,
+        })
+          .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+          .encrypt(BW_SECRET_KEY);
+
+        formData.append("githubApiToken", githubApiToken);
+        formData.append("railwayApiToken", railwayApiToken);
+        formData.append("renderApiToken", renderApiToken);
 
         const response = await fetcher("/api/user", {
           method: "PATCH",
@@ -245,9 +263,28 @@ const Tokens = ({ user, mutate }: any) => {
   );
 
   useEffect(() => {
-    githubApiTokenRef.current.value = user.githubApiToken;
-    railwayApiTokenRef.current.value = user.railwayApiToken;
-    renderApiTokenRef.current.value = user.renderApiToken;
+    const set = async () => {
+      const { payload: ghApiToken } = await jwtDecrypt(
+        user.githubApiToken,
+        BW_SECRET_KEY
+      );
+
+      const { payload: railwayApiToken } = await jwtDecrypt(
+        user.renderApiToken,
+        BW_SECRET_KEY
+      );
+
+      const { payload: renderApiToken } = await jwtDecrypt(
+        user.renderApiToken,
+        BW_SECRET_KEY
+      );
+
+      githubApiTokenRef.current.value = ghApiToken;
+      railwayApiTokenRef.current.value = railwayApiToken;
+      renderApiTokenRef.current.value = renderApiToken;
+    };
+
+    set().catch(console.error);
   }, [user]);
 
   return (

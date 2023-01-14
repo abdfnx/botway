@@ -5,6 +5,8 @@ import { auths } from "@/api/middlewares";
 import multer from "multer";
 import { getMongoDb } from "@/api/mongodb";
 import { updateProject } from "@/api/db";
+import { jwtDecrypt } from "jose";
+import { BW_SECRET_KEY } from "@/tools/api-tokens";
 
 const handler = nc(ncOpts);
 
@@ -17,7 +19,7 @@ handler.patch(multer({ dest: "/tmp" }).single("data"), async (req, res) => {
 
   const db = await getMongoDb();
 
-  const {
+  let {
     id,
     name,
     repo,
@@ -45,9 +47,22 @@ handler.patch(multer({ dest: "/tmp" }).single("data"), async (req, res) => {
   } = req.body;
 
   if (hostService == "railway") {
+    const { payload: rwApiToken } = await jwtDecrypt(
+      railwayApiToken,
+      BW_SECRET_KEY
+    );
+    const { payload: rwProjectId } = await jwtDecrypt(
+      railwayProjectId,
+      BW_SECRET_KEY
+    );
+    const { payload: rwServiceId } = await jwtDecrypt(
+      railwayServiceId,
+      BW_SECRET_KEY
+    );
+
     const nameBody =
       name != ""
-        ? `projectUpdate(id: "${railwayProjectId}", input: { name: "${name}" }) { id }`
+        ? `projectUpdate(id: "${rwProjectId.data}", input: { name: "${name}" }) { id }`
         : "";
     const serviceNameBody = name != "" ? `name: "${name}-main"` : "";
     const iconBody = icon != "" ? `icon: "${icon}"` : "";
@@ -59,13 +74,13 @@ handler.patch(multer({ dest: "/tmp" }).single("data"), async (req, res) => {
     const startCommandBody =
       startCommand != "" ? `startCommand: "${startCommand}"` : "";
 
-    const query = `mutation settingsUpdate { ${nameBody} serviceUpdate(id: "${railwayServiceId}", input: { ${serviceNameBody} ${iconBody} ${buildCommandBody} ${rootDirectoryBody} ${startCommandBody} ${repoBody} }) { id }}`;
+    const query = `mutation settingsUpdate { ${nameBody} serviceUpdate(id: "${rwServiceId.data}", input: { ${serviceNameBody} ${iconBody} ${buildCommandBody} ${rootDirectoryBody} ${startCommandBody} ${repoBody} }) { id }}`;
 
     await fetcher("https://backboard.railway.app/graphql/v2", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${railwayApiToken}`,
+        Authorization: `Bearer ${rwApiToken.data}`,
       },
       body: JSON.stringify({
         operationName: "settingsUpdate",
@@ -73,18 +88,27 @@ handler.patch(multer({ dest: "/tmp" }).single("data"), async (req, res) => {
       }),
     });
   } else if (hostService == "render") {
+    const { payload: rndApiToken } = await jwtDecrypt(
+      renderApiToken,
+      BW_SECRET_KEY
+    );
+    const { payload: rndServiceId } = await jwtDecrypt(
+      renderServiceId,
+      BW_SECRET_KEY
+    );
+
     const body = JSON.stringify({
       serviceDetails: { pullRequestPreviewsEnabled },
       branch: repoBranch,
       name,
     });
 
-    await fetcher(`https://api.render.com/v1/services/${renderServiceId}`, {
+    await fetcher(`https://api.render.com/v1/services/${rndServiceId.data}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${renderApiToken}`,
+        Authorization: `Bearer ${rndApiToken.data}`,
       },
       body,
     });

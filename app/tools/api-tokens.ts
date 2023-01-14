@@ -1,5 +1,10 @@
+import { base64url } from "jose";
 import { toast } from "react-hot-toast";
 import { toastStyle } from "./toast-style";
+
+const key: any = process.env.NEXT_PUBLIC_BW_SECRET_KEY;
+
+export const BW_SECRET_KEY = base64url.decode(key);
 
 const message = (msg: string) => {
   return toast.error(

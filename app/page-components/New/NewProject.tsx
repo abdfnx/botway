@@ -15,8 +15,9 @@ import { NewProjectModal } from "./NewProjectModal";
 import { CheckIcon, ChevronDownIcon } from "@primer/octicons-react";
 import { useCurrentUser } from "@/lib/user";
 import { Octokit } from "octokit";
-import { CheckAPITokens } from "@/tools/api-tokens";
+import { BW_SECRET_KEY, CheckAPITokens } from "@/tools/api-tokens";
 import { toastStyle } from "@/tools/toast-style";
+import { jwtDecrypt } from "jose";
 
 const NewProjectHandler = () => {
   const { data: { user } = {}, mutate } = useCurrentUser();
@@ -51,8 +52,15 @@ const NewProjectHandler = () => {
 
         CheckAPITokens(user, "");
 
+        const { payload } = await jwtDecrypt(
+          user.githubApiToken,
+          BW_SECRET_KEY
+        );
+
+        console.log(payload.data);
+
         const octokit = new Octokit({
-          auth: user.githubApiToken,
+          auth: payload.data,
         });
 
         const ghu = await (await octokit.request("GET /user", {})).data;

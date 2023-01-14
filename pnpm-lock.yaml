@@ -37,6 +37,7 @@ importers:
       express-session: ^1.17.3
       graphql: ^16.6.0
       graphql-request: ^5.1.0
+      jose: ^4.11.2
       modern-normalize: ^1.1.0
       mongodb: ^4.13.0
       multer: 1.4.5-lts.1
@@ -78,6 +79,7 @@ importers:
       express-session: 1.17.3
       graphql: 16.6.0
       graphql-request: 5.1.0_graphql@16.6.0
+      jose: 4.11.2
       modern-normalize: 1.1.0
       mongodb: 4.13.0
       multer: 1.4.5-lts.1
@@ -1814,10 +1816,10 @@ packages:
       }
     dev: true
 
-  /@types/jsonwebtoken/9.0.0:
+  /@types/jsonwebtoken/9.0.1:
     resolution:
       {
-        integrity: sha512-mM4TkDpA9oixqg1Fv2vVpOFyIVLJjm5x4k0V+K/rEsizfjD7Tk7LKk3GTtbB7KCfP0FEHQtsZqFxYA0+sijNVg==,
+        integrity: sha512-c5ltxazpWabia/4UzhIoaDcIza4KViOQhdbjRlfcIGVnsE3c3brkz9Z+F/EeJIECOQP7W7US2hNE930cWWkPiw==,
       }
     dependencies:
       "@types/node": 18.11.18
@@ -2861,6 +2863,13 @@ packages:
     resolution:
       {
         integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==,
+      }
+    dev: false
+
+  /jose/4.11.2:
+    resolution:
+      {
+        integrity: sha512-njj0VL2TsIxCtgzhO+9RRobBvws4oYyCM8TpvoUQwl/MbIM3NFJRR9+e6x0sS5xXaP1t6OCBkaBME98OV9zU5A==,
       }
     dev: false
 
@@ -4097,7 +4106,7 @@ packages:
         integrity: sha512-G33RTLrIBMFmlDV4u4CBF7dh71eWwykck4XgaxaIVeZKOYZRAAxvcGMRFTUclVY6xoUPQvO4Ne5wKGxYm/Yy9w==,
       }
     dependencies:
-      "@types/jsonwebtoken": 9.0.0
+      "@types/jsonwebtoken": 9.0.1
       jsonwebtoken: 9.0.0
     dev: false
 

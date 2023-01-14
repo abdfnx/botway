@@ -25,10 +25,10 @@ const SignIn = () => {
   }, [user, router, isValidating]);
 
   const onSubmit = useCallback(
-    async (event: any) => {
+    async (e: any) => {
       setIsLoading(true);
 
-      event.preventDefault();
+      e.preventDefault();
 
       try {
         const response = await fetcher("/api/auth", {

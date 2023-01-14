@@ -4,8 +4,10 @@ import { auths, validateBody } from "@/api/middlewares";
 import { getMongoDb } from "@/api/mongodb";
 import { ncOpts } from "@/api/nc";
 import { fetcher } from "@/lib/fetch";
+import { BW_SECRET_KEY } from "@/tools/api-tokens";
 import nc from "next-connect";
 import { Octokit } from "octokit";
+import { EncryptJWT, jwtDecrypt } from "jose";
 
 const handler = nc(ncOpts);
 
@@ -41,7 +43,7 @@ handler.post(
 
     const db = await getMongoDb();
 
-    const {
+    let {
       ghToken,
       railwayApiToken,
       userId,
@@ -82,14 +84,21 @@ handler.post(
       pullRequestPreviewsEnabled,
     };
 
+    const { payload: ghApiToken } = await jwtDecrypt(ghToken, BW_SECRET_KEY);
+
     if (hostService == "railway") {
+      const { payload: rwApiToken } = await jwtDecrypt(
+        railwayApiToken,
+        BW_SECRET_KEY
+      );
+
       const createRailwayProject = await fetcher(
         "https://backboard.railway.app/graphql/v2",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${railwayApiToken}`,
+            Authorization: `Bearer ${rwApiToken.data}`,
           },
           body: JSON.stringify({
             operationName: "projectCreate",
@@ -104,7 +113,7 @@ handler.post(
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${railwayApiToken}`,
+            Authorization: `Bearer ${rwApiToken.data}`,
           },
           body: JSON.stringify({
             operationName: "serviceCreate",
@@ -117,14 +126,26 @@ handler.post(
         }
       );
 
-      prj["railwayProjectId"] = createRailwayProject.data.projectCreate.id;
-      prj["railwayServiceId"] = createService.data.serviceCreate.id;
+      const railwayProjectId = await new EncryptJWT({
+        data: createRailwayProject.data.projectCreate.id,
+      })
+        .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+        .encrypt(BW_SECRET_KEY);
+
+      const railwayServiceId = await new EncryptJWT({
+        data: createService.data.serviceCreate.id,
+      })
+        .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+        .encrypt(BW_SECRET_KEY);
+
+      prj["railwayProjectId"] = railwayProjectId;
+      prj["railwayServiceId"] = railwayServiceId;
     }
 
     const project = await insertProject(db, userId, prj);
 
     const octokit = new Octokit({
-      auth: ghToken,
+      auth: ghApiToken.data,
     });
 
     const ghu = await (await octokit.request("GET /user", {})).data;
@@ -139,7 +160,7 @@ handler.post(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: req.body.ghToken,
+        Authorization: ghApiToken.data,
       },
       body: JSON.stringify({
         name,

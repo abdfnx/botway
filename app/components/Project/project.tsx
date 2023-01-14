@@ -1,5 +1,5 @@
 import { fetcher } from "@/lib/fetch";
-import { CheckAPITokens } from "@/tools/api-tokens";
+import { BW_SECRET_KEY, CheckAPITokens } from "@/tools/api-tokens";
 import { toastStyle } from "@/tools/toast-style";
 import { Dialog, Tab, Transition } from "@headlessui/react";
 import {
@@ -18,6 +18,7 @@ import { toast } from "react-hot-toast";
 import useSWR from "swr";
 import { Button } from "../Button";
 import { LoadingDots } from "../LoadingDots";
+import { EncryptJWT, jwtDecrypt } from "jose";
 
 const InfoIcon = ({ value }: any) => {
   let iconURL;
@@ -227,6 +228,22 @@ const Content = ({ nav, project, mutate, user }: any) => {
 
           const formData = new FormData();
 
+          const botToken = await new EncryptJWT({
+            data: botTokenRef.current.value,
+          })
+            .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+            .encrypt(BW_SECRET_KEY);
+
+          if (project.hostService == "render") {
+            const renderServiceId = await new EncryptJWT({
+              data: renderServiceIdRef.current.value,
+            })
+              .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+              .encrypt(BW_SECRET_KEY);
+
+            formData.append("renderServiceId", renderServiceId);
+          }
+
           formData.append("id", project.id);
           formData.append("name", project.name);
           formData.append("userId", user._id);
@@ -236,12 +253,11 @@ const Content = ({ nav, project, mutate, user }: any) => {
           formData.append("lang", project.lang);
           formData.append("packageManager", project.packageManager);
           formData.append("hostService", project.hostService);
-          formData.append("botToken", botTokenRef.current.value);
+          formData.append("botToken", botToken);
           formData.append("ghToken", user.githubApiToken);
           formData.append("railwayApiToken", user.railwayApiToken);
           formData.append("railwayProjectId", project.railwayProjectId);
           formData.append("railwayServiceId", project.railwayServiceId);
-          formData.append("renderServiceId", renderServiceIdRef.current.value);
           formData.append("renderApiToken", user.renderApiToken);
           formData.append("repoBranch", project.repoBranch);
           formData.append(
@@ -249,12 +265,28 @@ const Content = ({ nav, project, mutate, user }: any) => {
             project.pullRequestPreviewsEnabled
           );
 
+          if (project.railwayEnvId) {
+            formData.append("rwEnvId", project.railwayEnvId);
+          }
+
           if (project.platform != "telegram") {
-            formData.append("botAppToken", botAppTokenRef.current.value);
+            const botAppToken = await new EncryptJWT({
+              data: botAppTokenRef.current.value,
+            })
+              .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+              .encrypt(BW_SECRET_KEY);
+
+            formData.append("botAppToken", botAppToken);
           }
 
           if (project.platform == "slack" || project.platform == "twitch") {
-            formData.append("botSecretToken", botSecretTokenRef.current.value);
+            const botSecretToken = await new EncryptJWT({
+              data: botSecretTokenRef.current.value,
+            })
+              .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+              .encrypt(BW_SECRET_KEY);
+
+            formData.append("botSecretToken", botSecretToken);
           }
 
           await fetcher("/api/projects/update", {
@@ -273,10 +305,50 @@ const Content = ({ nav, project, mutate, user }: any) => {
     );
 
     useEffect(() => {
-      botTokenRef.current.value = project.botToken;
-      botAppTokenRef.current.value = project.botAppToken;
-      botSecretTokenRef.current.value = project.botSecretToken;
-      renderServiceIdRef.current.value = project.renderServiceId;
+      const set = async () => {
+        const { payload: botToken } = await jwtDecrypt(
+          project.botToken,
+          BW_SECRET_KEY
+        );
+
+        let botAppToken: any = "",
+          botSecretToken: any = "",
+          renderServiceId: any = "";
+
+        if (project.botAppToken) {
+          const { payload } = await jwtDecrypt(
+            project.botAppToken,
+            BW_SECRET_KEY
+          );
+
+          botAppToken = payload.data;
+        }
+
+        if (project.botSecretToken) {
+          const { payload } = await jwtDecrypt(
+            project.botSecretToken,
+            BW_SECRET_KEY
+          );
+
+          botSecretToken = payload.data;
+        }
+
+        if (project.renderServiceId) {
+          const { payload } = await jwtDecrypt(
+            project.renderServiceId,
+            BW_SECRET_KEY
+          );
+
+          renderServiceId = payload.data;
+        }
+
+        botTokenRef.current.value = botToken.data;
+        botAppTokenRef.current.value = botAppToken;
+        botSecretTokenRef.current.value = botSecretToken;
+        renderServiceIdRef.current.value = renderServiceId;
+      };
+
+      set().catch(console.error);
     }, [project]);
 
     return (
@@ -534,7 +606,7 @@ const Content = ({ nav, project, mutate, user }: any) => {
         }).then((res) => res.json());
 
       const { data, error } = useSWR(
-        `/api/graphql/projects/deployments/${project.hostService}`,
+        `/api/projects/deployments/${project.hostService}`,
         deploymentsFetcher,
         {
           refreshWhenOffline: false,
@@ -805,7 +877,7 @@ const Content = ({ nav, project, mutate, user }: any) => {
             formData.append("botSecretToken", project.botSecretToken);
           }
 
-          await fetcher("/api/graphql/projects/settings", {
+          await fetcher("/api/projects/settings", {
             method: "PATCH",
             body: formData,
           });
