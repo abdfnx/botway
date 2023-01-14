@@ -8,18 +8,11 @@ import (
 	"strings"
 
 	"github.com/abdfnx/botway/constants"
-	"github.com/abdfnx/botway/tools"
 	"github.com/abdfnx/botwaygo"
 	"github.com/abdfnx/tran/dfs"
 	"github.com/spf13/viper"
 	"github.com/tidwall/gjson"
 )
-
-func CopyConfig() {
-	tools.Copy(constants.BotwayConfigFile, "botway.json")
-
-	fmt.Println(constants.HEADING + constants.BOLD.Render("Done 🐋️"))
-}
 
 func DockerInit() {
 	err := dfs.CreateDirectory(filepath.Join(constants.HomeDir, ".botway"))

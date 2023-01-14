@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/abdfnx/botway/constants"
-	"github.com/abdfnx/botway/internal/pipes/initx"
 	"github.com/abdfnx/botwaygo"
 	"github.com/botwayorg/railway-api/entity"
 	CLIErrors "github.com/botwayorg/railway-api/errors"
@@ -17,8 +16,6 @@ import (
 
 func (h *Handler) Delpoy(ctx context.Context, req *entity.CommandRequest) error {
 	CheckBuildKit()
-
-	initx.CopyConfig()
 
 	isVerbose, err := req.Cmd.Flags().GetBool("verbose")
 	if err != nil {

@@ -7,9 +7,7 @@ import (
 	"os/exec"
 
 	"github.com/abdfnx/botway/constants"
-	"github.com/abdfnx/botway/internal/pipes/initx"
 	"github.com/abdfnx/botway/tools"
-	"github.com/abdfnx/botwaygo"
 	"github.com/abdfnx/looker"
 	"github.com/botwayorg/templates"
 	"github.com/spf13/cobra"
@@ -29,10 +27,6 @@ func ComposeCMD() *cobra.Command {
 			}
 
 			tools.CreateEnvFile()
-
-			if botwaygo.GetBotInfo("bot.host_service") == "railway.app" {
-				initx.CopyConfig()
-			}
 
 			dockerCompose := exec.Command("docker-compose", args...)
 

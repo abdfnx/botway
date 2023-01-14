@@ -6,6 +6,8 @@ COPY . .
 
 RUN botway docker-init
 
+RUN botway c-init
+
 FROM botwayorg/concord
 
 # To add more packages

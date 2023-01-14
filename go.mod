@@ -12,8 +12,8 @@ require (
 	github.com/botwayorg/get-latest v0.1.61
 	github.com/botwayorg/gh v0.1.1
 	github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635
-	github.com/botwayorg/railway-api v0.0.7
-	github.com/botwayorg/templates v0.0.4
+	github.com/botwayorg/railway-api v0.0.8
+	github.com/botwayorg/templates v0.0.5
 	github.com/briandowns/spinner v1.20.0
 	github.com/charmbracelet/bubbles v0.14.0
 	github.com/charmbracelet/bubbletea v0.23.1
@@ -46,7 +46,7 @@ require (
 	github.com/cli/shurcooL-graphql v0.0.2 // indirect
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/dlclark/regexp2 v1.7.0 // indirect
+	github.com/dlclark/regexp2 v1.8.0 // indirect
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/gdamore/encoding v1.0.0 // indirect

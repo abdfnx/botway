@@ -90,6 +90,7 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 		app.RenderCMD(),
 		app.PocketBaseCMD(),
 		app.SurrealCMD(),
+		app.GenerateCConfigCmd(),
 		versionCmd,
 	)
 
