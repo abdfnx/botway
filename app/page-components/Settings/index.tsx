@@ -264,20 +264,34 @@ const Tokens = ({ user, mutate }: any) => {
 
   useEffect(() => {
     const set = async () => {
-      const { payload: ghApiToken } = await jwtDecrypt(
-        user.githubApiToken,
-        BW_SECRET_KEY
-      );
+      let ghApiToken: any, railwayApiToken: any, renderApiToken: any;
 
-      const { payload: railwayApiToken } = await jwtDecrypt(
-        user.renderApiToken,
-        BW_SECRET_KEY
-      );
+      if (user.githubApiToken) {
+        const { payload } = await jwtDecrypt(
+          user.githubApiToken,
+          BW_SECRET_KEY
+        );
 
-      const { payload: renderApiToken } = await jwtDecrypt(
-        user.renderApiToken,
-        BW_SECRET_KEY
-      );
+        ghApiToken = payload.data;
+      }
+
+      if (user.railwayApiToken) {
+        const { payload } = await jwtDecrypt(
+          user.railwayApiToken,
+          BW_SECRET_KEY
+        );
+
+        railwayApiToken = payload.data;
+      }
+
+      if (user.renderApiToken) {
+        const { payload } = await jwtDecrypt(
+          user.renderApiToken,
+          BW_SECRET_KEY
+        );
+
+        renderApiToken = payload.data;
+      }
 
       githubApiTokenRef.current.value = ghApiToken;
       railwayApiTokenRef.current.value = railwayApiToken;

@@ -11,5 +11,8 @@
   "git.confirmSync": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "compile-hero.disable-compile-files-on-did-save-code": true
+  "compile-hero.disable-compile-files-on-did-save-code": true,
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  },
 }
