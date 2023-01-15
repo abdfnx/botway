@@ -9,12 +9,53 @@ import { UserAvatar } from "@/components/UserAvatar";
 import clsx from "clsx";
 import { toastStyle } from "@/tools/toast-style";
 import {
+  AlertIcon,
   ChevronDownIcon,
   RocketIcon,
   SignOutIcon,
   SlidersIcon,
   VersionsIcon,
 } from "@primer/octicons-react";
+
+const EmailNotVerifiedBanner = ({ user }: any) => {
+  const verify = useCallback(async () => {
+    try {
+      await fetcher("/api/user/email/verify", { method: "POST" });
+
+      toast.success(
+        "An email has been sent to your mailbox. Follow the instruction to verify your email.",
+        toastStyle
+      );
+    } catch (e: any) {
+      toast.error(e.message, toastStyle);
+    }
+  }, []);
+
+  if (user.emailVerified || process.env.NEXT_PUBLIC_FULL != "true")
+    return <></>;
+
+  return (
+    <div className="antialiased font-sans font-normal text-sm text-gray-800 leading-6 relative flex items-center w-full whitespace-pre-wrap justify-between px-4 rounded-none border border-solid bg-orange-25 border-orange-600 box-border border-l-0 border-r-0">
+      <div className="flex py-2 relative max-w-[1280px] mx-auto px-10 pr-12">
+        <div className="flex mr-4 mt-1">
+          <AlertIcon className="fill-yellow-400" size={16} aria-hidden="true" />
+        </div>
+        <div className="flex-col">
+          <span>
+            Your Email <a className="text-blue-700">{user.email}</a> is not
+            verified -{" "}
+            <a
+              className="text-blue-700 cursor-pointer underline"
+              onClick={verify}
+            >
+              Verify
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Layout = ({ children, title }: any) => {
   const { data, error, mutate } = useCurrentUser();
@@ -52,6 +93,7 @@ const Layout = ({ children, title }: any) => {
       ) : data?.user ? (
         <div className="min-h-screen bg">
           <div className="flex flex-col flex-1">
+            <EmailNotVerifiedBanner user={data.user} />
             <div className="relative flex-shrink-0 flex h-16">
               <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
                 <button type="button" className="text-gray-400 outline-none">

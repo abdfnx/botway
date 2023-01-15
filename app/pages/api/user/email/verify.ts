@@ -27,7 +27,7 @@ handler.post(async (req, res) => {
 
   await sendMail(
     req.user.email,
-    `Botway - Verification Email}`,
+    `Botway - Verification Email`,
     EmailTemplate(req.user.name, token._id, req.headers.host, "verify-email")
   );
 

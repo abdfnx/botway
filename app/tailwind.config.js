@@ -73,6 +73,10 @@ module.exports = {
         600: "#4f46e5",
         700: "#4338ca",
       },
+      orange: {
+        25: "#FFFBF3",
+        600: "#ea580c",
+      },
     },
   },
   variants: {
