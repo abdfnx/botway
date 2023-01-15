@@ -7,7 +7,7 @@ import { toastStyle } from "@/tools/toast-style";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { base64url, EncryptJWT, jwtDecrypt } from "jose";
+import { EncryptJWT, jwtDecrypt } from "jose";
 import { BW_SECRET_KEY } from "@/tools/api-tokens";
 
 const AccountInfo = ({ user, mutate }: any) => {
@@ -369,6 +369,20 @@ const Tokens = ({ user, mutate }: any) => {
   );
 };
 
+const EmailIsNotVerifed = () => {
+  return (
+    <div className="flex-1 border rounded-xl shadow-sm p-5 mb-8 bg-orange-25 border-orange-600">
+      <div className="w-full">
+        <div className="lg:grid lg:gap-2 lg:grid-cols-2 lg:grid-rows-1">
+          <div className="max-w-md">
+            <span className="text-yellow-500">Your Email is Not Verfied</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const Settings = () => {
   const { data, error, mutate } = useCurrentUser();
   const loading = !data && !error;
@@ -390,6 +404,14 @@ export const Settings = () => {
         <LoadingDots className="fixed inset-0 flex items-center justify-center" />
       ) : data?.user ? (
         <Layout title="General Settings">
+          {!data.user.emailVerified &&
+          process.env.NEXT_PUBLIC_FULL == "true" ? (
+            <span className="flex items-center">
+              <EmailIsNotVerifed />
+            </span>
+          ) : (
+            <></>
+          )}
           <span className="flex items-center">
             <AccountInfo user={data.user} mutate={mutate} />
           </span>

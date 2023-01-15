@@ -59,8 +59,8 @@ handler.patch(
       lang,
       packageManager,
       hostService,
-      botToken,
       platform,
+      botToken,
       botAppToken,
       botSecretToken,
       railwayApiToken,
@@ -244,13 +244,14 @@ handler.patch(
       );
     }
 
+    payload["botToken"] = botToken;
+
     if (platform != "telegram") {
-      payload["botToken"] = bt.data;
-      payload["botAppToken"] = bat.data;
-    } else if (platform == "slack" || platform == "twitch") {
-      payload["botToken"] = bt.data;
-      payload["botAppToken"] = bat.data;
-      payload["botSecretToken"] = bst.data;
+      payload["botAppToken"] = botAppToken;
+    }
+
+    if (platform == "slack" || platform == "twitch") {
+      payload["botSecretToken"] = botSecretToken;
     }
 
     const prj = await updateProject(db, userId, id, payload);

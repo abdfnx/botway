@@ -234,6 +234,26 @@ const Content = ({ nav, project, mutate, user }: any) => {
             .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
             .encrypt(BW_SECRET_KEY);
 
+          if (project.platform != "telegram") {
+            const botAppToken = await new EncryptJWT({
+              data: botAppTokenRef.current.value,
+            })
+              .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+              .encrypt(BW_SECRET_KEY);
+
+            formData.append("botAppToken", botAppToken);
+          }
+
+          if (project.platform == "slack" || project.platform == "twitch") {
+            const botSecretToken = await new EncryptJWT({
+              data: botSecretTokenRef.current.value,
+            })
+              .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+              .encrypt(BW_SECRET_KEY);
+
+            formData.append("botSecretToken", botSecretToken);
+          }
+
           if (project.hostService == "render") {
             const renderServiceId = await new EncryptJWT({
               data: renderServiceIdRef.current.value,
@@ -264,30 +284,6 @@ const Content = ({ nav, project, mutate, user }: any) => {
             "pullRequestPreviewsEnabled",
             project.pullRequestPreviewsEnabled
           );
-
-          if (project.railwayEnvId) {
-            formData.append("rwEnvId", project.railwayEnvId);
-          }
-
-          if (project.platform != "telegram") {
-            const botAppToken = await new EncryptJWT({
-              data: botAppTokenRef.current.value,
-            })
-              .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
-              .encrypt(BW_SECRET_KEY);
-
-            formData.append("botAppToken", botAppToken);
-          }
-
-          if (project.platform == "slack" || project.platform == "twitch") {
-            const botSecretToken = await new EncryptJWT({
-              data: botSecretTokenRef.current.value,
-            })
-              .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
-              .encrypt(BW_SECRET_KEY);
-
-            formData.append("botSecretToken", botSecretToken);
-          }
 
           await fetcher("/api/projects/update", {
             method: "PATCH",
@@ -831,6 +827,18 @@ const Content = ({ nav, project, mutate, user }: any) => {
     const rootDirectoryRef: any = useRef();
     const repoBranchRef: any = useRef();
     const pullRequestPreviewsEnabledRef: any = useRef();
+    const projectNameRef: any = useRef();
+    const deleteMyBotRef: any = useRef();
+
+    let [isOpen, setIsOpen] = useState(false);
+
+    const closeModal = () => {
+      setIsOpen(false);
+    };
+
+    const openModal = () => {
+      setIsOpen(true);
+    };
 
     const SettingsOnSubmit = useCallback(
       async (e: any) => {
@@ -898,34 +906,39 @@ const Content = ({ nav, project, mutate, user }: any) => {
       async (e: any) => {
         e.preventDefault();
 
-        try {
-          setIsLoadingDelete(true);
+        if (
+          projectNameRef.current.value == project.name &&
+          deleteMyBotRef.current.value == "delete my bot"
+        ) {
+          try {
+            setIsLoadingDelete(true);
 
-          CheckAPITokens(user, project.hostService);
+            CheckAPITokens(user, project.hostService);
 
-          const formData = new FormData();
+            const formData = new FormData();
 
-          formData.append("id", project.id);
-          formData.append("userId", user._id);
-          formData.append("name", project.name);
-          formData.append("hostService", project.hostService);
-          formData.append("railwayApiToken", user.railwayApiToken);
-          formData.append("railwayProjectId", project.railwayProjectId);
-          formData.append("renderServiceId", project.renderServiceId);
-          formData.append("renderApiToken", user.renderApiToken);
+            formData.append("id", project.id);
+            formData.append("userId", user._id);
+            formData.append("name", project.name);
+            formData.append("hostService", project.hostService);
+            formData.append("railwayApiToken", user.railwayApiToken);
+            formData.append("railwayProjectId", project.railwayProjectId);
+            formData.append("renderServiceId", project.renderServiceId);
+            formData.append("renderApiToken", user.renderApiToken);
 
-          await fetcher("/api/projects/delete", {
-            method: "PATCH",
-            body: formData,
-          });
+            await fetcher("/api/projects/delete", {
+              method: "PATCH",
+              body: formData,
+            });
 
-          toast.success("Your project has been deleted", toastStyle);
+            toast.success("Your project has been deleted", toastStyle);
 
-          mutate();
-        } catch (e: any) {
-          toast.error(e.message, toastStyle);
-        } finally {
-          setIsLoadingDelete(false);
+            mutate();
+          } catch (e: any) {
+            toast.error(e.message, toastStyle);
+          } finally {
+            setIsLoadingDelete(false);
+          }
         }
       },
       [mutate]
@@ -943,6 +956,9 @@ const Content = ({ nav, project, mutate, user }: any) => {
         pullRequestPreviewsEnabledRef.current.value =
           project.pullRequestPreviewsEnabled;
       }
+
+      // projectNameRef.current.value = "";
+      // deleteMyBotRef.current.value = "";
     }, [project]);
 
     const SettingsForm = () => {
@@ -1134,8 +1150,9 @@ const Content = ({ nav, project, mutate, user }: any) => {
                   </h2>
                   <br />
                   <h3 className="text-gray-500 mt-1 !leading-tight">
-                    Delete {project.name} and delete it on railway. This action
-                    is not reversible, so continue with extreme caution.
+                    Delete {project.name} and delete it on {project.hostService}
+                    . This action is not reversible, so continue with extreme
+                    caution.
                   </h3>
                 </hgroup>
                 <div></div>
@@ -1143,12 +1160,124 @@ const Content = ({ nav, project, mutate, user }: any) => {
 
               <Button
                 type="delete"
-                loading={isLoadingDelete}
-                onClick={DeleteProject}
+                // loading={isLoadingDelete}
+                // onClick={DeleteProject}
+                onClick={openModal}
                 className="button p-2"
               >
                 Delete Project
               </Button>
+
+              <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <div className="fixed inset-0 bg-black bg-opacity-25" />
+                  </Transition.Child>
+
+                  <div className="fixed inset-0 overflow-y-auto">
+                    <div className="flex min-h-full items-center justify-center p-4 text-center">
+                      <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0 scale-95"
+                        enterTo="opacity-100 scale-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100 scale-100"
+                        leaveTo="opacity-0 scale-95"
+                      >
+                        <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg p-6 text-left align-middle shadow-xl transition-all border border-gray-800">
+                          <Dialog.Title
+                            as="h3"
+                            className="text-lg font-medium leading-6 text-white"
+                          >
+                            Delete Bot Project
+                          </Dialog.Title>
+
+                          <div className="mt-2 text-gray-400">
+                            Delete{" "}
+                            <a className="text-gray-500">{project.name}</a> and
+                            delete it on{" "}
+                            <a className="text-gray-500">
+                              {project.hostService}
+                            </a>
+                            . This action is not reversible, so continue with
+                            extreme caution.
+                          </div>
+
+                          <form onSubmit={DeleteProject}>
+                            {!isLoadingDelete ? (
+                              <>
+                                <div className="mt-4">
+                                  <label
+                                    htmlFor="project-name"
+                                    className="block text-gray-500 text-sm font-semibold"
+                                  >
+                                    Enter the project name{" "}
+                                    <a className="text-white font-bold">
+                                      {project.name}
+                                    </a>{" "}
+                                    to continue:
+                                  </label>
+                                  <div className="pt-2">
+                                    <input
+                                      className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                                      ref={projectNameRef}
+                                      type="text"
+                                      required
+                                    />
+                                  </div>
+                                </div>
+
+                                <div className="mt-4">
+                                  <label
+                                    htmlFor="project-name"
+                                    className="block text-gray-500 text-sm font-semibold"
+                                  >
+                                    To verify, type{" "}
+                                    <a className="text-white font-bold">
+                                      delete my bot
+                                    </a>{" "}
+                                    below:
+                                  </label>
+                                  <div className="pt-2">
+                                    <input
+                                      className="trsn bg border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2"
+                                      ref={deleteMyBotRef}
+                                      type="text"
+                                      required
+                                    />
+                                  </div>
+                                </div>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+
+                            <div className="mt-4">
+                              <Button
+                                type="delete"
+                                loading={isLoadingDelete}
+                                onClick={DeleteProject}
+                                className="button p-2"
+                              >
+                                Continue
+                              </Button>
+                            </div>
+                          </form>
+                        </Dialog.Panel>
+                      </Transition.Child>
+                    </div>
+                  </div>
+                </Dialog>
+              </Transition>
             </div>
           </div>
         </form>

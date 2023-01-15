@@ -57,8 +57,6 @@ const NewProjectHandler = () => {
           BW_SECRET_KEY
         );
 
-        console.log(payload.data);
-
         const octokit = new Octokit({
           auth: payload.data,
         });
