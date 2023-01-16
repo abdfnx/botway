@@ -4,7 +4,7 @@ import { auths } from "@/api/middlewares";
 import { getMongoDb } from "@/api/mongodb";
 import { ncOpts } from "@/api/nc";
 import nc from "next-connect";
-import { EmailTemplate } from "./email-tmpl";
+import { EmailTemplate } from "@/tools/email-template";
 
 const handler = nc(ncOpts);
 

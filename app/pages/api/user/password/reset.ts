@@ -11,7 +11,7 @@ import { getMongoDb } from "@/api/mongodb";
 import { ncOpts } from "@/api/nc";
 import nc from "next-connect";
 import normalizeEmail from "validator/lib/normalizeEmail";
-import { EmailTemplate } from "../email/email-tmpl";
+import { EmailTemplate } from "@/tools/email-template";
 
 const handler = nc(ncOpts);
 
