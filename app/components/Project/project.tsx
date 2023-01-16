@@ -1160,11 +1160,7 @@ const Content = ({ nav, project, mutate, user }: any) => {
                 <div></div>
               </header>
 
-              <Button
-                type="delete"
-                onClick={openModal}
-                className="button p-2"
-              >
+              <Button type="delete" onClick={openModal} className="button p-2">
                 Delete Project
               </Button>
 

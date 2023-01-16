@@ -1,6 +1,7 @@
 import { Button } from "@/components/Button";
 import LogoSection from "@/components/Logo";
 import { fetcher } from "@/lib/fetch";
+import { toastStyle } from "@/tools/toast-style";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import toast from "react-hot-toast";
@@ -28,7 +29,7 @@ const NewPassword = ({ token }: any) => {
 
         setStatus("success");
       } catch (e: any) {
-        toast.error(e.message);
+        toast.error(e.message, toastStyle);
 
         setStatus(undefined);
       }

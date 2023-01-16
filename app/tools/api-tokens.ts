@@ -20,7 +20,17 @@ export const CheckAPITokens = (user: any, hostService: any) => {
     } else if (hostService == "render" && !user.renderApiToken) {
       message("Render API Token");
     }
-  } else if (!user.githubApiToken) {
+  } else {
+    if (!user.railwayApiToken && !user.renderApiToken) {
+      message("Railway API Token Or Render API Token");
+    }
+  }
+
+  if (!user.githubApiToken) {
     message("GitHub Token");
+  }
+
+  if (!user.emailVerified && process.env.NEXT_PUBLIC_FULL == "true") {
+    toast.error("You must verify your email", toastStyle);
   }
 };

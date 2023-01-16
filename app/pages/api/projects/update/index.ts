@@ -42,9 +42,11 @@ handler.patch(
   }),
   async (req, res) => {
     if (!req.user) {
-      req.status(401).end();
+      return req.status(401).end();
+    }
 
-      return;
+    if (!req.user.emailVerified && process.env.NEXT_PUBLIC_FULL == "true") {
+      return res.status(401).json({ message: "You must verify your email" });
     }
 
     const db = await getMongoDb();

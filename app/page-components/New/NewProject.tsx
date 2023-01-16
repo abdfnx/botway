@@ -100,7 +100,7 @@ const NewProjectHandler = () => {
         // refresh projects lists
         mutate();
       } catch (e: any) {
-        toast.error(e.message);
+        toast.error(e.message, toastStyle);
       } finally {
         setIsLoading(false);
       }

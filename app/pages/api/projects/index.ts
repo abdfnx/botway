@@ -41,6 +41,10 @@ handler.post(
       return res.status(401).end();
     }
 
+    if (!req.user.emailVerified && process.env.NEXT_PUBLIC_FULL == "true") {
+      return res.status(401).json({ message: "You must verify your email" });
+    }
+
     const db = await getMongoDb();
 
     let {
