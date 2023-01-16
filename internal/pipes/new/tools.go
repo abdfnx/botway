@@ -118,7 +118,7 @@ func BotLang(m model) string {
 
 func BotStartCmd(m model) string {
 	nodeCmd := BotPM(m) + " start"
-	denoCmd := "deno run --allow-all main.ts"
+	denoCmd := "deno task run"
 
 	if m.LangChoice == 0 && m.PMChoice == 0 {
 		if runtime.GOOS == "windows" {

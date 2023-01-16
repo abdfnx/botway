@@ -934,6 +934,8 @@ const Content = ({ nav, project, mutate, user }: any) => {
             toast.success("Your project has been deleted", toastStyle);
 
             mutate();
+
+            closeModal();
           } catch (e: any) {
             toast.error(e.message, toastStyle);
           } finally {
@@ -1160,8 +1162,6 @@ const Content = ({ nav, project, mutate, user }: any) => {
 
               <Button
                 type="delete"
-                // loading={isLoadingDelete}
-                // onClick={DeleteProject}
                 onClick={openModal}
                 className="button p-2"
               >
