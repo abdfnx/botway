@@ -57,6 +57,7 @@ jobs:
           pnpm i
           go get -u
           go run ./scripts/dot/main.go >> .env
+          export NEXT_PUBLIC_BW_SECRET_KEY=$(cat .env)
           pnpm build
           mkdir bwui
           cd bwui
