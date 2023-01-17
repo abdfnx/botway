@@ -15,4 +15,7 @@
   "[go]": {
     "editor.defaultFormatter": "golang.go"
   },
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "file:///workspace/botway/.github/workflows/deploy.yml"
+  }
 }

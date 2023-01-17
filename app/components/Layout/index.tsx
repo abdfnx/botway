@@ -66,7 +66,7 @@ const CheckUser = ({ user }: any) => {
             : !user.githubApiToken &&
               !user.railwayApiToken &&
               !user.renderApiToken
-            ? "You need to set API Tokens"
+            ? "You need to setup your API tokens"
             : "Everything is okay"}
         </a>
       </div>

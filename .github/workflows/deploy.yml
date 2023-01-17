@@ -50,6 +50,19 @@ jobs:
           cp $DARWIN_TARGET_PATH/botway-installer ./installer-macos && \
           cp ./installer-macos ../assets/static/installers
 
+      - name: Build Botway UI App
+        run: |
+          sudo apt-get install zip unzip -y --fix-missing
+          npm i -g pnpm@latest
+          pnpm i
+          pnpm build
+          mkdir bwui
+          cd bwui
+          cp -r ../app/.next ../app/package.json
+          zip -r bwui-latest.zip .next package.json
+          mkdir ../assets/static/app
+          cp bwui-latest.zip ../assets/static/app
+
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
