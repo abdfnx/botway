@@ -59,9 +59,7 @@ jobs:
           go run ./scripts/dot/main.go >> ./app/.env
           export NEXT_PUBLIC_BW_SECRET_KEY=$(cat ./app/.env)
           pnpm build
-          mkdir bwui
-          cd bwui
-          cp -r ../app/.next ../app/package.json
+          cd app
           zip -r bwui-latest.zip .next package.json
           mkdir ../assets/static/app
           cp bwui-latest.zip ../assets/static/app
