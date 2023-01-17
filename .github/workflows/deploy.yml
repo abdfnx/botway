@@ -56,8 +56,8 @@ jobs:
           npm i -g pnpm@latest
           pnpm i
           go get -u
-          go run ./scripts/dot/main.go >> .env
-          export NEXT_PUBLIC_BW_SECRET_KEY=$(cat .env)
+          go run ./scripts/dot/main.go >> ./app/.env
+          export NEXT_PUBLIC_BW_SECRET_KEY=$(cat ./app/.env)
           pnpm build
           mkdir bwui
           cd bwui
