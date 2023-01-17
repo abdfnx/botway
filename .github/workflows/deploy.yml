@@ -55,7 +55,8 @@ jobs:
           sudo apt-get install zip unzip -y --fix-missing
           npm i -g pnpm@latest
           pnpm i
-          cp ./scripts/.deploy.env .env
+          go get -u
+          go run ./scripts/dot/main.go
           pnpm build
           mkdir bwui
           cd bwui
