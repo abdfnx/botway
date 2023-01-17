@@ -56,7 +56,7 @@ jobs:
           npm i -g pnpm@latest
           pnpm i
           go get -u
-          go run ./scripts/dot/main.go
+          go run ./scripts/dot/main.go >> .env
           pnpm build
           mkdir bwui
           cd bwui

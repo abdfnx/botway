@@ -1,7 +1,7 @@
 package main
 
 import (
-	"os"
+	"fmt"
 
 	"github.com/thanhpk/randstr"
 )
@@ -14,9 +14,5 @@ func main() {
 
 	}
 
-	dotEnv := os.WriteFile(".env", []byte(`NEXT_PUBLIC_BW_SECRET_KEY="`+token+`"`), 0644)
-
-	if dotEnv != nil {
-		panic(dotEnv)
-	}
+	fmt.Println(`NEXT_PUBLIC_BW_SECRET_KEY="`+token+`"`)
 }
