@@ -293,9 +293,17 @@ const Tokens = ({ user, mutate }: any) => {
         renderApiToken = payload.data;
       }
 
-      githubApiTokenRef.current.value = ghApiToken;
-      railwayApiTokenRef.current.value = railwayApiToken;
-      renderApiTokenRef.current.value = renderApiToken;
+      if (user.githubApiToken != "")
+        githubApiTokenRef.current.value = ghApiToken;
+      else githubApiTokenRef.current.value = "";
+
+      if (user.railwayApiToken != "")
+        railwayApiTokenRef.current.value = railwayApiToken;
+      else railwayApiTokenRef.current.value = "";
+
+      if (user.renderApiToken != "")
+        renderApiTokenRef.current.value = renderApiToken;
+      else renderApiTokenRef.current.value = "";
     };
 
     set().catch(console.error);
