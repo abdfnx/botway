@@ -10,7 +10,7 @@ import (
 
 var (
 	// Styles
-	PRIMARY_COLOR_HEX = "#6366F1"
+	PRIMARY_COLOR_HEX = "#1d4ed8"
 	PRIMARY_COLOR     = lipgloss.Color(PRIMARY_COLOR_HEX)
 	CYAN_COLOR        = lipgloss.Color("#00FFFF")
 	GREEN_COLOR       = "#04B575"

@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://botway.web.app" target="_blank">
+  <a href="https://botway.deno.dev" target="_blank">
     <img src="https://cdn-botway.deno.dev/botway.svg" alt="Botway" width="300">
   </a>
 </p>

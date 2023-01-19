@@ -17,6 +17,11 @@
     "pkief.material-icon-theme",
     "rangav.vscode-thunder-client",
     "rebornix.ruby",
-    "vscjava.vscode-gradle"
+    "vscjava.vscode-gradle",
+    "golang.go",
+    "graphql.vscode-graphql",
+    "prisma.prisma",
+    "redhat.vscode-xml",
+    "bbenoist.nix"
   ]
 }

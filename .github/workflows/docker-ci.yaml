@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  BW_SECRET_KEY: ${{ secrets.BW_SECRET_KEY }}
+
 jobs:
   build-docker:
     runs-on: ubuntu-latest

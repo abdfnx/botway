@@ -27,17 +27,17 @@ builds:
   - <<: *build_defaults
     id: linux
     goos: [linux]
-    goarch: [amd64, arm64, arm, 386]
+    goarch: [amd64, arm64, arm, "386"]
 
   - <<: *build_defaults
     id: windows
     goos: [windows]
-    goarch: [amd64, arm64, arm, 386]
+    goarch: [amd64, arm64, arm, "386"]
 
   - <<: *build_defaults
     id: freebsd
     goos: [freebsd]
-    goarch: [amd64, arm64, arm, 386]
+    goarch: [amd64, arm64, arm, "386"]
 
 archives:
   - id: unix
@@ -86,7 +86,7 @@ scoop:
   bucket:
     owner: abdfnx
     name: botway
-  homepage: "https://botway.web.app"
+  homepage: "https://botway.deno.dev"
   description: "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack, or even Twitch"
   license: MIT
 
