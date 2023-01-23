@@ -8,6 +8,8 @@ import { BW_SECRET_KEY } from "@/tools/api-tokens";
 import nc from "next-connect";
 import { Octokit } from "octokit";
 import { EncryptJWT, jwtDecrypt } from "jose";
+import { exec } from "child_process";
+import { stringify } from "ajv";
 
 const handler = nc(ncOpts);
 
@@ -146,7 +148,7 @@ handler.post(
       prj["railwayServiceId"] = railwayServiceId;
     }
 
-    const project = await insertProject(db, userId, prj);
+    const project: any = await insertProject(db, userId, prj);
 
     const octokit = new Octokit({
       auth: ghApiToken.data,
@@ -160,23 +162,19 @@ handler.post(
       private: visibility != "public",
     });
 
-    await fetcher("https://create-botway-bot.up.railway.app/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: ghApiToken.data,
-      },
-      body: JSON.stringify({
-        name,
-        visibility,
-        platform,
-        lang,
-        packageManager,
-        hostService,
-        username: ghu.login,
-        email: ghu.email,
-      }),
-    });
+    exec(
+      `create-botway-bot ${stringify(name)} ${stringify(platform)} ${stringify(
+        lang
+      )} ${stringify(packageManager)} ${stringify(hostService)} ${stringify(
+        ghApiToken.data
+      )} ${stringify(ghu.login)} ${stringify(ghu.email)}`
+    )
+      .on("error", (e) => {
+        return res.json({ e });
+      })
+      .on("message", (m) => {
+        console.log(m);
+      });
 
     return res.json({ project });
   }

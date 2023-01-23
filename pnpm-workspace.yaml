@@ -1,3 +1,4 @@
 packages:
   - "app"
   - "packages/botway.js"
+  - "create-botway-bot"
