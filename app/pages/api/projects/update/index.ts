@@ -191,14 +191,6 @@ handler.patch(
           query: `mutation setTokens { variableCollectionUpsert(input: { projectId: "${rwProjectId.data}", environmentId: "${envId}", serviceId: "${rwServiceId.data}", variables: { ${vars} } }) serviceUpdate(id: "${rwServiceId.data}", input: { ${repoBody} }) { source { repo } } }`,
         }),
       });
-
-      const railwayEnvId = await new EncryptJWT({
-        data: envId,
-      })
-        .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
-        .encrypt(BW_SECRET_KEY);
-
-      payload["railwayEnvId"] = railwayEnvId;
     } else if (hostService == "render") {
       const { payload: rndApiToken } = await jwtDecrypt(
         renderApiToken,
