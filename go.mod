@@ -47,7 +47,7 @@ require (
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dlclark/regexp2 v1.8.0 // indirect
-	github.com/fatih/color v1.14.0 // indirect
+	github.com/fatih/color v1.14.1 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/gdamore/encoding v1.0.0 // indirect
 	github.com/gdamore/tcell/v2 v2.5.4 // indirect
@@ -69,7 +69,7 @@ require (
 	github.com/manifoldco/promptui v0.9.0 // indirect
 	github.com/mattn/go-localereader v0.0.1 // indirect
 	github.com/mattn/go-runewidth v0.0.14 // indirect
-	github.com/microcosm-cc/bluemonday v1.0.21 // indirect
+	github.com/microcosm-cc/bluemonday v1.0.22 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/muesli/ansi v0.0.0-20221106050444-61f0cd9a192a // indirect
 	github.com/muesli/cancelreader v0.2.2 // indirect
@@ -78,7 +78,7 @@ require (
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/rivo/tview v0.0.0-20230104153304-892d1a2eb0da // indirect
+	github.com/rivo/tview v0.0.0-20230130130022-4a1b7a76c01c // indirect
 	github.com/rivo/uniseg v0.4.3 // indirect
 	github.com/sahilm/fuzzy v0.1.0 // indirect
 	github.com/scmn-dev/browser v0.1.3 // indirect
