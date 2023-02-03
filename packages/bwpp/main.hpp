@@ -6,6 +6,7 @@ using namespace std;
 using json = nlohmann::json;
 
 json config;
+
 string homeDir = getenv("HOME");
 string slash = "/";
 

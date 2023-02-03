@@ -57,13 +57,24 @@ handler.patch(
       }
     }
 
-    const user = await updateUserById(db, req.user._id, {
+    let payload = {
       ...(username && { username }),
       ...(name && { name }),
-      githubApiToken,
-      railwayApiToken,
-      renderApiToken,
-    });
+    };
+
+    if (githubApiToken) {
+      payload.githubApiToken = githubApiToken;
+    }
+
+    if (railwayApiToken) {
+      payload.railwayApiToken = railwayApiToken;
+    }
+
+    if (renderApiToken) {
+      payload.renderApiToken = renderApiToken;
+    }
+
+    const user = await updateUserById(db, req.user._id, payload);
 
     res.json({ user });
   }

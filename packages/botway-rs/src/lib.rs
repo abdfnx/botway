@@ -13,11 +13,13 @@ use snailquote::unescape;
 
 fn get_home_dir() -> String {
     let home_dir = dirs::home_dir().unwrap();
+
     home_dir.to_str().unwrap().to_string()
 }
 
 fn return_path() -> String {
     let mut home_dir = get_home_dir();
+
     home_dir.push_str("/.botway/");
     home_dir.push_str("/botway.json");
 
@@ -27,6 +29,7 @@ fn return_path() -> String {
     let mut data = String::new();
 
     file.read_to_string(&mut data).unwrap();
+
     format!("{}", data)
 }
 

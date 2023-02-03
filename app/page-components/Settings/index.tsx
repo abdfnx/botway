@@ -27,6 +27,9 @@ const AccountInfo = ({ user, mutate }: any) => {
 
         formData.append("username", usernameRef.current.value);
         formData.append("name", nameRef.current.value);
+        // formData.append("githubApiToken", user.githubApiToken);
+        // formData.append("railwayApiToken", user.railwayApiToken);
+        // formData.append("renderApiToken", user.renderApiToken);
 
         const response = await fetcher("/api/user", {
           method: "PATCH",
@@ -52,7 +55,7 @@ const AccountInfo = ({ user, mutate }: any) => {
 
   return (
     <>
-      <div className="flex-1 border-b border-gray-800 shadow-sm p-5 mb-8">
+      <div className="flex-1 border-b border-gray-800 pb-5 shadow-sm mb-8">
         <div className="mb-4">
           <h1 className="text-xl text-gray-400 font-semibold">
             Account Information
@@ -128,6 +131,7 @@ const AccountInfo = ({ user, mutate }: any) => {
 const ChangePassword = () => {
   const currentPasswordRef: any = useRef();
   const newPasswordRef: any = useRef();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(async (e: any) => {
@@ -157,7 +161,7 @@ const ChangePassword = () => {
   }, []);
 
   return (
-    <div className="flex-1 border-b border-gray-800 shadow-sm p-5 mb-8">
+    <div className="flex-1 border-b border-gray-800 pb-5 shadow-sm mb-8">
       <div className="mb-4">
         <h1 className="text-xl text-gray-400 font-semibold">Change Password</h1>
       </div>
@@ -214,6 +218,7 @@ const Tokens = ({ user, mutate }: any) => {
   const githubApiTokenRef: any = useRef();
   const railwayApiTokenRef: any = useRef();
   const renderApiTokenRef: any = useRef();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(
@@ -311,7 +316,7 @@ const Tokens = ({ user, mutate }: any) => {
 
   return (
     <>
-      <div className="flex-1 shadow-sm p-5 mb-8">
+      <div className="flex-1 shadow-sm pb-5 mb-8">
         <div className="mb-4">
           <h1 className="text-xl text-gray-400 font-semibold">API Tokens</h1>
         </div>

@@ -188,7 +188,7 @@ handler.patch(
         },
         body: JSON.stringify({
           operationName: "setTokens",
-          query: `mutation setTokens { variableCollectionUpsert(input: { projectId: "${rwProjectId.data}", environmentId: "${envId}", serviceId: "${rwServiceId.data}", variables: { ${vars} } }) serviceUpdate(id: "${rwServiceId.data}", input: { ${repoBody} }) { source { repo } } }`,
+          query: `mutation setTokens { variableCollectionUpsert(input: { projectId: "${rwProjectId.data}", environmentId: "${envId}", serviceId: "${rwServiceId.data}", variables: { ${vars} } }) serviceInstanceUpdate(serviceId: "${rwServiceId.data}", input: { ${repoBody} }) }`,
         }),
       });
     } else if (hostService == "render") {

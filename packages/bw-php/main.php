@@ -13,10 +13,12 @@ function pathJoin($path1, $path2) {
         switch ($key) {
             case 0:
                 $val = rtrim($val, "/ ");
+
                 break;
 
             case $last_key:
                 $val = ltrim($val, "/ ");
+
                 break;
 
             default:
@@ -38,13 +40,13 @@ function pathJoin($path1, $path2) {
 }
 
 function homeDir() {
-    if(isset($_SERVER["HOME"])) {
+    if (isset($_SERVER["HOME"])) {
         $result = $_SERVER["HOME"];
     } else {
         $result = getenv("HOME");
     }
 
-    if(empty($result) && function_exists("exec")) {
+    if (empty($result) && function_exists("exec")) {
         if(strncasecmp(PHP_OS, "WIN", 3) === 0) {
             $result = exec("echo %userprofile%");
         } else {

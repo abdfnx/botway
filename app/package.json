@@ -11,7 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.8",
+    "@headlessui/react": "^1.7.9",
     "@octokit/core": "^4.2.0",
     "@primer/octicons-react": "^17.11.1",
     "@sendgrid/mail": "^7.7.0",

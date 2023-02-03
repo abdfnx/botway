@@ -62,6 +62,7 @@ char *path_join(const char *dir, const char *file)
         }
 
         strcat(buf, ++filecopy);
+
         free(--filecopy);
     }
     else

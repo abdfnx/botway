@@ -46,6 +46,7 @@ let botwayConfigPath = NSString(string: NSHomeDirectory())
 ))
 
 let config = try? Data(contentsOf: URL(fileURLWithPath: botwayConfigPath))
+
 let botwayConfig = try? JSONDecoder().decode(BW.self, from: config!)
 
 public func GetToken() -> String {
