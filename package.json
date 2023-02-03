@@ -15,7 +15,7 @@
     "start": "pnpm build && turbo run start --parallel",
     "format": "prettier *.json *.yaml *.md ./app ./create-botway-bot ./packages/botway.js -w"
   },
-  "packageManager": "pnpm@7.17.1",
+  "packageManager": "pnpm@7.26.3",
   "devDependencies": {
     "prettier": "^2.8.3",
     "turbo": "^1.7.2"
