@@ -21,7 +21,9 @@ COPY --from=bw /root/.botway /root/.botway
 COPY . .
 
 RUN gem update --system
+
 RUN gem install bundler
+
 RUN bundle install
 
 ENTRYPOINT ["bundle", "exec", "ruby", "./src/main.rb"]

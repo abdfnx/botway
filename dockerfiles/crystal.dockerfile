@@ -21,6 +21,7 @@ COPY --from=bw /root/.botway /root/.botway
 COPY . .
 
 RUN shards install
+
 RUN shards build --static --no-debug --release --production -v
 
 ENTRYPOINT [ "./bin/{{.BotName}}" ]

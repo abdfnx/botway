@@ -17,6 +17,7 @@ COPY . .
 WORKDIR /usr/src/{{.BotName}}/build
 
 RUN cmake ..
+
 RUN make -j$(nproc)
 
 ENTRYPOINT [ "/usr/src/{{.BotName}}/build/{{.BotName}}" ]

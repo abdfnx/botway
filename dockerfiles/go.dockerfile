@@ -23,6 +23,7 @@ WORKDIR /app/
 COPY . .
 
 RUN go mod tidy
+
 RUN go build -o bot ./src/main.go
 
 ENTRYPOINT ["./bot"]

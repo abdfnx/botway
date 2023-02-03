@@ -23,6 +23,7 @@ COPY . .
 RUN npm i -g pnpm
 
 RUN pnpm fetch --prod
+
 RUN pnpm install
 
 ENTRYPOINT ["pnpm", "start"]
