@@ -24,7 +24,7 @@ require (
 	github.com/mattn/go-isatty v0.0.17
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/muesli/reflow v0.3.0
-	github.com/muesli/termenv v0.13.0
+	github.com/muesli/termenv v0.14.0
 	github.com/spf13/cobra v1.6.1
 	github.com/spf13/viper v1.15.0
 	github.com/tidwall/gjson v1.14.4
