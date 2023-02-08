@@ -30,7 +30,7 @@ require (
 	github.com/tidwall/gjson v1.14.4
 	github.com/tidwall/sjson v1.2.5
 	golang.org/x/sys v0.5.0
-	golang.org/x/term v0.4.0
+	golang.org/x/term v0.5.0
 )
 
 require (
