@@ -14,7 +14,7 @@ require (
 	github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635
 	github.com/botwayorg/railway-api v0.0.8
 	github.com/botwayorg/templates v0.0.6
-	github.com/briandowns/spinner v1.21.0
+	github.com/briandowns/spinner v1.22.0
 	github.com/charmbracelet/bubbles v0.15.0
 	github.com/charmbracelet/bubbletea v0.23.2
 	github.com/charmbracelet/lipgloss v0.6.0
