@@ -72,8 +72,8 @@ github.com/botwayorg/railway-api v0.0.8 h1:bsUxTODObU3dz8f2p9V1lZ6cHLw4GQjN9r/LX
 github.com/botwayorg/railway-api v0.0.8/go.mod h1:v8sz1ApQLiXvESEw/X/WEs3hwIX/tZVUfNIL+j1eYYM=
 github.com/botwayorg/templates v0.0.6 h1:r2q938UDL+nrYbYUUM4Ur8s6KsjF77aDckC9v4clLSs=
 github.com/botwayorg/templates v0.0.6/go.mod h1:gx49kUjCrEgNQlO9D9wksyR+8+vXjcbvZuDLbAkvmOY=
-github.com/briandowns/spinner v1.22.0 h1:fJ/7tyeM2q9ebM57kGfjnUSrgPJBsULk+/s61UpMGrw=
-github.com/briandowns/spinner v1.22.0/go.mod h1:rPG4gmXeN3wQV/TsAY4w8lPdIM6RX3yqeBQJSrbXjuE=
+github.com/briandowns/spinner v1.23.0 h1:alDF2guRWqa/FOZZYWjlMIx2L6H0wyewPxo/CH4Pt2A=
+github.com/briandowns/spinner v1.23.0/go.mod h1:rPG4gmXeN3wQV/TsAY4w8lPdIM6RX3yqeBQJSrbXjuE=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/charmbracelet/bubbles v0.15.0 h1:c5vZ3woHV5W2b8YZI1q7v4ZNQaPetfHuoHzx+56Z6TI=
 github.com/charmbracelet/bubbles v0.15.0/go.mod h1:Y7gSFbBzlMpUDR/XM9MhZI374Q+1p1kluf1uLl8iK74=
