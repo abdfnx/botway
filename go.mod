@@ -1,6 +1,6 @@
 module github.com/abdfnx/botway
 
-go 1.19
+go 1.20
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.6
@@ -9,8 +9,9 @@ require (
 	github.com/abdfnx/looker v0.1.0
 	github.com/abdfnx/resto v0.1.6
 	github.com/abdfnx/tran v0.1.43
+	github.com/botwayorg/boa v0.1.0
 	github.com/botwayorg/get-latest v0.1.61
-	github.com/botwayorg/gh v0.1.1
+	github.com/botwayorg/gh v0.1.2
 	github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635
 	github.com/botwayorg/railway-api v0.0.8
 	github.com/botwayorg/templates v0.0.6
@@ -18,7 +19,6 @@ require (
 	github.com/charmbracelet/bubbles v0.15.0
 	github.com/charmbracelet/bubbletea v0.23.2
 	github.com/charmbracelet/lipgloss v0.7.1
-	github.com/elewis787/boa v0.1.1
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
 	github.com/mattn/go-colorable v0.1.13
 	github.com/mattn/go-isatty v0.0.18
