@@ -57,7 +57,5 @@ osxcross
 .turbo
 
 web
-
 .env
-
-.space
+deno.lock
