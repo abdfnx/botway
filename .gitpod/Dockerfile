@@ -1,7 +1,7 @@
 FROM gitpod/workspace-full
 
 # Install task, gomo, deno, and github cli
-RUN brew install go-task/tap/go-task abdfnx/tap/gomo abdfnx/tap/botway deno gh
+RUN brew install go-task/tap/go-task abdfnx/tap/gomo abdfnx/tap/botway deno go gh
 
 # Install pnpm
 RUN npm i -g npm@latest pnpm@latest
