@@ -11,12 +11,10 @@ foreach ($tag in $tags) {
     docker push botwayorg/botway:$tag
 }
 
-git clone https://github.com/botwayorg/app-core
+cd ./core
 
-cd ./app-core
+docker build -t botwayorg/app:windows --build-arg NEXT_PUBLIC_BW_SECRET_KEY=$(echo $Env:BW_SECRET_KEY) .
 
-docker build -t botwayorg/app --build-arg NEXT_PUBLIC_BW_SECRET_KEY=$(echo $Env:BW_SECRET_KEY) .
-
-docker push botwayorg/app
+docker push botwayorg/app:windows
 
 cd ..

@@ -6,6 +6,7 @@ RUN sudo apt-get update -yq && sudo apt-get upgrade -y
 
 RUN sudo apt-get install -y git-core curl gnupg build-essential openssl libssl-dev ruby ruby-dev 
 
+### Nodejs ###
 RUN curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash - && \
     sudo apt-get install -y nodejs
 

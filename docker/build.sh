@@ -14,9 +14,10 @@ do
     docker push botwayorg/botway:$t
 done
 
-git clone https://github.com/botwayorg/app-core
+docker build -t botwayorg/gp-image --file ./docker/gp-image.dockerfile .
+docker push botwayorg/gp-image
 
-cd ./app-core
+cd ./core
 
 docker build -t botwayorg/app --build-arg NEXT_PUBLIC_BW_SECRET_KEY=$(echo $BW_SECRET_KEY) .
 
