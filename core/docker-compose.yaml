@@ -1,0 +1,18 @@
+version: "3.1"
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    env_file:
+      - ./docker.env
+
+  botway-app:
+    image: botwayorg/app
+    restart: always
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    env_file:
+      - ./docker.env
