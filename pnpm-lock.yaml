@@ -38,10 +38,10 @@ importers:
         version: 1.2.1
       connect-mongo:
         specifier: ^5.0.0
-        version: 5.0.0(express-session@1.17.3)(mongodb@5.1.0)
+        version: 5.0.0(express-session@1.17.3)(mongodb@5.2.0)
       csstype:
-        specifier: ^3.1.1
-        version: 3.1.1
+        specifier: ^3.1.2
+        version: 3.1.2
       express-session:
         specifier: ^1.17.3
         version: 1.17.3
@@ -58,8 +58,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       mongodb:
-        specifier: ^5.1.0
-        version: 5.1.0
+        specifier: ^5.2.0
+        version: 5.2.0
       multer:
         specifier: 1.4.5-lts.1
         version: 1.4.5-lts.1
@@ -95,7 +95,7 @@ importers:
         version: 18.2.0(react@18.2.0)
       react-hot-toast:
         specifier: ^2.4.0
-        version: 2.4.0(csstype@3.1.1)(react-dom@18.2.0)(react@18.2.0)
+        version: 2.4.0(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0)
       sass:
         specifier: ^1.60.0
         version: 1.60.0
@@ -131,8 +131,8 @@ importers:
         specifier: ^1.0.35
         version: 1.0.35
       "@types/react":
-        specifier: ^18.0.31
-        version: 18.0.31
+        specifier: ^18.0.33
+        version: 18.0.33
       "@types/react-dom":
         specifier: ^18.0.11
         version: 18.0.11
@@ -954,18 +954,18 @@ packages:
         integrity: sha512-O38bPbI2CWtgw/OoQoY+BRelw7uysmXbWvw3nLWO21H1HSh+GOlqPuXshJfjmpNlKiiSDG9cc1JZAaMmVdcTlw==,
       }
     dependencies:
-      "@types/react": 18.0.31
+      "@types/react": 18.0.33
     dev: true
 
-  /@types/react@18.0.31:
+  /@types/react@18.0.33:
     resolution:
       {
-        integrity: sha512-EEG67of7DsvRDU6BLLI0p+k1GojDLz9+lZsnCpCRTa/lOokvyPBvp8S5x+A24hME3yyQuIipcP70KJ6H7Qupww==,
+        integrity: sha512-sHxzVxeanvQyQ1lr8NSHaj0kDzcNiGpILEVt69g9S31/7PfMvNCKLKcsHw4lYKjs3cGNJjXSP4mYzX43QlnjNA==,
       }
     dependencies:
       "@types/prop-types": 15.7.5
       "@types/scheduler": 0.16.3
-      csstype: 3.1.1
+      csstype: 3.1.2
     dev: true
 
   /@types/scheduler@0.16.3:
@@ -1108,7 +1108,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.21.5
-      caniuse-lite: 1.0.30001473
+      caniuse-lite: 1.0.30001474
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -1205,16 +1205,16 @@ packages:
     engines: { node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7 }
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001473
-      electron-to-chromium: 1.4.348
+      caniuse-lite: 1.0.30001474
+      electron-to-chromium: 1.4.352
       node-releases: 2.0.10
       update-browserslist-db: 1.0.10(browserslist@4.21.5)
     dev: true
 
-  /bson@5.1.0:
+  /bson@5.2.0:
     resolution:
       {
-        integrity: sha512-FEecNHkhYRBe7X9KDkdG12xNuz5VHGeH6mCE0B5sBmYtiR/Ux/9vUH/v4NUoBCDr6NuEhvahjoLiiRogptVW0A==,
+        integrity: sha512-HevkSpDbpUfsrHWmWiAsNavANKYIErV2ePXllp1bwq5CDreAaFVj6RVlZpJnxK4WWDCJ/5jMUpaY6G526q3Hjg==,
       }
     engines: { node: ">=14.20.1" }
     dev: false
@@ -1258,10 +1258,10 @@ packages:
     engines: { node: ">= 6" }
     dev: false
 
-  /caniuse-lite@1.0.30001473:
+  /caniuse-lite@1.0.30001474:
     resolution:
       {
-        integrity: sha512-ewDad7+D2vlyy+E4UJuVfiBsU69IL+8oVmTuZnH5Q6CIUbxNfI50uVpRHbUPDD6SUaN2o0Lh4DhTrvLG/Tn1yg==,
+        integrity: sha512-iaIZ8gVrWfemh5DG3T9/YqarVZoYf0r188IjaGwx68j4Pf0SGY6CQkmJUIE+NZHkkecQGohzXmBGEwWDr9aM3Q==,
       }
 
   /chokidar@3.5.3:
@@ -1350,7 +1350,7 @@ packages:
       typedarray: 0.0.6
     dev: false
 
-  /connect-mongo@5.0.0(express-session@1.17.3)(mongodb@5.1.0):
+  /connect-mongo@5.0.0(express-session@1.17.3)(mongodb@5.2.0):
     resolution:
       {
         integrity: sha512-s93jiP6GkRApn5duComx6RLwtP23YrulPxShz+8peX7svd6Q+MS8nKLhKCCazbP92C13eTVaIOxgeLt0ezIiCg==,
@@ -1363,7 +1363,7 @@ packages:
       debug: 4.3.4
       express-session: 1.17.3
       kruptein: 3.0.6
-      mongodb: 5.1.0
+      mongodb: 5.2.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -1409,10 +1409,10 @@ packages:
     engines: { node: ">=4" }
     hasBin: true
 
-  /csstype@3.1.1:
+  /csstype@3.1.2:
     resolution:
       {
-        integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==,
+        integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==,
       }
 
   /data-uri-to-buffer@4.0.1:
@@ -1513,10 +1513,10 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /electron-to-chromium@1.4.348:
+  /electron-to-chromium@1.4.352:
     resolution:
       {
-        integrity: sha512-gM7TdwuG3amns/1rlgxMbeeyNoBFPa+4Uu0c7FeROWh4qWmvSOnvcslKmWy51ggLKZ2n/F/4i2HJ+PVNxH9uCQ==,
+        integrity: sha512-ikFUEyu5/q+wJpMOxWxTaEVk2M1qKqTGKKyfJmod1CPZxKfYnxVS41/GCBQg21ItBpZybyN8sNpRqCUGm+Zc4Q==,
       }
     dev: true
 
@@ -1730,7 +1730,7 @@ packages:
       process: 0.11.10
     dev: false
 
-  /goober@2.1.12(csstype@3.1.1):
+  /goober@2.1.12(csstype@3.1.2):
     resolution:
       {
         integrity: sha512-yXHAvO08FU1JgTXX6Zn6sYCUFfB/OJSX8HHjDSgerZHZmFKAb08cykp5LBw5QnmyMcZyPRMqkdyHUSSzge788Q==,
@@ -1738,7 +1738,7 @@ packages:
     peerDependencies:
       csstype: ^3.0.10
     dependencies:
-      csstype: 3.1.1
+      csstype: 3.1.2
     dev: false
 
   /graphql-request@5.2.0(graphql@16.6.0):
@@ -2111,10 +2111,10 @@ packages:
       whatwg-url: 11.0.0
     dev: false
 
-  /mongodb@5.1.0:
+  /mongodb@5.2.0:
     resolution:
       {
-        integrity: sha512-qgKb7y+EI90y4weY3z5+lIgm8wmexbonz0GalHkSElQXVKtRuwqXuhXKccyvIjXCJVy9qPV82zsinY0W1FBnJw==,
+        integrity: sha512-nLgo95eP1acvjBcOdrUV3aqpWwHZCZwhYA2opB8StybbtQL/WoE5pk92qUUfjbKOWcGLYJczTqQbfOQhYtrkKg==,
       }
     engines: { node: ">=14.20.1" }
     peerDependencies:
@@ -2129,7 +2129,7 @@ packages:
       snappy:
         optional: true
     dependencies:
-      bson: 5.1.0
+      bson: 5.2.0
       mongodb-connection-string-url: 2.6.0
       socks: 2.7.1
     optionalDependencies:
@@ -2247,7 +2247,7 @@ packages:
     dependencies:
       "@next/env": 13.2.4
       "@swc/helpers": 0.4.14
-      caniuse-lite: 1.0.30001473
+      caniuse-lite: 1.0.30001474
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -2688,7 +2688,7 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-hot-toast@2.4.0(csstype@3.1.1)(react-dom@18.2.0)(react@18.2.0):
+  /react-hot-toast@2.4.0(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0):
     resolution:
       {
         integrity: sha512-qnnVbXropKuwUpriVVosgo8QrB+IaPJCpL8oBI6Ov84uvHZ5QQcTp2qg6ku2wNfgJl6rlQXJIQU5q+5lmPOutA==,
@@ -2698,7 +2698,7 @@ packages:
       react: ">=16"
       react-dom: ">=16"
     dependencies:
-      goober: 2.1.12(csstype@3.1.1)
+      goober: 2.1.12(csstype@3.1.2)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:

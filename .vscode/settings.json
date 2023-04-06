@@ -17,5 +17,8 @@
   },
   "yaml.schemas": {
     "https://json.schemastore.org/github-workflow.json": "file:///workspace/botway/.github/workflows/deploy.yml"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
   }
 }
