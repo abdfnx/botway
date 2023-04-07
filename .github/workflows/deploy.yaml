@@ -61,7 +61,8 @@ jobs:
           export NEXT_PUBLIC_BW_SECRET_KEY=$(cat ./app/.env)
           pnpm build
           cd app
-          zip -r bwui-latest.zip .next package.json
+          cp ../scripts/dot/main.go .
+          zip -r bwui-latest.zip .next package.json main.go
           mkdir ../assets/static/app
           cp bwui-latest.zip ../assets/static/app
 
