@@ -122,7 +122,7 @@ pub fn install() {
     } else {
         println!("{}", "Botway is installed successfully".bright_green());
         println!("{}", "🙏 Thanks for installing Botway! If this is your first time using the CLI, be sure to run `botway help` first.".bright_green());
-        println!("{}", "Stuck? Join our Discord https://discord.gg/j2dFz5V7qm".bright_cyan());
+        println!("{}", "Stuck? Join our Discord https://dub.sh/bw-discord".bright_cyan());
     }
 }
 

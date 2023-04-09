@@ -37,7 +37,7 @@ Remove-Item botway_windows* -Recurse -Force
 if (Test-Path -path $loc) {
     Write-Host "Thanks for installing Botway! Now Refresh your powershell" -ForegroundColor DarkGreen
     Write-Host "If this is your first time using the CLI, be sure to run 'botway --help' first." -ForegroundColor DarkGreen
-    Write-Host "Stuck? Join our Discord https://discord.gg/j2dFz5V7qm" -ForegroundColor DarkCyan
+    Write-Host "Stuck? Join our Discord https://dub.sh/bw-discord" -ForegroundColor DarkCyan
 } else {
     Write-Host "Download failed" -ForegroundColor Red
     Write-Host "Please try again later" -ForegroundColor Red

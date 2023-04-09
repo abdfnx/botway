@@ -29,7 +29,7 @@
     "mongodb": "^5.2.0",
     "multer": "1.4.5-lts.1",
     "nanoid": "^4.0.2",
-    "next": "^13.2.4",
+    "next": "^13.3.0",
     "next-connect": "^0.13.0",
     "next-session": "^4.0.5",
     "octokit": "^2.0.14",
@@ -39,7 +39,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
-    "sass": "^1.60.0",
+    "sass": "^1.61.0",
     "slug": "^8.2.2",
     "swr": "2.1.1",
     "tailwindcss": "^3.3.1",
@@ -59,6 +59,6 @@
     "autoprefixer": "^10.4.14",
     "postcss-import": "^15.1.0",
     "postcss-nested": "^6.0.1",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
   }
 }
