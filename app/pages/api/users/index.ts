@@ -64,32 +64,22 @@ handler.post(
       return;
     }
 
-    db.collection("users").count(async (err: any, count: any) => {
-      let isAdmin = false;
+    const user = await insertUser(db, {
+      email,
+      originalPassword: password,
+      name,
+      username,
+      isAdmin: false,
+      githubApiToken,
+      railwayApiToken,
+      renderApiToken,
+    });
 
-      if (!err && count === 0) {
-        isAdmin = true;
-      } else {
-        isAdmin = false;
-      }
+    req.logIn(user, (err: any) => {
+      if (err) throw err;
 
-      const user = await insertUser(db, {
-        email,
-        originalPassword: password,
-        name,
-        username,
-        isAdmin,
-        githubApiToken,
-        railwayApiToken,
-        renderApiToken,
-      });
-
-      req.logIn(user, (err: any) => {
-        if (err) throw err;
-
-        res.status(201).json({
-          user,
-        });
+      res.status(201).json({
+        user,
       });
     });
   }
