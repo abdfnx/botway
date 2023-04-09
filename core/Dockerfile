@@ -47,13 +47,12 @@ RUN /bin/bash -c "bash"
 ARG MONGO_URL NEXT_PUBLIC_FULL EMAIL_FROM SENDGRID_API_KEY NEXT_PUBLIC_BW_SECRET_KEY
 
 ### build ###
-RUN mkdir app && \
-    cd app && \
-    wget https://cdn-botway.deno.dev/app/bwui-latest.zip && \
-    unzip bwui-latest.zip && \
-    rm -rf .env && \
-    go run main.go >> .env && \
-    cp -rf .next package.json ..
+RUN git clone https://github.com/abdfnx/botway && \
+    cd botway/app && \
+    go run ../scripts/dot/main.go >> .env && \
+    pnpm i && \
+    pnpm build && \
+    cp -rf .next package.json ../..
 
 RUN pnpm i
 
