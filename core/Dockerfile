@@ -44,15 +44,11 @@ RUN echo 'eval "$(poetry env shell -q)"' >> ~/.bashrc
 
 RUN /bin/bash -c "bash"
 
-ARG MONGO_URL NEXT_PUBLIC_FULL EMAIL_FROM SENDGRID_API_KEY NEXT_PUBLIC_BW_SECRET_KEY
+ARG NEXT_PUBLIC_BW_SECRET_KEY NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 ### build ###
 RUN git clone https://github.com/abdfnx/botway && \
-    cd botway/app && \
-    go run ../scripts/dot/main.go >> .env && \
-    pnpm i && \
-    pnpm build && \
-    cp -rf .next package.json ../..
+    cp botway/core .
 
 RUN pnpm i
 
@@ -60,4 +56,4 @@ ENV PORT 3000
 
 EXPOSE 3000
 
-ENTRYPOINT [ "pnpm", "start" ]
+ENTRYPOINT [ "pnpm", "dev" ]

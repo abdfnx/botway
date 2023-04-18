@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "config/vars.scss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap");
+
+body {
+  background: $bg;
+  font-family: Inter;
+}
+
+.input {
+  @apply transition-all bg-bwdefualt border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2;
+}
+
+.button {
+  display: block;
+  border-radius: 5px;
+  @apply px-3 py-2 text-sm;
+  font-weight: 500;
+  padding: 0 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition-property: border-color, background, color;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+  font-size: 0.875rem;
+  height: 40px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  width: 5px !important;
+  height: 5px !important;
+}
+
+::placeholder {
+  font-family: Inter;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px !important;
+  @apply bg-secondary;
+}
+
+::-webkit-scrollbar-corner {
+  @apply bg-secondary;
+}

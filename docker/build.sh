@@ -19,8 +19,8 @@ docker push botwayorg/gp-image
 
 cd ./core
 
-docker build -t botwayorg/app --build-arg NEXT_PUBLIC_BW_SECRET_KEY=$(echo $BW_SECRET_KEY) .
+docker build -t botwayorg/botway --build-arg NEXT_PUBLIC_BW_SECRET_KEY=$(echo $BW_SECRET_KEY) .
 
-docker push botwayorg/app
+docker push botwayorg/botway
 
 cd ..

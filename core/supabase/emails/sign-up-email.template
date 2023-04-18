@@ -1,0 +1,78 @@
+<div>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="width: 100% !important">
+    <tbody>
+      <tr>
+        <td align="center">
+          <table style="border: 1px solid #eaeaea;
+              border-radius: 5px;
+              margin: 40px 0;" width="600" border="0" cellspacing="0" cellpadding="40">
+            <tbody>
+              <tr>
+                <td align="center">
+                  <div style="text-align: left; width: 465px">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="width: 100% !important">
+                      <tbody>
+                        <tr>
+                          <td align="center">
+                            <img src="https://cdn-botway.deno.dev/icon.png" width="40px" alt="Botway">
+                            <h1 style="color: #000;
+                                font-family: -apple-system, BlinkMacSystemFont,
+                                  'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+                                  'Cantarell', 'Fira Sans', 'Droid Sans',
+                                  'Helvetica Neue', sans-serif;
+                                font-size: 24px;
+                                font-weight: normal;
+                                margin: 30px 0;
+                                padding: 0;">
+                              Here's your Botway Verification URL
+                            </h1>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p style="color: #000;
+                        font-family: -apple-system, BlinkMacSystemFont,
+                          'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+                          'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                          sans-serif;
+                        font-size: 14px;
+                        line-height: 24px;">
+                      Hi <strong>{{ .Email }}</strong>
+                    </p>
+                    <p style="color: #000;
+                        font-family: -apple-system, BlinkMacSystemFont,
+                          'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+                          'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                          sans-serif;
+                        font-size: 14px;
+                        line-height: 24px;">
+                      Follow this link to confirm:
+                      <a href="{{ .ConfirmationURL }}">Confirm your mail</a>
+                    </p>
+                    <br>
+
+                    <br>
+                    <hr style="border: none;
+                        border-top: 1px solid #eaeaea;
+                        margin: 26px 0;
+                        width: 100%;">
+                    <p style="color: #666666;
+                        font-family: -apple-system, BlinkMacSystemFont,
+                          'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+                          'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                          sans-serif;
+                        font-size: 12px;
+                        text-align: center;
+                        line-height: 24px;">
+                      Botway
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
