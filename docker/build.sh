@@ -10,8 +10,8 @@ do
         filename="alpine"
     fi
 
-	docker build -t botwayorg/botway:$t --file ./docker/$filename.dockerfile .
-    docker push botwayorg/botway:$t
+	docker build -t botwayorg/botway-cli:$t --file ./docker/$filename.dockerfile .
+    docker push botwayorg/botway-cli:$t
 done
 
 docker build -t botwayorg/gp-image --file ./docker/gp-image.dockerfile .

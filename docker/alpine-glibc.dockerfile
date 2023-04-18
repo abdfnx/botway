@@ -1,4 +1,4 @@
-FROM botwayorg/botway:core AS core
+FROM botwayorg/botway-cli:core AS core
 FROM frolvlad/alpine-glibc:alpine-3.14_glibc-2.33
 
 RUN apk update && apk add bash sudo curl

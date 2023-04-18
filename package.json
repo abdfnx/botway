@@ -13,9 +13,9 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "start": "pnpm build && turbo run start --parallel",
-    "format": "prettier *.json *.yaml *.md ./core ./create-botway-bot ./packages/botway.js -w"
+    "format": "prettier *.json *.yaml *.md ./core ./assets ./create-botway-bot ./packages -w"
   },
-  "packageManager": "pnpm@7.26.3",
+  "packageManager": "pnpm@8.3.0",
   "devDependencies": {
     "prettier": "^2.8.7",
     "turbo": "^1.9.3"

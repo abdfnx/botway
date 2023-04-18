@@ -143,11 +143,12 @@ const Home = ({ user }: any) => {
                   </button>
                 </div>
               </div>
-              <div className="mt-10 grid lg:grid-cols-3 sm:grid-cols-2 lt-md:!grid-cols-1 gap-3">
-                {projectIsLoading ? (
-                  <LoadingDots className="fixed inset-0 flex items-center justify-center" />
-                ) : projects?.length != 0 ? (
-                  projects?.map((project) => (
+
+              {projectIsLoading ? (
+                <LoadingDots className="fixed inset-0 flex items-center justify-center" />
+              ) : projects?.length != 0 ? (
+                <div className="mt-10 grid lg:grid-cols-3 sm:grid-cols-2 lt-md:!grid-cols-1 gap-3">
+                  {projects?.map((project) => (
                     <div className="col-span-1">
                       <a href={`/project/${project.id}`}>
                         <div className="group relative text-left border-2 border-dashed border-gray-800 rounded-xl py-4 px-6 flex flex-row transition ease-in-out duration-150 h-32 cursor-pointer hover:bg-secondary">
@@ -196,22 +197,22 @@ const Home = ({ user }: any) => {
                         </div>
                       </a>
                     </div>
-                  ))
-                ) : (
-                  <div className="rounded-lg mt-8 overflow-hidden p-5 cursor-pointer border-2 border-dashed border-gray-800 hover:border-gray-600 shadow-lg transition duration-300 ease-in-out w-full h-60 flex flex-col items-center justify-center gap-4">
-                    <h2 className="text-md text-gray-400 text-center">
-                      Create a New Project
-                    </h2>
-                    <button
-                      onClick={() => setOpen(true)}
-                      className="h-9 px-2 py-3.5 rounded-lg border border-gray-800 inline-flex flex-shrink-0 whitespace-nowrap items-center gap-2 transition-colors duration-200 ease-in-out leading-none cursor-pointer text-white hover:bg-secondary focus:outline-none outline-none"
-                    >
-                      <ZapIcon size={16} className="fill-blue-700" />
-                      New Project
-                    </button>
-                  </div>
-                )}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-lg mt-8 overflow-hidden p-5 cursor-pointer border-2 border-dashed border-gray-800 hover:border-gray-600 shadow-lg transition duration-300 ease-in-out w-full h-60 flex flex-col items-center justify-center gap-4">
+                  <h2 className="text-md text-gray-400 text-center">
+                    Create a New Project
+                  </h2>
+                  <button
+                    onClick={() => setOpen(true)}
+                    className="h-9 px-2 py-3.5 rounded-lg border border-gray-800 inline-flex flex-shrink-0 whitespace-nowrap items-center gap-2 transition-colors duration-200 ease-in-out leading-none cursor-pointer text-white hover:bg-secondary focus:outline-none outline-none"
+                  >
+                    <ZapIcon size={16} className="fill-blue-700" />
+                    New Project
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

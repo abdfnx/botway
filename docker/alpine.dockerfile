@@ -1,4 +1,4 @@
-FROM botwayorg/botway:core AS core
+FROM botwayorg/botway-cli:core AS core
 FROM alpine:latest
 
 RUN apk update && apk add bash sudo

@@ -1,4 +1,4 @@
-FROM botwayorg/botway:core AS core
+FROM botwayorg/botway-cli:core AS core
 FROM ubuntu:20.04
 
 ENV BOTWAY_DIR /botway-dir/

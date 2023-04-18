@@ -4,6 +4,8 @@ import { BW_SECRET_KEY } from "@/tools/tokens";
 import { fetcher } from "@/tools/fetch";
 import { Octokit } from "octokit";
 import createClient from "@/supabase/server";
+import { exec } from "child_process";
+import { stringify } from "ajv";
 
 // export const runtime = "edge";
 export const revalidate = 0;
@@ -119,6 +121,22 @@ export async function POST(request: Request) {
   if (error) {
     return NextResponse.json({ error });
   }
+
+  exec(
+    `create-botway-bot ${stringify(body.name)} ${stringify(
+      body.platform
+    )} ${stringify(body.lang)} ${stringify(
+      body.package_manager
+    )} railway ${stringify(githubApiToken.data)} ${stringify(
+      ghu.login
+    )} ${stringify(ghu.email)}`
+  )
+    .on("error", (error) => {
+      return NextResponse.json({ error: error.message });
+    })
+    .on("message", (m) => {
+      console.log(m.toString());
+    });
 
   return NextResponse.json({ message: "Success" });
 }

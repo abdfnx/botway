@@ -1,4 +1,4 @@
-FROM botwayorg/botway:core AS core
+FROM botwayorg/botway-cli:core AS core
 FROM gcr.io/distroless/cc
 
 ENV BOTWAY_DIR /botway-dir/

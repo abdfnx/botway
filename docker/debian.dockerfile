@@ -1,4 +1,4 @@
-FROM botwayorg/botway:core AS core
+FROM botwayorg/botway-cli:core AS core
 FROM debian:stable-slim
 
 ENV BOTWAY_DIR /botway-dir/

@@ -1,4 +1,4 @@
-FROM botwayorg/botway:latest AS bw
+FROM botwayorg/botway-cli:latest AS bw
 
 ARG {{.BotSecrets}}
 
