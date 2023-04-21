@@ -44,7 +44,15 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         operationName: "projectCreate",
-        query: `mutation projectCreate { projectCreate(input: { name: "${body.name}" }) { id }}`,
+        query: `
+          mutation projectCreate {
+            projectCreate(input: {
+              name: "${body.name}"
+            }) {
+              id
+            }
+          }
+        `,
       }),
     }
   );
@@ -63,11 +71,16 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         operationName: "serviceCreate",
-        query: `mutation serviceCreate { serviceCreate(input: { name: "${
-          body.name + "-main"
-        }", projectId: "${
-          createRailwayProject.data.projectCreate.id
-        }" }) { id }}`,
+        query: `
+          mutation serviceCreate {
+            serviceCreate(input: {
+              name: "main",
+              projectId: "${createRailwayProject.data.projectCreate.id}"
+            }) {
+              id
+            }
+          }
+        `,
       }),
     }
   );

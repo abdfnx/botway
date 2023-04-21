@@ -11,12 +11,12 @@ body {
 }
 
 .input {
-  @apply transition-all bg-bwdefualt border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-blue-700 block w-full p-2;
+  @apply transition-all bg-bwdefualt border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg outline-none focus:outline-none hover:border-blue-700 block w-full p-2;
 }
 
 .button {
   display: block;
-  border-radius: 5px;
+  border-radius: 7px;
   @apply px-3 py-2 text-sm;
   font-weight: 500;
   padding: 0 12px;

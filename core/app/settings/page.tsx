@@ -193,7 +193,7 @@ const Settings = () => {
                               <button
                                 className={clsx(
                                   "relative text-white bg-blue-700 inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 shadow-sm text-xs px-2.5 py-1",
-                                  user.user_metadata["name"] == values.name
+                                  user.user_metadata["name"] === values.name
                                     ? "opacity-50 cursor-not-allowed pointer-events-none"
                                     : "cursor-pointer"
                                 )}

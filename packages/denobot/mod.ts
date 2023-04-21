@@ -3,7 +3,7 @@ import { readJson } from "https://deno.land/x/deno_json/mod.ts";
 
 let botwayConfigPath = Deno.env.get("HOME") + "/.botway" + "/botway.json";
 
-if (Deno.build.os == "windows") {
+if (Deno.build.os === "windows") {
   botwayConfigPath =
     Deno.env.get("USERPROFILE") + "\\.botway" + "\\botway.json";
 }
@@ -25,7 +25,7 @@ export const getToken = () => {
 
 export const getAppId = () => {
   try {
-    if (getBotInfo("type") == "slack") {
+    if (getBotInfo("type") === "slack") {
       return botwayConfig["botway"]["bots"][getBotInfo("name")][
         "bot_app_token"
       ];
@@ -57,9 +57,9 @@ export const getSecret = () => {
   try {
     let value = "";
 
-    if (getBotInfo("type") == "slack") {
+    if (getBotInfo("type") === "slack") {
       value = "signing_secret";
-    } else if (getBotInfo("type") == "twitch") {
+    } else if (getBotInfo("type") === "twitch") {
       value = "bot_client_secret";
     }
 

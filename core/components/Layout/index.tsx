@@ -270,7 +270,7 @@ export const DashLayout = ({ children, name, href }: any) => {
                       </span>
                       <a
                         href={
-                          href.toLowerCase() == "projects"
+                          href.toLowerCase() === "projects"
                             ? "/"
                             : `/${href.toLowerCase()}`
                         }

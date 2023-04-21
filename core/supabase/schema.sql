@@ -13,7 +13,7 @@ CREATE TABLE projects (
   bot_secret_token CHARACTER varying NULL,
   railway_project_id CHARACTER varying NOT NULL,
   railway_service_id CHARACTER varying NOT NULL,
-  railway_env_id CHARACTER varying NULL,
+  -- railway_env_id CHARACTER varying NULL,
   build_command CHARACTER varying NULL,
   start_command CHARACTER varying NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::TEXT, NOW()) NOT NULL,

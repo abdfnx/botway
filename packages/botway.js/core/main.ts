@@ -34,7 +34,7 @@ export const GetToken = () => {
 
 export const GetAppId = () => {
   try {
-    if (getBotInfo("type") == "slack") {
+    if (getBotInfo("type") === "slack") {
       return json["botway"]["bots"][getBotInfo("name")]["bot_app_token"];
     } else {
       return json["botway"]["bots"][getBotInfo("name")]["bot_app_id"];
@@ -67,9 +67,9 @@ export const GetSecret = () => {
     try {
       var value = "";
 
-      if (getBotInfo("type") == "slack") {
+      if (getBotInfo("type") === "slack") {
         value = "signing_secret";
-      } else if (getBotInfo("type") == "twitch") {
+      } else if (getBotInfo("type") === "twitch") {
         value = "bot_client_secret";
       }
 

@@ -27,6 +27,7 @@ import {
 } from "@tanstack/react-query";
 import { fetcher } from "@/tools/fetch";
 import { Button } from "@/components/Button";
+import { capitalizeFirstLetter } from "@/tools/text";
 
 export const revalidate = 0;
 
@@ -168,14 +169,14 @@ const Home = ({ user }: any) => {
                                   alt={`${project.platform} icon`}
                                   width={16}
                                 />
-                                {project.platform}
+                                {capitalizeFirstLetter(project.platform)}
 
                                 <img
                                   src={`https://cdn-botway.deno.dev/icons/${project.lang}.svg`}
                                   alt={`${project.lang} icon`}
                                   width={16}
                                 />
-                                {project.lang}
+                                {capitalizeFirstLetter(project.lang)}
                               </p>
                             </div>
                           </div>
@@ -258,7 +259,7 @@ const Home = ({ user }: any) => {
                     </Transition.Child>
                     <div className="flex h-full flex-col overflow-y-scroll bg-secondary border-l border-gray-800 py-4 shadow-xl">
                       <div className="px-4 border-b border-gray-800 sm:px-6">
-                        <Dialog.Title className="text-lg font-semibold text-white leading-6 pb-4 text-gray-900">
+                        <Dialog.Title className="text-lg font-semibold text-white leading-6 pb-4">
                           Create a new Bot Project
                         </Dialog.Title>
                       </div>
