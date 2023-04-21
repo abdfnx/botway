@@ -50,15 +50,21 @@ export async function POST(request: Request) {
   if (!body.repo.toString().includes(ghu.login))
     NextResponse.json({ error: `Repo owner must be ${ghu.login}` });
 
-  const iconBody = `icon: "${body.icon}"`;
+  const iconBody = body.icon != "" ? `icon: "${body.icon}"` : "";
 
-  const repoBody = `source: { repo: "${body.repo}" }`;
+  const repoBody = body.repo ? `source: { repo: "${body.repo}" }` : "";
 
-  const buildCommandBody = `buildCommand: "${body.buildCmd}"`;
+  const buildCommandBody = body.buildCmd
+    ? `buildCommand: "${body.buildCmd}"`
+    : "";
 
-  const rootDirectoryBody = `rootDirectory: "${body.rootDir}"`;
+  const rootDirectoryBody = body.rootDir
+    ? `rootDirectory: "${body.rootDir}"`
+    : "";
 
-  const startCommandBody = `startCommand: "${body.startCmd}"`;
+  const startCommandBody = body.startCmd
+    ? `startCommand: "${body.startCmd}"`
+    : "";
 
   const query = `
     mutation settingsUpdate {
@@ -85,8 +91,10 @@ export async function POST(request: Request) {
           ${startCommandBody},
           ${rootDirectoryBody},
           ${repoBody}
-        })
-    }`;
+        }
+      )
+    }
+  `;
 
   const editBot = await fetcher("https://backboard.railway.app/graphql/v2", {
     method: "POST",

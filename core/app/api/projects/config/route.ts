@@ -117,6 +117,8 @@ export async function POST(request: Request) {
   if (!body.repo.toString().includes(ghu.login))
     NextResponse.json({ error: `Repo owner must be ${ghu.login}` });
 
+  const repoBody = `source: { repo: "${body.repo}" }`;
+
   await fetcher("https://backboard.railway.app/graphql/v2", {
     method: "POST",
     headers: {
@@ -133,6 +135,20 @@ export async function POST(request: Request) {
             serviceId: "${railwayServiceId.data}",
             variables: { ${vars} }
           })
+
+          serviceInstanceUpdate(
+            serviceId: "${railwayServiceId.data}",
+            input: {
+              ${repoBody}
+            }
+          )
+
+          serviceConnect(id: "${railwayServiceId.data}", input: {
+            branch: "main"
+            repo: "${body.repo}"
+          }) {
+            id
+          }
         }
       `,
     }),
