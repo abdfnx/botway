@@ -26,6 +26,7 @@
     "formik": "^2.2.9",
     "graphql": "^16.6.0",
     "jose": "^4.14.1",
+    "mini-svg-data-uri": "^1.4.4",
     "next": "13.3.0",
     "octokit": "^2.0.14",
     "postcss": "8.4.23",

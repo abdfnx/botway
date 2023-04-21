@@ -13,12 +13,14 @@ import { UserAvatar } from "../UserAvatar";
 import { CMDK } from "./cmdk";
 import { useState } from "react";
 import { Tooltip } from "flowbite-react";
+import clsx from "clsx";
 
 export const ProjectLayout = ({
   user,
   projectId,
   projectName,
   children,
+  grid,
 }: any) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -252,7 +254,12 @@ export const ProjectLayout = ({
                 </button>
               </div>
             </div>
-            <main className="flex-1 overflow-y-auto max-h-screen">
+            <main
+              className={clsx(
+                "flex-1 overflow-y-auto max-h-screen",
+                grid ? "bg-grid-gray-800/[0.4]" : ""
+              )}
+            >
               <div className="mx-auto w-full max-w-7xl space-y-16">
                 {children}
               </div>

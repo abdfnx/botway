@@ -5,7 +5,7 @@ const LogoSection = () => {
         <div className="flex items-center space-x-1">
           <img
             alt="Botway Logo"
-            src="https://cdn-botway.deno.dev/botway.svg"
+            src="https://cdn-botway.deno.dev/simple/logo-white.svg"
             className="block w-56"
           />
         </div>
