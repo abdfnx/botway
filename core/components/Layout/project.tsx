@@ -12,6 +12,9 @@ import { CMDK } from "./cmdk";
 import { useState } from "react";
 import { Tooltip } from "flowbite-react";
 import clsx from "clsx";
+import { jwtDecrypt } from "jose";
+import { BW_SECRET_KEY } from "@/tools/tokens";
+import { useRouter } from "next/navigation";
 
 export const ProjectLayout = ({
   user,
@@ -19,8 +22,19 @@ export const ProjectLayout = ({
   projectName,
   children,
   grid,
+  projectRWID,
 }: any) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const openAtRailway = async () => {
+    const { payload: railwayProjectId } = await jwtDecrypt(
+      projectRWID,
+      BW_SECRET_KEY
+    );
+
+    router.push(`https://railway.app/project/${railwayProjectId.data}`);
+  };
 
   return (
     <>
@@ -123,13 +137,13 @@ export const ProjectLayout = ({
               <div className="border border-gray-800 h-px w-full"></div>
               <button className="place-content-center">
                 <Tooltip
-                  content="Open On Railway"
+                  content="Open at Railway"
                   arrow={false}
                   placement="right"
                 >
                   <a
                     className="transition-colors duration-200 flex items-center justify-center h-10 w-10 rounded hover:bg-bwdefualt"
-                    href={`/project/${projectId}/railway`}
+                    onClick={openAtRailway}
                   >
                     <img
                       src="https://cdn-botway.deno.dev/icons/railway.svg"

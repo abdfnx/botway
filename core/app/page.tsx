@@ -60,6 +60,9 @@ const Home = ({ user }: any) => {
     fetchProjects,
     {
       refetchInterval: 1,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
+      refetchIntervalInBackground: true,
     }
   );
 

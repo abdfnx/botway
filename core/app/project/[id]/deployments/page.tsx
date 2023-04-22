@@ -45,6 +45,9 @@ const Project = ({ user, projectId }: any) => {
     fetchProject,
     {
       refetchInterval: 1,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
+      refetchIntervalInBackground: true,
     }
   );
 
@@ -60,17 +63,24 @@ const Project = ({ user, projectId }: any) => {
     ["dy"],
     fetchDeployments,
     {
-      refetchInterval: 0,
+      refetchInterval: 1,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
+      refetchIntervalInBackground: true,
     }
   );
 
   const status = (deployStatus: any) => {
     switch (deployStatus) {
       case "FAILED":
+      case "CRASHED":
         return "text-red-700";
 
       case "SUCCESS":
         return "text-green-700";
+
+      case "DEPLOYING":
+        return "text-blue-700";
     }
 
     return "text-gray-400";
@@ -101,6 +111,7 @@ const Project = ({ user, projectId }: any) => {
           user={user}
           projectId={projectId}
           projectName={project?.name}
+          projectRWID={project?.railway_project_id}
         >
           <div className="mx-6 my-16 flex items-center space-x-6">
             <h1 className="text-3xl text-white">{project?.name} Deployments</h1>
@@ -167,7 +178,8 @@ const Project = ({ user, projectId }: any) => {
                         ) : deploy.node.status != "SUCCESS" ? (
                           deploy.node.status === "REMOVED" ? (
                             <ArchiveIcon className="fill-red-700" size={16} />
-                          ) : deploy.node.status === "FAILED" ? (
+                          ) : deploy.node.status === "FAILED" ||
+                            deploy.node.status === "CRASHED" ? (
                             <XCircleIcon className="fill-red-700" size={16} />
                           ) : (
                             <ClockIcon className="fill-gray-400" size={16} />

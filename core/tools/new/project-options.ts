@@ -384,7 +384,7 @@ export const packageManagers = (lang: any) => {
     },
     {
       name: "pipenv",
-      logo: "pipenv.png",
+      logo: "pipenv.svg",
     },
     {
       name: "poetry",
@@ -395,7 +395,7 @@ export const packageManagers = (lang: any) => {
   const rubyPM = [
     {
       name: "bundler",
-      logo: "bundler.png",
+      logo: "bundler.svg",
     },
   ];
 

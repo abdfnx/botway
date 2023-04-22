@@ -70,6 +70,9 @@ const Project = ({ user, projectId }: any) => {
     fetchProject,
     {
       refetchInterval: 1,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
+      refetchIntervalInBackground: true,
     }
   );
 
@@ -216,6 +219,7 @@ const Project = ({ user, projectId }: any) => {
           user={user}
           projectId={projectId}
           projectName={project?.name}
+          projectRWID={project?.railway_project_id}
         >
           <main className="flex-1 max-h-screen">
             <div className="overflow-y-auto mx-auto flex flex-col px-5 py-6 lg:px-16">

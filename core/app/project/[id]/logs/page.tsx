@@ -37,6 +37,9 @@ const Project = ({ user, projectId }: any) => {
     fetchProject,
     {
       refetchInterval: 1,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
+      refetchIntervalInBackground: true,
     }
   );
 
@@ -53,6 +56,9 @@ const Project = ({ user, projectId }: any) => {
     fetchLogs,
     {
       refetchInterval: 1,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
+      refetchIntervalInBackground: true,
     }
   );
 
@@ -81,6 +87,7 @@ const Project = ({ user, projectId }: any) => {
           user={user}
           projectId={projectId}
           projectName={project?.name}
+          projectRWID={project?.railway_project_id}
         >
           <div className="mx-6 my-16 flex items-center space-x-6">
             <h1 className="text-3xl text-white">{project?.name} Deploy Logs</h1>
@@ -98,7 +105,7 @@ const Project = ({ user, projectId }: any) => {
             </button>
           </div>
           <div className="mx-6">
-            <div className="rounded-2xl bg-secondary border border-gray-800 overflow-auto p-5 max-h-[400px] mb-6">
+            <div className="rounded-md bg-secondary border border-gray-800 overflow-auto p-5 max-h-[400px] mb-6">
               {logsIsLoading ? (
                 <LoadingDots />
               ) : logs ? (

@@ -16,6 +16,7 @@ CREATE TABLE projects (
   -- railway_env_id CHARACTER varying NULL,
   build_command CHARACTER varying NULL,
   start_command CHARACTER varying NULL,
+  integrations JSON NULL DEFAULT '{}'::JSON,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::TEXT, NOW()) NOT NULL,
   CONSTRAINT projects_railway_project_id_key UNIQUE (railway_project_id)
 );
