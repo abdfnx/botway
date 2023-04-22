@@ -93,18 +93,18 @@ export async function POST(request: Request) {
   }
 
   const envId = getEnvId.data.project.environments.edges.find(
-    (env: any) => env.node.name == "production"
+    (env: any) => env.node.name === "production"
   ).node.id;
 
   let vars;
 
-  if (body.platform == "discord") {
+  if (body.platform === "discord") {
     vars = `DISCORD_TOKEN: "${bt.data}", DISCORD_CLIENT_ID: "${bat.data}"`;
-  } else if (body.platform == "slack") {
+  } else if (body.platform === "slack") {
     vars = `SLACK_TOKEN: "${bt.data}", SLACK_APP_TOKEN: "${bat.data}", SLACK_SIGNING_SECRET: "${bst.data}"`;
-  } else if (body.platform == "telegram") {
+  } else if (body.platform === "telegram") {
     vars = `TELEGRAM_TOKEN: "${bt.data}"`;
-  } else if (body.platform == "twitch") {
+  } else if (body.platform === "twitch") {
     vars = `TWITCH_OAUTH_TOKEN: "${bt.data}", TWITCH_CLIENT_ID: "${bat.data}", TWITCH_CLIENT_SECRET: "${bst.data}"`;
   }
 
@@ -164,7 +164,7 @@ export async function POST(request: Request) {
     updateBody["bot_app_token"] = body.botAppToken;
   }
 
-  if (body.platform == "slack" || body.platform == "twitch") {
+  if (body.platform === "slack" || body.platform === "twitch") {
     updateBody["bot_secret_token"] = body.botSecretToken;
   }
 

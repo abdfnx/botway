@@ -132,7 +132,7 @@ const Project = ({ user, projectId }: any) => {
         body["botAppToken"] = botAppToken;
       }
 
-      if (project?.platform == "slack" || project?.platform == "twitch") {
+      if (project?.platform === "slack" || project?.platform === "twitch") {
         const botSecretToken = await new EncryptJWT({
           data: formData.botSecretToken,
         })
@@ -742,7 +742,7 @@ const Project = ({ user, projectId }: any) => {
                                       {capitalizeFirstLetter(project?.platform)}{" "}
                                       {project?.platform != "twitch"
                                         ? `Bot App ${
-                                            project?.platform == "discord"
+                                            project?.platform === "discord"
                                               ? "ID"
                                               : "Token"
                                           }`
@@ -765,14 +765,14 @@ const Project = ({ user, projectId }: any) => {
                               ) : (
                                 <></>
                               )}
-                              {project?.platform == "slack" ||
-                              project?.platform == "twitch" ? (
+                              {project?.platform === "slack" ||
+                              project?.platform === "twitch" ? (
                                 <div className="text-sm leading-4 grid gap-2 md:grid md:grid-cols-12">
                                   <br />
                                   <div className="flex flex-row space-x-2 justify-between col-span-12">
                                     <label className="block text-gray-400 text-sm leading-4">
                                       {capitalizeFirstLetter(project?.platform)}{" "}
-                                      {project?.platform == "twitch"
+                                      {project?.platform === "twitch"
                                         ? "Bot Client Secret"
                                         : "Bot Signing Secret"}
                                     </label>

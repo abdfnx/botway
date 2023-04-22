@@ -1,13 +1,11 @@
 import {
   AppsIcon,
-  CloudIcon,
   CodespacesIcon,
   GearIcon,
   HomeIcon,
   ListUnorderedIcon,
   PackageIcon,
   ServerIcon,
-  SlidersIcon,
 } from "@primer/octicons-react";
 import { UserAvatar } from "../UserAvatar";
 import { CMDK } from "./cmdk";
@@ -150,17 +148,6 @@ export const ProjectLayout = ({
                   </a>
                 </Tooltip>
               </button>
-              <button>
-                <Tooltip content="Storage" arrow={false} placement="right">
-                  <a
-                    className="transition-colors duration-200 flex items-center justify-center h-10 w-10 rounded hover:bg-bwdefualt"
-                    href={`/project/${projectId}/storage`}
-                  >
-                    <CloudIcon className="fill-white" size={18} />
-                  </a>
-                </Tooltip>
-              </button>
-
               <div className="border border-gray-800 h-px w-full"></div>
               <button>
                 <Tooltip content="Logs" arrow={false} placement="right">

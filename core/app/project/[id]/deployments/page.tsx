@@ -1,6 +1,6 @@
 "use client";
 
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useAuth } from "@/supabase/auth/provider";
 import { LoadingDots } from "@/components/LoadingDots";
 import supabase from "@/supabase/browser";
@@ -10,7 +10,6 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import useSWR from "swr";
 import { fetcher } from "@/tools/fetch";
 import Link from "next/link";
 import {
@@ -21,12 +20,16 @@ import {
   GitMergeIcon,
   XCircleIcon,
 } from "@primer/octicons-react";
+import { jwtDecrypt } from "jose";
+import { BW_SECRET_KEY } from "@/tools/tokens";
 
 export const revalidate = 0;
 
 const queryClient = new QueryClient();
 
 const Project = ({ user, projectId }: any) => {
+  const router = useRouter();
+
   const fetchProject = async () => {
     const { data: project } = await supabase
       .from("projects")
@@ -45,25 +48,21 @@ const Project = ({ user, projectId }: any) => {
     }
   );
 
-  const deploymentsFetcher = (url: any) =>
-    fetcher(url, {
+  const fetchDeployments = async () => {
+    const dys = await fetcher(`/api/deployments?id=${projectId}`, {
       method: "GET",
     });
 
-  const { data, error } = useSWR(
-    `/api/deployments?id=${projectId}`,
-    deploymentsFetcher,
+    return dys;
+  };
+
+  const { data: deployments, isLoading: dyIsLoading } = useQuery(
+    ["dy"],
+    fetchDeployments,
     {
-      refreshWhenOffline: true,
-      refreshWhenHidden: true,
-      refreshInterval: 0,
+      refetchInterval: 0,
     }
   );
-
-  if (!data && !error)
-    return (
-      <LoadingDots className="fixed inset-0 flex items-center justify-center" />
-    );
 
   const status = (deployStatus: any) => {
     switch (deployStatus) {
@@ -75,6 +74,22 @@ const Project = ({ user, projectId }: any) => {
     }
 
     return "text-gray-400";
+  };
+
+  const logsURL = async (deploy: any) => {
+    const { payload: railwayProjectId } = await jwtDecrypt(
+      project?.railway_project_id,
+      BW_SECRET_KEY
+    );
+
+    const { payload: railwayServiceId } = await jwtDecrypt(
+      project?.railway_service_id,
+      BW_SECRET_KEY
+    );
+
+    router.push(
+      `https://railway.app/project/${railwayProjectId.data}/service/${railwayServiceId.data}?id=${deploy.node.id}`
+    );
   };
 
   return (
@@ -91,9 +106,11 @@ const Project = ({ user, projectId }: any) => {
             <h1 className="text-3xl text-white">{project?.name} Deployments</h1>
           </div>
           <div className="mx-6">
-            {data ? (
-              data.length != 0 ? (
-                data.map((deploy: any) => (
+            {dyIsLoading ? (
+              <LoadingDots className="fixed inset-0 flex items-center justify-center" />
+            ) : deployments ? (
+              deployments.length != 0 ? (
+                deployments.map((deploy: any) => (
                   <div className="rounded-2xl border border-gray-800 overflow-hidden p-5 min-h-72 mb-6">
                     <header className="flex gap-3 justify-between mb-4">
                       <hgroup>
@@ -109,16 +126,18 @@ const Project = ({ user, projectId }: any) => {
                           )}
                         </h2>
                         <h3 className="text-gray-500 mt-1 !leading-tight">
-                          {deploy.node.status == "SUCCESS"
+                          {deploy.node.status === "SUCCESS"
                             ? "The deployment that is live on your production domains."
-                            : deploy.node.status == "FAILED"
+                            : deploy.node.status === "FAILED"
                             ? "The deployment is failed."
-                            : deploy.node.status == "REMOVED"
+                            : deploy.node.status === "REMOVED"
                             ? "The deployment is removed."
+                            : deploy.node.status === "CRASHED"
+                            ? "The deployment is crashed"
                             : "Waiting..."}
                         </h3>
                       </hgroup>
-                      {data.indexOf(deploy) === 0 ? (
+                      {deployments.indexOf(deploy) === 0 ? (
                         <Link
                           className="h-8 px-3.5 text-white rounded-md inline-flex flex-shrink-0 bg-secondary whitespace-nowrap items-center gap-2 transition-colors duration-150 ease-in-out leading-none border border-gray-800 hover:border-gray-700 cursor-pointer"
                           href={`/project/${projectId}/logs`}
@@ -126,7 +145,12 @@ const Project = ({ user, projectId }: any) => {
                           Logs
                         </Link>
                       ) : (
-                        <></>
+                        <a
+                          className="h-8 px-3.5 text-white rounded-md inline-flex flex-shrink-0 bg-secondary whitespace-nowrap items-center gap-2 transition-colors duration-150 ease-in-out leading-none border border-gray-800 hover:border-gray-700 cursor-pointer"
+                          onClick={() => logsURL(deploy)}
+                        >
+                          Logs
+                        </a>
                       )}
                     </header>
 
@@ -141,9 +165,9 @@ const Project = ({ user, projectId }: any) => {
                             size={16}
                           />
                         ) : deploy.node.status != "SUCCESS" ? (
-                          deploy.node.status == "REMOVED" ? (
+                          deploy.node.status === "REMOVED" ? (
                             <ArchiveIcon className="fill-red-700" size={16} />
-                          ) : deploy.node.status == "FAILED" ? (
+                          ) : deploy.node.status === "FAILED" ? (
                             <XCircleIcon className="fill-red-700" size={16} />
                           ) : (
                             <ClockIcon className="fill-gray-400" size={16} />

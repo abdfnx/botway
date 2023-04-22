@@ -20,6 +20,4 @@ COPY --from=bw /root/.botway /root/.botway
 
 COPY . .
 
-RUN deno cache deps.ts
-
 ENTRYPOINT ["deno", "run", "--allow-all", "main.ts"]

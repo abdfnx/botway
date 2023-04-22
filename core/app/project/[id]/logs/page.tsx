@@ -10,7 +10,6 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import useSWR from "swr";
 import { fetcher } from "@/tools/fetch";
 import clsx from "clsx";
 import { jwtDecrypt } from "jose";
@@ -22,6 +21,7 @@ const queryClient = new QueryClient();
 
 const Project = ({ user, projectId }: any) => {
   const router = useRouter();
+
   const fetchProject = async () => {
     const { data: project } = await supabase
       .from("projects")
@@ -40,26 +40,21 @@ const Project = ({ user, projectId }: any) => {
     }
   );
 
-  const deploymentsFetcher = (url: any) =>
-    fetcher(url, {
+  const fetchLogs = async () => {
+    const logs = await fetcher(`/api/deployments/logs?id=${projectId}`, {
       method: "GET",
     });
 
-  const { data, error } = useSWR(
-    `/api/deployments/logs?id=${projectId}`,
-    deploymentsFetcher,
+    return logs;
+  };
+
+  const { data: logs, isLoading: logsIsLoading } = useQuery(
+    ["logs"],
+    fetchLogs,
     {
-      refreshWhenOffline: true,
-      refreshWhenHidden: true,
-      revalidateOnMount: true,
-      refreshInterval: 0,
+      refetchInterval: 1,
     }
   );
-
-  if (!data && !error)
-    return (
-      <LoadingDots className="fixed inset-0 flex items-center justify-center" />
-    );
 
   const openAtRailway = async () => {
     const { payload: railwayProjectId } = await jwtDecrypt(
@@ -73,7 +68,7 @@ const Project = ({ user, projectId }: any) => {
     );
 
     router.push(
-      `https://railway.app/project/${railwayProjectId.data}/service/${railwayServiceId.data}?id=${data.dyId}`
+      `https://railway.app/project/${railwayProjectId.data}/service/${railwayServiceId.data}?id=${logs.dyId}`
     );
   };
 
@@ -103,10 +98,12 @@ const Project = ({ user, projectId }: any) => {
             </button>
           </div>
           <div className="mx-6">
-            <div className="rounded-2xl bg-secondary border border-gray-800 overflow-auto p-5 max-h-fit mb-6">
-              {data ? (
-                data.logs.length != 0 ? (
-                  data.logs.map((deploy: any) => (
+            <div className="rounded-2xl bg-secondary border border-gray-800 overflow-auto p-5 max-h-[400px] mb-6">
+              {logsIsLoading ? (
+                <LoadingDots />
+              ) : logs ? (
+                logs.logs.length != 0 ? (
+                  logs.logs.map((deploy: any) => (
                     <div>
                       <p className="font-mono text-xs text-white whitespace-nowrap">
                         <span
