@@ -10,6 +10,9 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import { useState } from "react";
+import { Integrations } from "@/supabase/integrations/data";
+import { IntegrationsGird } from "./IntegrationsGird";
 
 export const revalidate = 0;
 
@@ -37,6 +40,16 @@ const Project = ({ user, projectId }: any) => {
     }
   );
 
+  const integrationsByCategory: { [category: string]: any } = {};
+
+  Integrations.forEach(
+    (p) =>
+      (integrationsByCategory[p.category] = [
+        ...(integrationsByCategory[p.category] ?? []),
+        p,
+      ])
+  );
+
   return (
     <>
       {projectIsLoading ? (
@@ -52,7 +65,9 @@ const Project = ({ user, projectId }: any) => {
           <div className="mx-6 my-16 flex items-center space-x-6">
             <h1 className="text-3xl text-white">Integrations</h1>
           </div>
-          <div className="mx-6"></div>
+          <div className="mx-6">
+            <IntegrationsGird integrationsByCategory={integrationsByCategory} />
+          </div>
         </ProjectLayout>
       )}
     </>
