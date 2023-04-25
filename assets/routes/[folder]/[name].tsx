@@ -2,11 +2,21 @@ import { Handlers, HandlerContext } from "$fresh/server.ts";
 
 export const handler: Handlers = {
   async GET(_, ctx: HandlerContext) {
-    const { name } = ctx.params;
+    const { folder, name } = ctx.params;
 
-    const imageBuf = await Deno.readFile(`${Deno.cwd()}/${name}`);
+    const response = await fetch(
+      `${Deno.env.get(
+        "NEXT_PUBLIC_SUPABASE_URL"
+      )}/storage/v1/object/public/cdn/${folder}/${name}`
+    );
 
-    const resp = await new Response(imageBuf);
+    if (!response.ok) throw new Error("Response not OK");
+
+    const r = response.body?.getReader;
+
+    const buf = new Uint8Array(await response.arrayBuffer());
+
+    const resp = await new Response(buf);
 
     if (name.includes("svg")) {
       resp.headers.set("Content-Type", "image/svg+xml");
