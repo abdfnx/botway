@@ -3,12 +3,12 @@ import { Handlers } from "$fresh/server.ts";
 
 export const handler: Handlers = {
   async GET(_, ctx) {
-    const { name } = ctx.params;
+    const { slug } = ctx.params;
 
     const { data, error } = await supabase
       .from("main")
       .select("*")
-      .eq("name", name)
+      .eq("slug", slug)
       .single();
 
     if (error) {

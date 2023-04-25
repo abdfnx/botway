@@ -1,30 +1,21 @@
-import { supabase } from "../../supabase/config.ts";
-import { Handlers, PageProps } from "$fresh/server.ts";
+import { Handlers, HandlerContext } from "$fresh/server.ts";
 
 export const handler: Handlers = {
-  async GET(_, ctx) {
-    const { folder, name } = ctx.params;
+  async GET(_, ctx: HandlerContext) {
+    const { name } = ctx.params;
 
-    const { data, error } = supabase.storage
-      .from("cdn")
-      .getPublicUrl(`${folder}/${name}`);
+    const imageBuf = await Deno.readFile(`${Deno.cwd()}/${name}`);
 
-    if (error) {
-      return ctx.render(null);
+    const resp = await new Response(imageBuf);
+
+    if (name.includes("svg")) {
+      resp.headers.set("Content-Type", "image/svg+xml");
+    } else if (name.includes("png")) {
+      resp.headers.set("Content-Type", "image/png");
+    } else {
+      resp.headers.set("Content-Type", "application/octet-stream");
     }
 
-    return ctx.render(data.publicUrl);
+    return resp;
   },
 };
-
-export default function Page({ data }: PageProps) {
-  if (!data) {
-    return <h1>Not found</h1>;
-  }
-
-  return (
-    <iframe src={data} className="w-full h-full min-h-screen">
-      <p>This browser does not support file type!</p>
-    </iframe>
-  );
-}

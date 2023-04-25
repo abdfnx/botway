@@ -71,3 +71,8 @@ jobs:
           project: "cdn-botway"
           entrypoint: ./main.ts
           root: ./assets
+      
+      - name: Test Botway Assets
+        run: |
+          curl -fsSL https://cdn-botway.deno.dev/icons
+          curl -fsSL https://cdn-botway.deno.dev/fonts
