@@ -66,7 +66,10 @@ const Project = ({ user, projectId }: any) => {
             <h1 className="text-3xl text-white">Integrations</h1>
           </div>
           <div className="mx-6">
-            <IntegrationsGird integrationsByCategory={integrationsByCategory} />
+            <IntegrationsGird
+              integrationsByCategory={integrationsByCategory}
+              projectId={projectId}
+            />
           </div>
         </ProjectLayout>
       )}

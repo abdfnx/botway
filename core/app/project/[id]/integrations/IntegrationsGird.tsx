@@ -1,7 +1,9 @@
 export const IntegrationsGird = ({
   integrationsByCategory,
+  projectId,
 }: {
   integrationsByCategory: { [category: string]: any };
+  projectId: string;
 }) => {
   return (
     <>
@@ -16,7 +18,7 @@ export const IntegrationsGird = ({
             {integrationsByCategory[category].map((p: any) => (
               <a
                 className="focus:outline-none relative h-44 flex flex-col px-6 pt-6 pb-4 bg-bwdefualt hover:bg-secondary border border-gray-800 transition-all duration-200 rounded-2xl"
-                href={`/integrations/${p.name.toLowerCase()}`}
+                href={`/project/${projectId}/integrations/${p.name.toLowerCase()}`}
                 key={p.name.toLowerCase()}
               >
                 <div className="relative">
