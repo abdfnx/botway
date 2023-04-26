@@ -10,7 +10,6 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { Integrations } from "@/supabase/integrations/data";
 import { IntegrationsGird } from "./IntegrationsGird";
 
 export const revalidate = 0;
@@ -41,17 +40,38 @@ const Project = ({ user, projectId }: any) => {
 
   const integrationsByCategory: { [category: string]: any } = {};
 
-  Integrations.forEach(
-    (p) =>
-      (integrationsByCategory[p.category] = [
-        ...(integrationsByCategory[p.category] ?? []),
-        p,
+  const fetchIntegrations = async () => {
+    const { data: project } = await supabase
+      .from("projects")
+      .select("*")
+      .eq("id", projectId)
+      .single();
+
+    return project;
+  };
+
+  const { data: integrations, isLoading: integrationsIsLoading } = useQuery(
+    ["integrations"],
+    fetchIntegrations,
+    {
+      refetchInterval: 1,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
+      refetchIntervalInBackground: true,
+    }
+  );
+
+  integrations?.forEach(
+    (i: any) =>
+      (integrationsByCategory[i.category] = [
+        ...(integrationsByCategory[i.category] ?? []),
+        i,
       ])
   );
 
   return (
     <>
-      {projectIsLoading ? (
+      {projectIsLoading || integrationsIsLoading ? (
         <LoadingDots className="fixed inset-0 flex items-center justify-center" />
       ) : (
         <ProjectLayout
