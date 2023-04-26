@@ -10,7 +10,6 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { useState } from "react";
 import { Integrations } from "@/supabase/integrations/data";
 import { IntegrationsGird } from "./IntegrationsGird";
 
