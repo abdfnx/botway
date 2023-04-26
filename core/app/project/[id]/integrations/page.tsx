@@ -10,7 +10,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { IntegrationsGird } from "./IntegrationsGird";
+import { IntegrationsGird } from "@/components/Grid/IntegrationsGird";
 import { fetcher } from "@/tools/fetch";
 
 export const revalidate = 0;
