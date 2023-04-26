@@ -11,6 +11,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { IntegrationsGird } from "./IntegrationsGird";
+import { fetcher } from "@/tools/fetch";
 
 export const revalidate = 0;
 
@@ -41,13 +42,11 @@ const Project = ({ user, projectId }: any) => {
   const integrationsByCategory: { [category: string]: any } = {};
 
   const fetchIntegrations = async () => {
-    const { data: project } = await supabase
-      .from("projects")
-      .select("*")
-      .eq("id", projectId)
-      .single();
+    const integrations = await fetcher(`/api/integrations`, {
+      method: "GET",
+    });
 
-    return project;
+    return integrations;
   };
 
   const { data: integrations, isLoading: integrationsIsLoading } = useQuery(
@@ -71,7 +70,7 @@ const Project = ({ user, projectId }: any) => {
 
   return (
     <>
-      {projectIsLoading || integrationsIsLoading ? (
+      {projectIsLoading ? (
         <LoadingDots className="fixed inset-0 flex items-center justify-center" />
       ) : (
         <ProjectLayout
@@ -85,10 +84,14 @@ const Project = ({ user, projectId }: any) => {
             <h1 className="text-3xl text-white">Integrations</h1>
           </div>
           <div className="mx-6">
-            <IntegrationsGird
-              integrationsByCategory={integrationsByCategory}
-              projectId={projectId}
-            />
+            {integrationsIsLoading ? (
+              <LoadingDots className="fixed inset-0 flex items-center justify-center" />
+            ) : (
+              <IntegrationsGird
+                integrationsByCategory={integrationsByCategory}
+                projectId={projectId}
+              />
+            )}
           </div>
         </ProjectLayout>
       )}

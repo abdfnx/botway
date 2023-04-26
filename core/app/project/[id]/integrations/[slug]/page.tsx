@@ -10,13 +10,13 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { Integrations } from "@/supabase/integrations/data";
 import {
   ArrowUpRightIcon,
   FileDirectoryIcon,
   MarkGithubIcon,
 } from "@primer/octicons-react";
 import { marked } from "marked";
+import { fetcher } from "@/tools/fetch";
 
 export const revalidate = 0;
 
@@ -44,11 +44,28 @@ const Project = ({ user, projectId, slug }: any) => {
     }
   );
 
-  const int = Integrations.find((intx) => intx.name.toLowerCase() == slug);
+  const fetchIntegration = async () => {
+    const intx = await fetcher(`/api/integrations/x?slug=${slug}`, {
+      method: "GET",
+    });
+
+    return intx;
+  };
+
+  const { data: int, isLoading: integrationsIsLoading } = useQuery(
+    ["integration"],
+    fetchIntegration,
+    {
+      refetchInterval: 1,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
+      refetchIntervalInBackground: true,
+    }
+  );
 
   return (
     <>
-      {projectIsLoading ? (
+      {projectIsLoading || integrationsIsLoading ? (
         <LoadingDots className="fixed inset-0 flex items-center justify-center" />
       ) : (
         <ProjectLayout
@@ -81,10 +98,10 @@ const Project = ({ user, projectId, slug }: any) => {
                   <div className="pt-16" />
                   <div className="relative min-h-[420px] lg:min-h-[540px] py-16 w-full rounded-3xl border border-gray-800 bg-secondary flex flex-col justify-center items-center">
                     <div className="grid gap-4 items-center justify-items-center grid-cols-1">
-                      <article className="prose prose-gray prose-headings:text-white prose-p:text-gray-400 prose-a:text-blue-700 prose-strong:text-white prose-ol:text-white prose-li:text-white prose-ul:text-white prose-pre:bg-bwdefualt prose-pre:border prose-pre:rounded-2xl prose-pre:border-gray-800 prose-blockquote:border-l-4 prose-blockquote:border-gray-800 prose-hr:border prose-hr:border-gray-800">
+                      <article className="prose prose-gray prose-headings:text-white prose-p:text-gray-400 prose-a:text-blue-700 prose-strong:text-white prose-ol:text-white prose-li:text-white prose-ul:text-white prose-pre:bg-bwdefualt prose-pre:border prose-pre:rounded-2xl prose-pre:border-gray-800 prose-blockquote:border-l-4 prose-blockquote:border-gray-800 prose-hr:border prose-hr:border-gray-800 prose-code:bg-bwdefualt prose-code:rounded prose-code:text-gray-100">
                         <div
                           dangerouslySetInnerHTML={{
-                            __html: marked.parse(int?.overview || ""),
+                            __html: marked.parse(int?.overview),
                           }}
                         />
                       </article>
@@ -92,9 +109,7 @@ const Project = ({ user, projectId, slug }: any) => {
                   </div>
                 </div>
                 <div className="w-full lg:w-3/12 lg:mt-6 lg:sticky lg:top-[48px] align-self[flex-start] flex flex-col">
-                  <a
-                    className="flex items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none lg:!flex bg-blue-700 border-gray-800 text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3"
-                  >
+                  <a className="flex items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none lg:!flex bg-blue-700 border-gray-800 text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3">
                     <span className="inline-block">Add {int?.name}</span>
                   </a>
                   <div className="mt-16 flex flex-col space-y-6">
@@ -135,7 +150,12 @@ const Project = ({ user, projectId, slug }: any) => {
                       </div>
                       <div className="ml-2 text-gray-400 flex space-x-6 items-center">
                         <MarkGithubIcon size={18} />
-                        <a href={int?.repo} target="_blank" rel="noopener noreferrer" className="text-sm">
+                        <a
+                          href={int?.repo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm"
+                        >
                           Repo
                         </a>
                       </div>
