@@ -51,19 +51,14 @@ jobs:
           cp $DARWIN_TARGET_PATH/botway-installer ./installer-macos && \
           cp ./installer-macos ../assets/static/installers
 
-      # - name: Build Botway UI App
-      #   run: |
-      #     npm i -g pnpm@latest
-      #     pnpm i
-      #     go get -u
-      #     go run ./scripts/dot/main.go >> ./app/.env
-      #     export NEXT_PUBLIC_BW_SECRET_KEY=$(cat ./app/.env)
-      #     pnpm build
-      #     cd app
-      #     cp ../scripts/dot/main.go .
-      #     zip -r bwui-latest.zip .next package.json main.go
-      #     mkdir ../assets/static/app
-      #     cp bwui-latest.zip ../assets/static/app
+      - name: Set up Deno
+        uses: denoland/setup-deno@v1
+
+      - name: Get Static Files
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        run: deno task add-data
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
