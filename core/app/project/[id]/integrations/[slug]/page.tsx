@@ -104,6 +104,7 @@ const Project = ({ user, projectId, slug }: any) => {
                         <a
                           href={int?.website}
                           target="_blank"
+                          rel="noopener noreferrer"
                           className="text-sm"
                         >
                           Website
@@ -126,6 +127,7 @@ const Project = ({ user, projectId, slug }: any) => {
                         <a
                           href={`https://twitter.com/${int?.twitter}`}
                           target="_blank"
+                          rel="noopener noreferrer"
                           className="text-sm text-[#1DA1F2]"
                         >
                           {int?.twitter}
@@ -133,7 +135,7 @@ const Project = ({ user, projectId, slug }: any) => {
                       </div>
                       <div className="ml-2 text-gray-400 flex space-x-6 items-center">
                         <MarkGithubIcon size={18} />
-                        <a href={int?.repo} target="_blank" className="text-sm">
+                        <a href={int?.repo} target="_blank" rel="noopener noreferrer" className="text-sm">
                           Repo
                         </a>
                       </div>
