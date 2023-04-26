@@ -1,3 +1,3 @@
-# Botway Assets CDN 📦
+# Botway CDN 📦
 
 > Built with Deno Fresh 🦕

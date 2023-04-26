@@ -1,6 +1,6 @@
 import { supabase } from "./supabase/config.ts";
 
-const folders = ["icons", "fonts", "simple", "screenshots"];
+const folders = ["icons", "images", "fonts", "simple", "screenshots"];
 
 export const add = () => {
   folders.forEach(async (v) => {
