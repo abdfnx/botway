@@ -85,7 +85,7 @@ const Project = ({ user, projectId, slug }: any) => {
                   <div className="flex flex-col items-center space-y-4 lg:space-y-0 lg:flex-row lg:space-x-8">
                     <img
                       alt={int?.name}
-                      src={`https://cdn-botway.deno.dev/icons/${int?.name.toLowerCase()}.svg`}
+                      src={`https://cdn-botway.deno.dev/icons/${int?.slug}.svg`}
                       className="h-16 w-16 rounded-sm"
                     />
                     <div className="text-center lg:text-left space-y-4 lg:space-y-3 flex flex-col">
@@ -94,10 +94,13 @@ const Project = ({ user, projectId, slug }: any) => {
                       </p>
                       <p className="text-base text-gray-400">{int?.desc}</p>
                     </div>
+                    <a className="flex md:!hidden items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none bg-blue-700 border-gray-800 text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3">
+                      <span className="inline-block">Add {int?.name}</span>
+                    </a>
                   </div>
                   <div className="pt-16" />
                   <div className="relative min-h-[420px] lg:min-h-[540px] py-16 w-full rounded-3xl border border-gray-800 bg-secondary flex flex-col justify-center items-center">
-                    <div className="grid gap-4 items-center justify-items-center grid-cols-1">
+                    <div className="grid gap-4 items-center justify-items-center grid-cols-1 px-10">
                       <article className="prose prose-gray prose-headings:text-white prose-p:text-gray-400 prose-a:text-blue-700 prose-strong:text-white prose-ol:text-white prose-li:text-white prose-ul:text-white prose-pre:bg-bwdefualt prose-pre:border prose-pre:rounded-2xl prose-pre:border-gray-800 prose-blockquote:border-l-4 prose-blockquote:border-gray-800 prose-hr:border prose-hr:border-gray-800 prose-code:bg-bwdefualt prose-code:rounded prose-code:text-gray-100">
                         <div
                           dangerouslySetInnerHTML={{
@@ -109,7 +112,7 @@ const Project = ({ user, projectId, slug }: any) => {
                   </div>
                 </div>
                 <div className="w-full lg:w-3/12 lg:mt-6 lg:sticky lg:top-[48px] align-self[flex-start] flex flex-col">
-                  <a className="flex items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none lg:!flex bg-blue-700 border-gray-800 text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3">
+                  <a className="hidden md:flex items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none lg:!flex bg-blue-700 border-gray-800 text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3">
                     <span className="inline-block">Add {int?.name}</span>
                   </a>
                   <div className="mt-16 flex flex-col space-y-6">

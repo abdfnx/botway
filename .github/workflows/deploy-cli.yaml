@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy To Botway CLI
 
 on:
   push:
@@ -9,7 +9,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  deploy-botway-cdn:
+  deploy-botway-cli:
     runs-on: ubuntu-latest
 
     permissions:
@@ -51,18 +51,9 @@ jobs:
           cp $DARWIN_TARGET_PATH/botway-installer ./installer-macos && \
           cp ./installer-macos ../assets/static/installers
 
-      - name: Set up Deno
-        uses: denoland/setup-deno@v1
-
-      - name: Get Static Files
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-        run: cd assets && deno task add-data
-
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "cdn-botway"
+          project: "cli-botway"
           entrypoint: ./main.ts
           root: ./assets

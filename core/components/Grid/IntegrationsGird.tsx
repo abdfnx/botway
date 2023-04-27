@@ -20,15 +20,15 @@ export const IntegrationsGird = ({
               {integrationsByCategory[category].map((p: any) => (
                 <a
                   className="focus:outline-none relative h-44 flex flex-col px-6 pt-6 pb-4 bg-bwdefualt hover:bg-secondary border border-gray-800 transition-all duration-200 rounded-2xl"
-                  href={`/project/${projectId}/integrations/${p.name.toLowerCase()}`}
-                  key={p.name.toLowerCase()}
+                  href={`/project/${projectId}/integrations/${p.slug}`}
+                  key={p.slug}
                 >
                   <div className="relative">
                     <img
                       width={20}
                       height={20}
                       className="w-10 h-10"
-                      src={`https://cdn-botway.deno.dev/icons/${p.name.toLowerCase()}.svg`}
+                      src={`https://cdn-botway.deno.dev/icons/${p.slug}.svg`}
                       alt={p.name}
                     />
                   </div>
