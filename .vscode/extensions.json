@@ -22,6 +22,8 @@
     "graphql.vscode-graphql",
     "prisma.prisma",
     "redhat.vscode-xml",
-    "bbenoist.nix"
+    "bbenoist.nix",
+    "bungcip.better-toml",
+    "rust-lang.rust-analyzer"
   ]
 }

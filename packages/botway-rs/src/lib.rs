@@ -3,13 +3,13 @@
 pub mod botway_rs;
 
 extern crate dirs;
+use rustc_serialize::json::Json;
+use snailquote::unescape;
 use std::fs;
-use yaml_rust::{YamlLoader};
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
-use rustc_serialize::json::Json;
-use snailquote::unescape;
+use yaml_rust::YamlLoader;
 
 fn get_home_dir() -> String {
     let home_dir = dirs::home_dir().unwrap();
@@ -34,8 +34,8 @@ fn return_path() -> String {
 }
 
 fn get_bot_info(value: &str) -> String {
-    let bot_config = fs::read_to_string(".botway.yaml")
-        .expect("ERROR: Botway config file not found");
+    let bot_config =
+        fs::read_to_string(".botway.yaml").expect("ERROR: Botway config file not found");
 
     let data = YamlLoader::load_from_str(&bot_config).unwrap();
 
@@ -55,9 +55,21 @@ pub fn get(value_to_get: &str) -> String {
     let json = Json::from_str(&return_path()).unwrap();
 
     if value_to_get == "token" {
-        unescape(&json.find_path(&["botway", "bots", &get_bot_info("name"), "bot_token"]).unwrap().to_string()).unwrap()
+        unescape(
+            &json
+                .find_path(&["botway", "bots", &get_bot_info("name"), "bot_token"])
+                .unwrap()
+                .to_string(),
+        )
+        .unwrap()
     } else if value_to_get == "app_id" {
-        unescape(&json.find_path(&["botway", "bots", &get_bot_info("name"), "bot_app_id"]).unwrap().to_string()).unwrap()
+        unescape(
+            &json
+                .find_path(&["botway", "bots", &get_bot_info("name"), "bot_app_id"])
+                .unwrap()
+                .to_string(),
+        )
+        .unwrap()
     } else {
         "ERROR: Invalid value to get".to_string()
     }
@@ -77,6 +89,19 @@ pub fn get_guild_id(server_name: &str) -> String {
     } else {
         let json = Json::from_str(&return_path()).unwrap();
 
-        unescape(&json.find_path(&["botway", "bots", &get_bot_info("name"), "guilds", server_name, "server_id"]).unwrap().to_string()).unwrap()
+        unescape(
+            &json
+                .find_path(&[
+                    "botway",
+                    "bots",
+                    &get_bot_info("name"),
+                    "guilds",
+                    server_name,
+                    "server_id",
+                ])
+                .unwrap()
+                .to_string(),
+        )
+        .unwrap()
     }
 }

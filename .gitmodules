@@ -18,3 +18,7 @@
 	path = templates
 	url = https://github.com/botwayorg/templates
 	branch = main
+[submodule "strg"]
+	path = strg
+	url = https://github.com/botwayorg/strg
+	branch = main
