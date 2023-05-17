@@ -13,11 +13,11 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "start": "pnpm build && turbo run start --parallel",
-    "format": "prettier *.json *.yaml *.md ./core ./assets ./create-botway-bot ./packages -w"
+    "format": "prettier *.json *.yaml *.md ./core ./assets ./create-botway-bot ./packages ./strg -w"
   },
   "packageManager": "pnpm@8.3.0",
   "devDependencies": {
     "prettier": "^2.8.8",
-    "turbo": "^1.9.4"
+    "turbo": "^1.9.6"
   }
 }

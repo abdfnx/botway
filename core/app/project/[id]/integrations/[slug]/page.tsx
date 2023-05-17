@@ -17,12 +17,21 @@ import {
 } from "@primer/octicons-react";
 import { marked } from "marked";
 import { fetcher } from "@/tools/fetch";
+import { Fragment, useState } from "react";
+import { toast } from "react-hot-toast";
+import { toastStyle } from "@/tools/toast-style";
+import { Dialog, Transition } from "@headlessui/react";
+import { Field, Form, Formik } from "formik";
+import { Button } from "@/components/Button";
 
 export const revalidate = 0;
 
 const queryClient = new QueryClient();
 
 const Project = ({ user, projectId, slug }: any) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const fetchProject = async () => {
     const { data: project } = await supabase
       .from("projects")
@@ -63,6 +72,64 @@ const Project = ({ user, projectId, slug }: any) => {
     }
   );
 
+  async function addIntegration(formData: any) {
+    try {
+      setIsLoading(true);
+
+      let vars = {};
+
+      if (int.variables) {
+        if (int.variables.length === 1) {
+          vars = { v1: formData.v1 };
+        } else {
+          vars = { v1: formData.v1, v2: formData.v2 };
+        }
+      }
+
+      const body = {
+        name: int.name,
+        slug: int.slug,
+        template_repo: int.template_repo,
+        template_code: int.template_code,
+        is_plugin: int.is_plugin,
+        vars,
+      };
+
+      const newBot = await fetcher("/api/integrations/new", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (newBot.message === "Success") {
+        toast.success(
+          "You have successfully created a new bot project",
+          toastStyle
+        );
+      } else {
+        toast.error(newBot.error, toastStyle);
+      }
+    } catch (e: any) {
+      toast.error(e.message, toastStyle);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const check = (int: any) => {
+    if (!int.is_plugin) {
+      setOpen(true);
+    } else {
+      addIntegration({
+        name: int.title,
+        slug: int.slug,
+        template_repo: int.template_repo,
+        template_code: int.template_code,
+        is_plugin: int.is_plugin,
+      });
+    }
+  };
+
   return (
     <>
       {projectIsLoading || integrationsIsLoading ? (
@@ -94,7 +161,10 @@ const Project = ({ user, projectId, slug }: any) => {
                       </p>
                       <p className="text-base text-gray-400">{int?.desc}</p>
                     </div>
-                    <a className="flex md:!hidden items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none bg-blue-700 border-gray-800 text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3">
+                    <a
+                      onClick={() => check(int)}
+                      className="flex md:!hidden cursor-pointer items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none bg-blue-700 border-gray-800 text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3"
+                    >
                       <span className="inline-block">Add {int?.name}</span>
                     </a>
                   </div>
@@ -112,7 +182,10 @@ const Project = ({ user, projectId, slug }: any) => {
                   </div>
                 </div>
                 <div className="w-full lg:w-3/12 lg:mt-6 lg:sticky lg:top-[48px] align-self[flex-start] flex flex-col">
-                  <a className="hidden md:flex items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none lg:!flex bg-blue-700 border-gray-800 text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3">
+                  <a
+                    onClick={() => check(int)}
+                    className="hidden md:flex cursor-pointer items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none lg:!flex bg-blue-700 border-gray-800 text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3"
+                  >
                     <span className="inline-block">Add {int?.name}</span>
                   </a>
                   <div className="mt-16 flex flex-col space-y-6">
@@ -172,6 +245,111 @@ const Project = ({ user, projectId, slug }: any) => {
               </div>
             </div>
           </div>
+
+          <Transition.Root show={open} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={setOpen}>
+              <Transition.Child
+                as={Fragment}
+                enter="ease-in-out duration-500"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in-out duration-500"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="fixed inset-0 bg-bwdefualt bg-opacity-50 transition-opacity" />
+              </Transition.Child>
+
+              <div className="fixed inset-0 overflow-hidden">
+                <div className="absolute inset-0 overflow-hidden">
+                  <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+                    <Transition.Child
+                      as={Fragment}
+                      enter="transform transition ease-in-out duration-500 sm:duration-700"
+                      enterFrom="translate-x-full"
+                      enterTo="translate-x-0"
+                      leave="transform transition ease-in-out duration-500 sm:duration-700"
+                      leaveFrom="translate-x-0"
+                      leaveTo="translate-x-full"
+                    >
+                      <Dialog.Panel className="pointer-events-auto relative w-screen max-w-md">
+                        <Transition.Child
+                          as={Fragment}
+                          enter="ease-in-out duration-200"
+                          enterFrom="opacity-0"
+                          enterTo="opacity-100"
+                          leave="ease-in-out duration-500"
+                          leaveFrom="opacity-100"
+                          leaveTo="opacity-0"
+                        >
+                          <div className="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4"></div>
+                        </Transition.Child>
+                        <div className="flex h-full flex-col overflow-y-scroll bg-secondary border-l border-gray-800 py-4 shadow-xl">
+                          <div className="px-4 border-b border-gray-800 sm:px-6">
+                            <Dialog.Title className="text-lg font-semibold text-white leading-6 pb-4">
+                              Add Integration To My Project
+                            </Dialog.Title>
+                          </div>
+                          <div className="relative mt-4 flex-1 px-4 sm:px-6">
+                            <div className="my-4 max-w-4xl space-y-8">
+                              <Formik
+                                initialValues={{
+                                  slug: int.slug,
+                                  v1: "",
+                                  v2: "",
+                                }}
+                                onSubmit={addIntegration}
+                              >
+                                {({ errors }) => (
+                                  <>
+                                    <Form className="column w-full">
+                                      <div>
+                                        {int.variables ? (
+                                          int.variables.map((varx: any) => (
+                                            <>
+                                              <label className="text-white col-span-12 text-base lg:col-span-5">
+                                                {varx.name}
+                                              </label>
+
+                                              <div className="pt-2" />
+
+                                              <Field
+                                                className="input"
+                                                id={`v${varx.index}`}
+                                                name={`v${varx.index}`}
+                                                type="text"
+                                              />
+
+                                              <div className="pb-2" />
+                                            </>
+                                          ))
+                                        ) : (
+                                          <></>
+                                        )}
+                                      </div>
+                                      <br />
+
+                                      <Button
+                                        htmlType="submit"
+                                        type="success"
+                                        loading={isLoading}
+                                      >
+                                        Add
+                                      </Button>
+                                    </Form>
+                                  </>
+                                )}
+                              </Formik>
+                            </div>
+                          </div>
+                        </div>
+                      </Dialog.Panel>
+                    </Transition.Child>
+                  </div>
+                </div>
+              </div>
+            </Dialog>
+          </Transition.Root>
         </ProjectLayout>
       )}
     </>

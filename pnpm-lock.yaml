@@ -7,8 +7,8 @@ importers:
         specifier: ^2.8.8
         version: 2.8.8
       turbo:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: ^1.9.6
+        version: 1.9.6
 
   core:
     dependencies:
@@ -20,13 +20,13 @@ importers:
         version: 19.1.0(react@18.2.0)
       "@supabase/auth-helpers-nextjs":
         specifier: ^0.6.1
-        version: 0.6.1(@supabase/supabase-js@2.21.0)
+        version: 0.6.1(@supabase/supabase-js@2.22.0)
       "@supabase/supabase-js":
-        specifier: ^2.21.0
-        version: 2.21.0(encoding@0.1.13)
+        specifier: ^2.22.0
+        version: 2.22.0(encoding@0.1.13)
       "@tanstack/react-query":
-        specifier: ^4.29.5
-        version: 4.29.5(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^4.29.7
+        version: 4.29.7(react-dom@18.2.0)(react@18.2.0)
       ajv:
         specifier: ^8.12.0
         version: 8.12.0
@@ -122,8 +122,8 @@ importers:
         specifier: ^4.3.0
         version: 4.3.0
       "@types/node":
-        specifier: ^20.1.3
-        version: 20.1.3
+        specifier: ^20.1.7
+        version: 20.1.7
       "@types/react":
         specifier: 18.2.6
         version: 18.2.6
@@ -236,10 +236,10 @@ packages:
       }
     dev: false
 
-  /@floating-ui/dom@1.2.7:
+  /@floating-ui/dom@1.2.8:
     resolution:
       {
-        integrity: sha512-DyqylONj1ZaBnzj+uBnVfzdjjCkFCL2aA9ESHLyUOGSqb03RpbLMImP1ekIQXYs4KLk9jAjJfZAU8hXfWSahEg==,
+        integrity: sha512-XLwhYV90MxiHDq6S0rzFZj00fnDM+A1R9jhSioZoMsa7G0Q0i+Q4x40ajR8FHSdYDE1bgjG45mIWe6jtv9UPmg==,
       }
     dependencies:
       "@floating-ui/core": 1.2.6
@@ -254,7 +254,7 @@ packages:
       react: ">=16.8.0"
       react-dom: ">=16.8.0"
     dependencies:
-      "@floating-ui/dom": 1.2.7
+      "@floating-ui/dom": 1.2.8
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
@@ -506,7 +506,7 @@ packages:
       }
     engines: { node: ">= 14" }
     dependencies:
-      "@octokit/auth-app": 4.0.10(encoding@0.1.13)
+      "@octokit/auth-app": 4.0.12(encoding@0.1.13)
       "@octokit/auth-unauthenticated": 3.0.4
       "@octokit/core": 4.2.0(encoding@0.1.13)
       "@octokit/oauth-app": 4.2.1(encoding@0.1.13)
@@ -517,21 +517,20 @@ packages:
       - encoding
     dev: false
 
-  /@octokit/auth-app@4.0.10(encoding@0.1.13):
+  /@octokit/auth-app@4.0.12(encoding@0.1.13):
     resolution:
       {
-        integrity: sha512-cLFDd7Z0TkBB0BLt3rWXNS5f2eTeAjzG9iQlFQ6ttNPaXNdYMtnQmr2NBDFq3WnZFSct9dpSdFaVuquRrCY67w==,
+        integrity: sha512-4iwQ+UrmJDW4AOJwaTmptuCa0bXTKrVaaZL7KirUq5MKLWq+xcSr7e8Ha8Kf7Cq8CXVpt+W5i3kNVS6N8R2sUA==,
       }
     engines: { node: ">= 14" }
     dependencies:
       "@octokit/auth-oauth-app": 5.0.5(encoding@0.1.13)
       "@octokit/auth-oauth-user": 2.1.1(encoding@0.1.13)
-      "@octokit/request": 6.2.3(encoding@0.1.13)
+      "@octokit/request": 6.2.4(encoding@0.1.13)
       "@octokit/request-error": 3.0.3
       "@octokit/types": 9.2.2
-      "@types/lru-cache": 5.1.1
       deprecation: 2.3.1
-      lru-cache: 6.0.0
+      lru-cache: 9.1.1
       universal-github-app-jwt: 1.1.1
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
@@ -547,7 +546,7 @@ packages:
     dependencies:
       "@octokit/auth-oauth-device": 4.0.4(encoding@0.1.13)
       "@octokit/auth-oauth-user": 2.1.1(encoding@0.1.13)
-      "@octokit/request": 6.2.3(encoding@0.1.13)
+      "@octokit/request": 6.2.4(encoding@0.1.13)
       "@octokit/types": 9.2.2
       "@types/btoa-lite": 1.0.0
       btoa-lite: 1.0.0
@@ -564,7 +563,7 @@ packages:
     engines: { node: ">= 14" }
     dependencies:
       "@octokit/oauth-methods": 2.0.5(encoding@0.1.13)
-      "@octokit/request": 6.2.3(encoding@0.1.13)
+      "@octokit/request": 6.2.4(encoding@0.1.13)
       "@octokit/types": 9.2.2
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
@@ -580,7 +579,7 @@ packages:
     dependencies:
       "@octokit/auth-oauth-device": 4.0.4(encoding@0.1.13)
       "@octokit/oauth-methods": 2.0.5(encoding@0.1.13)
-      "@octokit/request": 6.2.3(encoding@0.1.13)
+      "@octokit/request": 6.2.4(encoding@0.1.13)
       "@octokit/types": 9.2.2
       btoa-lite: 1.0.0
       universal-user-agent: 6.0.0
@@ -618,7 +617,7 @@ packages:
     dependencies:
       "@octokit/auth-token": 3.0.3
       "@octokit/graphql": 5.0.5(encoding@0.1.13)
-      "@octokit/request": 6.2.3(encoding@0.1.13)
+      "@octokit/request": 6.2.4(encoding@0.1.13)
       "@octokit/request-error": 3.0.3
       "@octokit/types": 9.2.2
       before-after-hook: 2.2.3
@@ -646,7 +645,7 @@ packages:
       }
     engines: { node: ">= 14" }
     dependencies:
-      "@octokit/request": 6.2.3(encoding@0.1.13)
+      "@octokit/request": 6.2.4(encoding@0.1.13)
       "@octokit/types": 9.2.2
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
@@ -689,7 +688,7 @@ packages:
     engines: { node: ">= 14" }
     dependencies:
       "@octokit/oauth-authorization-url": 5.0.0
-      "@octokit/request": 6.2.3(encoding@0.1.13)
+      "@octokit/request": 6.2.4(encoding@0.1.13)
       "@octokit/request-error": 3.0.3
       "@octokit/types": 9.2.2
       btoa-lite: 1.0.0
@@ -697,10 +696,10 @@ packages:
       - encoding
     dev: false
 
-  /@octokit/openapi-types@17.1.2:
+  /@octokit/openapi-types@17.2.0:
     resolution:
       {
-        integrity: sha512-OaS7Ol4Y+U50PbejfzQflGWRMxO04nYWO5ZBv6JerqMKE2WS/tI9VoVDDPXHBlRMGG2fOdKwtVGlFfc7AVIstw==,
+        integrity: sha512-MazrFNx4plbLsGl+LFesMo96eIXkFgEtaKbnNpdh4aQ0VM10aoylFsTYP1AEjkeoRNZiiPe3T6Gl2Hr8dJWdlQ==,
       }
     dev: false
 
@@ -745,10 +744,10 @@ packages:
       bottleneck: 2.19.5
     dev: false
 
-  /@octokit/plugin-throttling@5.2.0(@octokit/core@4.2.0):
+  /@octokit/plugin-throttling@5.2.2(@octokit/core@4.2.0):
     resolution:
       {
-        integrity: sha512-qWYvVIS1aRC3hN4a0ICWUp51IolHIn7E4iri2AKjbExJaovMDvRtae4nGoxG5pP6+WATk7JZ5epOJobFbGYV1w==,
+        integrity: sha512-oRg6BJSrj0v/Rz4segpJCAGxa2IjK82YOkTyHtIzxAt3sjF++y7bRe+RJbwSi7YEZpybiMNI9W/y0xL4UAC3jw==,
       }
     engines: { node: ">= 14" }
     peerDependencies:
@@ -771,10 +770,10 @@ packages:
       once: 1.4.0
     dev: false
 
-  /@octokit/request@6.2.3(encoding@0.1.13):
+  /@octokit/request@6.2.4(encoding@0.1.13):
     resolution:
       {
-        integrity: sha512-TNAodj5yNzrrZ/VxP+H5HiYaZep0H3GU0O7PaF+fhDrt8FPrnkei9Aal/txsN/1P7V3CPiThG0tIvpPDYUsyAA==,
+        integrity: sha512-at92SYQstwh7HH6+Kf3bFMnHrle7aIrC0r5rTP+Bb30118B6j1vI2/M4walh6qcQgfuLIKs8NUO5CytHTnUI3A==,
       }
     engines: { node: ">= 14" }
     dependencies:
@@ -794,7 +793,7 @@ packages:
         integrity: sha512-9BjDxjgQIvCjNWZsbqyH5QC2Yni16oaE6xL+8SUBMzcYPF4TGQBXGA97Cl3KceK9mwiNMb1mOYCz6FbCCLEL+g==,
       }
     dependencies:
-      "@octokit/openapi-types": 17.1.2
+      "@octokit/openapi-types": 17.2.0
     dev: false
 
   /@octokit/webhooks-methods@3.0.2:
@@ -844,7 +843,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@supabase/auth-helpers-nextjs@0.6.1(@supabase/supabase-js@2.21.0):
+  /@supabase/auth-helpers-nextjs@0.6.1(@supabase/supabase-js@2.22.0):
     resolution:
       {
         integrity: sha512-ffDAR4pW2Cosj/CuuGRAhzOFfHtqzdgax7zqRGGyq334gxxPplsmJFGaLPRJ3Z/4mTSIJHyFd6LYdHMN0a+5Bw==,
@@ -852,11 +851,11 @@ packages:
     peerDependencies:
       "@supabase/supabase-js": ^2.0.4
     dependencies:
-      "@supabase/auth-helpers-shared": 0.3.4(@supabase/supabase-js@2.21.0)
-      "@supabase/supabase-js": 2.21.0(encoding@0.1.13)
+      "@supabase/auth-helpers-shared": 0.3.4(@supabase/supabase-js@2.22.0)
+      "@supabase/supabase-js": 2.22.0(encoding@0.1.13)
     dev: false
 
-  /@supabase/auth-helpers-shared@0.3.4(@supabase/supabase-js@2.21.0):
+  /@supabase/auth-helpers-shared@0.3.4(@supabase/supabase-js@2.22.0):
     resolution:
       {
         integrity: sha512-8I3D0SPHHexkFTSfPg0nZgJSVazWoB3tZDpT6IjRv6w89vDMUzO99Lit4H9anVLF4teW8c/nJJxawDNbDlgbgg==,
@@ -864,7 +863,7 @@ packages:
     peerDependencies:
       "@supabase/supabase-js": ^2.0.4
     dependencies:
-      "@supabase/supabase-js": 2.21.0(encoding@0.1.13)
+      "@supabase/supabase-js": 2.22.0(encoding@0.1.13)
       jose: 4.14.4
     dev: false
 
@@ -874,18 +873,18 @@ packages:
         integrity: sha512-bIR1Puae6W+1/MzPfYBWOG/SCWGo4B5CB7c0ZZksvliNEAzhxNBJ0UFKYINcGdGtxG8ZC+1xr3utWpNZNwnoRw==,
       }
     dependencies:
-      cross-fetch: 3.1.5(encoding@0.1.13)
+      cross-fetch: 3.1.6(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@supabase/gotrue-js@2.26.0(encoding@0.1.13):
+  /@supabase/gotrue-js@2.27.0(encoding@0.1.13):
     resolution:
       {
-        integrity: sha512-orxz8nwaF5D1nY/9H5xxTfFSCTvYeDLx24UO/Mxsx83xFP0t5RNxQZ0lEHBOhHhXJ4vR/COv79AxoWCOTu/7Rg==,
+        integrity: sha512-KWoo6giZDLuF2wcN+g8DZPnTa6n9k3v7WNWTUpniPjE8H3MPMJcHka+8uHQFpvMFGUNt+ULNNbhGiaVR4PzJyA==,
       }
     dependencies:
-      cross-fetch: 3.1.5(encoding@0.1.13)
+      cross-fetch: 3.1.6(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -896,7 +895,7 @@ packages:
         integrity: sha512-WDBUPOCOwcZonaCwEodwdA8hwWYOiXroDF9vWGxZxKAnuSVE2Ieci/kvhR4EsWvgGST2h90LRowgO+msXe8+fA==,
       }
     dependencies:
-      cross-fetch: 3.1.5(encoding@0.1.13)
+      cross-fetch: 3.1.6(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -920,23 +919,23 @@ packages:
         integrity: sha512-nkR0fQA9ScAtIKA3vNoPEqbZv1k5B5HVRYEvRWdlP6mUpFphM9TwPL2jZ/ztNGMTG5xT6SrHr+H7Ykz8qzbhjw==,
       }
     dependencies:
-      cross-fetch: 3.1.5(encoding@0.1.13)
+      cross-fetch: 3.1.6(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@supabase/supabase-js@2.21.0(encoding@0.1.13):
+  /@supabase/supabase-js@2.22.0(encoding@0.1.13):
     resolution:
       {
-        integrity: sha512-FW3ZzBoc4orSgfX0dXrmJoXAcI/hiekmqXTkN64vjtUF2Urp3UjyAf71UTtV9Jl6ejHoe3K++e0+Rg9zKUJh5w==,
+        integrity: sha512-omkgSWL1HwnpXZZy+yshFLx/qqxwk9kx9jbRM6IHNEylKrH/sz6JX7rGyIOmN9niDxMRjsCu1nwuBhD6IiF2xg==,
       }
     dependencies:
       "@supabase/functions-js": 2.1.1(encoding@0.1.13)
-      "@supabase/gotrue-js": 2.26.0(encoding@0.1.13)
+      "@supabase/gotrue-js": 2.27.0(encoding@0.1.13)
       "@supabase/postgrest-js": 1.6.1(encoding@0.1.13)
       "@supabase/realtime-js": 2.7.2
       "@supabase/storage-js": 2.5.1(encoding@0.1.13)
-      cross-fetch: 3.1.5(encoding@0.1.13)
+      cross-fetch: 3.1.6(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -966,17 +965,17 @@ packages:
       tailwindcss: 3.3.2
     dev: true
 
-  /@tanstack/query-core@4.29.5:
+  /@tanstack/query-core@4.29.7:
     resolution:
       {
-        integrity: sha512-xXIiyQ/4r9KfaJ3k6kejqcaqFXXBTzN2aOJ5H1J6aTJE9hl/nbgAdfF6oiIu0CD5xowejJEJ6bBg8TO7BN4NuQ==,
+        integrity: sha512-GXG4b5hV2Loir+h2G+RXhJdoZhJLnrBWsuLB2r0qBRyhWuXq9w/dWxzvpP89H0UARlH6Mr9DiVj4SMtpkF/aUA==,
       }
     dev: false
 
-  /@tanstack/react-query@4.29.5(react-dom@18.2.0)(react@18.2.0):
+  /@tanstack/react-query@4.29.7(react-dom@18.2.0)(react@18.2.0):
     resolution:
       {
-        integrity: sha512-F87cibC3s3eG0Q90g2O+hqntpCrudKFnR8P24qkH9uccEhXErnJxBC/AAI4cJRV2bfMO8IeGZQYf3WyYgmSg0w==,
+        integrity: sha512-ijBWEzAIo09fB1yd22slRZzprrZ5zMdWYzBnCg5qiXuFbH78uGN1qtGz8+Ed4MuhaPaYSD+hykn+QEKtQviEtg==,
       }
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -988,7 +987,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      "@tanstack/query-core": 4.29.5
+      "@tanstack/query-core": 4.29.7
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
@@ -1105,14 +1104,7 @@ packages:
         integrity: sha512-drE6uz7QBKq1fYqqoFKTDRdFCPHd5TCub75BM+D+cMx7NU9hUz7SESLfC2fSCXVFMO5Yj8sOWHuGqPgjc+fz0Q==,
       }
     dependencies:
-      "@types/node": 20.1.3
-    dev: false
-
-  /@types/lru-cache@5.1.1:
-    resolution:
-      {
-        integrity: sha512-ssE3Vlrys7sdIzs5LOxCzTVMsU7i9oa/IaW92wF32JFb3CVczqOkru2xspuKczHEbG3nvmPY7IFqVmGGHdNbYw==,
-      }
+      "@types/node": 20.1.7
     dev: false
 
   /@types/marked@4.3.0:
@@ -1133,6 +1125,13 @@ packages:
     resolution:
       {
         integrity: sha512-NP2yfZpgmf2eDRPmgGq+fjGjSwFgYbihA8/gK+ey23qT9RkxsgNTZvGOEpXgzIGqesTYkElELLgtKoMQTys5vA==,
+      }
+    dev: true
+
+  /@types/node@20.1.7:
+    resolution:
+      {
+        integrity: sha512-WCuw/o4GSwDGMoonES8rcvwsig77dGCMbZDrZr2x4ZZiNW4P/gcoZXe/0twgtobcTkmg9TuKflxYL/DuwDyJzg==,
       }
 
   /@types/phoenix@1.5.6:
@@ -1199,7 +1198,7 @@ packages:
         integrity: sha512-NbsqiNX9CnEfC1Z0Vf4mE1SgAJ07JnRYcNex7AJ9zAVzmiGHmjKFEk7O4TJIsgv2B1sLEb6owKFZrACwdYngsQ==,
       }
     dependencies:
-      "@types/node": 20.1.3
+      "@types/node": 20.1.7
     dev: false
 
   /@webassemblyjs/ast@1.11.6:
@@ -1508,7 +1507,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.21.5
-      caniuse-lite: 1.0.30001486
+      caniuse-lite: 1.0.30001488
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -1603,8 +1602,8 @@ packages:
     engines: { node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7 }
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001486
-      electron-to-chromium: 1.4.393
+      caniuse-lite: 1.0.30001488
+      electron-to-chromium: 1.4.397
       node-releases: 2.0.10
       update-browserslist-db: 1.0.11(browserslist@4.21.5)
     dev: false
@@ -1668,10 +1667,10 @@ packages:
       }
     engines: { node: ">= 6" }
 
-  /caniuse-lite@1.0.30001486:
+  /caniuse-lite@1.0.30001488:
     resolution:
       {
-        integrity: sha512-uv7/gXuHi10Whlj0pp5q/tsK/32J2QSqVRKQhs2j8VsDCjgyruAh/eEXHF822VqO9yT6iZKw3nRwZRSPBE9OQg==,
+        integrity: sha512-NORIQuuL4xGpIy6iCCQGN4iFjlBXtfKWIenlUuyZJumLRIindLb7wXM+GO8erEhb7vXfcnf4BAg2PrSDN5TNLQ==,
       }
     dev: false
 
@@ -1845,13 +1844,13 @@ packages:
       yargs: 17.7.2
     dev: false
 
-  /cross-fetch@3.1.5(encoding@0.1.13):
+  /cross-fetch@3.1.6(encoding@0.1.13):
     resolution:
       {
-        integrity: sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==,
+        integrity: sha512-riRvo06crlE8HiqOwIpQhxwdOk4fOeR7FVM/wXoxchFEqMNUjvbs3bfo4OTgMEMHzppd4DxFBDbyySj8Cv781g==,
       }
     dependencies:
-      node-fetch: 2.6.7(encoding@0.1.13)
+      node-fetch: 2.6.11(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -2056,10 +2055,10 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /electron-to-chromium@1.4.393:
+  /electron-to-chromium@1.4.397:
     resolution:
       {
-        integrity: sha512-Yl1E9pu+7PBKSVHZsuw79QVa8ZonpyxBGI/MnuBumiXpxNuNwFo9iZLAAhQGla/LTAt1A7zR4PwgysukxJc0qA==,
+        integrity: sha512-jwnPxhh350Q/aMatQia31KAIQdhEsYS0fFZ0BQQlN9tfvOEwShu6ZNwI4kL/xBabjcB/nTy6lSt17kNIluJZ8Q==,
       }
     dev: false
 
@@ -2547,7 +2546,7 @@ packages:
       he: 1.2.0
       param-case: 3.0.4
       relateurl: 0.2.7
-      terser: 5.17.3
+      terser: 5.17.4
     dev: false
 
   /html-webpack-plugin@5.5.1(webpack@5.82.1):
@@ -2636,10 +2635,10 @@ packages:
     dependencies:
       binary-extensions: 2.2.0
 
-  /is-core-module@2.12.0:
+  /is-core-module@2.12.1:
     resolution:
       {
-        integrity: sha512-RECHCBCd/viahWmwj6enj19sKbHfJrddi/6cBDsNTKbNq0f7VeaUkBo60BqzvPqo/W54ChS62Z5qyun7cfOMqQ==,
+        integrity: sha512-Q4ZuBAe2FUsKtyQJoQHlvP8OvBERxO3jEmy1I7hcRXcJBGGHFh/aJBswbXuS9sgrDH2QUO8ilkwNPHvHMd8clg==,
       }
     dependencies:
       has: 1.0.3
@@ -2697,7 +2696,7 @@ packages:
       }
     engines: { node: ">= 10.13.0" }
     dependencies:
-      "@types/node": 20.1.3
+      "@types/node": 20.1.7
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: false
@@ -2884,6 +2883,14 @@ packages:
       yallist: 4.0.0
     dev: false
 
+  /lru-cache@9.1.1:
+    resolution:
+      {
+        integrity: sha512-65/Jky17UwSb0BuB9V+MyDpsOtXKmYwzhyl+cOa9XUiI4uV2Ouy/2voFP3+al0BjZbJgMBD8FojMpAf+Z+qn4A==,
+      }
+    engines: { node: 14 || >=16.14 }
+    dev: false
+
   /marked@5.0.2:
     resolution:
       {
@@ -3033,7 +3040,7 @@ packages:
       "@next/env": 13.4.2
       "@swc/helpers": 0.5.1
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001486
+      caniuse-lite: 1.0.30001488
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -3077,22 +3084,6 @@ packages:
     resolution:
       {
         integrity: sha512-4I6pdBY1EthSqDmJkiNk3JIT8cswwR9nfeW/cPdUagJYEQG7R95WRH74wpz7ma8Gh/9dI9FP+OU+0E4FvtA55w==,
-      }
-    engines: { node: 4.x || >=6.0.0 }
-    peerDependencies:
-      encoding: ^0.1.0
-    peerDependenciesMeta:
-      encoding:
-        optional: true
-    dependencies:
-      encoding: 0.1.13
-      whatwg-url: 5.0.0
-    dev: false
-
-  /node-fetch@2.6.7(encoding@0.1.13):
-    resolution:
-      {
-        integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==,
       }
     engines: { node: 4.x || >=6.0.0 }
     peerDependencies:
@@ -3191,7 +3182,7 @@ packages:
       "@octokit/plugin-paginate-rest": 6.1.0(@octokit/core@4.2.0)
       "@octokit/plugin-rest-endpoint-methods": 7.1.0(@octokit/core@4.2.0)
       "@octokit/plugin-retry": 4.1.3(@octokit/core@4.2.0)
-      "@octokit/plugin-throttling": 5.2.0(@octokit/core@4.2.0)
+      "@octokit/plugin-throttling": 5.2.2(@octokit/core@4.2.0)
       "@octokit/types": 9.2.2
     transitivePeerDependencies:
       - encoding
@@ -3320,7 +3311,7 @@ packages:
       postcss: ^8.2.14
     dependencies:
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
 
   /postcss-selector-parser@6.0.10:
     resolution:
@@ -3333,10 +3324,10 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /postcss-selector-parser@6.0.12:
+  /postcss-selector-parser@6.0.13:
     resolution:
       {
-        integrity: sha512-NdxGCAZdRrwVI1sy59+Wzrh+pMMHxapGnpfenDVlMEXoOcvt4pGE0JLK9YY2F5dLxcFYA/YbVQKhcGU+FtSYQg==,
+        integrity: sha512-EaV1Gl4mUEV4ddhDnv/xtj7sxwrwxdetHdWUGnT4VJQf+4d05v6lHYZr8N573k5Z0BViss7BDhfWtKS3+sfAqQ==,
       }
     engines: { node: ">=4" }
     dependencies:
@@ -3614,7 +3605,7 @@ packages:
       }
     hasBin: true
     dependencies:
-      is-core-module: 2.12.0
+      is-core-module: 2.12.1
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
@@ -3929,7 +3920,7 @@ packages:
       postcss-js: 4.0.1(postcss@8.4.23)
       postcss-load-config: 4.0.1(postcss@8.4.23)
       postcss-nested: 6.0.1(postcss@8.4.23)
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
       postcss-value-parser: 4.2.0
       resolve: 1.22.2
       sucrase: 3.32.0
@@ -3967,14 +3958,14 @@ packages:
       jest-worker: 27.5.1
       schema-utils: 3.1.2
       serialize-javascript: 6.0.1
-      terser: 5.17.3
+      terser: 5.17.4
       webpack: 5.82.1
     dev: false
 
-  /terser@5.17.3:
+  /terser@5.17.4:
     resolution:
       {
-        integrity: sha512-AudpAZKmZHkG9jueayypz4duuCFJMMNGRMwaPvQKWfxKedh8Z2x3OCoDqIIi1xx5+iwx1u6Au8XQcc9Lke65Yg==,
+        integrity: sha512-jcEKZw6UPrgugz/0Tuk/PVyLAPfMBJf5clnGueo45wTweoV8yh7Q7PEkhkJ5uuUbC7zAxEcG3tqNr1bstkQ8nw==,
       }
     engines: { node: ">=10" }
     hasBin: true
@@ -4066,10 +4057,10 @@ packages:
         integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==,
       }
 
-  /turbo-darwin-64@1.9.4:
+  /turbo-darwin-64@1.9.6:
     resolution:
       {
-        integrity: sha512-kCmDmxyUWWI+BstTZQKNM87UbNx40C0ZHUTFqs9tmeH7d5+gA2QhqrSoBuwQYw7YYNLpbkqu1ObbppsUlIFPdQ==,
+        integrity: sha512-9jmxyCAcPrJiPD/EmtK2tObrPGblmyORCgNgtcw1iozcfC7kqungWTfbnHrvTNUfUmVhH0sA3BGzshpuslbQHg==,
       }
     cpu: [x64]
     os: [darwin]
@@ -4077,10 +4068,10 @@ packages:
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@1.9.4:
+  /turbo-darwin-arm64@1.9.6:
     resolution:
       {
-        integrity: sha512-Of64jMEaDDHx0dzU7RwdOuh1lP021vtQun9wmEHhT0Hk/TQF+kDCywoHcY7R5nlSRcssFjysVyhCeZW6CkWrrA==,
+        integrity: sha512-5f8ajEi8mOdAZ0AXavu/TzkHGEUi7tw+paefff7KK+XTUrdeyTlf8ULiTI+r97uH1jsYeTeL4JPu9IsEx+bL6g==,
       }
     cpu: [arm64]
     os: [darwin]
@@ -4088,10 +4079,10 @@ packages:
     dev: true
     optional: true
 
-  /turbo-linux-64@1.9.4:
+  /turbo-linux-64@1.9.6:
     resolution:
       {
-        integrity: sha512-kajvUnXlUNtgVzLW3Y/RoHrC64G+G0Ky/o1F+oP6QK/T85H8NwNHXq2F6hyIrZPNGbKpPgpetuQ1waIibxJ0rA==,
+        integrity: sha512-UrCDMl2Nqd/kxNEJonqvDg8nmZU4UggVQTmqcdYyuOiCA3H98jxggQqZh1VGeF23XDbCWHSQjnbkLeoUvQJWKw==,
       }
     cpu: [x64]
     os: [linux]
@@ -4099,10 +4090,10 @@ packages:
     dev: true
     optional: true
 
-  /turbo-linux-arm64@1.9.4:
+  /turbo-linux-arm64@1.9.6:
     resolution:
       {
-        integrity: sha512-11P9Y8MoimqUzib3SU3md4g1loLF0FRHpYCbPzUTWPT3beOcdM2nop2u/yFHyBnbSxz1rTWczRJPnNoAki0B/Q==,
+        integrity: sha512-oOxAT6lNiMpYVZPWzFNsUvC2LQgKYyH4aBnkeoBnjuAUk8BK5AhUWSWl4QlfTcBWW4LnjDPeZQKrbnxvHhPVsw==,
       }
     cpu: [arm64]
     os: [linux]
@@ -4110,10 +4101,10 @@ packages:
     dev: true
     optional: true
 
-  /turbo-windows-64@1.9.4:
+  /turbo-windows-64@1.9.6:
     resolution:
       {
-        integrity: sha512-2tFcFhuqs1c1DGFAk2wjU0TXrOXKoPdma9vxrTVdwvtz5Nc8XPF8RNW+1jbmRjpumGUkXou6Pe973GSvPjvD5w==,
+        integrity: sha512-65UxLL1vb5RItzJYNerO5c+yPMzSnD+GvJxfBZIvAwSnb+4ulhPRHzQOYinVq4PZ2DosBZOorWPRf97POmhvog==,
       }
     cpu: [x64]
     os: [win32]
@@ -4121,10 +4112,10 @@ packages:
     dev: true
     optional: true
 
-  /turbo-windows-arm64@1.9.4:
+  /turbo-windows-arm64@1.9.6:
     resolution:
       {
-        integrity: sha512-wJfEwUyWXxn6VKD2Vbycke6cm99gJ0llkr9gUnbR06eaRu1TiLY24FcFqN95/wftp0n5nne7b6K7Wz1TLh1fJQ==,
+        integrity: sha512-aF9VzYT+vaKNbZGDccN7AYrNhph4gr6yOFN7GtTr777IwS5FGW7evku7RScsua5r2HwVKvBO2WjyadpbXuoOOQ==,
       }
     cpu: [arm64]
     os: [win32]
@@ -4132,20 +4123,20 @@ packages:
     dev: true
     optional: true
 
-  /turbo@1.9.4:
+  /turbo@1.9.6:
     resolution:
       {
-        integrity: sha512-PqhlMCmu6sOqcVswt1tYL0TV/O0uQ8kUZWfmlEl0EHPusc2R3nzg7KVXrZbXTHXzQH5HE2oJm9iUI0mYz31i7Q==,
+        integrity: sha512-mLbCIAYNbSm60kVhBiAr+YA1BYpPObS/y7rqw1hjh36ZdJDp35lUSeqdBs6oGt0Y4hnmN4ZeIXu8zMVRR03/vw==,
       }
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.9.4
-      turbo-darwin-arm64: 1.9.4
-      turbo-linux-64: 1.9.4
-      turbo-linux-arm64: 1.9.4
-      turbo-windows-64: 1.9.4
-      turbo-windows-arm64: 1.9.4
+      turbo-darwin-64: 1.9.6
+      turbo-darwin-arm64: 1.9.6
+      turbo-linux-64: 1.9.6
+      turbo-linux-arm64: 1.9.6
+      turbo-windows-64: 1.9.6
+      turbo-windows-arm64: 1.9.6
     dev: true
 
   /type-fest@2.19.0:
