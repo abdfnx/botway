@@ -80,9 +80,14 @@ const Project = ({ user, projectId, slug }: any) => {
 
       if (int.variables) {
         if (int.variables.length === 1) {
-          vars = { v1: formData.v1 };
+          vars = { v: formData.v1, k: int.variables[0].name };
         } else {
-          vars = { v1: formData.v1, v2: formData.v2 };
+          vars = {
+            v1: formData.v1,
+            k1: int.variables[0].name,
+            v2: formData.v2,
+            k2: int.variables[1].name,
+          };
         }
       }
 
@@ -92,10 +97,11 @@ const Project = ({ user, projectId, slug }: any) => {
         template_repo: int.template_repo,
         template_code: int.template_code,
         is_plugin: int.is_plugin,
+        projectId: project?.railway_project_id,
         vars,
       };
 
-      const newBot = await fetcher("/api/integrations/new", {
+      const newBot = await fetcher("/api/integrations/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -106,8 +112,12 @@ const Project = ({ user, projectId, slug }: any) => {
           "You have successfully created a new bot project",
           toastStyle
         );
+
+        setOpen(false);
       } else {
         toast.error(newBot.error, toastStyle);
+
+        setOpen(false);
       }
     } catch (e: any) {
       toast.error(e.message, toastStyle);

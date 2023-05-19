@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.0.1",
     "@headlessui/react": "^1.7.14",
     "@primer/octicons-react": "^19.1.0",
     "@supabase/auth-helpers-nextjs": "^0.6.1",
@@ -28,8 +29,8 @@
     "jose": "^4.14.4",
     "marked": "^5.0.2",
     "mini-svg-data-uri": "^1.4.4",
-    "next": "13.4.2",
-    "octokit": "^2.0.14",
+    "next": "13.4.3",
+    "octokit": "^2.0.16",
     "postcss": "8.4.23",
     "postcss-nested": "^6.0.1",
     "react": "18.2.0",
@@ -46,8 +47,8 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
     "@types/bcryptjs": "^2.4.2",
-    "@types/marked": "^4.3.0",
-    "@types/node": "^20.1.7",
+    "@types/marked": "^5.0.0",
+    "@types/node": "^20.2.1",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
     "@types/slug": "^5.0.3",
