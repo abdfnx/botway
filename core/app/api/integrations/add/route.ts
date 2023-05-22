@@ -47,15 +47,17 @@ export async function POST(request: Request) {
 
   if (body.vars) {
     if (body.vars.k) {
-      vars = `variables: {${body.vars.k}: "${body.vars.v}"}`;
+      vars = `variables: {${body.vars.k}: "${body.vars.v}" ${body.def_vars}}`;
     } else {
-      vars = `variables: {${body.vars.k1}: "${body.vars.v1}" ${body.vars.k2}: "${body.vars.v2}"}`;
+      vars = `variables: {${body.vars.k1}: "${body.vars.v1}" ${body.vars.k2}: "${body.vars.v2}" ${body.def_vars}}`;
     }
   }
 
   const query = `
     mutation {
       templateDeploy(input: {
+        ${body.plugin ? `plugins: ["${body.plugin}"]` : ""}
+
         services: [
           {
             hasDomain: true
@@ -90,6 +92,8 @@ export async function POST(request: Request) {
   });
 
   if (deploy.errors) {
+    console.log(deploy.errors);
+
     return NextResponse.json({ message: deploy.errors[0].message });
   }
 

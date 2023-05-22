@@ -99,6 +99,8 @@ const Project = ({ user, projectId, slug }: any) => {
         is_plugin: int.is_plugin,
         projectId: project?.railway_project_id,
         vars,
+        def_vars: int.def_variables,
+        plugin: int.plugin,
       };
 
       const newBot = await fetcher("/api/integrations/add", {
@@ -327,7 +329,11 @@ const Project = ({ user, projectId, slug }: any) => {
                                                 className="input"
                                                 id={`v${varx.index}`}
                                                 name={`v${varx.index}`}
-                                                type="text"
+                                                type={
+                                                  varx.is_hidden
+                                                    ? "password"
+                                                    : "text"
+                                                }
                                               />
 
                                               <div className="pb-2" />

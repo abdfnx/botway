@@ -21,7 +21,7 @@ require (
 	github.com/charmbracelet/lipgloss v0.7.1
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
 	github.com/mattn/go-colorable v0.1.13
-	github.com/mattn/go-isatty v0.0.18
+	github.com/mattn/go-isatty v0.0.19
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/muesli/reflow v0.3.0
 	github.com/muesli/termenv v0.15.1
@@ -40,7 +40,7 @@ require (
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/charmbracelet/glamour v0.6.0 // indirect
 	github.com/chzyer/readline v1.5.1 // indirect
-	github.com/cli/browser v1.1.0 // indirect
+	github.com/cli/browser v1.2.0 // indirect
 	github.com/cli/oauth v1.0.1 // indirect
 	github.com/cli/safeexec v1.0.1 // indirect
 	github.com/cli/shurcooL-graphql v0.0.3 // indirect
