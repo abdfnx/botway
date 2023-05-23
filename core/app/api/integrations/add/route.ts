@@ -53,7 +53,7 @@ export async function POST(request: Request) {
     }
   }
 
-  const query = `
+  const templateQuery = `
     mutation {
       templateDeploy(input: {
         ${body.plugin ? `plugins: ["${body.plugin}"]` : ""}
@@ -78,7 +78,21 @@ export async function POST(request: Request) {
       }) {
         projectId
       }
-    }`;
+    }
+  `;
+
+  const pluginQuery = `
+    mutation {
+      pluginCreate(input: {
+        name: "${body.slug}"
+        projectId: "${projectId.data}"
+      }) {
+        id
+      }
+    }
+  `;
+
+  const query = body.is_plugin ? pluginQuery : templateQuery;
 
   const deploy = await fetcher("https://backboard.railway.app/graphql/v2", {
     method: "POST",

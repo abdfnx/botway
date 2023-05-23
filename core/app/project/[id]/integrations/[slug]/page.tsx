@@ -95,7 +95,6 @@ const Project = ({ user, projectId, slug }: any) => {
         name: int.name,
         slug: int.slug,
         template_repo: int.template_repo,
-        template_code: int.template_code,
         is_plugin: int.is_plugin,
         projectId: project?.railway_project_id,
         vars,
@@ -103,21 +102,21 @@ const Project = ({ user, projectId, slug }: any) => {
         plugin: int.plugin,
       };
 
-      const newBot = await fetcher("/api/integrations/add", {
+      const newInt = await fetcher("/api/integrations/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
-      if (newBot.message === "Success") {
+      if (newInt.message === "Success") {
         toast.success(
-          "You have successfully created a new bot project",
+          "You have successfully created a new bot integration",
           toastStyle
         );
 
         setOpen(false);
       } else {
-        toast.error(newBot.error, toastStyle);
+        toast.error(newInt.error, toastStyle);
 
         setOpen(false);
       }
@@ -128,17 +127,41 @@ const Project = ({ user, projectId, slug }: any) => {
     }
   }
 
-  const check = (int: any) => {
+  const check = async (int: any) => {
     if (!int.is_plugin) {
       setOpen(true);
     } else {
-      addIntegration({
-        name: int.title,
-        slug: int.slug,
-        template_repo: int.template_repo,
-        template_code: int.template_code,
-        is_plugin: int.is_plugin,
-      });
+      try {
+        setIsLoading(true);
+        const newInt = await fetcher("/api/integrations/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: int.title,
+            slug: int.slug,
+            template_repo: int.template_repo,
+            is_plugin: int.is_plugin,
+            projectId: project?.railway_project_id,
+          }),
+        });
+
+        if (newInt.message === "Success") {
+          toast.success(
+            "You have successfully created a new bot integration",
+            toastStyle
+          );
+
+          setOpen(false);
+        } else {
+          toast.error(newInt.error, toastStyle);
+
+          setOpen(false);
+        }
+      } catch (e: any) {
+        toast.error(e.message, toastStyle);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -175,9 +198,15 @@ const Project = ({ user, projectId, slug }: any) => {
                     </div>
                     <a
                       onClick={() => check(int)}
-                      className="flex md:!hidden cursor-pointer items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none bg-blue-700 border-gray-800 text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3"
+                      className="flex md:!hidden cursor-pointer items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3"
                     >
-                      <span className="inline-block">Add {int?.name}</span>
+                      <Button
+                        htmlType="submit"
+                        type="success"
+                        loading={isLoading}
+                      >
+                        Add {int?.name}
+                      </Button>
                     </a>
                   </div>
                   <div className="pt-16" />
@@ -196,9 +225,15 @@ const Project = ({ user, projectId, slug }: any) => {
                 <div className="w-full lg:w-3/12 lg:mt-6 lg:sticky lg:top-[48px] align-self[flex-start] flex flex-col">
                   <a
                     onClick={() => check(int)}
-                    className="hidden md:flex cursor-pointer items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none lg:!flex bg-blue-700 border-gray-800 text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3"
+                    className="hidden md:flex cursor-pointer items-center justify-center transition-all duration-200 active:scale-95 outline-none focus:outline-none lg:!flex text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3"
                   >
-                    <span className="inline-block">Add {int?.name}</span>
+                    <Button
+                      htmlType="submit"
+                      type="success"
+                      loading={isLoading}
+                    >
+                      Add {int?.name}
+                    </Button>
                   </a>
                   <div className="mt-16 flex flex-col space-y-6">
                     <div className="flex flex-col space-y-4">
