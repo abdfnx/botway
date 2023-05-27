@@ -4,6 +4,7 @@ import createClient from "@/supabase/server";
 import { AuthProvider } from "@/supabase/auth/provider";
 import "@/assets/main.scss";
 import "react-cmdk/dist/cmdk.css";
+import "reactflow/dist/style.css";
 
 // do not cache this layout
 export const revalidate = 0;

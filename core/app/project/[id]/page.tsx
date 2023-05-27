@@ -47,12 +47,8 @@ const Project = ({ user, projectId }: any) => {
           projectId={projectId}
           projectName={project?.name}
           projectRWID={project?.railway_project_id}
-          grid={true}
         >
-          <div className="mx-6 my-16 flex items-center space-x-6">
-            <h1 className="text-3xl text-white">{project?.name}</h1>
-          </div>
-          <div className="mx-6"></div>
+          <div className="w-[80vw] h-screen pr-10"></div>
         </ProjectLayout>
       )}
     </>
