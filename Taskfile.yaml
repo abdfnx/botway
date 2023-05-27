@@ -48,6 +48,8 @@ tasks:
   docker:
     cmds:
       - '{{if eq OS "windows"}}.\docker\build.ps1{{else}}./docker/build.sh{{end}}'
+      - docker build -t botwayorg/coder:latest --file Dockerfile.coder .
+      - docker push botwayorg/coder:latest
 
   build-full-image:
     dir: ./docker
