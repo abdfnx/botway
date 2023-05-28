@@ -13,13 +13,6 @@ RUN sudo chown -R coder:coder /home/coder/.local
 RUN sudo apt-get update -y && sudo apt-get upgrade -y \
     && sudo apt-get install -y sqlite3 git-core curl gnupg build-essential wget openssl ruby ruby-dev libopus-dev opus-tools binutils libssl-dev zlib1g-dev libboost-system-dev libcurl4-openssl-dev libffi-dev python-dev ffmpeg build-essential autoconf automake libtool m4 youtube-dl
 
-### C ###
-RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/llvm-archive-keyring.gpg \
-    && echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/jammy/ \
-    llvm-toolchain-jammy-15 main" | sudo tee /etc/apt/sources.list.d/llvm.list > /dev/null \
-    && sudo apt-get update -y \
-    && sudo apt-get install -y clang clangd clang-format clang-tidy gdb lld
-
 ### Nodejs ###
 RUN curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash - && \
     sudo apt-get install -y nodejs
