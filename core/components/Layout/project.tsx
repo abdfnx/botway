@@ -23,6 +23,7 @@ export const ProjectLayout = ({
   children,
   grid,
   projectRWID,
+  noMargin,
 }: any) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -261,7 +262,11 @@ export const ProjectLayout = ({
                 grid ? "bg-grid-gray-800/[0.4]" : ""
               )}
             >
-              <div className="mx-auto w-full max-w-7xl space-y-16">
+              <div
+                className={`${
+                  !noMargin ? "mx-auto" : ""
+                } w-full max-w-7xl space-y-16`}
+              >
                 {children}
               </div>
             </main>
