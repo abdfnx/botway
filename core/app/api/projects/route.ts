@@ -74,7 +74,7 @@ export async function POST(request: Request) {
         query: `
           mutation serviceCreate {
             serviceCreate(input: {
-              name: "main",
+              name: "Main",
               projectId: "${createRailwayProject.data.projectCreate.id}"
             }) {
               id
