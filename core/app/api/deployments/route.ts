@@ -24,7 +24,7 @@ export async function GET(request: Request) {
 
   const { data, error } = await supabase
     .from("projects")
-    .select("railway_project_id")
+    .select("railway_service_id")
     .eq("id", id)
     .single();
 
@@ -37,8 +37,8 @@ export async function GET(request: Request) {
     BW_SECRET_KEY
   );
 
-  const { payload: railwayProjectId } = await jwtDecrypt(
-    data?.railway_project_id,
+  const { payload: railwayServiceId } = await jwtDecrypt(
+    data?.railway_service_id,
     BW_SECRET_KEY
   );
 
@@ -53,7 +53,7 @@ export async function GET(request: Request) {
       body: JSON.stringify({
         query: `
           query {
-            project(id: "${railwayProjectId.data}") {
+            service(id: "${railwayServiceId.data}") {
               deployments {
                 edges {
                   node {
@@ -76,7 +76,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: deployments.errors[0].message });
   }
 
-  const dy = deployments.data.project.deployments.edges.sort(
+  const dy = deployments.data.service.deployments.edges.sort(
     (a: any, b: any) => {
       return (
         new Date(b.node.createdAt).getTime() -

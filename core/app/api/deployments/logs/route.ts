@@ -24,7 +24,7 @@ export async function GET(request: Request) {
 
   const { data, error } = await supabase
     .from("projects")
-    .select("railway_project_id")
+    .select("railway_service_id")
     .eq("id", id)
     .single();
 
@@ -37,8 +37,8 @@ export async function GET(request: Request) {
     BW_SECRET_KEY
   );
 
-  const { payload: railwayProjectId } = await jwtDecrypt(
-    data?.railway_project_id,
+  const { payload: railwayServiceId } = await jwtDecrypt(
+    data.railway_service_id,
     BW_SECRET_KEY
   );
 
@@ -53,7 +53,7 @@ export async function GET(request: Request) {
       body: JSON.stringify({
         query: `
           query {
-            project(id: "${railwayProjectId.data}") {
+            service(id: "${railwayServiceId.data}") {
               deployments {
                 edges {
                   node {
@@ -76,36 +76,41 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: deployments.errors[0].message });
   }
 
-  const dy = deployments.data.project.deployments.edges.sort(
-    (a: any, b: any) => {
-      return (
-        new Date(b.node.createdAt).getTime() -
-        new Date(a.node.createdAt).getTime()
-      );
-    }
-  );
+  if (deployments.data.service.deployments.edges.length === 0) {
+    return NextResponse.json({ message: "No Logs" });
+  } else {
+    const dy = deployments.data.service.deployments.edges.sort(
+      (a: any, b: any) => {
+        return (
+          new Date(b.node.createdAt).getTime() -
+          new Date(a.node.createdAt).getTime()
+        );
+      }
+    );
 
-  const logs = await fetcher("https://backboard.railway.app/graphql/v2", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${railwayApiToken.data}`,
-    },
-    body: JSON.stringify({
-      query: `
-        query {
-          deploymentLogs(limit: 10000, deploymentId: "${dy[0].node.id}") {
-            message
-            severity
-            timestamp
+    const logs = await fetcher("https://backboard.railway.app/graphql/v2", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${railwayApiToken.data}`,
+      },
+      body: JSON.stringify({
+        query: `
+          query {
+            deploymentLogs(limit: 10000, deploymentId: "${dy[0].node.id}") {
+              message
+              severity
+              timestamp
+            }
           }
-        }
-      `,
-    }),
-  });
+        `,
+      }),
+    });
 
-  return NextResponse.json({
-    logs: logs.data.deploymentLogs,
-    dyId: dy[0].node.id,
-  });
+    return NextResponse.json({
+      logs: logs.data.deploymentLogs,
+      dyId: dy[0].node.id,
+      message: "Success",
+    });
+  }
 }

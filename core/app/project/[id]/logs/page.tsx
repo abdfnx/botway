@@ -108,7 +108,7 @@ const Project = ({ user, projectId }: any) => {
             <div className="rounded-md bg-secondary border border-gray-800 overflow-auto p-5 max-h-[400px] mb-6">
               {logsIsLoading ? (
                 <LoadingDots />
-              ) : logs ? (
+              ) : logs.message != "No Logs" ? (
                 logs.logs.length != 0 ? (
                   logs.logs.map((deploy: any) => (
                     <div>
