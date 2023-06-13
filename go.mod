@@ -29,7 +29,7 @@ require (
 	github.com/spf13/viper v1.16.0
 	github.com/tidwall/gjson v1.14.4
 	github.com/tidwall/sjson v1.2.5
-	golang.org/x/sys v0.8.0
+	golang.org/x/sys v0.9.0
 	golang.org/x/term v0.8.0
 )
 
