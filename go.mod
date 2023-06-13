@@ -3,7 +3,7 @@ module github.com/abdfnx/botway
 go 1.20
 
 require (
-	github.com/AlecAivazis/survey/v2 v2.3.6
+	github.com/AlecAivazis/survey/v2 v2.3.7
 	github.com/MakeNowJust/heredoc v1.0.0
 	github.com/abdfnx/botwaygo v0.1.4
 	github.com/abdfnx/looker v0.1.0
