@@ -1,4 +1,4 @@
-FROM golang:alpine
+FROM golang:1-alpine3.18
 
 RUN apk update && apk add git curl bash sudo
 
