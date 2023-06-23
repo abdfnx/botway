@@ -27,4 +27,4 @@ RUN poetry config virtualenvs.create false
 
 RUN poetry install
 
-ENTRYPOINT ["python3", "./src/main.py"]
+ENTRYPOINT ["poetry", "run", "python3", "./src/main.py"]
