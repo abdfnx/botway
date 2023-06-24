@@ -142,7 +142,7 @@ const CE = ({ user, projectId }: any) => {
                     : "Your project needs to enable Botway CE"}
                 </h2>
                 <h2 className="text-sm text-gray-500 text-center">
-                  Botway CE is a code editor that build on top of{" "}
+                  Botway CE is a code editor that built on top of{" "}
                   <Link
                     href="https://coder.com"
                     target="_blank"

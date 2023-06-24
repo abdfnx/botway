@@ -56,11 +56,17 @@ export async function POST(request: Request) {
             name: "bwce-${body.slug}-${faker.number.int({ max: 100 })}"
             serviceName: "CE"
             template: "https://github.com/botwayorg/ce"
-            variables: {GIT_REPO: "https://github.com/${
-              body.repo
-            }" GITHUB_TOKEN: "${githubApiToken.data}" PASSWORD: "${
-    password.data
-  }"}
+            variables: {
+              GIT_REPO: "https://github.com/${body.repo}"
+              GITHUB_TOKEN: "${githubApiToken.data}"
+              PASSWORD: "${password.data}"
+            }
+            volumes: [
+              {
+                mountPath: "/home/coder"
+                projectId: "${projectId.data}"
+              }
+            ]
           }
         ]
 
