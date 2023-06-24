@@ -2,4 +2,3 @@ packages:
   - "core"
   - "packages/botway.js"
   - "create-botway-bot"
-  - "strg"
