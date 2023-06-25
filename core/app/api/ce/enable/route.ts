@@ -63,7 +63,7 @@ export async function POST(request: Request) {
             }
             volumes: [
               {
-                mountPath: "/home/coder"
+                mountPath: "/root"
                 projectId: "${projectId.data}"
               }
             ]

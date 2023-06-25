@@ -100,6 +100,8 @@ const Project = ({ user, projectId, slug }: any) => {
         vars,
         def_vars: int.def_variables,
         plugin: int.plugin,
+        has_volume: int.has_volume,
+        volume_path: int.volume_path,
       };
 
       const newInt = await fetcher("/api/integrations/add", {

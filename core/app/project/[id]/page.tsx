@@ -10,23 +10,12 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import ReactFlow, { Node, useNodesState, ConnectionLineType } from "reactflow";
-import NodeCustom from "./nodes/node";
-import NodeLoading from "./nodes/node-loading";
 import { fetcher } from "@/tools/fetch";
-import dagre from "dagre";
-
-const dagreGraph = new dagre.graphlib.Graph();
-dagreGraph.setDefaultEdgeLabel(() => ({}));
+import { ContainerIcon } from "@primer/octicons-react";
 
 export const revalidate = 0;
 
 const queryClient = new QueryClient();
-
-const nodeTypes = {
-  custom: NodeCustom,
-  loading: NodeLoading,
-};
 
 const Project = ({ user, projectId }: any) => {
   const fetchServices = async () => {
@@ -51,92 +40,18 @@ const Project = ({ user, projectId }: any) => {
     }
   );
 
-  let initNodes: Node<any, string | undefined>[] = [];
-
-  const nodeWidth = 172;
-  const nodeHeight = 36;
-
-  const getLayoutedElements = (nodes: any, direction = "TB") => {
-    const isHorizontal = direction === "LR";
-    dagreGraph.setGraph({ rankdir: direction });
-
-    nodes.forEach((node: any) => {
-      dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
-    });
-
-    dagre.layout(dagreGraph);
-
-    nodes.forEach((node: any) => {
-      const nodeWithPosition = dagreGraph.node(node.id);
-
-      node.targetPosition = isHorizontal ? "left" : "top";
-      node.sourcePosition = isHorizontal ? "right" : "bottom";
-
-      // We are shifting the dagre node position (anchor=center center) to the top left
-      // so it matches the React Flow node anchor point (top left).
-      node.position = {
-        x: (nodeWithPosition.x * (services?.services.length - 2)) / 2,
-        y: 2 * (nodeWithPosition.y * services?.services.length),
-      };
-
-      return node;
-    });
-
-    return { nodes };
-  };
-
-  const position = { x: 0, y: 0 };
-
   services?.services.map((node: any, index: any) => {
-    initNodes.push({
-      id: `"${index + 1}"`,
-      type: "custom",
-      data: {
-        name: node.node.name,
-      },
-      position,
-    });
+    // initNodes.push({
+    //   id: `"${index + 1}"`,
+    //   type: "custom",
+    //   data: {
+    //     name: node.node.name,
+    //   },
+    //   position,
+    // });
   });
 
-  services?.plugins.map((node: any, index: any) => {
-    initNodes.push({
-      id: `"${index + services?.services.length + 1}"`,
-      type: "custom",
-      data: {
-        name: node.node.name,
-      },
-      position,
-    });
-  });
-
-  const initNodesLoading = [
-    {
-      id: "1",
-      type: "loading",
-      data: {},
-      position: { x: 0, y: 50 },
-    },
-  ];
-
-  const { nodes: layoutedNodes } = getLayoutedElements(initNodes);
-
-  const Flow = () => {
-    const [nodes, setNodes, onNodesChange] = useNodesState(
-      servicesIsLoading ? initNodesLoading : layoutedNodes
-    );
-
-    return (
-      <ReactFlow
-        nodes={nodes}
-        connectionLineType={ConnectionLineType.SmoothStep}
-        onNodesChange={onNodesChange}
-        nodeTypes={nodeTypes}
-        fitView
-        nodesDraggable={false}
-        className=""
-      />
-    );
-  };
+  services?.plugins.map((node: any, index: any) => {});
 
   const fetchProject = async () => {
     const { data: project } = await supabase
@@ -170,11 +85,17 @@ const Project = ({ user, projectId }: any) => {
           projectName={project?.name}
           projectRWID={project?.railway_project_id}
           grid={true}
-          noMargin={true}
         >
-          <div className="w-screen h-screen">
-            <Flow />
+          <div className="mx-6 my-16 flex items-center space-x-6">
+            <div className="">
+              <img src="https://cdn-botway.deno.dev/icons/bot.svg" width={67} />
+            </div>
+            <div>
+              <h1 className="text-lg text-white">{project?.name}</h1>
+              <h1 className="text-base text-gray-400">Bot Project</h1>
+            </div>
           </div>
+          <div className="mx-6"></div>
         </ProjectLayout>
       )}
     </>

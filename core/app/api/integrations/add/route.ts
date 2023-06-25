@@ -53,6 +53,16 @@ export async function POST(request: Request) {
     }
   }
 
+  const volumes = body.has_volume
+    ? `
+    volumes: [
+      {
+        mountPath: "${body.volume_path}"
+        projectId: "${projectId.data}"
+      }
+    ]`
+    : "";
+
   const templateQuery = `
     mutation {
       templateDeploy(input: {
@@ -71,6 +81,7 @@ export async function POST(request: Request) {
             }"
             template: "https://github.com/${body.template_repo}"
             ${vars}
+            ${volumes}
           }
         ]
 

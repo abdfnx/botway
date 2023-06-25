@@ -239,7 +239,7 @@ const CE = ({ user, projectId }: any) => {
                                         children
                                       />
                                     )}
-                                    <span className="truncate">Save</span>
+                                    <span className="truncate">Done</span>
                                   </button>
                                 </div>
                               </div>
