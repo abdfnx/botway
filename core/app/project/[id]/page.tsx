@@ -11,7 +11,15 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { fetcher } from "@/tools/fetch";
-import { ContainerIcon } from "@primer/octicons-react";
+import {
+  CheckIcon,
+  GearIcon,
+  MarkGithubIcon,
+  XCircleIcon,
+} from "@primer/octicons-react";
+import Link from "next/link";
+import { CheckTokens } from "./settings/page";
+import { Tooltip } from "flowbite-react";
 
 export const revalidate = 0;
 
@@ -86,13 +94,43 @@ const Project = ({ user, projectId }: any) => {
           projectRWID={project?.railway_project_id}
           grid={true}
         >
-          <div className="mx-6 my-16 flex items-center space-x-6">
+          <div className="mx-6 mt-16 flex items-center space-x-6">
             <div className="">
               <img src="https://cdn-botway.deno.dev/icons/bot.svg" width={67} />
             </div>
             <div>
               <h1 className="text-lg text-white">{project?.name}</h1>
               <h1 className="text-base text-gray-400">Bot Project</h1>
+            </div>
+          </div>
+          <div className="mx-6 bg-secondary justify-between flex border border-gray-800 rounded-lg p-4">
+            <div className="flex">
+              <MarkGithubIcon size={20} className="fill-gray-400" />
+              <Link
+                href={`https://github.com/${project?.repo}`}
+                target="_blank"
+              >
+                <h1 className="pl-2 text-sm text-white">{project?.repo}</h1>
+              </Link>
+            </div>
+            <div className="flex">
+              <button>
+                <Tooltip content="Tokens Status" arrow={false} placement="top">
+                  {CheckTokens(project) ? (
+                    <>
+                      <CheckIcon size={20} className="fill-green-600" />
+                    </>
+                  ) : (
+                    <>
+                      <XCircleIcon size={20} className="fill-red-600" />
+                    </>
+                  )}
+                </Tooltip>
+              </button>
+
+              <a href={`/project/${projectId}/settings`}>
+                <GearIcon size={20} className="ml-3 fill-white" />
+              </a>
             </div>
           </div>
           <div className="mx-6"></div>

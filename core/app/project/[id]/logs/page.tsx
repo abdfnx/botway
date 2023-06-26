@@ -78,6 +78,16 @@ const Project = ({ user, projectId }: any) => {
     );
   };
 
+  const NoLogs = () => {
+    return (
+      <div className="rounded-2xl overflow-hidden p-5 w-full h-60 flex flex-col items-center justify-center gap-4">
+        <h2 className="text-md text-gray-400 text-center">
+          There is no logs 📜
+        </h2>
+      </div>
+    );
+  };
+
   return (
     <>
       {projectIsLoading ? (
@@ -132,18 +142,10 @@ const Project = ({ user, projectId }: any) => {
                     </div>
                   ))
                 ) : (
-                  <div className="rounded-2xl overflow-hidden p-5 cursor-pointer w-full h-60 flex flex-col items-center justify-center gap-4">
-                    <h2 className="text-md text-gray-400 text-center">
-                      There is no logs 📜
-                    </h2>
-                  </div>
+                  <NoLogs />
                 )
               ) : (
-                <div className="rounded-2xl overflow-hidden p-5 cursor-pointer w-full h-60 flex flex-col items-center justify-center gap-4">
-                  <h2 className="text-md text-gray-400 text-center">
-                    There is no logs 📜
-                  </h2>
-                </div>
+                <NoLogs />
               )}
             </div>
           </div>

@@ -39,6 +39,28 @@ const UpdateNameSchema = Yup.object().shape({
   rootDir: Yup.string(),
 });
 
+export const CheckTokens = (project: any) => {
+  if (project?.platform === "telegram") {
+    if (project?.bot_token.length != 0) {
+      return true;
+    }
+  } else if (project?.platform === "discord") {
+    if (project?.bot_token.length != 0 && project?.bot_app_token.length != 0) {
+      return true;
+    }
+  } else if (project?.platform === "slack" || project?.platform === "twitch") {
+    if (
+      project?.bot_token.length != 0 &&
+      project?.bot_app_token.length != 0 &&
+      project?.bot_secret_token.length != 0
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 const queryClient = new QueryClient();
 
 const Project = ({ user, projectId }: any) => {
@@ -177,34 +199,6 @@ const Project = ({ user, projectId }: any) => {
       setIsLoadingDelete(false);
     }
   }
-
-  const checkTokens = () => {
-    if (project?.platform === "telegram") {
-      if (project?.bot_token.length != 0) {
-        return true;
-      }
-    } else if (project?.platform === "discord") {
-      if (
-        project?.bot_token.length != 0 &&
-        project?.bot_app_token.length != 0
-      ) {
-        return true;
-      }
-    } else if (
-      project?.platform === "slack" ||
-      project?.platform === "twitch"
-    ) {
-      if (
-        project?.bot_token.length != 0 &&
-        project?.bot_app_token.length != 0 &&
-        project?.bot_secret_token.length != 0
-      ) {
-        return true;
-      }
-    }
-
-    return false;
-  };
 
   if (!project && !projectIsLoading) {
     redirect("/");
@@ -580,7 +574,7 @@ const Project = ({ user, projectId }: any) => {
                             className="py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap text-gray-500"
                             style={{ minWidth: "64px", maxWidth: "400px" }}
                           >
-                            {checkTokens() ? (
+                            {CheckTokens(project) ? (
                               <>
                                 <CheckIcon
                                   size={18}
