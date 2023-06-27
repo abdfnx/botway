@@ -468,60 +468,6 @@ const Project = ({ user, projectId }: any) => {
 
               <div>
                 <div className="my-6">
-                  <h3 className="text-white text-xl">Infrastructure</h3>
-                </div>
-                <div className="overflow-hidden shadow">
-                  <div className="flex flex-col gap-0">
-                    <div className="grid lg:grid-cols-2 sm:grid-cols-2 lt-md:!grid-cols-1 gap-3">
-                      <a
-                        href="https://docker.com"
-                        target="_blank"
-                        className="border border-gray-800 transition-all bg-[#00084d] hover:bg-[#00124d] duration-200 rounded-2xl p-4 flex flex-col items-center"
-                      >
-                        <div aria-hidden="true">
-                          <img
-                            src="https://cdn-botway.deno.dev/icons/docker.svg"
-                            width={35}
-                          />
-                        </div>
-                        <div className="space-y-2 mt-3 sm:space-y-4 flex flex-col items-center">
-                          <h1 className="text-white text-xs md:text-sm font-bold">
-                            Docker is your Container Builder
-                          </h1>
-                          <p className="text-xs md:text-sm text-gray-400 text-center">
-                            Docker is a platform for developing, shipping, and
-                            running applications 🐳
-                          </p>
-                        </div>
-                      </a>
-                      <a
-                        href="https://railway.app"
-                        target="_blank"
-                        className="border border-gray-800 transition-all bg-[#181622] hover:bg-[#1f132a] duration-200 rounded-2xl p-4 flex flex-col items-center"
-                      >
-                        <div aria-hidden="true">
-                          <img
-                            src="https://cdn-botway.deno.dev/icons/railway.svg"
-                            width={30}
-                          />
-                        </div>
-                        <div className="space-y-2 mt-3 sm:space-y-4 flex flex-col items-center">
-                          <h1 className="text-white text-xs md:text-sm font-bold">
-                            Railway is your Host Service
-                          </h1>
-                          <p className="text-xs md:text-sm text-gray-400 text-center">
-                            Railway is a canvas for shipping your apps,
-                            databases, and more 🚄
-                          </p>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div className="my-6">
                   <h3 className="text-white text-xl">Bot Configuration</h3>
                 </div>
                 <div className="my-4 max-w-full space-y-8">

@@ -1,11 +1,13 @@
 import {
   AppsIcon,
   CodespacesIcon,
+  DatabaseIcon,
   GearIcon,
   HomeIcon,
   ListUnorderedIcon,
   PackageIcon,
   ServerIcon,
+  SlidersIcon,
 } from "@primer/octicons-react";
 import { UserAvatar } from "../UserAvatar";
 import { CMDK } from "./cmdk";
@@ -153,6 +155,16 @@ export const ProjectLayout = ({
                   </a>
                 </Tooltip>
               </button>
+              <button className="place-content-center">
+                <Tooltip content="Resources" arrow={false} placement="right">
+                  <a
+                    className="transition-colors duration-200 flex items-center justify-center h-10 w-10 rounded hover:bg-bwdefualt"
+                    href={`/project/${projectId}/resources`}
+                  >
+                    <DatabaseIcon className="fill-white" size={18} />
+                  </a>
+                </Tooltip>
+              </button>
               <button>
                 <Tooltip content="Deployments" arrow={false} placement="right">
                   <a
@@ -171,6 +183,16 @@ export const ProjectLayout = ({
                     href={`/project/${projectId}/logs`}
                   >
                     <ListUnorderedIcon className="fill-white" size={18} />
+                  </a>
+                </Tooltip>
+              </button>
+              <button>
+                <Tooltip content="Environment" arrow={false} placement="right">
+                  <a
+                    className="transition-colors duration-200 flex items-center justify-center h-10 w-10 rounded hover:bg-bwdefualt"
+                    href={`/project/${projectId}/deployments`}
+                  >
+                    <SlidersIcon className="fill-white" size={18} />
                   </a>
                 </Tooltip>
               </button>
@@ -265,7 +287,7 @@ export const ProjectLayout = ({
               <div
                 className={`${
                   !noMargin ? "mx-auto" : ""
-                } w-full max-w-7xl space-y-16`}
+                } w-full max-w-7xl space-y-8`}
               >
                 {children}
               </div>

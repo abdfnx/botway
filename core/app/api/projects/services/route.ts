@@ -65,6 +65,16 @@ export async function POST(request: Request) {
               edges {
                 node {
                   id
+                  friendlyName
+                  name
+                }
+              }
+            }
+
+            volumes {
+              edges {
+                node {
+                  id
                   name
                 }
               }
@@ -84,5 +94,6 @@ export async function POST(request: Request) {
     message: "Success",
     services: projectData.data.project.services.edges,
     plugins: projectData.data.project.plugins.edges,
+    volumes: projectData.data.project.volumes.edges,
   });
 }
