@@ -1,6 +1,6 @@
 "use client";
 
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useAuth } from "@/supabase/auth/provider";
 import { LoadingDots } from "@/components/LoadingDots";
 import supabase from "@/supabase/browser";
@@ -13,7 +13,6 @@ import {
 import { fetcher } from "@/tools/fetch";
 import {
   CheckIcon,
-  DatabaseIcon,
   GearIcon,
   MarkGithubIcon,
   XCircleIcon,
@@ -21,13 +20,18 @@ import {
 import Link from "next/link";
 import { CheckTokens } from "./settings/page";
 import { Tooltip } from "flowbite-react";
+import { jwtDecrypt } from "jose";
+import { BW_SECRET_KEY } from "@/tools/tokens";
 
 export const revalidate = 0;
 
 const queryClient = new QueryClient();
 
 const Project = ({ user, projectId }: any) => {
-  const data: { type: string; name: any; friendlyName?: any }[] = [];
+  const router = useRouter();
+
+  const data: { id: string; type: string; name: any; friendlyName?: any }[] =
+    [];
 
   const fetchServices = async () => {
     const services = await fetcher(`/api/projects/services`, {
@@ -53,6 +57,7 @@ const Project = ({ user, projectId }: any) => {
 
   services?.services.map((node: any) => {
     data.push({
+      id: node.node.id,
       type: "service",
       name: node.node.name,
     });
@@ -60,6 +65,7 @@ const Project = ({ user, projectId }: any) => {
 
   services?.plugins.map((node: any) => {
     data.push({
+      id: node.node.id,
       type: "plugin",
       name: node.node.name,
       friendlyName: node.node.friendlyName,
@@ -68,6 +74,7 @@ const Project = ({ user, projectId }: any) => {
 
   services?.volumes.map((node: any) => {
     data.push({
+      id: node.node.id,
       type: "volume",
       name: node.node.name,
     });
@@ -93,6 +100,17 @@ const Project = ({ user, projectId }: any) => {
       refetchIntervalInBackground: true,
     }
   );
+
+  const openAtRailway = async (id: any, type: any) => {
+    const { payload: railwayProjectId } = await jwtDecrypt(
+      project?.railway_project_id,
+      BW_SECRET_KEY
+    );
+
+    router.push(
+      `https://railway.app/project/${railwayProjectId.data}/${type}/${id}`
+    );
+  };
 
   return (
     <>
@@ -147,6 +165,9 @@ const Project = ({ user, projectId }: any) => {
             </div>
           </div>
           <div className="mx-6">
+            <div className="my-6">
+              <h3 className="text-white text-xl">Containers</h3>
+            </div>
             <div className="my-4 max-w-full space-y-8">
               <div className="overflow-x-auto flex-grow rounded-lg border border-gray-800">
                 <table className="w-full border-collapse select-auto bg-bwdefualt">
@@ -159,29 +180,27 @@ const Project = ({ user, projectId }: any) => {
                       <th className="py-3 px-4 text-left hidden md:block font-semibold text-xs text-gray-400">
                         Type
                       </th>
-                      <th className="py-3 px-4 text-left font-semibold text-xs text-gray-400">
-                        Actions
-                      </th>
-                      <th className="py-3 px-4 text-left font-semibold text-xs text-gray-400" />
+                      <th className="py-3 px-4" />
                     </tr>
                   </thead>
                   <tbody>
                     {servicesIsLoading ? (
                       <tr>
-                        <td
-                          className="py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap"
-                          style={{ minWidth: "64px", maxWidth: "400px" }}
-                        >
+                        <td className="py-3 px-4  place-content-center overflow-hidden items-center justify-center overflow-ellipsis whitespace-nowrap">
                           <div className="flex space-x-2 items-center">
-                            <LoadingDots className="fixed flex items-center justify-center" />
+                            <LoadingDots className="flex items-center justify-center" />
                           </div>
                         </td>
                       </tr>
                     ) : (
                       data.map((node: any) => (
-                        <tr>
+                        <tr
+                          className={`${
+                            node.id % 2 === 0 ? "bg-secondary" : ""
+                          }`}
+                        >
                           <td
-                            className="py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap"
+                            className={`py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap`}
                             style={{ minWidth: "64px", maxWidth: "100px" }}
                           >
                             <div className="flex space-x-2 items-center">
@@ -225,9 +244,22 @@ const Project = ({ user, projectId }: any) => {
                           </td>
                           <td
                             className="py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap text-gray-500"
-                            style={{ minWidth: "64px", maxWidth: "200px" }}
+                            style={{ minWidth: "64px", maxWidth: "400px" }}
                           >
-                            <div className="bg-secondary rounded-lg p-1 items-center justify-center"></div>
+                            <Tooltip
+                              content="Open at Railway"
+                              arrow={false}
+                              placement="bottom"
+                            >
+                              <img
+                                src="https://cdn-botway.deno.dev/icons/railway.svg"
+                                className="cursor-pointer"
+                                onClick={() =>
+                                  openAtRailway(node.id, node.type)
+                                }
+                                width={20}
+                              />
+                            </Tooltip>
                           </td>
                         </tr>
                       ))
@@ -241,7 +273,7 @@ const Project = ({ user, projectId }: any) => {
             <div className="my-6">
               <h3 className="text-white text-xl">Infrastructure</h3>
             </div>
-            <div className="overflow-hidden shadow">
+            <div className="overflow-hidden shadow pb-12">
               <div className="flex flex-col gap-0">
                 <div className="grid lg:grid-cols-2 sm:grid-cols-2 lt-md:!grid-cols-1 gap-3">
                   <a
@@ -290,7 +322,6 @@ const Project = ({ user, projectId }: any) => {
               </div>
             </div>
           </div>
-          <div className="mx-6"></div>
         </ProjectLayout>
       )}
     </>
