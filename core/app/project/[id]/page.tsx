@@ -13,6 +13,7 @@ import {
 import { fetcher } from "@/tools/fetch";
 import {
   CheckIcon,
+  DatabaseIcon,
   GearIcon,
   MarkGithubIcon,
   XCircleIcon,
@@ -210,14 +211,14 @@ const Project = ({ user, projectId }: any) => {
                                   width={20}
                                 />
                               ) : node.type === "volume" ? (
-                                <img
-                                  src={`https://cdn-botway.deno.dev/icons/volume.svg`}
-                                  width={17}
+                                <DatabaseIcon
+                                  className="fill-white"
+                                  size={19}
                                 />
                               ) : (
-                                <img
-                                  src={`https://cdn-botway.deno.dev/icons/github.svg`}
-                                  width={20}
+                                <MarkGithubIcon
+                                  className="fill-white"
+                                  size={19}
                                 />
                               )}
                             </div>

@@ -130,11 +130,47 @@ const Project = ({ user, projectId, slug }: any) => {
   }
 
   const check = async (int: any) => {
-    if (!int.is_plugin) {
+    if (!int.is_plugin && int.variables.length != 0) {
       setOpen(true);
+    } else if (!int.is_plugin && int.variables.length === 0) {
+      try {
+        setIsLoading(true);
+
+        const body = {
+          name: int.name,
+          slug: int.slug,
+          template_repo: int.template_repo,
+          is_plugin: int.is_plugin,
+          projectId: project?.railway_project_id,
+          def_vars: int.def_variables,
+          plugin: int.plugin,
+          has_volume: int.has_volume,
+          volume_path: int.volume_path,
+        };
+
+        const newInt = await fetcher("/api/integrations/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+
+        if (newInt.message === "Success") {
+          toast.success(
+            "You have successfully created a new bot integration",
+            toastStyle
+          );
+        } else {
+          toast.error(newInt.error, toastStyle);
+        }
+      } catch (e: any) {
+        toast.error(e.message, toastStyle);
+      } finally {
+        setIsLoading(false);
+      }
     } else {
       try {
         setIsLoading(true);
+
         const newInt = await fetcher("/api/integrations/add", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

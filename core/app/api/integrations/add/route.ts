@@ -51,6 +51,8 @@ export async function POST(request: Request) {
     } else {
       vars = `variables: {${body.vars.k1}: "${body.vars.v1}" ${body.vars.k2}: "${body.vars.v2}" ${body.def_vars}}`;
     }
+  } else {
+    vars = `variables: {${body.def_vars}}`;
   }
 
   const volumes = body.has_volume
