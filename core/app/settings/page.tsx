@@ -212,7 +212,7 @@ const Settings = () => {
             </div>
             <div className="mb-8 ml-1">
               <div className="my-4 max-w-4xl space-y-8">
-                <div className="overflow-x-auto flex-grow rounded-2xl border border-gray-800">
+                <div className="overflow-x-auto flex-grow border border-gray-800 rounded-lg">
                   <table className="w-full border-collapse select-auto">
                     <thead>
                       <tr className="bg-secondary border-b border-gray-800">

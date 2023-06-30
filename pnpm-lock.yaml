@@ -32,8 +32,8 @@ importers:
         specifier: ^2.26.0
         version: 2.26.0(encoding@0.1.13)
       "@tanstack/react-query":
-        specifier: ^4.29.18
-        version: 4.29.18(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^4.29.19
+        version: 4.29.19(react-dom@18.2.0)(react@18.2.0)
       ajv:
         specifier: ^8.12.0
         version: 8.12.0
@@ -93,7 +93,7 @@ importers:
         version: 18.2.0
       react-cmdk:
         specifier: ^1.3.9
-        version: 1.3.9(react-dom@18.2.0)(react@18.2.0)(webpack@5.88.0)
+        version: 1.3.9(react-dom@18.2.0)(react@18.2.0)(webpack@5.88.1)
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
@@ -144,8 +144,8 @@ importers:
         specifier: ^1.0.6
         version: 1.0.6(tailwindcss@3.3.2)
       typescript:
-        specifier: ^5.1.3
-        version: 5.1.3
+        specifier: ^5.1.6
+        version: 5.1.6
 
   create-botway-bot:
     dependencies:
@@ -858,10 +858,10 @@ packages:
       - encoding
     dev: false
 
-  /@supabase/gotrue-js@2.33.0(encoding@0.1.13):
+  /@supabase/gotrue-js@2.34.0(encoding@0.1.13):
     resolution:
       {
-        integrity: sha512-HwY5OtS2Q8gw3s8JcZL5hQXCVJDinKdhfiULLSIWUdzihCgTTVSIb9rVZJ1psZMjpRtuAPXNK46nezWn6uJyRA==,
+        integrity: sha512-j4up+jZDyutUwKcrwDXhVbeHFydUu9wLvotr4qREenz+ec0d3L7Zs0Nb1hP8B64HbJ4tmFXhpOG23IsvQtC58w==,
       }
     dependencies:
       cross-fetch: 3.1.6(encoding@0.1.13)
@@ -911,7 +911,7 @@ packages:
       }
     dependencies:
       "@supabase/functions-js": 2.1.2(encoding@0.1.13)
-      "@supabase/gotrue-js": 2.33.0(encoding@0.1.13)
+      "@supabase/gotrue-js": 2.34.0(encoding@0.1.13)
       "@supabase/postgrest-js": 1.7.1(encoding@0.1.13)
       "@supabase/realtime-js": 2.7.3
       "@supabase/storage-js": 2.5.1(encoding@0.1.13)
@@ -945,17 +945,17 @@ packages:
       tailwindcss: 3.3.2
     dev: true
 
-  /@tanstack/query-core@4.29.17:
+  /@tanstack/query-core@4.29.19:
     resolution:
       {
-        integrity: sha512-iDbO8yZOpm1lqgq6L8mpxGbKaoiyZSjthxEB3WGU7mNPYss9q4H3Q67+e2xXGwkemEVmtEX/WwvtFitrvVU8TA==,
+        integrity: sha512-uPe1DukeIpIHpQi6UzIgBcXsjjsDaLnc7hF+zLBKnaUlh7jFE/A+P8t4cU4VzKPMFB/C970n/9SxtpO5hmIRgw==,
       }
     dev: false
 
-  /@tanstack/react-query@4.29.18(react-dom@18.2.0)(react@18.2.0):
+  /@tanstack/react-query@4.29.19(react-dom@18.2.0)(react@18.2.0):
     resolution:
       {
-        integrity: sha512-CyoxrT8U7MWLZOdl0XLCiHC+W5cnXNELafFtzcsrwrALiUulONEfWFl6TzgvENfhC50OBjVGy/6Yl3YsIhAM6g==,
+        integrity: sha512-XiTIOHHQ5Cw1WUlHaD4fmVUMhoWjuNJlAeJGq7eM4BraI5z7y8WkZO+NR8PSuRnQGblpuVdjClQbDFtwxTtTUw==,
       }
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -967,7 +967,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      "@tanstack/query-core": 4.29.17
+      "@tanstack/query-core": 4.29.19
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
@@ -1410,7 +1410,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.21.9
-      caniuse-lite: 1.0.30001508
+      caniuse-lite: 1.0.30001509
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -1492,8 +1492,8 @@ packages:
     engines: { node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7 }
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001508
-      electron-to-chromium: 1.4.441
+      caniuse-lite: 1.0.30001509
+      electron-to-chromium: 1.4.445
       node-releases: 2.0.12
       update-browserslist-db: 1.0.11(browserslist@4.21.9)
     dev: false
@@ -1557,10 +1557,10 @@ packages:
       }
     engines: { node: ">= 6" }
 
-  /caniuse-lite@1.0.30001508:
+  /caniuse-lite@1.0.30001509:
     resolution:
       {
-        integrity: sha512-sdQZOJdmt3GJs1UMNpCCCyeuS2IEGLXnHyAo9yIO5JJDjbjoVRij4M1qep6P6gFpptD1PqIYgzM+gwJbOi92mw==,
+        integrity: sha512-2uDDk+TRiTX5hMcUYT/7CSyzMZxjfGu0vAUjS2g0LSD8UoXOv0LtpH4LxGMemsiPq6LCVIUjNwVM0erkOkGCDA==,
       }
     dev: false
 
@@ -1850,10 +1850,10 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /electron-to-chromium@1.4.441:
+  /electron-to-chromium@1.4.445:
     resolution:
       {
-        integrity: sha512-LlCgQ8zgYZPymf5H4aE9itwiIWH4YlCiv1HFLmmcBeFYi5E+3eaIFnjHzYtcFQbaKfAW+CqZ9pgxo33DZuoqPg==,
+        integrity: sha512-++DB+9VK8SBJwC+X1zlMfJ1tMA3F0ipi39GdEp+x3cV2TyBihqAgad8cNMWtLDEkbH39nlDQP7PfGrDr3Dr7HA==,
       }
     dev: false
 
@@ -2265,10 +2265,10 @@ packages:
       he: 1.2.0
       param-case: 3.0.4
       relateurl: 0.2.7
-      terser: 5.18.1
+      terser: 5.18.2
     dev: false
 
-  /html-webpack-plugin@5.5.3(webpack@5.88.0):
+  /html-webpack-plugin@5.5.3(webpack@5.88.1):
     resolution:
       {
         integrity: sha512-6YrDKTuqaP/TquFH7h4srYWsZx+x6k6+FbsTm0ziCwGHDP78Unr1r9F/H4+sGmMbX08GQcJ+K64x55b+7VM/jg==,
@@ -2282,7 +2282,7 @@ packages:
       lodash: 4.17.21
       pretty-error: 4.0.0
       tapable: 2.2.1
-      webpack: 5.88.0
+      webpack: 5.88.1
     dev: false
 
   /htmlparser2@6.1.0:
@@ -2729,7 +2729,7 @@ packages:
       "@next/env": 13.4.7
       "@swc/helpers": 0.5.1
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001508
+      caniuse-lite: 1.0.30001509
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -3111,7 +3111,7 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /react-cmdk@1.3.9(react-dom@18.2.0)(react@18.2.0)(webpack@5.88.0):
+  /react-cmdk@1.3.9(react-dom@18.2.0)(react@18.2.0)(webpack@5.88.1):
     resolution:
       {
         integrity: sha512-MSVmAQZ9iqY7hO3r++XP6yWSHzGfMDGMvY3qlDT8k5RiWoRFwO1CGPlsWzhvcUbPilErzsMKK7uB4McEcX4B6g==,
@@ -3122,7 +3122,7 @@ packages:
     dependencies:
       "@headlessui/react": 1.7.15(react-dom@18.2.0)(react@18.2.0)
       "@heroicons/react": 2.0.18(react@18.2.0)
-      html-webpack-plugin: 5.5.3(webpack@5.88.0)
+      html-webpack-plugin: 5.5.3(webpack@5.88.1)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
@@ -3550,7 +3550,7 @@ packages:
     engines: { node: ">=6" }
     dev: false
 
-  /terser-webpack-plugin@5.3.9(webpack@5.88.0):
+  /terser-webpack-plugin@5.3.9(webpack@5.88.1):
     resolution:
       {
         integrity: sha512-ZuXsqE07EcggTWQjXUj+Aot/OMcD0bMKGgF63f7UxYcu5/AJF53aIpK1YoP5xR9l6s/Hy2b+t1AM0bLNPRuhwA==,
@@ -3573,14 +3573,14 @@ packages:
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.1
-      terser: 5.18.1
-      webpack: 5.88.0
+      terser: 5.18.2
+      webpack: 5.88.1
     dev: false
 
-  /terser@5.18.1:
+  /terser@5.18.2:
     resolution:
       {
-        integrity: sha512-j1n0Ao919h/Ai5r43VAnfV/7azUYW43GPxK7qSATzrsERfW7+y2QW9Cp9ufnRF5CQUWbnLSo7UJokSWCqg4tsQ==,
+        integrity: sha512-Ah19JS86ypbJzTzvUCX7KOsEIhDaRONungA4aYBjEP3JZRf4ocuDzTg4QWZnPn9DEMiMYGJPiSOy7aykoCc70w==,
       }
     engines: { node: ">=10" }
     hasBin: true
@@ -3780,6 +3780,15 @@ packages:
     hasBin: true
     dev: true
 
+  /typescript@5.1.6:
+    resolution:
+      {
+        integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==,
+      }
+    engines: { node: ">=14.17" }
+    hasBin: true
+    dev: true
+
   /universal-github-app-jwt@1.1.1:
     resolution:
       {
@@ -3897,10 +3906,10 @@ packages:
     engines: { node: ">=10.13.0" }
     dev: false
 
-  /webpack@5.88.0:
+  /webpack@5.88.1:
     resolution:
       {
-        integrity: sha512-O3jDhG5e44qIBSi/P6KpcCcH7HD+nYIHVBhdWFxcLOcIGN8zGo5nqF3BjyNCxIh4p1vFdNnreZv2h2KkoAw3lw==,
+        integrity: sha512-FROX3TxQnC/ox4N+3xQoWZzvGXSuscxR32rbzjpXgEzWudJFEJBpdlkkob2ylrv5yzzufD1zph1OoFsLtm6stQ==,
       }
     engines: { node: ">=10.13.0" }
     hasBin: true
@@ -3931,7 +3940,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.9(webpack@5.88.0)
+      terser-webpack-plugin: 5.3.9(webpack@5.88.1)
       watchpack: 2.4.0
       webpack-sources: 3.2.3
     transitivePeerDependencies:

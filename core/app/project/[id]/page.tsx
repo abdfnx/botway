@@ -127,16 +127,14 @@ const Project = ({ user, projectId }: any) => {
         >
           <h1 className="mx-6 my-16 text-3xl text-white">My Bot</h1>
           <div className="mx-6 mt-16 flex items-center space-x-6">
-            <div className="">
-              <img src="https://cdn-botway.deno.dev/icons/bot.svg" width={55} />
-            </div>
+            <img src="https://cdn-botway.deno.dev/icons/bot.svg" width={55} />
             <div>
               <h1 className="text-base text-white">{project?.name}</h1>
               <h1 className="text-sm text-gray-400">Bot Project</h1>
             </div>
           </div>
-          <div className="mx-6 bg-secondary justify-between flex border border-gray-800 rounded-lg p-4">
-            <div className="flex">
+          <div className="mx-6 mt-1 bg-secondary justify-between flex border border-gray-800 rounded-lg p-4">
+            <div className="flex mt-0.5">
               <MarkGithubIcon size={20} className="fill-gray-400" />
               <Link
                 href={`https://github.com/${project?.repo}`}
@@ -201,7 +199,7 @@ const Project = ({ user, projectId }: any) => {
                           }`}
                         >
                           <td
-                            className={`py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap`}
+                            className="py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap border-r border-gray-800"
                             style={{ minWidth: "64px", maxWidth: "100px" }}
                           >
                             <div className="flex space-x-2 items-center">
@@ -250,7 +248,7 @@ const Project = ({ user, projectId }: any) => {
                             <Tooltip
                               content="Open at Railway"
                               arrow={false}
-                              placement="bottom"
+                              placement="right"
                             >
                               <img
                                 src="https://cdn-botway.deno.dev/icons/railway.svg"

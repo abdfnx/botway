@@ -16,7 +16,7 @@ body {
 
 .button {
   display: block;
-  border-radius: 7px;
+  border-radius: 8px;
   @apply px-3 py-2 text-sm;
   font-weight: 500;
   padding: 0 12px;
@@ -28,7 +28,6 @@ body {
   transition-timing-function: ease;
   font-size: 0.875rem;
   height: 40px;
-  cursor: pointer;
   text-decoration: none;
 }
 

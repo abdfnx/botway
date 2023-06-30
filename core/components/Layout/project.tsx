@@ -155,16 +155,6 @@ export const ProjectLayout = ({
                   </a>
                 </Tooltip>
               </button>
-              <button className="place-content-center">
-                <Tooltip content="Resources" arrow={false} placement="right">
-                  <a
-                    className="transition-colors duration-200 flex items-center justify-center h-10 w-10 rounded hover:bg-bwdefualt"
-                    href={`/project/${projectId}/resources`}
-                  >
-                    <DatabaseIcon className="fill-white" size={18} />
-                  </a>
-                </Tooltip>
-              </button>
               <button>
                 <Tooltip content="Deployments" arrow={false} placement="right">
                   <a
@@ -190,7 +180,7 @@ export const ProjectLayout = ({
                 <Tooltip content="Environment" arrow={false} placement="right">
                   <a
                     className="transition-colors duration-200 flex items-center justify-center h-10 w-10 rounded hover:bg-bwdefualt"
-                    href={`/project/${projectId}/deployments`}
+                    href={`/project/${projectId}/env`}
                   >
                     <SlidersIcon className="fill-white" size={18} />
                   </a>
@@ -213,7 +203,7 @@ export const ProjectLayout = ({
                 href="/settings"
                 className="flex border-none place-content-center self-center rounded bg-transparent p-0 outline-none transition-all focus:outline-4 focus:outline-none"
               >
-                <span className="relative place-content-center self-center cursor-pointer inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded outline-none transition-all outline-0 text-gray-400 hover:bg-bwdefualt shadow-none focus-visible:outline-none text-xs px-2.5 py-1">
+                <span className="relative place-content-center self-center cursor-pointer inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded-lg outline-none transition-all outline-0 text-gray-400 hover:bg-bwdefualt shadow-none focus-visible:outline-none text-xs px-2.5 py-1">
                   <span className="truncate">
                     <div className="py-1">
                       <UserAvatar data={user.email} size={24} />
@@ -266,7 +256,7 @@ export const ProjectLayout = ({
                 <button
                   type="button"
                   onClick={() => setIsOpen(true)}
-                  className="flex border-gray-800 hover:bg-bwdefualt border rounded p-0 outline-none outline-offset-1 transition-all focus:outline-4"
+                  className="flex border-gray-800 hover:bg-secondary border rounded p-0 outline-none outline-offset-1 transition-all focus:outline-4"
                 >
                   <span className="relative cursor-pointer inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 text-blue-700 shadow-sm text-xs px-2.5 py-1">
                     <AppsIcon />

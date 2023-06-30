@@ -235,15 +235,19 @@ const Project = ({ user, projectId, slug }: any) => {
                       <p className="text-base text-gray-400">{int?.desc}</p>
                     </div>
                     <a
-                      onClick={() => check(int)}
-                      className="flex md:!hidden cursor-pointer items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3"
+                      className={`flex md:!hidden cursor-pointer items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3 ${
+                        !int?.soon ? "cursor-pointer" : "cursor-not-allowed"
+                      }`}
                     >
                       <Button
                         htmlType="submit"
                         type="success"
+                        onClick={!int?.soon ? () => check(int) : null}
                         loading={isLoading}
+                        disabled={int?.soon}
+                        className={int?.soon ? "cursor-not-allowed" : ""}
                       >
-                        Add {int?.name}
+                        {int?.soon ? "Soon" : `Add ${int?.name}`}
                       </Button>
                     </a>
                   </div>
@@ -262,15 +266,19 @@ const Project = ({ user, projectId, slug }: any) => {
                 </div>
                 <div className="w-full lg:w-3/12 lg:mt-6 lg:sticky lg:top-[48px] align-self[flex-start] flex flex-col">
                   <a
-                    onClick={() => check(int)}
-                    className="hidden md:flex cursor-pointer items-center justify-center transition-all duration-200 active:scale-95 outline-none focus:outline-none lg:!flex text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3"
+                    className={`hidden md:flex items-center justify-center transition-all duration-200 active:scale-95 outline-none focus:outline-none lg:!flex text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3 ${
+                      !int?.soon ? "cursor-pointer" : "cursor-not-allowed"
+                    }`}
                   >
                     <Button
                       htmlType="submit"
                       type="success"
+                      onClick={!int?.soon ? () => check(int) : null}
                       loading={isLoading}
+                      disabled={int?.soon}
+                      className={int?.soon ? "cursor-not-allowed" : ""}
                     >
-                      Add {int?.name}
+                      {int?.soon ? "Soon" : `Add ${int?.name}`}
                     </Button>
                   </a>
                   <div className="mt-16 flex flex-col space-y-6">
