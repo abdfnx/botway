@@ -49,6 +49,7 @@ pub fn install() {
 
         "macos" => {
             match &arch as &str {
+                // TODO: replace macos with darwin
                 "x86_64" => {
                     name = "botway_macos_".to_owned() + &latest_version + "_amd64"
                 }

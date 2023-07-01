@@ -20,7 +20,7 @@ builds:
         - -X main.version={{ .Tag }}
         - -X main.buildDate={{ .Env.BuildDate }}
 
-    id: macos
+    id: darwin
     goos: [darwin]
     goarch: [amd64, arm64, arm]
 
@@ -41,13 +41,11 @@ builds:
 
 archives:
   - id: unix
-    builds: [macos, linux, freebsd]
+    builds: [darwin, linux, freebsd]
     <<: &archive_defaults
       name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Tag }}_{{ .Arch }}"
 
     wrap_in_directory: "true"
-    replacements:
-      darwin: macos
     format: zip
     files:
       - LICENSE
