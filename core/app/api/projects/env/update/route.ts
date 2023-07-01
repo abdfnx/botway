@@ -45,10 +45,7 @@ export async function POST(request: Request) {
     BW_SECRET_KEY
   );
 
-  const { payload: value } = await jwtDecrypt(
-    body.value,
-    BW_SECRET_KEY
-  );
+  const { payload: value } = await jwtDecrypt(body.value, BW_SECRET_KEY);
 
   const getEnvId = await fetcher("https://backboard.railway.app/graphql/v2", {
     method: "POST",
