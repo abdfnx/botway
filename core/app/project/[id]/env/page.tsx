@@ -202,6 +202,7 @@ const Env = ({ user, projectId }: any) => {
             <h1 className="text-3xl text-white">
               {project?.name} Environment Variables
             </h1>
+
             <button
               onClick={openAtRailway}
               className="border border-gray-800 transition-all bg-[#181622] hover:bg-[#1f132a] duration-200 rounded-2xl p-3 text-white flex flex-col items-center"
@@ -224,6 +225,7 @@ const Env = ({ user, projectId }: any) => {
                 <h1 className="text-lg text-white">
                   {Object.keys(vars?.vars).length} Service Variables
                 </h1>
+
                 <button
                   type="button"
                   onClick={() => setIsOpenAdd(true)}
@@ -238,6 +240,7 @@ const Env = ({ user, projectId }: any) => {
                   </span>
                 </button>
               </div>
+
               <div className="overflow-x-auto flex-grow rounded-lg border border-gray-800">
                 <table className="w-full border-collapse select-auto bg-secondary">
                   <tbody>
@@ -255,6 +258,7 @@ const Env = ({ user, projectId }: any) => {
                             {key}
                           </div>
                         </td>
+
                         <td
                           className={`py-3 px-4 overflow-hidden hidden md:table-cell overflow-ellipsis whitespace-nowrap ${
                             index != Object.keys(vars?.vars).length - 1

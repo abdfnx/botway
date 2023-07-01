@@ -72,8 +72,7 @@ const CE = ({ user, projectId }: any) => {
 
       if (project?.enable_ce) {
         body = {
-          envId: project?.railway_env_id,
-          projectId: project?.railway_project_id,
+          railwayProjectId: project?.railway_project_id,
         };
 
         ce = await fetcher("/api/ce", {
@@ -96,7 +95,7 @@ const CE = ({ user, projectId }: any) => {
             .encrypt(BW_SECRET_KEY),
           repo: project?.repo,
           slug: slug(project?.name, "-"),
-          projectId: project?.railway_project_id,
+          projectId,
         };
 
         ce = await fetcher("/api/ce/enable", {
@@ -134,13 +133,18 @@ const CE = ({ user, projectId }: any) => {
           </div>
           <div className="mx-6">
             <div className="w-full h-60 grid lg:grid-cols-2 lt-md:!grid-cols-1 items-center justify-center gap-4">
-              <img src="https://cdn-botway.deno.dev/images/coder.svg" alt="" />
+              <img
+                src="https://cdn-botway.deno.dev/images/coder.svg"
+                alt="Botway CE"
+              />
+
               <div className="pb-4">
                 <h2 className="text-md text-gray-400 text-center">
                   {project?.enable_ce
                     ? "Botway CE is enabled 👍"
                     : "Your project needs to enable Botway CE"}
                 </h2>
+
                 <h2 className="text-sm text-gray-500 text-center">
                   Botway CE is a code editor that built on top of{" "}
                   <Link

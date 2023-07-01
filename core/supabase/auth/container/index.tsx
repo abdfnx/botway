@@ -17,12 +17,16 @@ const Auth = ({ view: initialView }: any) => {
   switch (view) {
     case VIEWS.UPDATE_PASSWORD:
       return <UpdatePassword />;
+
     case VIEWS.FORGOTTEN_PASSWORD:
       return <ResetPassword />;
+
     case VIEWS.SIGN_UP:
       return <SignUp />;
+
     case VIEWS.SIGN_IN:
       return <SignIn />;
+
     default:
       return (
         <LoadingDots className="fixed inset-0 flex items-center justify-center" />

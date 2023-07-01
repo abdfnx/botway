@@ -1,17 +1,14 @@
 import {
-  AppsIcon,
   CodespacesIcon,
-  DatabaseIcon,
   GearIcon,
   HomeIcon,
   ListUnorderedIcon,
   PackageIcon,
   ServerIcon,
   SlidersIcon,
+  SparkleFillIcon,
 } from "@primer/octicons-react";
 import { UserAvatar } from "../UserAvatar";
-import { CMDK } from "./cmdk";
-import { useState } from "react";
 import { Tooltip } from "flowbite-react";
 import clsx from "clsx";
 import { jwtDecrypt } from "jose";
@@ -28,8 +25,6 @@ export const ProjectLayout = ({
   noMargin,
 }: any) => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
   const openAtRailway = async () => {
     const { payload: railwayProjectId } = await jwtDecrypt(
       projectRWID,
@@ -255,14 +250,14 @@ export const ProjectLayout = ({
                 </a>
                 <button
                   type="button"
-                  onClick={() => setIsOpen(true)}
+                  onClick={() => {}}
                   className="flex border-gray-800 hover:bg-secondary border rounded p-0 outline-none outline-offset-1 transition-all focus:outline-4"
                 >
                   <span className="relative cursor-pointer inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 text-blue-700 shadow-sm text-xs px-2.5 py-1">
-                    <AppsIcon />
+                    <SparkleFillIcon />
 
                     <span className="hidden font-thin text-gray-500 md:block">
-                      Ctrl + K
+                      AI
                     </span>
                   </span>
                 </button>
@@ -285,8 +280,6 @@ export const ProjectLayout = ({
           </main>
         </div>
       </div>
-
-      <CMDK isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };

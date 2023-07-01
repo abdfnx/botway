@@ -7,7 +7,6 @@ import createClient from "@/supabase/server";
 import { exec } from "child_process";
 import { stringify } from "ajv";
 
-// export const runtime = "edge";
 export const revalidate = 0;
 
 export async function POST(request: Request) {

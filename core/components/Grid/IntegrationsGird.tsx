@@ -16,6 +16,7 @@ export const IntegrationsGird = ({
             className="space-y-6 my-6"
           >
             {<h2 className="text-xl text-gray-400">{category}</h2>}
+
             <div className="grid gap-5 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 lg:max-w-none">
               {integrationsByCategory[category].map((p: any) => (
                 <a
@@ -32,6 +33,7 @@ export const IntegrationsGird = ({
                       alt={p.name}
                     />
                   </div>
+
                   <div className="mt-4 flex-grow flex flex-col space-y-2">
                     <p className="font-semibold text-white line-clamp-1">
                       {p.name}{" "}

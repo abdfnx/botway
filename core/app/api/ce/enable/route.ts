@@ -34,8 +34,18 @@ export async function POST(request: Request) {
 
   const { payload: password } = await jwtDecrypt(body.password, BW_SECRET_KEY);
 
-  const { payload: projectId } = await jwtDecrypt(
-    body.projectId,
+  const { data, error: ceError } = await supabase
+    .from("projects")
+    .select("railway_project_id, lang")
+    .eq("id", body.projectId)
+    .single();
+
+  if (ceError) {
+    return NextResponse.json({ error: ceError });
+  }
+
+  const { payload: railwayProjectId } = await jwtDecrypt(
+    data.railway_project_id,
     BW_SECRET_KEY
   );
 
@@ -44,6 +54,69 @@ export async function POST(request: Request) {
   });
 
   const ghu = await (await octokit.request("GET /user", {})).data;
+
+  let pkgs = "cmake ";
+
+  switch (data.lang) {
+    case "crystal":
+      pkgs += "crystal";
+
+      break;
+
+    case "csharp":
+      pkgs += "dotnet";
+
+      break;
+
+    case "dart":
+      pkgs += "dart-lang/dart/dart";
+
+      break;
+
+    case "deno":
+      pkgs += "deno";
+
+      break;
+
+    case "go":
+      pkgs += "go";
+
+      break;
+
+    case "java":
+      pkgs += "java gradle";
+
+      break;
+    case "kotlin":
+      pkgs += "kotlin java gradle";
+
+      break;
+
+    case "nim":
+      pkgs += "nim";
+
+      break;
+
+    case "php":
+      pkgs += "composer";
+
+      break;
+
+    case "python":
+      pkgs += "poetry pipenv";
+
+      break;
+
+    case "rust":
+      pkgs += "rust rustup-init";
+
+      break;
+
+    case "swift":
+      pkgs += "swift";
+
+      break;
+  }
 
   const query = `
     mutation {
@@ -60,17 +133,18 @@ export async function POST(request: Request) {
               GIT_REPO: "https://github.com/${body.repo}"
               GITHUB_TOKEN: "${githubApiToken.data}"
               PASSWORD: "${password.data}"
+              PKGS: "${pkgs}"
             }
             volumes: [
               {
                 mountPath: "/root"
-                projectId: "${projectId.data}"
+                projectId: "${railwayProjectId.data}"
               }
             ]
           }
         ]
 
-        projectId: "${projectId.data}"
+        projectId: "${railwayProjectId.data}"
       }) {
         projectId
       }
@@ -99,7 +173,7 @@ export async function POST(request: Request) {
     .update({
       enable_ce: true,
     })
-    .eq("railway_project_id", body.projectId);
+    .eq("id", body.projectId);
 
   if (error) {
     return NextResponse.json({ error });

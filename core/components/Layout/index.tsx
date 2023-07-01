@@ -1,19 +1,15 @@
 import {
-  AppsIcon,
   ArrowUpRightIcon,
   ContainerIcon,
   GearIcon,
   HomeIcon,
   MarkGithubIcon,
+  SparkleFillIcon,
 } from "@primer/octicons-react";
 import { Toaster } from "react-hot-toast";
-import { useState } from "react";
-import { CMDK } from "./cmdk";
 import { SignOut } from "@/supabase/auth/container/sign-out";
 
 export const DashLayout = ({ children, name, href }: any) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
   return (
     <>
       <Toaster />
@@ -290,14 +286,14 @@ export const DashLayout = ({ children, name, href }: any) => {
                       </a>
                       <button
                         type="button"
-                        onClick={() => setIsOpen(true)}
+                        onClick={() => {}}
                         className="flex border-gray-800 hover:bg-secondary border rounded p-0 outline-none outline-offset-1 transition-all focus:outline-4"
                       >
                         <span className="relative cursor-pointer inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 text-blue-700 shadow-sm text-xs px-2.5 py-1">
-                          <AppsIcon />
+                          <SparkleFillIcon />
 
                           <span className="hidden font-thin text-gray-500 md:block">
-                            Ctrl + K
+                            AI
                           </span>
                         </span>
                       </button>
@@ -310,8 +306,6 @@ export const DashLayout = ({ children, name, href }: any) => {
           </div>
         </div>
       </body>
-
-      <CMDK isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };

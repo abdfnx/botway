@@ -82,6 +82,7 @@ const SignIn = () => {
                 placeholder="Email Address"
                 type="email"
               />
+
               {errors.email && touched.email ? (
                 <div className="text-red-600 text-sm font-medium pt-1">
                   {errors.email}
@@ -89,6 +90,7 @@ const SignIn = () => {
               ) : null}
 
               <div className="pb-6" />
+
               <label
                 htmlFor="password"
                 className="block text-gray-500 pb-2 text-sm font-medium"
@@ -106,6 +108,7 @@ const SignIn = () => {
                 name="password"
                 type="password"
               />
+
               {errors.password && touched.password ? (
                 <div className="text-red-600 text-sm font-medium pt-1">
                   {errors.password}

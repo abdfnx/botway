@@ -50,37 +50,37 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         query: `
-        query {
-          project(id: "${railwayProjectId.data}") {
-            services {
-              edges {
-                node {
-                  id
-                  name
+          query {
+            project(id: "${railwayProjectId.data}") {
+              services {
+                edges {
+                  node {
+                    id
+                    name
+                  }
                 }
               }
-            }
 
-            plugins {
-              edges {
-                node {
-                  id
-                  friendlyName
-                  name
+              plugins {
+                edges {
+                  node {
+                    id
+                    friendlyName
+                    name
+                  }
                 }
               }
-            }
 
-            volumes {
-              edges {
-                node {
-                  id
-                  name
+              volumes {
+                edges {
+                  node {
+                    id
+                    name
+                  }
                 }
               }
             }
           }
-        }
       `,
       }),
     }

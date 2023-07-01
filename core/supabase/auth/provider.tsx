@@ -56,11 +56,13 @@ export const AuthProvider = (props: any) => {
           setView(VIEWS.UPDATE_PASSWORD);
 
           break;
+
         case EVENTS.SIGNED_OUT:
         case EVENTS.USER_UPDATED:
           setView(VIEWS.SIGN_IN);
 
           break;
+
         default:
       }
     });

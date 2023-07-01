@@ -25,14 +25,14 @@ export async function POST(request: Request) {
     BW_SECRET_KEY
   );
 
-  const { payload: projectId } = await jwtDecrypt(
-    body.projectId,
+  const { payload: railwayProjectId } = await jwtDecrypt(
+    body.railwayProjectId,
     BW_SECRET_KEY
   );
 
   const query = `
     query {
-      project(id: "${projectId.data}") {
+      project(id: "${railwayProjectId.data}") {
         services {
           edges {
             node {

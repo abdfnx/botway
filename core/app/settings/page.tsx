@@ -145,6 +145,7 @@ const Settings = () => {
                 </h3>
               </div>
             </div>
+
             <div className="mb-9 mt-10 ml-1">
               <div className="my-4 max-w-4xl space-y-8">
                 <Formik
@@ -162,6 +163,7 @@ const Settings = () => {
                             <label className="text-white col-span-12 text-base lg:col-span-5">
                               General settings
                             </label>
+
                             <div className="relative col-span-12 flex flex-col gap-6 lg:col-span-7">
                               <div className="text-sm leading-4 grid gap-2 md:grid md:grid-cols-12">
                                 <div className="flex flex-row space-x-2 justify-between col-span-12">
@@ -172,6 +174,7 @@ const Settings = () => {
                                     User Name
                                   </label>
                                 </div>
+
                                 <div className="col-span-12">
                                   <div className="relative">
                                     <Field
@@ -186,7 +189,9 @@ const Settings = () => {
                             </div>
                           </div>
                         </div>
+
                         <div className="border-gray-800 border-t" />
+
                         <div className="flex py-4 px-8">
                           <div className="flex w-full items-center gap-2 justify-end">
                             <div className="flex items-center gap-2">
@@ -210,6 +215,7 @@ const Settings = () => {
                 </Formik>
               </div>
             </div>
+
             <div className="mb-8 ml-1">
               <div className="my-4 max-w-4xl space-y-8">
                 <div className="overflow-x-auto flex-grow border border-gray-800 rounded-lg">
@@ -238,11 +244,13 @@ const Settings = () => {
                                 size={18}
                               />
                             </div>
+
                             <p className="text-sm pt-0.5 text-white">
                               GitHub API Token
                             </p>
                           </div>
                         </td>
+
                         <td
                           className="py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap text-gray-500"
                           style={{ minWidth: "64px", maxWidth: "400px" }}
@@ -250,6 +258,7 @@ const Settings = () => {
                           {user.user_metadata["githubApiToken"].length != 0 ? (
                             <>
                               <CheckIcon size={18} className="fill-green-600" />
+
                               <span className="pl-2 text-sm hidden md:inline">
                                 Thank you for adding this token
                               </span>
@@ -257,12 +266,14 @@ const Settings = () => {
                           ) : (
                             <>
                               <XCircleIcon size={18} className="fill-red-600" />
+
                               <span className="pl-2 text-sm hidden md:inline">
                                 You need to add this token
                               </span>
                             </>
                           )}
                         </td>
+
                         <td
                           className="py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap text-gray-500 w-[44px]"
                           style={{ minWidth: "64px", maxWidth: "400px" }}
@@ -280,6 +291,7 @@ const Settings = () => {
                           </button>
                         </td>
                       </tr>
+
                       <tr>
                         <td
                           className="py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap"
@@ -292,11 +304,13 @@ const Settings = () => {
                                 width={18}
                               />
                             </div>
+
                             <p className="text-sm text-white">
                               Railway API Token
                             </p>
                           </div>
                         </td>
+
                         <td
                           className="py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap text-gray-500"
                           style={{ minWidth: "64px", maxWidth: "400px" }}
@@ -304,6 +318,7 @@ const Settings = () => {
                           {user.user_metadata["railwayApiToken"].length != 0 ? (
                             <>
                               <CheckIcon size={18} className="fill-green-600" />
+
                               <span className="pl-2 text-sm hidden md:inline">
                                 Thank you for adding this token
                               </span>
@@ -311,12 +326,14 @@ const Settings = () => {
                           ) : (
                             <>
                               <XCircleIcon size={18} className="fill-red-600" />
+
                               <span className="pl-2 text-sm hidden md:inline">
                                 You need to add this token
                               </span>
                             </>
                           )}
                         </td>
+
                         <td
                           className="py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap text-gray-500 w-[44px]"
                           style={{ minWidth: "64px", maxWidth: "400px" }}
@@ -439,6 +456,7 @@ const Settings = () => {
                     >
                       Edit Railway API Token
                     </Dialog.Title>
+
                     <div className="mt-2">
                       <Formik
                         initialValues={{

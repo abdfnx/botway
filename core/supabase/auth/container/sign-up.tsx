@@ -31,7 +31,6 @@ const SignUp = () => {
             name: params.name,
             githubApiToken: "",
             railwayApiToken: "",
-            // renderApiToken: "",
           },
         },
       });
@@ -106,6 +105,7 @@ const SignUp = () => {
               >
                 Name
               </label>
+
               <Field
                 className="input"
                 id="name"
@@ -113,18 +113,22 @@ const SignUp = () => {
                 placeholder="Your Name"
                 type="text"
               />
+
               {errors.name && touched.name ? (
                 <div className="text-red-600 text-sm font-medium pt-1">
                   {errors.name}
                 </div>
               ) : null}
+
               <div className="pb-6" />
+
               <label
                 htmlFor="email"
                 className="block text-gray-500 pb-2 text-sm font-medium"
               >
                 Email
               </label>
+
               <Field
                 className={clsx("input", errors.email && "bg-red-50")}
                 id="email"
@@ -132,18 +136,22 @@ const SignUp = () => {
                 placeholder="Email Address"
                 type="email"
               />
+
               {errors.email && touched.email ? (
                 <div className="text-red-600 text-sm font-medium pt-1">
                   {errors.email}
                 </div>
               ) : null}
+
               <div className="pb-6" />
+
               <label
                 htmlFor="password"
                 className="block text-gray-500 pb-2 text-sm font-medium"
               >
                 Password
               </label>
+
               <Field
                 className={clsx(
                   "input",
@@ -154,11 +162,13 @@ const SignUp = () => {
                 name="password"
                 type="password"
               />
+
               {errors.password && touched.password ? (
                 <div className="text-red-600 text-sm font-medium pt-1">
                   {errors.password}
                 </div>
               ) : null}
+
               <Button htmlType="submit" className="button w-full p-2">
                 Create
               </Button>

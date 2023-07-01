@@ -228,12 +228,14 @@ const Project = ({ user, projectId, slug }: any) => {
                       src={`https://cdn-botway.deno.dev/icons/${int?.slug}.svg`}
                       className="h-16 w-16 rounded-sm"
                     />
+
                     <div className="text-center lg:text-left space-y-4 lg:space-y-3 flex flex-col">
                       <p className="text-white text-lg font-semibold">
                         {int?.name}
                       </p>
                       <p className="text-base text-gray-400">{int?.desc}</p>
                     </div>
+
                     <a
                       className={`flex md:!hidden cursor-pointer items-center justify-center border transition-all duration-200 active:scale-95 outline-none focus:outline-none text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3 ${
                         !int?.soon ? "cursor-pointer" : "cursor-not-allowed"
@@ -251,7 +253,9 @@ const Project = ({ user, projectId, slug }: any) => {
                       </Button>
                     </a>
                   </div>
+
                   <div className="pt-16" />
+
                   <div className="relative min-h-[420px] lg:min-h-[540px] py-16 w-full rounded-3xl border border-gray-800 bg-secondary flex flex-col justify-center items-center">
                     <div className="grid gap-4 items-center justify-items-center grid-cols-1 px-10">
                       <article className="prose prose-gray prose-headings:text-white prose-p:text-gray-400 prose-a:text-blue-700 prose-strong:text-white prose-ol:text-white prose-li:text-white prose-ul:text-white prose-pre:bg-bwdefualt prose-pre:border prose-pre:rounded-2xl prose-pre:border-gray-800 prose-blockquote:border-l-4 prose-blockquote:border-gray-800 prose-hr:border prose-hr:border-gray-800 prose-code:bg-bwdefualt prose-code:rounded prose-code:text-gray-100">
@@ -264,6 +268,7 @@ const Project = ({ user, projectId, slug }: any) => {
                     </div>
                   </div>
                 </div>
+
                 <div className="w-full lg:w-3/12 lg:mt-6 lg:sticky lg:top-[48px] align-self[flex-start] flex flex-col">
                   <a
                     className={`hidden md:flex items-center justify-center transition-all duration-200 active:scale-95 outline-none focus:outline-none lg:!flex text-white hover:opacity-90 h-[42px] py-2 px-3 rounded-lg text-base leading-6 space-x-3 ${
@@ -281,10 +286,12 @@ const Project = ({ user, projectId, slug }: any) => {
                       {int?.soon ? "Soon" : `Add ${int?.name}`}
                     </Button>
                   </a>
+
                   <div className="mt-16 flex flex-col space-y-6">
                     <div className="flex flex-col space-y-4">
                       <div className="ml-2 text-gray-400 flex space-x-6 items-center">
                         <ArrowUpRightIcon size={20} />
+
                         <a
                           href={int?.website}
                           target="_blank"
@@ -294,6 +301,7 @@ const Project = ({ user, projectId, slug }: any) => {
                           Website
                         </a>
                       </div>
+
                       <div className="ml-2 text-gray-400 flex space-x-6 items-center">
                         <svg
                           width="18"
@@ -317,8 +325,10 @@ const Project = ({ user, projectId, slug }: any) => {
                           {int?.twitter}
                         </a>
                       </div>
+
                       <div className="ml-2 text-gray-400 flex space-x-6 items-center">
                         <MarkGithubIcon size={18} />
+
                         <a
                           href={int?.repo}
                           target="_blank"
@@ -328,8 +338,10 @@ const Project = ({ user, projectId, slug }: any) => {
                           Repo
                         </a>
                       </div>
+
                       <div className="ml-2 text-gray-400 flex space-x-6 items-center">
                         <FileDirectoryIcon size={18} />
+
                         <p className="text-sm">{int?.category}</p>
                       </div>
                     </div>
@@ -377,12 +389,14 @@ const Project = ({ user, projectId, slug }: any) => {
                         >
                           <div className="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4"></div>
                         </Transition.Child>
+
                         <div className="flex h-full flex-col overflow-y-scroll bg-secondary border-l border-gray-800 py-4 shadow-xl">
                           <div className="px-4 border-b border-gray-800 sm:px-6">
                             <Dialog.Title className="text-lg font-semibold text-white leading-6 pb-4">
                               Add Integration To My Project
                             </Dialog.Title>
                           </div>
+
                           <div className="relative mt-4 flex-1 px-4 sm:px-6">
                             <div className="my-4 max-w-4xl space-y-8">
                               <Formik
@@ -393,7 +407,7 @@ const Project = ({ user, projectId, slug }: any) => {
                                 }}
                                 onSubmit={addIntegration}
                               >
-                                {({ errors }) => (
+                                {() => (
                                   <>
                                     <Form className="column w-full">
                                       <div>
@@ -424,6 +438,7 @@ const Project = ({ user, projectId, slug }: any) => {
                                           <></>
                                         )}
                                       </div>
+
                                       <br />
 
                                       <Button

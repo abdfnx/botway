@@ -236,6 +236,7 @@ const Project = ({ user, projectId }: any) => {
                         Project Settings
                       </h3>
                     </div>
+
                     <div className="bg-secondary border border-gray-800 overflow-hidden rounded-2xl shadow">
                       <div className="px-8 py-8 opacity-100">
                         <div className="relative col-span-12 flex flex-col gap-6 lg:col-span-7">
@@ -246,6 +247,7 @@ const Project = ({ user, projectId }: any) => {
                                   Project name
                                 </label>
                               </div>
+
                               <div className="col-span-12">
                                 <div>
                                   <div className="relative">
@@ -265,12 +267,14 @@ const Project = ({ user, projectId }: any) => {
                                 </div>
                               </div>
                             </div>
+
                             <div className="text-sm leading-4 grid gap-2 md:grid md:grid-cols-12">
                               <div className="flex flex-row space-x-2 justify-between col-span-12">
                                 <label className="block text-gray-400 text-sm leading-4">
                                   Project Icon
                                 </label>
                               </div>
+
                               <div className="col-span-12">
                                 <div>
                                   <div className="relative">
@@ -290,12 +294,14 @@ const Project = ({ user, projectId }: any) => {
                                 </div>
                               </div>
                             </div>
+
                             <div className="text-sm leading-4 grid gap-2 md:grid md:grid-cols-12">
                               <div className="flex flex-row space-x-2 justify-between col-span-12">
                                 <label className="block text-gray-400 text-sm leading-4">
                                   Build Command
                                 </label>
                               </div>
+
                               <div className="col-span-12">
                                 <div>
                                   <div className="relative">
@@ -320,12 +326,14 @@ const Project = ({ user, projectId }: any) => {
                                 </div>
                               </div>
                             </div>
+
                             <div className="text-sm leading-4 grid gap-2 md:grid md:grid-cols-12">
                               <div className="flex flex-row space-x-2 justify-between col-span-12">
                                 <label className="block text-gray-400 text-sm leading-4">
                                   Start Command
                                 </label>
                               </div>
+
                               <div className="col-span-12">
                                 <div>
                                   <div className="relative">
@@ -350,12 +358,14 @@ const Project = ({ user, projectId }: any) => {
                                 </div>
                               </div>
                             </div>
+
                             <div className="text-sm leading-4 grid gap-2 md:grid md:grid-cols-12">
                               <div className="flex flex-row space-x-2 justify-between col-span-12">
                                 <label className="block text-gray-400 text-sm leading-4">
                                   Root Directory
                                 </label>
                               </div>
+
                               <div className="col-span-12">
                                 <div>
                                   <div className="relative">
@@ -380,12 +390,14 @@ const Project = ({ user, projectId }: any) => {
                                 </div>
                               </div>
                             </div>
+
                             <div className="text-sm leading-4 grid gap-2 md:grid md:grid-cols-12">
                               <div className="flex flex-row space-x-2 justify-between col-span-12">
                                 <label className="block text-gray-400 text-sm leading-4">
                                   GitHub Repo
                                 </label>
                               </div>
+
                               <div className="col-span-12">
                                 <div>
                                   <div className="relative">
@@ -408,12 +420,14 @@ const Project = ({ user, projectId }: any) => {
                                 </div>
                               </div>
                             </div>
+
                             <div className="text-sm leading-4 grid gap-2 md:grid md:grid-cols-12">
                               <div className="flex flex-row space-x-2 justify-between col-span-12">
                                 <label className="block text-gray-400 text-sm leading-4">
                                   Project ID
                                 </label>
                               </div>
+
                               <div className="col-span-12">
                                 <div>
                                   <div className="relative">
@@ -432,7 +446,9 @@ const Project = ({ user, projectId }: any) => {
                           </div>
                         </div>
                       </div>
+
                       <div className="border-gray-800 border-t" />
+
                       <div className="flex bg-bwdefualt py-4 px-8">
                         <div className="flex w-full items-center gap-2 justify-end">
                           <div className="flex items-center gap-2">
@@ -456,6 +472,7 @@ const Project = ({ user, projectId }: any) => {
                                   children
                                 />
                               )}
+
                               <span className="truncate">Save</span>
                             </button>
                           </div>
@@ -470,6 +487,7 @@ const Project = ({ user, projectId }: any) => {
                 <div className="my-6">
                   <h3 className="text-white text-xl">Bot Configuration</h3>
                 </div>
+
                 <div className="my-4 max-w-full space-y-8">
                   <div className="overflow-x-auto flex-grow rounded-2xl border border-gray-800">
                     <table className="w-full border-collapse select-auto">
@@ -511,6 +529,7 @@ const Project = ({ user, projectId }: any) => {
                                   width={20}
                                 />
                               </div>
+
                               <p className="text-sm text-white">
                                 {capitalizeFirstLetter(project?.platform)}
                               </p>
@@ -563,6 +582,7 @@ const Project = ({ user, projectId }: any) => {
                 <div className="my-6">
                   <h3 className="text-red-500 mb-2 text-xl">Danger Zone</h3>
                 </div>
+
                 <div className="relative">
                   <div className="transition-opacity duration-300">
                     <div className="overflow-hidden rounded-2xl border bg-red-200 border-red-700 shadow-sm mb-8">
@@ -572,6 +592,7 @@ const Project = ({ user, projectId }: any) => {
                             <div className="text-red-900">
                               <AlertIcon size={18} />
                             </div>
+
                             <div className="flex flex-1 items-center justify-between">
                               <div>
                                 <h3 className="block text-base font-normal mb-1">
@@ -665,6 +686,7 @@ const Project = ({ user, projectId }: any) => {
                                     Bot Token
                                   </label>
                                 </div>
+
                                 <div className="col-span-12">
                                   <div>
                                     <div className="relative">
@@ -678,6 +700,7 @@ const Project = ({ user, projectId }: any) => {
                                   </div>
                                 </div>
                               </div>
+
                               {project?.platform != "telegram" ? (
                                 <div className="text-sm leading-4 grid gap-2 md:grid md:grid-cols-12">
                                   <br />
@@ -693,6 +716,7 @@ const Project = ({ user, projectId }: any) => {
                                         : "Bot Client ID"}
                                     </label>
                                   </div>
+
                                   <div className="col-span-12">
                                     <div>
                                       <div className="relative">
@@ -709,6 +733,7 @@ const Project = ({ user, projectId }: any) => {
                               ) : (
                                 <></>
                               )}
+
                               {project?.platform === "slack" ||
                               project?.platform === "twitch" ? (
                                 <div className="text-sm leading-4 grid gap-2 md:grid md:grid-cols-12">
@@ -721,6 +746,7 @@ const Project = ({ user, projectId }: any) => {
                                         : "Bot Signing Secret"}
                                     </label>
                                   </div>
+
                                   <div className="col-span-12">
                                     <div>
                                       <div className="relative">

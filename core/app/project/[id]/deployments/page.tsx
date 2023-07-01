@@ -136,6 +136,7 @@ const Project = ({ user, projectId }: any) => {
                             </span>
                           )}
                         </h2>
+
                         <h3 className="text-gray-500 mt-1 !leading-tight">
                           {deploy.node.status === "SUCCESS"
                             ? "The deployment that is live on your production domains."
@@ -148,6 +149,7 @@ const Project = ({ user, projectId }: any) => {
                             : "Waiting..."}
                         </h3>
                       </hgroup>
+
                       {deployments.indexOf(deploy) === 0 ? (
                         <Link
                           className="h-8 px-3.5 text-white rounded-md inline-flex flex-shrink-0 bg-secondary whitespace-nowrap items-center gap-2 transition-colors duration-150 ease-in-out leading-none border border-gray-800 hover:border-gray-700 cursor-pointer"
@@ -168,6 +170,7 @@ const Project = ({ user, projectId }: any) => {
                     <label className="flex items-center mt-5 mb-1 text-sm text-gray-400">
                       Deployment Details
                     </label>
+
                     <div className="flex items-center gap-3 mt-2">
                       <span className="w-5 h-5 inline-flex items-center justify-center rounded-full flex-shrink-0 bg-fresh/15">
                         {deploy.node.status === "SUCCESS" ? (
@@ -188,6 +191,7 @@ const Project = ({ user, projectId }: any) => {
                           <ArchiveIcon className="fill-red-700" size={16} />
                         )}
                       </span>
+
                       <span className="flex items-center gap-1">
                         <img
                           src="https://cdn-botway.deno.dev/icons/docker.svg"
@@ -195,6 +199,7 @@ const Project = ({ user, projectId }: any) => {
                           className="mr-1"
                         />
                       </span>
+
                       <span className="flex items-center gap-1">
                         <FileDirectoryIcon
                           size={16}
@@ -202,6 +207,7 @@ const Project = ({ user, projectId }: any) => {
                         />
                         {deploy.node.meta.rootDirectory}
                       </span>
+
                       <span className="hidden md:flex items-center gap-1">
                         <GitMergeIcon
                           size={16}
@@ -211,6 +217,7 @@ const Project = ({ user, projectId }: any) => {
                           {deploy.node.meta.branch}
                         </span>
                       </span>
+
                       <span className="inline-flex items-center gap-2 max-w-100">
                         <Link
                           className="text-gray-400 text-sm hover:text-gray-500 transition-all duration-200 hover:underline truncate"

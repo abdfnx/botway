@@ -90,15 +90,15 @@ export async function POST(request: Request) {
     },
     body: JSON.stringify({
       query: `
-      mutation {
-        variableUpsert(input: {
-          environmentId: "${envId}"
-          name: "${body.key}"
-          projectId: "${railwayProjectId.data}"
-          serviceId: "${railwayServiceId.data}"
-          value: "${value.data}"
-        })
-      }
+        mutation {
+          variableUpsert(input: {
+            environmentId: "${envId}"
+            name: "${body.key}"
+            projectId: "${railwayProjectId.data}"
+            serviceId: "${railwayServiceId.data}"
+            value: "${value.data}"
+          })
+        }
       `,
     }),
   });

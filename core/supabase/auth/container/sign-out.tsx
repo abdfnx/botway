@@ -18,6 +18,7 @@ export const SignOut = () => {
             <div className="transition truncate text-sm min-w-fit">
               <SignOutIcon className="fill-red-600" />
             </div>
+
             <span className="transition truncate text-gray-400 hover:text-white text-sm w-full">
               Sign Out
             </span>

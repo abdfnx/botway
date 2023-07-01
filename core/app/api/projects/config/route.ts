@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { EncryptJWT, jwtDecrypt } from "jose";
+import { jwtDecrypt } from "jose";
 import { BW_SECRET_KEY } from "@/tools/tokens";
 import { fetcher } from "@/tools/fetch";
 import { Octokit } from "octokit";

@@ -83,6 +83,7 @@ const Project = ({ user, projectId }: any) => {
           <div className="mx-6 my-16 flex items-center space-x-6">
             <h1 className="text-3xl text-white">Integrations</h1>
           </div>
+
           <div className="mx-6">
             {integrationsIsLoading ? (
               <LoadingDots className="fixed inset-0 flex items-center justify-center" />

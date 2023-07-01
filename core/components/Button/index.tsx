@@ -12,7 +12,7 @@ export const Button = forwardRef(function Button(
       <button
         className={clsx(
           type === "delete" ? "bg-red-600" : "bg-blue-700",
-          "text-white hover:text-gray-200 transition button p-1",
+          "text-white hover:text-gray-200 transition button p-1 outline-none focus:outline-none",
           className
         )}
         ref={ref}

@@ -101,6 +101,7 @@ const Project = ({ user, projectId }: any) => {
         >
           <div className="mx-6 my-16 flex items-center space-x-6">
             <h1 className="text-3xl text-white">{project?.name} Deploy Logs</h1>
+
             <button
               onClick={openAtRailway}
               className="border border-gray-800 transition-all bg-[#181622] hover:bg-[#1f132a] duration-200 rounded-2xl p-3 text-white flex flex-col items-center"
@@ -114,6 +115,7 @@ const Project = ({ user, projectId }: any) => {
               </span>
             </button>
           </div>
+
           <div className="mx-6">
             <div className="rounded-md bg-secondary border border-gray-800 overflow-auto p-5 max-h-[400px] mb-6">
               {logsIsLoading ? (
@@ -133,6 +135,7 @@ const Project = ({ user, projectId }: any) => {
                         >
                           {deploy.severity}
                         </span>
+
                         <span className="pr-2 text-gray-400">
                           {deploy.timestamp}
                         </span>
