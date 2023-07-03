@@ -3,8 +3,8 @@ image:
 
 tasks:
   - name: Setup Botway
-    init: gomo
-    command: gomo update
+    init: go mod download
+    command: go get -u
 
   - name: Setup Botway UI
     init: pnpm i

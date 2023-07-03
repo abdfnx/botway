@@ -9,7 +9,6 @@ import (
 )
 
 var (
-	// Styles
 	PRIMARY_COLOR_HEX = "#1d4ed8"
 	PRIMARY_COLOR     = lipgloss.Color(PRIMARY_COLOR_HEX)
 	CYAN_COLOR        = lipgloss.Color("#00FFFF")
@@ -52,7 +51,6 @@ var (
 	WARN_FOREGROUND    = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(YELLOW_COLOR))
 	HEADING            = lipgloss.NewStyle().Foreground(lipgloss.Color(PRIMARY_COLOR)).SetString("==> ").String()
 
-	// File Paths
 	HomeDir, _             = dfs.GetHomeDirectory()
 	BotwayDirPath          = filepath.Join(HomeDir, ".botway")
 	BotwayConfigFile       = filepath.Join(BotwayDirPath, "botway.json")

@@ -6,10 +6,6 @@
 	path = packages/botwaycr
 	url = https://github.com/abdfnx/botwaycr
 	branch = main
-[submodule "packages/botway-lua"]
-	path = packages/botway-lua
-	url = https://github.com/abdfnx/botway-lua
-	branch = main
 [submodule "create-botway-bot"]
 	path = create-botway-bot
 	url = https://github.com/abdfnx/create-botway-bot

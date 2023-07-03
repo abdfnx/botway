@@ -6,7 +6,7 @@ import { LoadingDots } from "@/components/LoadingDots";
 
 export const revalidate = 0;
 
-const AI = () => {
+const NewProjectAI = () => {
   const { initial, user } = useAuth();
 
   if (initial) {
@@ -22,4 +22,4 @@ const AI = () => {
   redirect("/");
 };
 
-export default AI;
+export default NewProjectAI;
