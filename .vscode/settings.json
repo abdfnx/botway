@@ -3,20 +3,21 @@
     "node_modules/**": true,
     ".next/**": true
   },
+  "editor.formatOnSave": true,
+  "editor.fontFamily": "FiraCode NF",
+  "editor.fontLigatures": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "workbench.colorTheme": "GitHub Dark Default",
+  "workbench.iconTheme": "material-icon-theme",
+  "redhat.telemetry.enabled": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
   "go.toolsManagement.checkForUpdates": "local",
   "go.useLanguageServer": true,
-  "editor.formatOnSave": true,
-  "editor.fontLigatures": true,
-  "git.autofetch": true,
-  "git.confirmSync": false,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "compile-hero.disable-compile-files-on-did-save-code": true,
   "[go]": {
     "editor.defaultFormatter": "golang.go"
-  },
-  "yaml.schemas": {
-    "https://json.schemastore.org/github-workflow.json": "file:///workspace/botway/.github/workflows/deploy.yml"
   },
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
