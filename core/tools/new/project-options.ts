@@ -1,102 +1,5 @@
-export const platforms = [
-  {
-    name: "Discord",
-    slug: "discord",
-  },
-  {
-    name: "Slack",
-    slug: "slack",
-  },
-  {
-    name: "Telegram",
-    slug: "telegram",
-  },
-  {
-    name: "Twitch",
-    slug: "twitch",
-  },
-];
-
-export const visibilityOptions = [
-  {
-    typeName: "Public",
-    type: "public",
-  },
-  {
-    typeName: "Private",
-    type: "private",
-  },
-];
-
-export const langs = (platform: any) => {
-  const bwLangs = [
-    {
-      name: "Node.js",
-      slug: "nodejs",
-    },
-    {
-      name: "C++",
-      slug: "cpp",
-    },
-    {
-      name: "Crystal",
-      slug: "crystal",
-    },
-    {
-      name: "C#",
-      slug: "csharp",
-    },
-    {
-      name: "Dart",
-      slug: "dart",
-    },
-    {
-      name: "Deno",
-      slug: "deno",
-    },
-    {
-      name: "Go",
-      slug: "go",
-    },
-    {
-      name: "Java",
-      slug: "java",
-    },
-    {
-      name: "Kotlin",
-      slug: "kotlin",
-    },
-    {
-      name: "Nim",
-      slug: "nim",
-    },
-    {
-      name: "PHP",
-      slug: "php",
-    },
-    {
-      name: "Python",
-      slug: "python",
-    },
-    {
-      name: "Ruby",
-      slug: "ruby",
-    },
-    {
-      name: "Rust",
-      slug: "rust",
-    },
-    {
-      name: "Swift",
-      slug: "swift",
-    },
-    {
-      name: "TypeScript",
-      slug: "typescript",
-    },
-  ];
-
-  const discordLangs = [
+const languages = {
+  discord: [
     {
       name: "Node.js",
       slug: "nodejs",
@@ -161,9 +64,8 @@ export const langs = (platform: any) => {
       name: "TypeScript",
       slug: "typescript",
     },
-  ];
-
-  const telegramLangs = [
+  ],
+  telegram: [
     {
       name: "Node.js",
       slug: "nodejs",
@@ -171,10 +73,6 @@ export const langs = (platform: any) => {
     {
       name: "C++",
       slug: "cpp",
-    },
-    {
-      name: "Crystal",
-      slug: "crystal",
     },
     {
       name: "C#",
@@ -228,9 +126,8 @@ export const langs = (platform: any) => {
       name: "TypeScript",
       slug: "typescript",
     },
-  ];
-
-  const slackLangs = [
+  ],
+  slack: [
     {
       name: "Node.js",
       slug: "nodejs",
@@ -243,14 +140,12 @@ export const langs = (platform: any) => {
       name: "TypeScript",
       slug: "typescript",
     },
-  ];
-
-  const twitchLangs = [
+  ],
+  twitch: [
     {
       name: "Node.js",
       slug: "nodejs",
     },
-
     {
       name: "Deno",
       slug: "deno",
@@ -271,28 +166,209 @@ export const langs = (platform: any) => {
       name: "TypeScript",
       slug: "typescript",
     },
-  ];
+  ],
+};
 
+export const PLPV: any = {
+  discord: {
+    nodejs: {
+      pm: ["npm", "pnpm", "yarn"],
+    },
+    c: {
+      pm: ["default"],
+    },
+    cpp: {
+      pm: ["cmake"],
+    },
+    crystal: {
+      pm: ["shards"],
+    },
+    csharp: {
+      pm: ["dotnet"],
+    },
+    dart: {
+      pm: ["pub"],
+    },
+    deno: {
+      pm: ["deno package manager"],
+    },
+    go: {
+      pm: ["go package manager"],
+    },
+    java: {
+      pm: ["gradle"],
+    },
+    kotlin: {
+      pm: ["gradle"],
+    },
+    nim: {
+      pm: ["nimble"],
+    },
+    php: {
+      pm: ["composer"],
+    },
+    python: {
+      pm: ["pip", "pipenv", "poetry"],
+    },
+    ruby: {
+      pm: ["bundler"],
+    },
+    rust: {
+      pm: ["cargo"],
+    },
+    typescript: {
+      pm: ["npm", "pnpm", "yarn"],
+    },
+  },
+  telegram: {
+    nodejs: {
+      pm: ["npm", "pnpm", "yarn"],
+    },
+    cpp: {
+      pm: ["cmake"],
+    },
+    csharp: {
+      pm: ["dotnet"],
+    },
+    dart: {
+      pm: ["pub"],
+    },
+    deno: {
+      pm: ["deno package manager"],
+    },
+    go: {
+      pm: ["go package manager"],
+    },
+    java: {
+      pm: ["gradle"],
+    },
+    kotlin: {
+      pm: ["gradle"],
+    },
+    nim: {
+      pm: ["nimble"],
+    },
+    php: {
+      pm: ["composer"],
+    },
+    python: {
+      pm: ["pip", "pipenv", "poetry"],
+    },
+    ruby: {
+      pm: ["bundler"],
+    },
+    rust: {
+      pm: ["cargo"],
+    },
+    swift: {
+      pm: ["swift"],
+    },
+    typescript: {
+      pm: ["npm", "pnpm", "yarn"],
+    },
+  },
+  slack: {
+    nodejs: {
+      pm: ["npm", "pnpm", "yarn"],
+    },
+    python: {
+      pm: ["pip", "pipenv", "poetry"],
+    },
+    typescript: {
+      pm: ["npm", "pnpm", "yarn"],
+    },
+  },
+  twitch: {
+    nodejs: {
+      pm: ["npm", "pnpm", "yarn"],
+    },
+
+    deno: {
+      pm: ["deno package manager"],
+    },
+    go: {
+      pm: ["go package manager"],
+    },
+    java: {
+      pm: ["gradle"],
+    },
+    python: {
+      pm: ["pip", "pipenv", "poetry"],
+    },
+    typescript: {
+      pm: ["npm", "pnpm", "yarn"],
+    },
+  },
+};
+
+export const platforms = [
+  {
+    name: "Choose",
+    slug: "choose",
+  },
+  {
+    name: "Discord",
+    slug: "discord",
+  },
+  {
+    name: "Slack",
+    slug: "slack",
+  },
+  {
+    name: "Telegram",
+    slug: "telegram",
+  },
+  {
+    name: "Twitch",
+    slug: "twitch",
+  },
+];
+
+export const visibilityOptions = [
+  {
+    typeName: "Choose",
+    type: "choose",
+  },
+  {
+    typeName: "Public",
+    type: "public",
+  },
+  {
+    typeName: "Private",
+    type: "private",
+  },
+];
+
+export const langs = (platform: any) => {
   switch (platform) {
     case "Discord":
-      return discordLangs;
+      return languages["discord"];
 
     case "Telegram":
-      return telegramLangs;
+      return languages["telegram"];
 
     case "Slack":
-      return slackLangs;
+      return languages["slack"];
 
     case "Twitch":
-      return twitchLangs;
+      return languages["twitch"];
 
     default:
-      return bwLangs;
+      return [
+        {
+          name: "Choose",
+          slug: "choose",
+        },
+      ];
   }
 };
 
 export const packageManagers = (lang: any) => {
   const nodePMs = [
+    {
+      name: "Choose",
+      logo: "choose.svg",
+    },
     {
       name: "npm",
       logo: "npm.svg",
@@ -309,12 +385,20 @@ export const packageManagers = (lang: any) => {
 
   const cPM = [
     {
+      name: "Choose",
+      logo: "choose.svg",
+    },
+    {
       name: "default",
       logo: "c.svg",
     },
   ];
 
   const cppPM = [
+    {
+      name: "Choose",
+      logo: "choose.svg",
+    },
     {
       name: "cmake",
       logo: "cmake.svg",
@@ -323,12 +407,20 @@ export const packageManagers = (lang: any) => {
 
   const crytsalPM = [
     {
+      name: "Choose",
+      logo: "choose.svg",
+    },
+    {
       name: "shards",
       logo: "crystal.svg",
     },
   ];
 
   const csharpPM = [
+    {
+      name: "Choose",
+      logo: "choose.svg",
+    },
     {
       name: "dotnet",
       logo: "dotnet.svg",
@@ -337,12 +429,20 @@ export const packageManagers = (lang: any) => {
 
   const dartPM = [
     {
+      name: "Choose",
+      logo: "choose.svg",
+    },
+    {
       name: "pub",
       logo: "dart.svg",
     },
   ];
 
   const denoPM = [
+    {
+      name: "Choose",
+      logo: "choose.svg",
+    },
     {
       name: "deno package manager",
       logo: "deno.svg",
@@ -351,12 +451,20 @@ export const packageManagers = (lang: any) => {
 
   const goPM = [
     {
+      name: "Choose",
+      logo: "choose.svg",
+    },
+    {
       name: "go package manager",
       logo: "go.svg",
     },
   ];
 
   const gradlePM = [
+    {
+      name: "Choose",
+      logo: "choose.svg",
+    },
     {
       name: "gradle",
       logo: "gradle.svg",
@@ -365,6 +473,10 @@ export const packageManagers = (lang: any) => {
 
   const nimPM = [
     {
+      name: "Choose",
+      logo: "choose.svg",
+    },
+    {
       name: "nimble",
       logo: "nimble.svg",
     },
@@ -372,12 +484,20 @@ export const packageManagers = (lang: any) => {
 
   const phpPM = [
     {
+      name: "Choose",
+      logo: "choose.svg",
+    },
+    {
       name: "composer",
       logo: "composer.svg",
     },
   ];
 
   const pythonPMs = [
+    {
+      name: "Choose",
+      logo: "choose.svg",
+    },
     {
       name: "pip",
       logo: "pip.svg",
@@ -394,6 +514,10 @@ export const packageManagers = (lang: any) => {
 
   const rubyPM = [
     {
+      name: "Choose",
+      logo: "choose.svg",
+    },
+    {
       name: "bundler",
       logo: "bundler.svg",
     },
@@ -401,16 +525,20 @@ export const packageManagers = (lang: any) => {
 
   const rustPMs = [
     {
-      name: "cargo",
-      logo: "cargo.png",
+      name: "Choose",
+      logo: "choose.svg",
     },
     {
-      name: "fleet",
-      logo: "rust.svg",
+      name: "cargo",
+      logo: "cargo.png",
     },
   ];
 
   const swiftPM = [
+    {
+      name: "Choose",
+      logo: "choose.svg",
+    },
     {
       name: "swift",
       logo: "swift.svg",
@@ -467,6 +595,9 @@ export const packageManagers = (lang: any) => {
 
     case "Swift":
       return swiftPM;
+
+    case "Choose":
+      return [{ name: "Choose", logo: "choose.svg" }];
 
     default:
       return [{ name: "default", logo: "icon.svg" }];

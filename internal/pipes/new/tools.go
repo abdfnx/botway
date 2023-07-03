@@ -204,7 +204,7 @@ func BotStartCmd(m model) string {
 }
 
 func BotPM(m model) string {
-	var nodePMs = func () string {
+	var nodePMs = func() string {
 		if m.PMChoice == 1 {
 			return "yarn"
 		} else if m.PMChoice == 2 {
@@ -214,14 +214,6 @@ func BotPM(m model) string {
 		}
 
 		return "npm"
-	}
-
-	var rustPMs = func () string {
-		if m.PMChoice == 1 {
-			return "fleet"
-		}
-
-		return "cargo"
 	}
 
 	if m.LangChoice == 0 && m.PMChoice == 0 {
@@ -244,7 +236,7 @@ func BotPM(m model) string {
 		if m.PlatformChoice == 3 {
 			return "gradle"
 		} else {
-			rustPMs()
+			return "cargo"
 		}
 	} else if m.LangChoice == 6 {
 		return "deno"

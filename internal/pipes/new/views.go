@@ -196,7 +196,6 @@ func pmsView(m model) string {
 			langs += fmt.Sprintf(
 				"%s\n%s",
 				checkbox("cargo", pm == 0),
-				checkbox("fleet", pm == 1),
 			)
 		}
 	} else if m.LangChoice == 6 {
@@ -361,9 +360,6 @@ func finalView(m model) string {
 			switch m.PMChoice {
 			case 0:
 				pm = "cargo"
-
-			case 1:
-				pm = "fleet"
 			}
 		}
 

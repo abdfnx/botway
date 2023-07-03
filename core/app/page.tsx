@@ -5,9 +5,16 @@ import { useAuth, VIEWS } from "@/supabase/auth/provider";
 import { LoadingDots } from "@/components/LoadingDots";
 import { DashLayout } from "@/components/Layout";
 import { UserAvatar } from "@/components/UserAvatar";
-import { CheckIcon, ChevronDownIcon, ZapIcon } from "@primer/octicons-react";
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  CommandPaletteIcon,
+  SparkleFillIcon,
+  StackIcon,
+  ZapIcon,
+} from "@primer/octicons-react";
 import { Fragment, useRef, useState } from "react";
-import { Dialog, Listbox, Transition } from "@headlessui/react";
+import { Dialog, Listbox, Menu, Transition } from "@headlessui/react";
 import { Field, Form, Formik } from "formik";
 import supabase from "@/supabase/browser";
 import { toast } from "react-hot-toast";
@@ -16,6 +23,7 @@ import {
   langs,
   packageManagers,
   platforms,
+  PLPV,
   visibilityOptions,
 } from "@/tools/new/project-options";
 import clsx from "clsx";
@@ -84,31 +92,49 @@ const Home = ({ user }: any) => {
     try {
       setIsLoading(true);
 
-      const body = {
-        name: formData.name,
-        visibility: visibilityRef.current.value,
-        platform: platformRef.current.value,
-        lang: langRef.current.value,
-        package_manager: packageManagerRef.current.value,
-      };
+      if (
+        visibilityRef.current.value.toLowerCase() != "choose" &&
+        platformRef.current.value.toLowerCase() != "choose" &&
+        langRef.current.value.toLowerCase() != "choose" &&
+        packageManagerRef.current.value.toLowerCase() != "choose"
+      ) {
+        if (
+          PLPV[platformRef.current.value][langRef.current.value] != null &&
+          PLPV[platformRef.current.value][langRef.current.value].pm.includes(
+            packageManagerRef.current.value
+          )
+        ) {
+          const body = {
+            name: formData.name,
+            visibility: visibilityRef.current.value,
+            platform: platformRef.current.value,
+            lang: langRef.current.value,
+            package_manager: packageManagerRef.current.value,
+          };
 
-      const newBot = await fetcher("/api/projects", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+          const newBot = await fetcher("/api/projects", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
 
-      if (newBot.message === "Success") {
-        toast.success(
-          "You have successfully created a new bot project",
-          toastStyle
-        );
+          if (newBot.message === "Success") {
+            toast.success(
+              "You have successfully created a new bot project",
+              toastStyle
+            );
 
-        setOpen(false);
+            setOpen(false);
+          } else {
+            toast.error(newBot.error, toastStyle);
+
+            setOpen(false);
+          }
+        } else {
+          toast.error("Choose the right choice", toastStyle);
+        }
       } else {
-        toast.error(newBot.error, toastStyle);
-
-        setOpen(false);
+        toast.error("Choose the right choice(s)", toastStyle);
       }
     } catch (e: any) {
       toast.error(e.message, toastStyle);
@@ -123,7 +149,9 @@ const Home = ({ user }: any) => {
         <div className="py-4 px-5">
           <div className="my-2">
             <div className="flex">
-              <h3 className="text-xl text-white">Welcome to Botway</h3>
+              <h3 className="text-xl text-white font-farray">
+                Welcome to Botway
+              </h3>
             </div>
           </div>
           <div className="my-8 space-y-8">
@@ -138,13 +166,60 @@ const Home = ({ user }: any) => {
                   </a>
                 </div>
                 <div className="flex gap-2 justify-end flex-shrink-0">
-                  <button
-                    onClick={() => setOpen(true)}
-                    className="h-9 px-2 py-3.5 rounded-lg border border-gray-800 inline-flex flex-shrink-0 whitespace-nowrap items-center gap-2 transition-colors duration-200 ease-in-out leading-none cursor-pointer text-white hover:bg-secondary focus:outline-none outline-none"
-                  >
-                    <ZapIcon size={16} className="fill-blue-700" />
-                    New Project
-                  </button>
+                  <Menu as="div" className="relative inline-block text-left">
+                    <div>
+                      <Menu.Button className="h-9 px-2 py-3.5 rounded-lg border border-gray-800 inline-flex flex-shrink-0 whitespace-nowrap items-center gap-2 transition-colors duration-200 ease-in-out leading-none cursor-pointer text-white hover:bg-secondary focus:outline-none outline-none">
+                        <ZapIcon size={16} className="fill-blue-700" />
+                        New Project
+                      </Menu.Button>
+                    </div>
+
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right border border-gray-800 rounded-lg bg-secondary shadow-lg focus:outline-none">
+                        <div className="px-1 py-1">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                onClick={() => setOpen(true)}
+                                className={`${
+                                  active ? "bg-bwdefualt" : ""
+                                } group flex w-full text-white items-center rounded-lg px-2 py-2 text-sm`}
+                              >
+                                <StackIcon
+                                  size={18}
+                                  className="fill-blue-700 mr-2"
+                                />
+                                <h1 className="font-mono">Botway Templates</h1>
+                              </button>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active ? "bg-bwdefualt" : ""
+                                } group flex w-full text-white items-center rounded-lg px-2 py-2 text-sm`}
+                              >
+                                <SparkleFillIcon
+                                  size={18}
+                                  className="fill-blue-700 mr-2"
+                                />
+                                <h1 className="font-mono">Botway AI</h1>
+                              </button>
+                            )}
+                          </Menu.Item>
+                        </div>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
                 </div>
               </div>
 
@@ -155,18 +230,23 @@ const Home = ({ user }: any) => {
                   {projects?.map((project) => (
                     <div className="col-span-1">
                       <a href={`/project/${project.id}`}>
-                        <div className="group relative text-left border-2 border-dashed border-gray-800 rounded-xl py-4 px-6 flex flex-row transition ease-in-out duration-150 h-32 cursor-pointer hover:bg-secondary">
+                        <div className="group text-left border-2 border-dashed border-gray-800 rounded-xl py-4 px-6 flex flex-row transition duration-150 h-32 cursor-pointer hover:bg-secondary">
                           <div className="flex h-full w-full flex-col space-y-2">
                             <h5 className="text-white">
-                              <div className="flex w-full flex-row justify-between gap-1">
+                              <div className="flex w-full items-center flex-row justify-between gap-1">
                                 <span className="flex-shrink truncate">
                                   {project.name}
                                 </span>
+
+                                <CommandPaletteIcon
+                                  size={18}
+                                  className="fill-blue-700"
+                                />
                               </div>
                             </h5>
                             <br />
                             <div className="w-full">
-                              <p className="flex items-center gap-1.5 mt-1.5 text-sm text-gray-500">
+                              <p className="flex items-center gap-1.5 mt-3 text-sm text-gray-500">
                                 <img
                                   src={`https://cdn-botway.deno.dev/icons/${project.platform}.svg`}
                                   alt={`${project.platform} icon`}
@@ -182,21 +262,6 @@ const Home = ({ user }: any) => {
                                 {capitalizeFirstLetter(project.lang)}
                               </p>
                             </div>
-                          </div>
-                          <div className="absolute right-4 top-4 text-gray-500 transition-all duration-200 group-hover:right-3">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="21"
-                              height="21"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              className="sbui-icon"
-                            >
-                              <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
                           </div>
                         </div>
                       </a>

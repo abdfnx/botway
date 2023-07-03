@@ -88,6 +88,12 @@ module.exports = {
         600: "#ea580c",
       },
     },
+    extend: {
+      fontFamily: {
+        mono: ["JetBrains Mono"],
+        farray: ["Farray"],
+      },
+    },
   },
   extend: {
     backgroundImage: (theme) => ({
@@ -102,7 +108,8 @@ module.exports = {
     require("tailwindcss-animate"),
     require("@tailwindcss/typography"),
     require("flowbite/plugin"),
-    function ({ matchUtilities, theme }) {
+
+    ({ matchUtilities, theme }) => {
       matchUtilities(
         {
           "bg-grid": (value) => ({
@@ -121,7 +128,8 @@ module.exports = {
         { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
       );
     },
-    function ({ addUtilities, theme }) {
+
+    ({ addUtilities, theme }) => {
       let backgroundSize = "7.07px 7.07px";
       let backgroundImage = (color) =>
         `linear-gradient(135deg, ${color} 10%, transparent 10%, transparent 50%, ${color} 50%, ${color} 60%, transparent 60%, transparent 100%)`;

@@ -9,13 +9,3 @@ $bg-secondary: hsl(220, 55%, 10%);
 .bg-secondary {
   background: $bg-secondary;
 }
-
-@font-face {
-  font-family: "Farray";
-  src: url("https://cdn-botway.deno.dev/fonts/farray.otf");
-}
-
-@font-face {
-  font-family: "Moranga";
-  src: url("https://cdn-botway.deno.dev/fonts/moranga.otf");
-}

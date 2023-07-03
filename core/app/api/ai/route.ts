@@ -18,5 +18,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: userError });
   }
 
-  return NextResponse.json({ message: "Success" });
+  const ai = await fetcher(`https://ai-botway.hop.sh/ai`, {
+    method: "POST",
+    body: JSON.stringify({
+      userId: user?.id.toString(),
+      prompt: body.prompt,
+    }),
+  });
+
+  return NextResponse.json({ message: "Success", answer: ai.data });
 }

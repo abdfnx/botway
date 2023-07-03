@@ -76,9 +76,6 @@ RUN tar -xzf gh.tar.gz
 RUN sudo mv "gh_$(curl https://get-latest.deno.dev/cli/cli?no-v=true)_linux_amd64/bin/gh" /usr/bin
 RUN rm -rf gh*
 
-### fleet ###
-RUN cargo install fleet-rs
-
 ### pyenv ###
 RUN pip install tld --ignore-installed six distlib --user
 RUN curl https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash

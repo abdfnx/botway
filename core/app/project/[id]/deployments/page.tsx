@@ -200,10 +200,10 @@ const Project = ({ user, projectId }: any) => {
                         />
                       </span>
 
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1 font-mono">
                         <FileDirectoryIcon
                           size={16}
-                          className="fill-gray-600 mr-1 font-mono"
+                          className="fill-gray-600 mr-1"
                         />
                         {deploy.node.meta.rootDirectory}
                       </span>

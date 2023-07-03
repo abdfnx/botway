@@ -175,19 +175,7 @@ const Project = ({ user, projectId }: any) => {
 
             <div className="my-4 max-w-full space-y-8">
               <div className="overflow-x-auto flex-grow rounded-lg border border-gray-800">
-                <table className="w-full border-collapse select-auto bg-bwdefualt">
-                  <thead>
-                    <tr className="bg-secondary border-b border-gray-800">
-                      <th className="py-3 px-4" />
-                      <th className="py-3 px-4 text-left font-semibold text-xs text-gray-400">
-                        Name
-                      </th>
-                      <th className="py-3 px-4 text-left hidden md:block font-semibold text-xs text-gray-400">
-                        Type
-                      </th>
-                      <th className="py-3 px-4" />
-                    </tr>
-                  </thead>
+                <table className="w-full border-collapse select-auto bg-secondary">
                   <tbody>
                     {servicesIsLoading ? (
                       <tr>

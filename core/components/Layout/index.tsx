@@ -284,9 +284,8 @@ export const DashLayout = ({ children, name, href }: any) => {
                           <HomeIcon />
                         </span>
                       </a>
-                      <button
-                        type="button"
-                        onClick={() => {}}
+                      <a
+                        href="/ai"
                         className="flex border-gray-800 hover:bg-secondary border rounded p-0 outline-none outline-offset-1 transition-all focus:outline-4"
                       >
                         <span className="relative cursor-pointer inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 text-blue-700 shadow-sm text-xs px-2.5 py-1">
@@ -296,7 +295,7 @@ export const DashLayout = ({ children, name, href }: any) => {
                             AI
                           </span>
                         </span>
-                      </button>
+                      </a>
                     </div>
                   </div>
                   {children}

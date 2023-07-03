@@ -254,7 +254,7 @@ const Env = ({ user, projectId }: any) => {
                           }`}
                           style={{ minWidth: "64px", maxWidth: "100px" }}
                         >
-                          <div className="flex text-sm font-semibold font-mono leading-6 text-white space-x-2 items-center">
+                          <div className="flex text-sm font-semibold leading-6 text-white space-x-2 items-center font-mono">
                             {key}
                           </div>
                         </td>
@@ -268,14 +268,14 @@ const Env = ({ user, projectId }: any) => {
                           style={{ minWidth: "64px", maxWidth: "250px" }}
                         >
                           <div className="flex justify-between">
-                            <div className="flex text-sm font-medium font-mono leading-6 text-white space-x-2 items-center">
+                            <div className="flex text-sm font-medium leading-6 text-white space-x-2 items-center font-mono">
                               {show && currentVar === key
                                 ? vars?.vars[key]
                                 : "•".repeat(vars?.vars[key].length)}
 
                               {show && currentVar === key ? (
                                 <div
-                                  className="mt-1 cursor-pointer"
+                                  className="cursor-pointer"
                                   onClick={() => showEvent(!show, key)}
                                 >
                                   <EyeClosedIcon
@@ -285,7 +285,7 @@ const Env = ({ user, projectId }: any) => {
                                 </div>
                               ) : (
                                 <div
-                                  className="mt-1 cursor-pointer"
+                                  className="cursor-pointer"
                                   onClick={() => showEvent(!show, key)}
                                 >
                                   <EyeIcon
@@ -364,7 +364,7 @@ const Env = ({ user, projectId }: any) => {
                           {({ errors }) => (
                             <Form className="column w-full">
                               <Field
-                                className="input"
+                                className="input font-mono"
                                 id="value"
                                 name="value"
                                 type="text"
@@ -456,7 +456,7 @@ const Env = ({ user, projectId }: any) => {
                                 <div className="pt-2" />
 
                                 <Field
-                                  className="input"
+                                  className="input font-mono"
                                   id="key"
                                   name="key"
                                   type="text"
@@ -479,7 +479,7 @@ const Env = ({ user, projectId }: any) => {
                                 <div className="pt-2" />
 
                                 <Field
-                                  className="input"
+                                  className="input font-mono"
                                   id="value"
                                   name="value"
                                   type="text"

@@ -133,10 +133,6 @@ func NewBot(m model, l string, platform, lang int) {
 
 		dotGitIgnoreFileContent = respone + "\n*.lock\nbotway-tokens.env\n/botway.json"
 
-		if BotLang(m) == "rust" && BotPM(m) == "fleet" {
-			dotGitIgnoreFileContent += "\nfleet.toml"
-		}
-
 		DiscordHandler(m)
 		TelegramHandler(m)
 		SlackHandler(m)

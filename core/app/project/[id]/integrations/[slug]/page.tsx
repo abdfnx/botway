@@ -258,7 +258,7 @@ const Project = ({ user, projectId, slug }: any) => {
 
                   <div className="relative min-h-[420px] lg:min-h-[540px] py-16 w-full rounded-3xl border border-gray-800 bg-secondary flex flex-col justify-center items-center">
                     <div className="grid gap-4 items-center justify-items-center grid-cols-1 px-10">
-                      <article className="prose prose-gray prose-headings:text-white prose-p:text-gray-400 prose-a:text-blue-700 prose-strong:text-white prose-ol:text-white prose-li:text-white prose-ul:text-white prose-pre:bg-bwdefualt prose-pre:border prose-pre:rounded-2xl prose-pre:border-gray-800 prose-blockquote:border-l-4 prose-blockquote:border-gray-800 prose-hr:border prose-hr:border-gray-800 prose-code:bg-bwdefualt prose-code:rounded prose-code:text-gray-100">
+                      <article className="prose prose-gray prose-headings:text-white prose-p:text-gray-400 prose-a:text-blue-700 prose-strong:text-white prose-ol:text-white prose-li:text-white prose-ul:text-white prose-pre:bg-bwdefualt prose-pre:border prose-pre:rounded-2xl prose-pre:border-gray-800 prose-blockquote:border-l-4 prose-blockquote:border-gray-800 prose-hr:border prose-hr:border-gray-800 prose-code:bg-bwdefualt prose-code:font-mono prose-code:rounded prose-code:text-gray-100">
                         <div
                           dangerouslySetInnerHTML={{
                             __html: marked.parse(int?.overview),
