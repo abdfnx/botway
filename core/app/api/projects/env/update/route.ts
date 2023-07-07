@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 
   const { payload: railwayApiToken } = await jwtDecrypt(
     user?.user_metadata["railwayApiToken"],
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { data, error } = await supabase
@@ -37,12 +37,12 @@ export async function POST(request: Request) {
 
   const { payload: railwayProjectId } = await jwtDecrypt(
     data.railway_project_id,
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: railwayServiceId } = await jwtDecrypt(
     data.railway_service_id,
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: value } = await jwtDecrypt(body.value, BW_SECRET_KEY);
@@ -76,7 +76,7 @@ export async function POST(request: Request) {
   }
 
   const envId = getEnvId.data.project.environments.edges.find(
-    (env: any) => env.node.name === "production"
+    (env: any) => env.node.name === "production",
   ).node.id;
 
   const updateVar = await fetcher("https://backboard.railway.app/graphql/v2", {

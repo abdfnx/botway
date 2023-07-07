@@ -53,7 +53,7 @@ const Project = ({ user, projectId }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   services?.services.map((node: any) => {
@@ -99,17 +99,17 @@ const Project = ({ user, projectId }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   const openAtRailway = async (id: any, type: any) => {
     const { payload: railwayProjectId } = await jwtDecrypt(
       project?.railway_project_id,
-      BW_SECRET_KEY
+      BW_SECRET_KEY,
     );
 
     router.push(
-      `https://railway.app/project/${railwayProjectId.data}/${type}/${id}`
+      `https://railway.app/project/${railwayProjectId.data}/${type}/${id}`,
     );
   };
 

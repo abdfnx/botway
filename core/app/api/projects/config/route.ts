@@ -23,12 +23,12 @@ export async function POST(request: Request) {
 
   const { payload: githubApiToken } = await jwtDecrypt(
     user?.user_metadata["githubApiToken"],
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: railwayApiToken } = await jwtDecrypt(
     user?.user_metadata["railwayApiToken"],
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: bt } = await jwtDecrypt(body.botToken, BW_SECRET_KEY);
@@ -53,12 +53,12 @@ export async function POST(request: Request) {
 
   const { payload: railwayProjectId } = await jwtDecrypt(
     body.railwayProjectId,
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: railwayServiceId } = await jwtDecrypt(
     body.railwayServiceId,
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const getEnvId = await fetcher("https://backboard.railway.app/graphql/v2", {
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
   }
 
   const envId = getEnvId.data.project.environments.edges.find(
-    (env: any) => env.node.name === "production"
+    (env: any) => env.node.name === "production",
   ).node.id;
 
   let vars;

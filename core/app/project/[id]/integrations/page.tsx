@@ -36,7 +36,7 @@ const Project = ({ user, projectId }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   const integrationsByCategory: { [category: string]: any } = {};
@@ -57,7 +57,7 @@ const Project = ({ user, projectId }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   integrations?.forEach(
@@ -65,7 +65,7 @@ const Project = ({ user, projectId }: any) => {
       (integrationsByCategory[i.category] = [
         ...(integrationsByCategory[i.category] ?? []),
         i,
-      ])
+      ]),
   );
 
   return (

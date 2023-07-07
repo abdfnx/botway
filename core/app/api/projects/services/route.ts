@@ -32,12 +32,12 @@ export async function POST(request: Request) {
 
   const { payload: railwayProjectId } = await jwtDecrypt(
     data.railway_project_id,
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: railwayApiToken } = await jwtDecrypt(
     user?.user_metadata["railwayApiToken"],
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const projectData = await fetcher(
@@ -83,7 +83,7 @@ export async function POST(request: Request) {
           }
       `,
       }),
-    }
+    },
   );
 
   if (projectData.errors) {

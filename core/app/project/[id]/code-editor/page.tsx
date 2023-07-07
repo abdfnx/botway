@@ -59,7 +59,7 @@ const CE = ({ user, projectId }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   const enableCE = async (formData: any) => {

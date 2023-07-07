@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     `https://cdn-botway.deno.dev/integrations/${slug}`,
     {
       method: "GET",
-    }
+    },
   );
 
   return NextResponse.json(intx);

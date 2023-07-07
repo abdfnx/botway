@@ -48,7 +48,7 @@ const Project = ({ user, projectId }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   const fetchDeployments = async () => {
@@ -67,7 +67,7 @@ const Project = ({ user, projectId }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   const status = (deployStatus: any) => {
@@ -89,16 +89,16 @@ const Project = ({ user, projectId }: any) => {
   const logsURL = async (deploy: any) => {
     const { payload: railwayProjectId } = await jwtDecrypt(
       project?.railway_project_id,
-      BW_SECRET_KEY
+      BW_SECRET_KEY,
     );
 
     const { payload: railwayServiceId } = await jwtDecrypt(
       project?.railway_service_id,
-      BW_SECRET_KEY
+      BW_SECRET_KEY,
     );
 
     router.push(
-      `https://railway.app/project/${railwayProjectId.data}/service/${railwayServiceId.data}?id=${deploy.node.id}`
+      `https://railway.app/project/${railwayProjectId.data}/service/${railwayServiceId.data}?id=${deploy.node.id}`,
     );
   };
 

@@ -85,7 +85,7 @@ const Env = ({ user, projectId }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   const fetchVariables = async () => {
@@ -107,22 +107,22 @@ const Env = ({ user, projectId }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   const openAtRailway = async () => {
     const { payload: railwayProjectId } = await jwtDecrypt(
       project?.railway_project_id,
-      BW_SECRET_KEY
+      BW_SECRET_KEY,
     );
 
     const { payload: railwayServiceId } = await jwtDecrypt(
       project?.railway_service_id,
-      BW_SECRET_KEY
+      BW_SECRET_KEY,
     );
 
     router.push(
-      `https://railway.app/project/${railwayProjectId.data}/service/${railwayServiceId.data}/variables`
+      `https://railway.app/project/${railwayProjectId.data}/service/${railwayServiceId.data}/variables`,
     );
   };
 

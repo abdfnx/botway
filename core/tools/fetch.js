@@ -15,7 +15,7 @@ export const fetcher = async (...args) => {
       return payload;
     } else {
       return Promise.reject(
-        payload || new Error("Something went wrong " + err)
+        payload || new Error("Something went wrong " + err),
       );
     }
   });

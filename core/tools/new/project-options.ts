@@ -169,7 +169,7 @@ const languages = {
   ],
 };
 
-export const PLPV: any = {
+export const PLP: any = {
   discord: {
     nodejs: {
       pm: ["npm", "pnpm", "yarn"],

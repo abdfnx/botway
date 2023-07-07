@@ -22,12 +22,12 @@ export async function POST(request: Request) {
 
   const { payload: railwayApiToken } = await jwtDecrypt(
     user?.user_metadata["railwayApiToken"],
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: railwayProjectId } = await jwtDecrypt(
     body.railwayProjectId,
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const deleteBot = await fetcher("https://backboard.railway.app/graphql/v2", {

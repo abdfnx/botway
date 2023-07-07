@@ -56,7 +56,7 @@ const UpdatePassword = () => {
               <Field
                 className={clsx(
                   "input",
-                  errors.password && touched.password && "bg-red-50"
+                  errors.password && touched.password && "bg-red-50",
                 )}
                 id="password"
                 placeholder="••••••••••••••••"

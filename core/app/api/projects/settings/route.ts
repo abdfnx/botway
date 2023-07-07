@@ -23,22 +23,22 @@ export async function POST(request: Request) {
 
   const { payload: githubApiToken } = await jwtDecrypt(
     user?.user_metadata["githubApiToken"],
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: railwayApiToken } = await jwtDecrypt(
     user?.user_metadata["railwayApiToken"],
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: railwayProjectId } = await jwtDecrypt(
     body.railwayProjectId,
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: railwayServiceId } = await jwtDecrypt(
     body.railwayServiceId,
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const octokit = new Octokit({

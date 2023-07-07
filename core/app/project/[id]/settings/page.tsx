@@ -95,7 +95,7 @@ const Project = ({ user, projectId }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   async function updateProjectName(formData: any) {
@@ -462,7 +462,7 @@ const Project = ({ user, projectId }: any) => {
                                   project?.root_directory === values.rootDir &&
                                   project?.repo === values.repo
                                   ? "opacity-50 cursor-not-allowed pointer-events-none"
-                                  : "cursor-pointer"
+                                  : "cursor-pointer",
                               )}
                               type="submit"
                             >

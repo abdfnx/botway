@@ -75,7 +75,7 @@ const SignIn = () => {
               <Field
                 className={clsx(
                   "input",
-                  errors.email && touched.email && "bg-red-50"
+                  errors.email && touched.email && "bg-red-50",
                 )}
                 id="email"
                 name="email"
@@ -101,7 +101,7 @@ const SignIn = () => {
               <Field
                 className={clsx(
                   "input",
-                  errors.password && touched.password && "bg-red-50"
+                  errors.password && touched.password && "bg-red-50",
                 )}
                 id="password"
                 placeholder="••••••••••••••••"

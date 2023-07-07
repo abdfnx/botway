@@ -21,7 +21,7 @@ const SignUp = () => {
 
   async function signUp(formData: any) {
     async function signUpFunc(
-      params: any
+      params: any,
     ): Promise<{ auth: any; error: Error | null }> {
       const { data, error } = await supabase.auth.signUp({
         email: params.email,
@@ -69,7 +69,7 @@ const SignUp = () => {
     } else {
       toast.success(
         "Your account has been created\nPlease check your email for further instructions",
-        toastStyle
+        toastStyle,
       );
     }
   }
@@ -155,7 +155,7 @@ const SignUp = () => {
               <Field
                 className={clsx(
                   "input",
-                  errors.password && touched.password && "bg-red-50"
+                  errors.password && touched.password && "bg-red-50",
                 )}
                 id="password"
                 placeholder="••••••••••••••••"

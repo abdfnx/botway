@@ -23,7 +23,7 @@ import {
   langs,
   packageManagers,
   platforms,
-  PLPV,
+  PLP,
   visibilityOptions,
 } from "@/tools/new/project-options";
 import clsx from "clsx";
@@ -47,6 +47,7 @@ const AddNewProjectSchema = Yup.object().shape({
 
 const Home = ({ user }: any) => {
   const [open, setOpen] = useState(false);
+  const [promptOpen, setPromptOpen] = useState(false);
 
   const platformRef: any = useRef();
   const langRef: any = useRef();
@@ -71,21 +72,21 @@ const Home = ({ user }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   const [visibilitySelected, setvisibilitySelected]: any = useState(
-    visibilityOptions[0]
+    visibilityOptions[0],
   );
 
   const [platformSelected, setPlatformSelected]: any = useState(platforms[0]);
 
   const [langSelected, setLangSelected] = useState(
-    langs(platformSelected.name)[0]
+    langs(platformSelected.name)[0],
   );
 
   const [pmSelected, setPMSelected] = useState(
-    packageManagers(langSelected.name)[0]
+    packageManagers(langSelected.name)[0],
   );
 
   async function addNewProject(formData: any) {
@@ -96,46 +97,51 @@ const Home = ({ user }: any) => {
         visibilityRef.current.value.toLowerCase() != "choose" &&
         platformRef.current.value.toLowerCase() != "choose" &&
         langRef.current.value.toLowerCase() != "choose" &&
-        packageManagerRef.current.value.toLowerCase() != "choose"
+        packageManagerRef.current.value.toLowerCase() != "choose" &&
+        PLP[platformRef.current.value][langRef.current.value] != null &&
+        PLP[platformRef.current.value][langRef.current.value].pm.includes(
+          packageManagerRef.current.value,
+        )
       ) {
-        if (
-          PLPV[platformRef.current.value][langRef.current.value] != null &&
-          PLPV[platformRef.current.value][langRef.current.value].pm.includes(
-            packageManagerRef.current.value
-          )
-        ) {
-          const body = {
-            name: formData.name,
-            visibility: visibilityRef.current.value,
-            platform: platformRef.current.value,
-            lang: langRef.current.value,
-            package_manager: packageManagerRef.current.value,
-          };
+        const body = {
+          name: formData.name,
+          visibility: visibilityRef.current.value,
+          platform: platformRef.current.value,
+          lang: langRef.current.value,
+          package_manager: packageManagerRef.current.value,
+        };
 
-          const newBot = await fetcher("/api/projects", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
-          });
+        const newBot = await fetcher("/api/projects", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
 
-          if (newBot.message === "Success") {
-            toast.success(
-              "You have successfully created a new bot project",
-              toastStyle
-            );
+        if (newBot.message === "Success") {
+          toast.success(
+            "You have successfully created a new bot project",
+            toastStyle,
+          );
 
-            setOpen(false);
-          } else {
-            toast.error(newBot.error, toastStyle);
-
-            setOpen(false);
-          }
+          setOpen(false);
         } else {
-          toast.error("Choose the right choice", toastStyle);
+          toast.error(newBot.error, toastStyle);
+
+          setOpen(false);
         }
       } else {
         toast.error("Choose the right choice(s)", toastStyle);
       }
+    } catch (e: any) {
+      toast.error(e.message, toastStyle);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function submitPrompt(formData: any) {
+    try {
+      setIsLoading(true);
     } catch (e: any) {
       toast.error(e.message, toastStyle);
     } finally {
@@ -207,6 +213,7 @@ const Home = ({ user }: any) => {
                                 className={`${
                                   active ? "bg-bwdefualt" : ""
                                 } group flex w-full text-white items-center rounded-lg px-2 py-2 text-sm`}
+                                onClick={() => setPromptOpen(true)}
                               >
                                 <SparkleFillIcon
                                   size={18}
@@ -288,7 +295,11 @@ const Home = ({ user }: any) => {
       </div>
 
       <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={setOpen}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => setOpen(false)}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-in-out duration-500"
@@ -411,7 +422,7 @@ const Home = ({ user }: any) => {
                                                     key={platform.name}
                                                     onChange={() =>
                                                       setPlatformSelected(
-                                                        platform
+                                                        platform,
                                                       )
                                                     }
                                                     className={({ active }) =>
@@ -419,7 +430,7 @@ const Home = ({ user }: any) => {
                                                         active
                                                           ? "text-white bg-secondary"
                                                           : "text-gray-500",
-                                                        "relative transition cursor-pointer select-none py-2 pl-3 pr-9 rounded-lg mx-2 my-1"
+                                                        "relative transition cursor-pointer select-none py-2 pl-3 pr-9 rounded-lg mx-2 my-1",
                                                       )
                                                     }
                                                     value={platform}
@@ -438,7 +449,7 @@ const Home = ({ user }: any) => {
                                                               selected
                                                                 ? "font-semibold"
                                                                 : "font-normal",
-                                                              "ml-3 block truncate"
+                                                              "ml-3 block truncate",
                                                             )}
                                                           >
                                                             {platform.name}
@@ -451,7 +462,7 @@ const Home = ({ user }: any) => {
                                                               active
                                                                 ? "text-white"
                                                                 : "text-blue-700",
-                                                              "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                              "absolute inset-y-0 right-0 flex items-center pr-4",
                                                             )}
                                                           >
                                                             <CheckIcon
@@ -521,7 +532,7 @@ const Home = ({ user }: any) => {
                                             >
                                               <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-lg bg py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                                 {langs(
-                                                  platformSelected.name
+                                                  platformSelected.name,
                                                 ).map((lang) => (
                                                   <Listbox.Option
                                                     key={lang.name}
@@ -530,7 +541,7 @@ const Home = ({ user }: any) => {
                                                         active
                                                           ? "text-white bg-secondary"
                                                           : "text-gray-500",
-                                                        "relative transition cursor-pointer select-none py-2 pl-3 pr-9 rounded-lg mx-2 my-1"
+                                                        "relative transition cursor-pointer select-none py-2 pl-3 pr-9 rounded-lg mx-2 my-1",
                                                       )
                                                     }
                                                     value={lang}
@@ -549,7 +560,7 @@ const Home = ({ user }: any) => {
                                                               selected
                                                                 ? "font-semibold"
                                                                 : "font-normal",
-                                                              "ml-3 block truncate"
+                                                              "ml-3 block truncate",
                                                             )}
                                                           >
                                                             {lang.name}
@@ -562,7 +573,7 @@ const Home = ({ user }: any) => {
                                                               active
                                                                 ? "text-white"
                                                                 : "text-blue-700",
-                                                              "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                              "absolute inset-y-0 right-0 flex items-center pr-4",
                                                             )}
                                                           >
                                                             <CheckIcon
@@ -633,7 +644,7 @@ const Home = ({ user }: any) => {
                                             >
                                               <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-lg bg py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                                 {packageManagers(
-                                                  langSelected.name
+                                                  langSelected.name,
                                                 ).map((pm) => (
                                                   <Listbox.Option
                                                     key={pm.name}
@@ -642,7 +653,7 @@ const Home = ({ user }: any) => {
                                                         active
                                                           ? "text-white bg-secondary"
                                                           : "text-gray-500",
-                                                        "relative transition cursor-pointer select-none py-2 pl-3 pr-9 rounded-lg mx-2 my-1"
+                                                        "relative transition cursor-pointer select-none py-2 pl-3 pr-9 rounded-lg mx-2 my-1",
                                                       )
                                                     }
                                                     value={pm}
@@ -661,7 +672,7 @@ const Home = ({ user }: any) => {
                                                               selected
                                                                 ? "font-semibold"
                                                                 : "font-normal",
-                                                              "ml-3 block truncate"
+                                                              "ml-3 block truncate",
                                                             )}
                                                           >
                                                             {pm.name}
@@ -674,7 +685,7 @@ const Home = ({ user }: any) => {
                                                               active
                                                                 ? "text-white"
                                                                 : "text-blue-700",
-                                                              "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                              "absolute inset-y-0 right-0 flex items-center pr-4",
                                                             )}
                                                           >
                                                             <CheckIcon
@@ -748,7 +759,7 @@ const Home = ({ user }: any) => {
                                                           active
                                                             ? "text-white bg-secondary"
                                                             : "text-gray-500",
-                                                          "relative transition cursor-pointer select-none py-2 pl-2 pr-9 rounded-lg mx-2 my-1"
+                                                          "relative transition cursor-pointer select-none py-2 pl-2 pr-9 rounded-lg mx-2 my-1",
                                                         )
                                                       }
                                                       value={visibility}
@@ -764,7 +775,7 @@ const Home = ({ user }: any) => {
                                                                 selected
                                                                   ? "font-semibold"
                                                                   : "font-normal",
-                                                                "ml-3 block truncate"
+                                                                "ml-3 block truncate",
                                                               )}
                                                             >
                                                               {
@@ -779,7 +790,7 @@ const Home = ({ user }: any) => {
                                                                 active
                                                                   ? "text-white"
                                                                   : "text-blue-700",
-                                                                "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                                "absolute inset-y-0 right-0 flex items-center pr-4",
                                                               )}
                                                             >
                                                               <CheckIcon
@@ -791,7 +802,7 @@ const Home = ({ user }: any) => {
                                                         </>
                                                       )}
                                                     </Listbox.Option>
-                                                  )
+                                                  ),
                                                 )}
                                               </Listbox.Options>
                                             </Transition>
@@ -851,6 +862,74 @@ const Home = ({ user }: any) => {
           </div>
         </Dialog>
       </Transition.Root>
+
+      <Transition appear show={promptOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => setPromptOpen(false)}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-bwdefualt bg-opacity-50 transition-opacity" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="min-w-full bg-secondary transform overflow-scroll rounded-xl p-0 text-left align-middle shadow-xl transition-all border border-gray-800">
+                  <div>
+                    {promptOpen ? (
+                      isLoading ? (
+                        <div className="m-4 gap-4 flex justify-between items-center">
+                          <h1 className="text-base text-white">Creating</h1>
+                          <LoadingDots />
+                        </div>
+                      ) : (
+                        <Formik
+                          initialValues={{
+                            prompt: "",
+                          }}
+                          onSubmit={submitPrompt}
+                        >
+                          {() => (
+                            <Form className="mt-2 column overflow-scroll min-h-full">
+                              <Field
+                                className="border-none outline-none focus:outline-none focus-within:outline-none bg-secondary text-xl placeholder:text-xl placeholder:text-gray-400 text-white rounded-sm block w-full p-4"
+                                id="prompt"
+                                name="prompt"
+                                type="text"
+                                placeholder="Build your own bot using AI, you need to specify bot platform, language (default: python), and package manager (optional)"
+                              />
+                            </Form>
+                          )}
+                        </Formik>
+                      )
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </DashLayout>
   );
 };

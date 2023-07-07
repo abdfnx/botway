@@ -40,7 +40,7 @@ export const getAppId = () => {
 export const getGuildId = (serverName: string) => {
   if (getBotInfo("type") != "discord") {
     console.log(
-      "ERROR: This function/feature is only working with discord bots"
+      "ERROR: This function/feature is only working with discord bots",
     );
   } else {
     try {

@@ -27,7 +27,7 @@ const ResetPassword = () => {
       formData?.email,
       {
         redirectTo: origin,
-      }
+      },
     );
 
     if (error) {

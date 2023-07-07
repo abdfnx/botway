@@ -34,12 +34,12 @@ export async function GET(request: Request) {
 
   const { payload: railwayApiToken } = await jwtDecrypt(
     user?.user_metadata["railwayApiToken"],
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: railwayServiceId } = await jwtDecrypt(
     data?.railway_service_id,
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const deployments = await fetcher(
@@ -69,7 +69,7 @@ export async function GET(request: Request) {
           }
         `,
       }),
-    }
+    },
   );
 
   if (deployments.errors) {
@@ -82,7 +82,7 @@ export async function GET(request: Request) {
         new Date(b.node.createdAt).getTime() -
         new Date(a.node.createdAt).getTime()
       );
-    }
+    },
   );
 
   return NextResponse.json(dy);

@@ -24,12 +24,12 @@ export async function POST(request: Request) {
 
   const { payload: githubApiToken } = await jwtDecrypt(
     user?.user_metadata["githubApiToken"],
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: railwayApiToken } = await jwtDecrypt(
     user?.user_metadata["railwayApiToken"],
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: password } = await jwtDecrypt(body.password, BW_SECRET_KEY);
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
 
   const { payload: railwayProjectId } = await jwtDecrypt(
     data.railway_project_id,
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const octokit = new Octokit({

@@ -29,7 +29,7 @@ export const ProjectLayout = ({
   const openAtRailway = async () => {
     const { payload: railwayProjectId } = await jwtDecrypt(
       projectRWID,
-      BW_SECRET_KEY
+      BW_SECRET_KEY,
     );
 
     router.push(`https://railway.app/project/${railwayProjectId.data}`);
@@ -266,7 +266,7 @@ export const ProjectLayout = ({
             <main
               className={clsx(
                 "flex-1 overflow-y-auto max-h-screen",
-                grid ? "bg-grid-gray-800/[0.4]" : ""
+                grid ? "bg-grid-gray-800/[0.4]" : "",
               )}
             >
               <div

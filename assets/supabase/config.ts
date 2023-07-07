@@ -10,5 +10,5 @@ const options = {
 export const supabase = createClient(
   Deno.env.get("NEXT_PUBLIC_SUPABASE_URL"),
   Deno.env.get("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
-  options
+  options,
 );

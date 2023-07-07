@@ -25,12 +25,12 @@ export async function POST(request: Request) {
 
   const { payload: githubApiToken } = await jwtDecrypt(
     user?.user_metadata["githubApiToken"],
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: railwayApiToken } = await jwtDecrypt(
     user?.user_metadata["railwayApiToken"],
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const createRailwayProject = await fetcher(
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
           }
         `,
       }),
-    }
+    },
   );
 
   if (createRailwayProject.errors) {
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
           }
         `,
       }),
-    }
+    },
   );
 
   if (createService.errors) {
@@ -136,12 +136,12 @@ export async function POST(request: Request) {
 
   exec(
     `create-botway-bot ${stringify(body.name)} ${stringify(
-      body.platform
+      body.platform,
     )} ${stringify(body.lang)} ${stringify(
-      body.package_manager
+      body.package_manager,
     )} railway ${stringify(githubApiToken.data)} ${stringify(
-      ghu.login
-    )} ${stringify(ghu.email)}`
+      ghu.login,
+    )} ${stringify(ghu.email)}`,
   )
     .on("error", (error) => {
       return NextResponse.json({ error: error.message });

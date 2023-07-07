@@ -40,7 +40,7 @@ const Project = ({ user, projectId }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   const fetchLogs = async () => {
@@ -59,22 +59,22 @@ const Project = ({ user, projectId }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   const openAtRailway = async () => {
     const { payload: railwayProjectId } = await jwtDecrypt(
       project?.railway_project_id,
-      BW_SECRET_KEY
+      BW_SECRET_KEY,
     );
 
     const { payload: railwayServiceId } = await jwtDecrypt(
       project?.railway_service_id,
-      BW_SECRET_KEY
+      BW_SECRET_KEY,
     );
 
     router.push(
-      `https://railway.app/project/${railwayProjectId.data}/service/${railwayServiceId.data}?id=${logs.dyId}`
+      `https://railway.app/project/${railwayProjectId.data}/service/${railwayServiceId.data}?id=${logs.dyId}`,
     );
   };
 
@@ -130,7 +130,7 @@ const Project = ({ user, projectId }: any) => {
                             "pr-2",
                             deploy.severity === "err"
                               ? "text-red-600"
-                              : "text-blue-700"
+                              : "text-blue-700",
                           )}
                         >
                           {deploy.severity}

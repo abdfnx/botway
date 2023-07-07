@@ -19,8 +19,8 @@ export const add = () => {
     data.map(async (d) => {
       const response = await fetch(
         `${Deno.env.get(
-          "NEXT_PUBLIC_SUPABASE_URL"
-        )}/storage/v1/object/public/cdn/${v}/${d.name}`
+          "NEXT_PUBLIC_SUPABASE_URL",
+        )}/storage/v1/object/public/cdn/${v}/${d.name}`,
       );
 
       if (!response.ok) throw new Error("Response not OK");

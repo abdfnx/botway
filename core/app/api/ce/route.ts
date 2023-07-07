@@ -22,12 +22,12 @@ export async function POST(request: Request) {
 
   const { payload: railwayApiToken } = await jwtDecrypt(
     user?.user_metadata["railwayApiToken"],
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const { payload: railwayProjectId } = await jwtDecrypt(
     body.railwayProjectId,
-    BW_SECRET_KEY
+    BW_SECRET_KEY,
   );
 
   const query = `
@@ -87,8 +87,8 @@ export async function POST(request: Request) {
     srv.node.serviceInstances.edges.find(
       (si: any) =>
         si.node.source.template?.serviceSource ===
-        "https://github.com/botwayorg/ce"
-    )
+        "https://github.com/botwayorg/ce",
+    ),
   ).node.serviceInstances.edges[0].node.domains;
 
   let domain;

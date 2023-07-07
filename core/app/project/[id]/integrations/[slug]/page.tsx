@@ -50,7 +50,7 @@ const Project = ({ user, projectId, slug }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   const fetchIntegration = async () => {
@@ -69,7 +69,7 @@ const Project = ({ user, projectId, slug }: any) => {
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
-    }
+    },
   );
 
   async function addIntegration(formData: any) {
@@ -113,7 +113,7 @@ const Project = ({ user, projectId, slug }: any) => {
       if (newInt.message === "Success") {
         toast.success(
           "You have successfully created a new bot integration",
-          toastStyle
+          toastStyle,
         );
 
         setOpen(false);
@@ -157,7 +157,7 @@ const Project = ({ user, projectId, slug }: any) => {
         if (newInt.message === "Success") {
           toast.success(
             "You have successfully created a new bot integration",
-            toastStyle
+            toastStyle,
           );
         } else {
           toast.error(newInt.error, toastStyle);
@@ -186,7 +186,7 @@ const Project = ({ user, projectId, slug }: any) => {
         if (newInt.message === "Success") {
           toast.success(
             "You have successfully created a new bot integration",
-            toastStyle
+            toastStyle,
           );
 
           setOpen(false);
