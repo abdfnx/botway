@@ -27,7 +27,7 @@ require (
 	github.com/muesli/termenv v0.15.2
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
-	github.com/tidwall/gjson v1.14.4
+	github.com/tidwall/gjson v1.15.0
 	github.com/tidwall/sjson v1.2.5
 	golang.org/x/sys v0.10.0
 	golang.org/x/term v0.10.0
