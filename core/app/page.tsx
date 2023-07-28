@@ -36,6 +36,7 @@ import {
 import { fetcher } from "@/tools/fetch";
 import { Button } from "@/components/Button";
 import { capitalizeFirstLetter } from "@/tools/text";
+import { useCompletion } from "ai/react";
 
 export const revalidate = 0;
 
@@ -142,6 +143,25 @@ const Home = ({ user }: any) => {
   async function submitPrompt(formData: any) {
     try {
       setIsLoading(true);
+
+      const newBot = await fetcher("/api/ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: formData.prompt }),
+      });
+
+      if (newBot.message === "Success") {
+        toast.success(
+          "You have successfully created a new bot project",
+          toastStyle,
+        );
+
+        setPromptOpen(false);
+      } else {
+        toast.error(newBot.error, toastStyle);
+
+        setPromptOpen(false);
+      }
     } catch (e: any) {
       toast.error(e.message, toastStyle);
     } finally {
@@ -882,7 +902,7 @@ const Home = ({ user }: any) => {
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex min-h-full mx-4 md:mx-32 items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -892,14 +912,29 @@ const Home = ({ user }: any) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="min-w-full bg-secondary transform overflow-scroll rounded-xl p-0 text-left align-middle shadow-xl transition-all border border-gray-800">
+                <Dialog.Panel className="min-w-full bg-secondary transform overflow-scroll rounded-2xl p-0 text-left align-middle shadow-xl transition-all border border-gray-800">
                   <div>
                     {promptOpen ? (
                       isLoading ? (
-                        <div className="m-4 gap-4 flex justify-between items-center">
-                          <h1 className="text-base text-white">Creating</h1>
-                          <LoadingDots />
-                        </div>
+                        <Transition.Child
+                          as={Fragment}
+                          enter="ease-out duration-300"
+                          enterFrom="opacity-0"
+                          enterTo="opacity-100"
+                          leave="ease-in duration-200"
+                          leaveFrom="opacity-100"
+                          leaveTo="opacity-0"
+                        >
+                          <div
+                            className="gap-4 flex justify-between items-center"
+                            style={{ margin: "22px" }}
+                          >
+                            <h1 className="text-sm md:text-xl text-white">
+                              Creating
+                            </h1>
+                            <LoadingDots />
+                          </div>
+                        </Transition.Child>
                       ) : (
                         <Formik
                           initialValues={{
@@ -910,7 +945,7 @@ const Home = ({ user }: any) => {
                           {() => (
                             <Form className="mt-2 column overflow-scroll min-h-full">
                               <Field
-                                className="border-none outline-none focus:outline-none focus-within:outline-none bg-secondary text-xl placeholder:text-xl placeholder:text-gray-400 text-white rounded-sm block w-full p-4"
+                                className="border-none outline-none focus:outline-none focus-within:outline-none bg-secondary text-sm md:text-xl placeholder:text-sm md:placeholder:text-xl placeholder:text-gray-400 text-white rounded-sm block w-full p-4"
                                 id="prompt"
                                 name="prompt"
                                 type="text"
@@ -921,7 +956,9 @@ const Home = ({ user }: any) => {
                         </Formik>
                       )
                     ) : (
-                      <></>
+                      <div className="items-center" style={{ margin: "22px" }}>
+                        <h1 className="text-sm md:text-xl text-white">Done 🤝</h1>
+                      </div>
                     )}
                   </div>
                 </Dialog.Panel>
