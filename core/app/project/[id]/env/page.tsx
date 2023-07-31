@@ -229,7 +229,7 @@ const Env = ({ user, projectId }: any) => {
                 <button
                   type="button"
                   onClick={() => setIsOpenAdd(true)}
-                  className="flex border-gray-800 hover:bg-secondary border p-0.5 outline-none ease-out duration-200 rounded-md outline-offset-1 transition-all focus:outline-4"
+                  className="flex border-gray-800 bg-bwdefualt hover:bg-secondary border p-0.5 outline-none ease-out duration-200 rounded-md outline-offset-1 transition-all focus:outline-4"
                 >
                   <span className="relative cursor-pointer inline-flex items-center place-content-center space-x-2 text-center font-regular  outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 text-blue-700 shadow-sm px-2.5 py-1">
                     <PlusIcon />

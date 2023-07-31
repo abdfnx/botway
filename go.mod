@@ -9,7 +9,7 @@ require (
 	github.com/abdfnx/looker v0.1.0
 	github.com/abdfnx/resto v0.1.6
 	github.com/abdfnx/tran v0.1.43
-	github.com/botwayorg/boa v0.1.0
+	github.com/botwayorg/boa v0.1.1
 	github.com/botwayorg/get-latest v0.1.61
 	github.com/botwayorg/gh v0.1.2
 	github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635
@@ -27,7 +27,7 @@ require (
 	github.com/muesli/termenv v0.15.2
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
-	github.com/tidwall/gjson v1.14.4
+	github.com/tidwall/gjson v1.15.0
 	github.com/tidwall/sjson v1.2.5
 	golang.org/x/sys v0.10.0
 	golang.org/x/term v0.10.0
@@ -68,13 +68,13 @@ require (
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/manifoldco/promptui v0.9.0 // indirect
 	github.com/mattn/go-localereader v0.0.1 // indirect
-	github.com/mattn/go-runewidth v0.0.14 // indirect
-	github.com/microcosm-cc/bluemonday v1.0.24 // indirect
+	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/microcosm-cc/bluemonday v1.0.25 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/muesli/ansi v0.0.0-20230316100256-276c6243b2f6 // indirect
 	github.com/muesli/cancelreader v0.2.2 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
-	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
+	github.com/pelletier/go-toml/v2 v2.0.9 // indirect
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
@@ -83,7 +83,7 @@ require (
 	github.com/sahilm/fuzzy v0.1.0 // indirect
 	github.com/scmn-dev/browser v0.1.3 // indirect
 	github.com/shurcooL/githubv4 v0.0.0-20230704064427-599ae7bbf278 // indirect
-	github.com/shurcooL/graphql v0.0.0-20230704054941-24ceaa0402e4 // indirect
+	github.com/shurcooL/graphql v0.0.0-20230722043721-ed46e5a46466 // indirect
 	github.com/spf13/afero v1.9.5 // indirect
 	github.com/spf13/cast v1.5.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
@@ -94,7 +94,7 @@ require (
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/yosssi/gohtml v0.0.0-20201013000340-ee4748c638f4 // indirect
-	github.com/yuin/goldmark v1.5.4 // indirect
+	github.com/yuin/goldmark v1.5.5 // indirect
 	github.com/yuin/goldmark-emoji v1.0.2 // indirect
 	golang.org/x/net v0.12.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect

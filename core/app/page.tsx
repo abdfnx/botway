@@ -228,18 +228,16 @@ const Home = ({ user }: any) => {
                             )}
                           </Menu.Item>
                           <Menu.Item>
-                            {({ active }) => (
+                            {() => (
                               <button
-                                className={`${
-                                  active ? "bg-bwdefualt" : ""
-                                } group flex w-full text-white items-center rounded-lg px-2 py-2 text-sm`}
-                                onClick={() => setPromptOpen(true)}
+                                className={`cursor-context-menu group flex w-full text-white items-center rounded-lg px-2 py-2 text-sm`}
+                                // onClick={() => setPromptOpen(true)}
                               >
                                 <SparkleFillIcon
                                   size={18}
                                   className="fill-blue-700 mr-2"
                                 />
-                                <h1 className="font-mono">Botway AI</h1>
+                                <h1 className="font-mono">Botway AI - Soon</h1>
                               </button>
                             )}
                           </Menu.Item>
@@ -957,7 +955,9 @@ const Home = ({ user }: any) => {
                       )
                     ) : (
                       <div className="items-center" style={{ margin: "22px" }}>
-                        <h1 className="text-sm md:text-xl text-white">Done 🤝</h1>
+                        <h1 className="text-sm md:text-xl text-white">
+                          Done 🤝
+                        </h1>
                       </div>
                     )}
                   </div>

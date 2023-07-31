@@ -285,14 +285,14 @@ export const DashLayout = ({ children, name, href }: any) => {
                         </span>
                       </a>
                       <a
-                        href="/ai"
+                        // href="/ai"
                         className="flex border-gray-800 hover:bg-secondary border rounded p-0 outline-none outline-offset-1 transition-all focus:outline-4"
                       >
                         <span className="relative cursor-pointer inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 text-blue-700 shadow-sm text-xs px-2.5 py-1">
                           <SparkleFillIcon />
 
                           <span className="hidden font-extrabold text-gray-500 md:block">
-                            AI
+                            AI - Soon
                           </span>
                         </span>
                       </a>
