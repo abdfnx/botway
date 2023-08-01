@@ -28,7 +28,7 @@
     "formik": "^2.4.2",
     "graphql": "^16.7.1",
     "jose": "^4.14.4",
-    "marked": "^5.1.2",
+    "marked": "^6.0.0",
     "mini-svg-data-uri": "^1.4.4",
     "next": "13.4.12",
     "octokit": "^3.1.0",
