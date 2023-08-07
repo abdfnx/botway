@@ -11,7 +11,7 @@ import (
 	"github.com/abdfnx/botway/internal/dashboard"
 	"github.com/abdfnx/botway/internal/options"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/botwayorg/boa"
+	"github.com/elewis787/boa"
 	"github.com/spf13/cobra"
 )
 
