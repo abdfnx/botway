@@ -13,7 +13,7 @@ require (
 	github.com/botwayorg/gh v0.1.2
 	github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635
 	github.com/botwayorg/railway-api v0.0.8
-	github.com/botwayorg/templates v0.1.0
+	github.com/botwayorg/templates v0.1.1
 	github.com/briandowns/spinner v1.23.0
 	github.com/charmbracelet/bubbles v0.16.1
 	github.com/charmbracelet/bubbletea v0.24.2
