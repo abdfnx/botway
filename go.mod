@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.7
 	github.com/MakeNowJust/heredoc v1.0.0
-	github.com/abdfnx/botwaygo v0.1.4
+	github.com/abdfnx/botwaygo v0.1.5
 	github.com/abdfnx/looker v0.1.0
 	github.com/abdfnx/resto v0.1.6
 	github.com/abdfnx/tran v0.1.43
@@ -27,7 +27,7 @@ require (
 	github.com/muesli/termenv v0.15.2
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
-	github.com/tidwall/gjson v1.15.0
+	github.com/tidwall/gjson v1.16.0
 	github.com/tidwall/sjson v1.2.5
 	golang.org/x/sys v0.11.0
 	golang.org/x/term v0.11.0
