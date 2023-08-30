@@ -21,13 +21,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: userError });
   }
 
-  const { payload: githubApiToken } = await jwtDecrypt(
-    user?.user_metadata["githubApiToken"],
-    BW_SECRET_KEY,
-  );
-
-  const { payload: railwayApiToken } = await jwtDecrypt(
-    user?.user_metadata["railwayApiToken"],
+  const { payload: zeaburApiToken } = await jwtDecrypt(
+    user?.user_metadata["zeaburApiToken"],
     BW_SECRET_KEY,
   );
 
@@ -51,101 +46,106 @@ export async function POST(request: Request) {
     bst = "not";
   }
 
-  const { payload: railwayProjectId } = await jwtDecrypt(
-    body.railwayProjectId,
+  const { payload: zeaburServiceId } = await jwtDecrypt(
+    body.zeaburServiceId,
     BW_SECRET_KEY,
   );
 
-  const { payload: railwayServiceId } = await jwtDecrypt(
-    body.railwayServiceId,
+  const { payload: zeaburEnvId } = await jwtDecrypt(
+    body.zeaburEnvId,
     BW_SECRET_KEY,
   );
-
-  const getEnvId = await fetcher("https://backboard.railway.app/graphql/v2", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${railwayApiToken.data}`,
-    },
-    body: JSON.stringify({
-      query: `
-        query {
-          project(id: "${railwayProjectId.data}") {
-            environments {
-              edges {
-                node {
-                  name,
-                  id
-                }
-              }
-            }
-          }
-        }
-      `,
-    }),
-  });
-
-  if (getEnvId.errors) {
-    return NextResponse.json({ error: getEnvId.errors[0].message });
-  }
-
-  const envId = getEnvId.data.project.environments.edges.find(
-    (env: any) => env.node.name === "production",
-  ).node.id;
 
   let vars;
+  let shared = `createEnvironmentVariable(
+        environmentID: "${zeaburEnvId.data}"
+        serviceID: "${zeaburServiceId.data}"`;
 
   if (body.platform === "discord") {
-    vars = `DISCORD_TOKEN: "${bt.data}", DISCORD_CLIENT_ID: "${bat.data}"`;
+    vars = `
+      ${shared}
+        key: "DISCORD_TOKEN"
+        value: "${bt.data}"
+      ) {
+        _id
+      }
+
+      var2: ${shared}
+        key: "DISCORD_CLIENT_ID"
+        value: "${bat.data}"
+      ) {
+        _id
+      }
+    `;
   } else if (body.platform === "slack") {
-    vars = `SLACK_TOKEN: "${bt.data}", SLACK_APP_TOKEN: "${bat.data}", SLACK_SIGNING_SECRET: "${bst.data}"`;
+    vars = `
+      ${shared}
+        key: "SLACK_TOKEN"
+        value: "${bt.data}"
+      ) {
+        _id
+      }
+
+      var2: ${shared}
+        key: "SLACK_APP_TOKEN"
+        value: "${bat.data}"
+      ) {
+        _id
+      }
+
+      var3: ${shared}
+        key: "SLACK_SIGNING_SECRET"
+        value: "${bst.data}"
+      ) {
+        _id
+      }
+    `;
   } else if (body.platform === "telegram") {
-    vars = `TELEGRAM_TOKEN: "${bt.data}"`;
+    vars = `
+      ${shared}
+        key: "TELEGRAM_TOKEN"
+        value: "${bt.data}"
+      ) {
+        _id
+      }
+    `;
   } else if (body.platform === "twitch") {
-    vars = `TWITCH_OAUTH_TOKEN: "${bt.data}", TWITCH_CLIENT_ID: "${bat.data}", TWITCH_CLIENT_SECRET: "${bst.data}"`;
+    vars = `
+      ${shared}
+        key: "TWITCH_OAUTH_TOKEN"
+        value: "${bt.data}"
+      ) {
+        _id
+      }
+
+      var2: ${shared}
+        key: "TWITCH_CLIENT_ID"
+        value: "${bat.data}"
+      ) {
+        _id
+      }
+
+      var3: ${shared}
+        key: "TWITCH_CLIENT_SECRET"
+        value: "${bst.data}"
+      ) {
+        _id
+      }
+    `;
   }
 
-  const octokit = new Octokit({
-    auth: githubApiToken.data,
-  });
+  console.log(vars);
 
-  const ghu = await (await octokit.request("GET /user", {})).data;
-
-  if (!body.repo.toString().includes(ghu.login))
-    NextResponse.json({ error: `Repo owner must be ${ghu.login}` });
-
-  const repoBody = `source: { repo: "${body.repo}" }`;
-
-  await fetcher("https://backboard.railway.app/graphql/v2", {
+  await fetcher("https://gateway.zeabur.com/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${railwayApiToken.data}`,
+      Authorization: `Bearer ${zeaburApiToken.data}`,
     },
     body: JSON.stringify({
-      operationName: "setTokens",
       query: `
-        mutation setTokens {
-          variableCollectionUpsert(input: {
-            projectId: "${railwayProjectId.data}",
-            environmentId: "${envId}",
-            serviceId: "${railwayServiceId.data}",
-            variables: { ${vars} }
-          })
-
-          serviceInstanceUpdate(
-            serviceId: "${railwayServiceId.data}",
-            input: {
-              ${repoBody}
-            }
-          )
-
-          serviceConnect(id: "${railwayServiceId.data}", input: {
-            branch: "main"
-            repo: "${body.repo}"
-          }) {
-            id
-          }
+        mutation {
+          ${vars}
         }
       `,
     }),

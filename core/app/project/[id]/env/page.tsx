@@ -1,6 +1,6 @@
 "use client";
 
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useAuth } from "@/supabase/auth/provider";
 import { LoadingDots } from "@/components/LoadingDots";
 import supabase from "@/supabase/browser";
@@ -11,7 +11,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { fetcher } from "@/tools/fetch";
-import { EncryptJWT, jwtDecrypt } from "jose";
+import { EncryptJWT } from "jose";
 import { BW_SECRET_KEY } from "@/tools/tokens";
 import {
   EyeClosedIcon,
@@ -65,8 +65,6 @@ const Env = ({ user, projectId }: any) => {
     setCurrentVar(varx);
   };
 
-  const router = useRouter();
-
   const fetchProject = async () => {
     const { data: project } = await supabase
       .from("projects")
@@ -110,23 +108,7 @@ const Env = ({ user, projectId }: any) => {
     },
   );
 
-  const openAtRailway = async () => {
-    const { payload: railwayProjectId } = await jwtDecrypt(
-      project?.railway_project_id,
-      BW_SECRET_KEY,
-    );
-
-    const { payload: railwayServiceId } = await jwtDecrypt(
-      project?.railway_service_id,
-      BW_SECRET_KEY,
-    );
-
-    router.push(
-      `https://railway.app/project/${railwayProjectId.data}/service/${railwayServiceId.data}/variables`,
-    );
-  };
-
-  async function updateVar(formData: any) {
+  const updateVar = async (formData: any) => {
     try {
       setIsLoading(true);
 
@@ -154,9 +136,9 @@ const Env = ({ user, projectId }: any) => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
-  async function addVar(formData: any) {
+  const addVar = async (formData: any) => {
     try {
       setIsLoading(true);
 
@@ -184,7 +166,7 @@ const Env = ({ user, projectId }: any) => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <>
@@ -195,26 +177,13 @@ const Env = ({ user, projectId }: any) => {
           user={user}
           projectId={projectId}
           projectName={project?.name}
-          projectRWID={project?.railway_project_id}
+          projectRWID={project?.zeabur_project_id}
           grid={true}
         >
           <div className="mx-6 my-16 flex items-center space-x-6">
             <h1 className="text-3xl text-white">
               {project?.name} Environment Variables
             </h1>
-
-            <button
-              onClick={openAtRailway}
-              className="border border-gray-800 transition-all bg-[#181622] hover:bg-[#1f132a] duration-200 rounded-2xl p-3 text-white flex flex-col items-center"
-            >
-              <span className="flex">
-                <img
-                  src="https://cdn-botway.deno.dev/icons/railway.svg"
-                  width={24}
-                />
-                <span className="ml-2">Open at Railway</span>
-              </span>
-            </button>
           </div>
 
           {varsIsLoading ? (

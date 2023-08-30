@@ -1,6 +1,6 @@
 author: bw
 bot:
-  host_service: railway.app
+  host_service: zeabur.com
   lang: deno
   name: botx
   package_manager: deno

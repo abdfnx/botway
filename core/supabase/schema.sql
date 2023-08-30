@@ -11,14 +11,15 @@ CREATE TABLE projects (
   bot_token CHARACTER varying NOT NULL,
   bot_app_token CHARACTER varying NULL,
   bot_secret_token CHARACTER varying NULL,
-  railway_project_id CHARACTER varying NOT NULL,
-  railway_service_id CHARACTER varying NOT NULL,
-  -- railway_env_id CHARACTER varying NULL,
+  zeabur_project_id CHARACTER varying NOT NULL,
+  zeabur_service_id CHARACTER varying NOT NULL,
+  zeabur_env_id CHARACTER varying NOT NULL,
   build_command CHARACTER varying NULL,
   start_command CHARACTER varying NULL,
   enable_ce BOOLEAN NOT NULL DEFAULT false,
+  ce_service_id CHARACTER varying NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::TEXT, NOW()) NOT NULL,
-  CONSTRAINT projects_railway_project_id_key UNIQUE (railway_project_id)
+  CONSTRAINT projects_zeabur_project_id_key UNIQUE (zeabur_project_id)
 );
 
 -- Enable row level security

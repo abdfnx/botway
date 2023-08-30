@@ -29,7 +29,7 @@ export const AuthProvider = (props: any) => {
   const { accessToken, ...rest } = props;
 
   useEffect(() => {
-    async function getActiveSession() {
+    const getActiveSession = async () => {
       const {
         data: { session: activeSession },
       }: any = await supabase.auth.getSession();
@@ -37,7 +37,7 @@ export const AuthProvider = (props: any) => {
       setSession(activeSession);
       setUser(activeSession?.user ?? null);
       setInitial(false);
-    }
+    };
 
     getActiveSession();
 

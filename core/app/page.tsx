@@ -11,6 +11,7 @@ import {
   CommandPaletteIcon,
   SparkleFillIcon,
   StackIcon,
+  WorkflowIcon,
   ZapIcon,
 } from "@primer/octicons-react";
 import { Fragment, useRef, useState } from "react";
@@ -36,7 +37,6 @@ import {
 import { fetcher } from "@/tools/fetch";
 import { Button } from "@/components/Button";
 import { capitalizeFirstLetter } from "@/tools/text";
-import { useCompletion } from "ai/react";
 
 export const revalidate = 0;
 
@@ -90,7 +90,7 @@ const Home = ({ user }: any) => {
     packageManagers(langSelected.name)[0],
   );
 
-  async function addNewProject(formData: any) {
+  const addNewProject = async (formData: any) => {
     try {
       setIsLoading(true);
 
@@ -138,9 +138,9 @@ const Home = ({ user }: any) => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
-  async function submitPrompt(formData: any) {
+  const submitPrompt = async (formData: any) => {
     try {
       setIsLoading(true);
 
@@ -167,7 +167,7 @@ const Home = ({ user }: any) => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <DashLayout name={user.user_metadata["name"]} href="Projects">
@@ -175,7 +175,7 @@ const Home = ({ user }: any) => {
         <div className="py-4 px-5">
           <div className="my-2">
             <div className="flex">
-              <h3 className="text-xl text-white font-farray">
+              <h3 className="text-xl text-white font-mono">
                 Welcome to Botway
               </h3>
             </div>
@@ -238,6 +238,21 @@ const Home = ({ user }: any) => {
                                   className="fill-blue-700 mr-2"
                                 />
                                 <h1 className="font-mono">Botway AI - Soon</h1>
+                              </button>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {() => (
+                              <button
+                                className={`cursor-context-menu group flex w-full text-white items-center rounded-lg px-2 py-2 text-sm`}
+                              >
+                                <WorkflowIcon
+                                  size={16}
+                                  className="fill-blue-700 mr-2.5"
+                                />
+                                <h1 className="font-mono">
+                                  Botway Visual - Soon
+                                </h1>
                               </button>
                             )}
                           </Menu.Item>
@@ -847,23 +862,23 @@ const Home = ({ user }: any) => {
                                 </Form>
 
                                 <a
-                                  href="https://railway.app"
+                                  href="https://zeabur.com"
                                   target="_blank"
-                                  className="mt-4 border border-gray-800 transition-all bg-[#181622] hover:bg-[#1f132a] duration-200 rounded-2xl p-4 sm:mt-8 flex flex-col items-center"
+                                  className="mt-4 border border-gray-800 transition-all bg-[#121212] hover:bg-[#141414] duration-200 rounded-2xl p-4 sm:mt-8 flex flex-col items-center"
                                 >
                                   <div aria-hidden="true">
                                     <img
-                                      src="https://cdn-botway.deno.dev/icons/railway.svg"
+                                      src="https://cdn-botway.deno.dev/icons/zeabur.svg"
                                       width={30}
                                     />
                                   </div>
                                   <div className="space-y-2 mt-3 sm:space-y-4 flex flex-col items-center">
                                     <h1 className="text-white text-xs md:text-sm font-bold">
-                                      Your Bot Project will be hosted on Railway
+                                      Your Bot Project will be hosted on Zeabur
                                     </h1>
                                     <p className="text-xs md:text-sm text-gray-400 text-center">
-                                      Railway is a canvas for shipping your
-                                      apps, databases, and more 🚄
+                                      Zeabur is a platform that help you deploy
+                                      your service with one click. 🏗️
                                     </p>
                                   </div>
                                 </a>

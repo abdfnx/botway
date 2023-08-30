@@ -28,77 +28,10 @@ export async function POST(request: Request) {
     BW_SECRET_KEY,
   );
 
-  const { payload: railwayApiToken } = await jwtDecrypt(
-    user?.user_metadata["railwayApiToken"],
+  const { payload: zeaburApiToken } = await jwtDecrypt(
+    user?.user_metadata["zeaburApiToken"],
     BW_SECRET_KEY,
   );
-
-  const createRailwayProject = await fetcher(
-    "https://backboard.railway.app/graphql/v2",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${railwayApiToken.data}`,
-      },
-      body: JSON.stringify({
-        operationName: "projectCreate",
-        query: `
-          mutation projectCreate {
-            projectCreate(input: {
-              name: "${body.name}"
-            }) {
-              id
-            }
-          }
-        `,
-      }),
-    },
-  );
-
-  if (createRailwayProject.errors) {
-    return NextResponse.json({ error: createRailwayProject.errors[0].message });
-  }
-
-  const createService = await fetcher(
-    "https://backboard.railway.app/graphql/v2",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${railwayApiToken.data}`,
-      },
-      body: JSON.stringify({
-        operationName: "serviceCreate",
-        query: `
-          mutation serviceCreate {
-            serviceCreate(input: {
-              name: "Main",
-              projectId: "${createRailwayProject.data.projectCreate.id}"
-            }) {
-              id
-            }
-          }
-        `,
-      }),
-    },
-  );
-
-  if (createService.errors) {
-    return NextResponse.json({ error: createService.errors[0].message });
-  }
-
-  const railwayProjectId = await new EncryptJWT({
-    data: createRailwayProject.data.projectCreate.id,
-  })
-    .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
-    .encrypt(BW_SECRET_KEY);
-
-  const railwayServiceId = await new EncryptJWT({
-    data: createService.data.serviceCreate.id,
-  })
-    .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
-    .encrypt(BW_SECRET_KEY);
 
   const octokit = new Octokit({
     auth: githubApiToken.data,
@@ -106,11 +39,95 @@ export async function POST(request: Request) {
 
   const ghu = await (await octokit.request("GET /user", {})).data;
 
-  await octokit.request("POST /user/repos", {
+  const repo = await octokit.request("POST /user/repos", {
     name: body.name,
-    description: `My Awesome ${body.platform} botway bot.`,
+    description: `My Awesome Bot. Created By @botwayorg, Hosted On @zeabur.`,
     private: body.visibility != "public",
   });
+
+  exec(
+    `create-botway-bot ${stringify(body.name)} ${stringify(
+      body.platform,
+    )} ${stringify(body.lang)} ${stringify(body.package_manager)} ${stringify(
+      githubApiToken.data,
+    )} ${stringify(ghu.login)} ${stringify(ghu.email)}`,
+  )
+    .on("error", (error) => {
+      return NextResponse.json({ error: error.message });
+    })
+    .on("message", (m) => {
+      console.log(m.toString());
+    });
+
+  const createProject = await fetcher("https://gateway.zeabur.com/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${zeaburApiToken.data}`,
+    },
+    body: JSON.stringify({
+      query: `
+        mutation {
+          createProject(name: "${body.name}") {
+            _id
+            environments {
+              _id
+            }
+          }
+        }
+      `,
+    }),
+  });
+
+  if (createProject.errors) {
+    return NextResponse.json({ error: createProject.errors[0].message });
+  }
+
+  const createService = await fetcher("https://gateway.zeabur.com/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${zeaburApiToken.data}`,
+    },
+    body: JSON.stringify({
+      query: `
+        mutation {
+          createService(
+            name: "main"
+            template: GIT
+            projectID: "${createProject.data.createProject._id}"
+            gitProvider: GITHUB
+            repoID: ${repo.data.id}
+            branchName: "main"
+          ) {
+            _id
+          }
+        }
+      `,
+    }),
+  });
+
+  if (createService.errors) {
+    return NextResponse.json({ error: createService.errors[0].message });
+  }
+
+  const zeaburProjectId = await new EncryptJWT({
+    data: createProject.data.createProject._id,
+  })
+    .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+    .encrypt(BW_SECRET_KEY);
+
+  const zeaburEnvId = await new EncryptJWT({
+    data: createProject.data.createProject.environments[0]._id,
+  })
+    .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+    .encrypt(BW_SECRET_KEY);
+
+  const zeaburServiceId = await new EncryptJWT({
+    data: createService.data.createService._id,
+  })
+    .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+    .encrypt(BW_SECRET_KEY);
 
   const { error } = await supabase.from("projects").insert({
     user_id: user?.id,
@@ -124,8 +141,9 @@ export async function POST(request: Request) {
     bot_token: "",
     bot_app_token: "",
     bot_secret_token: "",
-    railway_project_id: railwayProjectId,
-    railway_service_id: railwayServiceId,
+    zeabur_project_id: zeaburProjectId,
+    zeabur_env_id: zeaburEnvId,
+    zeabur_service_id: zeaburServiceId,
     build_command: "",
     start_command: "",
   });
@@ -133,22 +151,6 @@ export async function POST(request: Request) {
   if (error) {
     return NextResponse.json({ error });
   }
-
-  exec(
-    `create-botway-bot ${stringify(body.name)} ${stringify(
-      body.platform,
-    )} ${stringify(body.lang)} ${stringify(
-      body.package_manager,
-    )} railway ${stringify(githubApiToken.data)} ${stringify(
-      ghu.login,
-    )} ${stringify(ghu.email)}`,
-  )
-    .on("error", (error) => {
-      return NextResponse.json({ error: error.message });
-    })
-    .on("message", (m) => {
-      console.log(m.toString());
-    });
 
   return NextResponse.json({ message: "Success" });
 }

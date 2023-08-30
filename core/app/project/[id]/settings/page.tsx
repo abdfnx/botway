@@ -98,7 +98,7 @@ const Project = ({ user, projectId }: any) => {
     },
   );
 
-  async function updateProjectName(formData: any) {
+  const updateProjectName = async (formData: any) => {
     try {
       setIsLoading(true);
 
@@ -108,25 +108,28 @@ const Project = ({ user, projectId }: any) => {
         buildCmd: formData.buildCmd,
         startCmd: formData.startCmd,
         rootDir: formData.rootDir,
-        repo: formData.repo,
         projectId,
-        railwayProjectId: project?.railway_project_id,
-        railwayServiceId: project?.railway_service_id,
       };
 
-      await fetcher("/api/projects/settings", {
+      const settings = await fetcher("/api/projects/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+
+      if (settings.message === "Success") {
+        toast.success("Done", toastStyle);
+      } else {
+        toast.error(settings.error, toastStyle);
+      }
     } catch (e: any) {
       toast.error(e.message, toastStyle);
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
-  async function editTokens(formData: any) {
+  const editTokens = async (formData: any) => {
     try {
       setIsLoadingTokens(true);
 
@@ -141,10 +144,9 @@ const Project = ({ user, projectId }: any) => {
         botAppToken: "",
         botSecretToken: "",
         projectId,
-        repo: project?.repo,
         platform: project?.platform,
-        railwayProjectId: project?.railway_project_id,
-        railwayServiceId: project?.railway_service_id,
+        zeaburEnvId: project?.zeabur_env_id,
+        zeaburServiceId: project?.zeabur_service_id,
       };
 
       if (project?.platform != "telegram") {
@@ -179,9 +181,9 @@ const Project = ({ user, projectId }: any) => {
     } finally {
       setIsLoadingTokens(false);
     }
-  }
+  };
 
-  async function deleteProject() {
+  const deleteProject = async () => {
     try {
       setIsLoadingDelete(true);
 
@@ -190,7 +192,7 @@ const Project = ({ user, projectId }: any) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           projectId,
-          railwayProjectId: project?.railway_project_id,
+          zeaburEnvId: project?.zeabur_env_id,
         }),
       });
     } catch (e: any) {
@@ -198,7 +200,7 @@ const Project = ({ user, projectId }: any) => {
     } finally {
       setIsLoadingDelete(false);
     }
-  }
+  };
 
   if (!project && !projectIsLoading) {
     redirect("/");
@@ -213,7 +215,7 @@ const Project = ({ user, projectId }: any) => {
           user={user}
           projectId={projectId}
           projectName={project?.name}
-          projectRWID={project?.railway_project_id}
+          projectRWID={project?.zeabur_project_id}
         >
           <main className="flex-1 max-h-screen">
             <div className="overflow-y-auto mx-auto flex flex-col px-5 py-6 lg:px-16">
@@ -224,7 +226,6 @@ const Project = ({ user, projectId }: any) => {
                   buildCmd: project?.build_command,
                   startCmd: project?.start_command,
                   rootDir: project?.root_directory,
-                  repo: project?.repo,
                 }}
                 validationSchema={UpdateNameSchema}
                 onSubmit={updateProjectName}
@@ -394,36 +395,6 @@ const Project = ({ user, projectId }: any) => {
                             <div className="text-sm leading-4 grid gap-2 md:grid md:grid-cols-12">
                               <div className="flex flex-row space-x-2 justify-between col-span-12">
                                 <label className="block text-gray-400 text-sm leading-4">
-                                  GitHub Repo
-                                </label>
-                              </div>
-
-                              <div className="col-span-12">
-                                <div>
-                                  <div className="relative">
-                                    <Field
-                                      className="input"
-                                      id="repo"
-                                      name="repo"
-                                      type="text"
-                                      placeholder={
-                                        project?.repo != "" ? null : "user/repo"
-                                      }
-                                    />
-
-                                    {errors.repo ? (
-                                      <div className="text-red-600 text-sm font-semibold pt-2">
-                                        {errors.repo.toString()}
-                                      </div>
-                                    ) : null}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="text-sm leading-4 grid gap-2 md:grid md:grid-cols-12">
-                              <div className="flex flex-row space-x-2 justify-between col-span-12">
-                                <label className="block text-gray-400 text-sm leading-4">
                                   Project ID
                                 </label>
                               </div>
@@ -459,8 +430,7 @@ const Project = ({ user, projectId }: any) => {
                                   project?.icon === values.icon &&
                                   project?.build_command === values.buildCmd &&
                                   project?.start_command === values.startCmd &&
-                                  project?.root_directory === values.rootDir &&
-                                  project?.repo === values.repo
+                                  project?.root_directory === values.rootDir
                                   ? "opacity-50 cursor-not-allowed pointer-events-none"
                                   : "cursor-pointer",
                               )}
@@ -579,8 +549,8 @@ const Project = ({ user, projectId }: any) => {
               </div>
 
               <section>
-                <div className="my-6">
-                  <h3 className="text-red-500 mb-2 text-xl">Danger Zone</h3>
+                <div className="my-1">
+                  <h3 className="text-red-500 mb-6 text-xl">Danger Zone</h3>
                 </div>
 
                 <div className="relative">
@@ -602,7 +572,7 @@ const Project = ({ user, projectId }: any) => {
                                   <div>
                                     <p className="mb-4 block">
                                       Delete {project?.name} and delete it on
-                                      Railway. This action is not reversible, so
+                                      Zeabur. This action is not reversible, so
                                       continue with extreme caution.
                                     </p>
 

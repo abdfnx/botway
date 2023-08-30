@@ -72,7 +72,7 @@ const CE = ({ user, projectId }: any) => {
 
       if (project?.enable_ce) {
         body = {
-          railwayProjectId: project?.railway_project_id,
+          projectId,
         };
 
         ce = await fetcher("/api/ce", {
@@ -93,7 +93,6 @@ const CE = ({ user, projectId }: any) => {
           })
             .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
             .encrypt(BW_SECRET_KEY),
-          repo: project?.repo,
           slug: slug(project?.name, "-"),
           projectId,
         };
@@ -126,7 +125,7 @@ const CE = ({ user, projectId }: any) => {
           user={user}
           projectId={projectId}
           projectName={project?.name}
-          projectRWID={project?.railway_project_id}
+          projectRWID={project?.zeabur_project_id}
         >
           <div className="mx-6 my-16 flex items-center space-x-6">
             <h1 className="text-3xl text-white">Code Editor</h1>

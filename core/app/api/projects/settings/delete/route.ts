@@ -20,27 +20,26 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: userError });
   }
 
-  const { payload: railwayApiToken } = await jwtDecrypt(
-    user?.user_metadata["railwayApiToken"],
+  const { payload: zeaburApiToken } = await jwtDecrypt(
+    user?.user_metadata["zeaburApiToken"],
     BW_SECRET_KEY,
   );
 
-  const { payload: railwayProjectId } = await jwtDecrypt(
-    body.railwayProjectId,
+  const { payload: zeaburProjectId } = await jwtDecrypt(
+    body.zeaburProjectId,
     BW_SECRET_KEY,
   );
 
-  const deleteBot = await fetcher("https://backboard.railway.app/graphql/v2", {
+  const deleteBot = await fetcher("https://gateway.zeabur.com/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${railwayApiToken.data}`,
+      Authorization: `Bearer ${zeaburApiToken.data}`,
     },
     body: JSON.stringify({
-      operationName: "projectDelete",
       query: `
-        mutation projectDelete {
-          projectDelete(id: "${railwayProjectId.data}")
+        mutation {
+          deleteProject(_id: "${zeaburProjectId.data}")
         }
       `,
     }),

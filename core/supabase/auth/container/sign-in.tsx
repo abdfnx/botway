@@ -18,7 +18,7 @@ const SignInSchema = Yup.object().shape({
 const SignIn = () => {
   const { setView } = useAuth();
 
-  async function signIn(formData: any) {
+  const signIn = async (formData: any) => {
     const { error } = await supabase.auth.signInWithPassword({
       email: formData.email,
       password: formData.password,
@@ -29,7 +29,7 @@ const SignIn = () => {
 
       console.log(error);
     }
-  }
+  };
 
   return (
     <Template>
@@ -37,14 +37,14 @@ const SignIn = () => {
         Welcome to Botway
       </h2>
 
-      <p className="text-sm text-gray-500 font-medium pt-1 cursor-pointer">
+      <p className="text-sm text-gray-500 font-medium pt-2 cursor-pointer">
         You don't have an Account?{" "}
         <a onClick={() => setView(VIEWS.SIGN_UP)} className="text-blue-700">
           Sign up for an account
         </a>
       </p>
 
-      <p className="text-sm text-gray-500 font-medium pt-1 cursor-pointer">
+      <p className="text-sm text-gray-500 font-medium pt-1.5 cursor-pointer">
         Forget Password?{" "}
         <a
           onClick={() => setView(VIEWS.FORGOTTEN_PASSWORD)}

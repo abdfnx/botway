@@ -85,19 +85,19 @@ export const DashLayout = ({ children, name, href }: any) => {
                               href="/settings/tokens"
                             >
                               <a
-                                href="https://railway.app/account"
+                                href="https://dash.zeabur.com/account/general"
                                 target="_blank"
                                 className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1"
                               >
                                 <img
-                                  src="https://cdn-botway.deno.dev/icons/railway.svg"
+                                  src="https://cdn-botway.deno.dev/icons/zeabur.svg"
                                   width={16}
                                 />
                                 <span
-                                  title="railway"
+                                  title="zeabur"
                                   className="w-full truncate text-sm text-gray-400 hover:text-white transition"
                                 >
-                                  My Account on Railway
+                                  My Account on Zeabur
                                 </span>
                               </a>
                             </a>

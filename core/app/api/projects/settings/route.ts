@@ -3,7 +3,6 @@ import { jwtDecrypt } from "jose";
 import { BW_SECRET_KEY } from "@/tools/tokens";
 import { fetcher } from "@/tools/fetch";
 import createClient from "@/supabase/server";
-import { Octokit } from "octokit";
 
 export const revalidate = 0;
 
@@ -21,89 +20,69 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: userError });
   }
 
-  const { payload: githubApiToken } = await jwtDecrypt(
-    user?.user_metadata["githubApiToken"],
+  const { payload: zeaburApiToken } = await jwtDecrypt(
+    user?.user_metadata["zeaburApiToken"],
     BW_SECRET_KEY,
   );
 
-  const { payload: railwayApiToken } = await jwtDecrypt(
-    user?.user_metadata["railwayApiToken"],
+  const { data, error: pError } = await supabase
+    .from("projects")
+    .select("zeabur_project_id, zeabur_service_id, name")
+    .eq("id", body.projectId)
+    .single();
+
+  if (pError) {
+    return NextResponse.json({ error: pError });
+  }
+
+  const { payload: zeaburProjectId } = await jwtDecrypt(
+    data.zeabur_project_id,
     BW_SECRET_KEY,
   );
 
-  const { payload: railwayProjectId } = await jwtDecrypt(
-    body.railwayProjectId,
+  const { payload: zeaburServiceId } = await jwtDecrypt(
+    data.zeabur_service_id,
     BW_SECRET_KEY,
   );
 
-  const { payload: railwayServiceId } = await jwtDecrypt(
-    body.railwayServiceId,
-    BW_SECRET_KEY,
-  );
-
-  const octokit = new Octokit({
-    auth: githubApiToken.data,
-  });
-
-  const ghu = await (await octokit.request("GET /user", {})).data;
-
-  if (!body.repo.toString().includes(ghu.login))
-    NextResponse.json({ error: `Repo owner must be ${ghu.login}` });
-
-  const iconBody = body.icon != "" ? `icon: "${body.icon}"` : "";
-
-  const repoBody = body.repo ? `source: { repo: "${body.repo}" }` : "";
-
-  const buildCommandBody = body.buildCmd
-    ? `buildCommand: "${body.buildCmd}"`
-    : "";
-
-  const rootDirectoryBody = body.rootDir
-    ? `rootDirectory: "${body.rootDir}"`
-    : "";
-
-  const startCommandBody = body.startCmd
-    ? `startCommand: "${body.startCmd}"`
-    : "";
-
-  const query = `
-    mutation settingsUpdate {
-      projectUpdate(
-        id: "${railwayProjectId.data}",
-        input: {
-          name: "${body.name}"
-        }) {
-          id
-        }
-
-      serviceUpdate(
-        id: "${railwayServiceId.data}",
-        input: { 
-          ${iconBody} 
-        }) {
-          id
-        }
-
-      serviceInstanceUpdate(
-        serviceId: "${railwayServiceId.data}",
-        input: {
-          ${buildCommandBody},
-          ${startCommandBody},
-          ${rootDirectoryBody},
-          ${repoBody}
-        }
-      )
+  const nameBody = `
+    mutation {
+      renameProject(_id: "${zeaburProjectId.data}", name: "${body.name}")
     }
   `;
 
-  const editBot = await fetcher("https://backboard.railway.app/graphql/v2", {
+  const iconBody = body.icon
+    ? `updateProjectIcon(projectID: "${zeaburProjectId.data}", iconURL: "${body.icon}")`
+    : "";
+
+  const buildCommandBody = body.buildCmd
+    ? `updateCustomBuildCommand(serviceID: "${zeaburServiceId.data}", customBuildCommand: "${body.buildCmd}")`
+    : "";
+
+  const startCommandBody = body.startCmd
+    ? `updateCustomStartCommand(serviceID: "${zeaburServiceId.data}", customStartCommand: "${body.startCmd}")`
+    : "";
+
+  const rootDirectoryBody = body.rootDir
+    ? `updateRootDirectory(serviceID: "${zeaburServiceId.data}", rootDirectory: "${body.rootDir}")`
+    : "";
+
+  const query = `
+    mutation {
+      ${iconBody}
+      ${buildCommandBody}
+      ${startCommandBody}
+      ${rootDirectoryBody}
+    }
+  `;
+
+  const editBot = await fetcher("https://gateway.zeabur.com/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${railwayApiToken.data}`,
+      Authorization: `Bearer ${zeaburApiToken.data}`,
     },
     body: JSON.stringify({
-      operationName: "settingsUpdate",
       query,
     }),
   });
@@ -112,12 +91,28 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: editBot.errors[0].message });
   }
 
+  if (body.name != data.name) {
+    const updateName = await fetcher("https://gateway.zeabur.com/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${zeaburApiToken.data}`,
+      },
+      body: JSON.stringify({
+        query: nameBody,
+      }),
+    });
+
+    if (updateName.errors) {
+      return NextResponse.json({ error: updateName.errors[0].message });
+    }
+  }
+
   const { error } = await supabase
     .from("projects")
     .update({
       name: body.name,
       icon: body.icon,
-      repo: body.repo,
       build_command: body.buildCmd,
       start_command: body.startCmd,
       root_directory: body.rootDir,

@@ -12,6 +12,7 @@ import {
 } from "@tanstack/react-query";
 import { fetcher } from "@/tools/fetch";
 import {
+  ArrowRightIcon,
   CheckIcon,
   DatabaseIcon,
   GearIcon,
@@ -23,6 +24,7 @@ import { CheckTokens } from "./settings/page";
 import { Tooltip } from "flowbite-react";
 import { jwtDecrypt } from "jose";
 import { BW_SECRET_KEY } from "@/tools/tokens";
+import { capitalizeFirstLetter } from "@/tools/text";
 
 export const revalidate = 0;
 
@@ -31,8 +33,7 @@ const queryClient = new QueryClient();
 const Project = ({ user, projectId }: any) => {
   const router = useRouter();
 
-  const data: { id: string; type: string; name: any; friendlyName?: any }[] =
-    [];
+  const data: { _id: string; name: any; code: any; icon: any }[] = [];
 
   const fetchServices = async () => {
     const services = await fetcher(`/api/projects/services`, {
@@ -49,7 +50,7 @@ const Project = ({ user, projectId }: any) => {
     ["services"],
     fetchServices,
     {
-      refetchInterval: 1,
+      refetchInterval: 36000,
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
@@ -58,26 +59,10 @@ const Project = ({ user, projectId }: any) => {
 
   services?.services.map((node: any) => {
     data.push({
-      id: node.node.id,
-      type: "service",
-      name: node.node.name,
-    });
-  });
-
-  services?.plugins.map((node: any) => {
-    data.push({
-      id: node.node.id,
-      type: "plugin",
-      name: node.node.name,
-      friendlyName: node.node.friendlyName,
-    });
-  });
-
-  services?.volumes.map((node: any) => {
-    data.push({
-      id: node.node.id,
-      type: "volume",
-      name: node.node.name,
+      _id: node._id,
+      name: node.name,
+      code: node?.marketplaceItem?.code || "",
+      icon: node?.marketplaceItem?.iconURL || "",
     });
   });
 
@@ -102,14 +87,14 @@ const Project = ({ user, projectId }: any) => {
     },
   );
 
-  const openAtRailway = async (id: any, type: any) => {
-    const { payload: railwayProjectId } = await jwtDecrypt(
-      project?.railway_project_id,
+  const openAtZeabur = async (id: any) => {
+    const { payload: zeaburProjectId } = await jwtDecrypt(
+      project?.zeabur_project_id,
       BW_SECRET_KEY,
     );
 
     router.push(
-      `https://railway.app/project/${railwayProjectId.data}/${type}/${id}`,
+      `https://dash.zeabur.com/projects/${zeaburProjectId.data}/services/${id}`,
     );
   };
 
@@ -122,7 +107,7 @@ const Project = ({ user, projectId }: any) => {
           user={user}
           projectId={projectId}
           projectName={project?.name}
-          projectRWID={project?.railway_project_id}
+          projectRWID={project?.zeabur_project_id}
           grid={true}
         >
           <h1 className="mx-6 my-16 text-3xl text-white">My Bot</h1>
@@ -132,7 +117,9 @@ const Project = ({ user, projectId }: any) => {
 
             <div>
               <h1 className="text-base text-white">{project?.name}</h1>
-              <h1 className="text-sm text-gray-400">Bot Project</h1>
+              <h1 className="text-sm text-gray-400">
+                {capitalizeFirstLetter(project?.platform)} Bot Project
+              </h1>
             </div>
           </div>
 
@@ -163,9 +150,11 @@ const Project = ({ user, projectId }: any) => {
                 </Tooltip>
               </button>
 
-              <a href={`/project/${projectId}/settings`}>
-                <GearIcon size={20} className="ml-3 fill-white" />
-              </a>
+              <Tooltip content="Bot Settings" arrow={false} placement="top">
+                <a href={`/project/${projectId}/settings`}>
+                  <GearIcon size={20} className="ml-3 fill-white" />
+                </a>
+              </Tooltip>
             </div>
           </div>
           <div className="mx-6">
@@ -189,7 +178,7 @@ const Project = ({ user, projectId }: any) => {
                       data.map((node: any) => (
                         <tr
                           className={`${
-                            node.id % 2 === 0 ? "bg-secondary" : ""
+                            node._id % 2 === 0 ? "bg-secondary" : ""
                           }`}
                         >
                           <td
@@ -197,16 +186,8 @@ const Project = ({ user, projectId }: any) => {
                             style={{ minWidth: "64px", maxWidth: "100px" }}
                           >
                             <div className="flex space-x-2 items-center">
-                              {node.type === "plugin" ? (
-                                <img
-                                  src={`https://cdn-botway.deno.dev/icons/${node.name}.svg`}
-                                  width={20}
-                                />
-                              ) : node.type === "volume" ? (
-                                <DatabaseIcon
-                                  className="fill-white"
-                                  size={19}
-                                />
+                              {node?.code ? (
+                                <img src={node?.icon} width={20} />
                               ) : (
                                 <MarkGithubIcon
                                   className="fill-white"
@@ -221,11 +202,7 @@ const Project = ({ user, projectId }: any) => {
                             style={{ minWidth: "64px", maxWidth: "250px" }}
                           >
                             <div className="flex space-x-2 mt-0.5 items-center">
-                              <p className="text-sm text-white">
-                                {node.type === "plugin"
-                                  ? node.friendlyName
-                                  : node.name}
-                              </p>
+                              <p className="text-sm text-white">{node.name}</p>
                             </div>
                           </td>
 
@@ -234,7 +211,7 @@ const Project = ({ user, projectId }: any) => {
                             style={{ minWidth: "64px", maxWidth: "400px" }}
                           >
                             <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                              {node.type}
+                              {node?.code ? "plugin" : "service"}
                             </span>
                           </td>
 
@@ -243,16 +220,14 @@ const Project = ({ user, projectId }: any) => {
                             style={{ minWidth: "64px", maxWidth: "400px" }}
                           >
                             <Tooltip
-                              content="Open at Railway"
+                              content="Open at Zeabur"
                               arrow={false}
                               placement="right"
                             >
                               <img
-                                src="https://cdn-botway.deno.dev/icons/railway.svg"
+                                src="https://cdn-botway.deno.dev/icons/zeabur.svg"
                                 className="cursor-pointer"
-                                onClick={() =>
-                                  openAtRailway(node.id, node.type)
-                                }
+                                onClick={() => openAtZeabur(node._id)}
                                 width={20}
                               />
                             </Tooltip>
@@ -299,24 +274,24 @@ const Project = ({ user, projectId }: any) => {
                   </a>
 
                   <a
-                    href="https://railway.app"
+                    href="https://zeabur.com"
                     target="_blank"
-                    className="border border-gray-800 transition-all bg-[#181622] hover:bg-[#1f132a] duration-200 rounded-2xl p-4 flex flex-col items-center"
+                    className="border border-gray-800 transition-all bg-[#121212] hover:bg-[#141414] duration-200 rounded-2xl p-4 flex flex-col items-center"
                   >
                     <div aria-hidden="true">
                       <img
-                        src="https://cdn-botway.deno.dev/icons/railway.svg"
+                        src="https://cdn-botway.deno.dev/icons/zeabur.svg"
                         width={30}
                       />
                     </div>
 
                     <div className="space-y-2 mt-3 sm:space-y-4 flex flex-col items-center">
                       <h1 className="text-white text-xs md:text-sm font-bold">
-                        Railway is your Host Service
+                        Zeabur is your Host Service
                       </h1>
                       <p className="text-xs md:text-sm text-gray-400 text-center">
-                        Railway is a canvas for shipping your apps, databases,
-                        and more 🚄
+                        Zeabur is a platform that help you deploy your service
+                        with one click. 🏗️
                       </p>
                     </div>
                   </a>

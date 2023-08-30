@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 
   const { data, error } = await supabase
     .from("projects")
-    .select("railway_project_id")
+    .select("zeabur_project_id")
     .eq("id", body.projectId)
     .single();
 
@@ -30,61 +30,39 @@ export async function POST(request: Request) {
     return NextResponse.json({ error });
   }
 
-  const { payload: railwayProjectId } = await jwtDecrypt(
-    data.railway_project_id,
+  const { payload: zeaburApiToken } = await jwtDecrypt(
+    user?.user_metadata["zeaburApiToken"],
     BW_SECRET_KEY,
   );
 
-  const { payload: railwayApiToken } = await jwtDecrypt(
-    user?.user_metadata["railwayApiToken"],
+  const { payload: zeaburProjectId } = await jwtDecrypt(
+    data.zeabur_project_id,
     BW_SECRET_KEY,
   );
 
-  const projectData = await fetcher(
-    "https://backboard.railway.app/graphql/v2",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${railwayApiToken.data}`,
-      },
-      body: JSON.stringify({
-        query: `
-          query {
-            project(id: "${railwayProjectId.data}") {
-              services {
-                edges {
-                  node {
-                    id
-                    name
-                  }
-                }
-              }
-
-              plugins {
-                edges {
-                  node {
-                    id
-                    friendlyName
-                    name
-                  }
-                }
-              }
-
-              volumes {
-                edges {
-                  node {
-                    id
-                    name
-                  }
-                }
+  const projectData = await fetcher("https://gateway.zeabur.com/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${zeaburApiToken.data}`,
+    },
+    body: JSON.stringify({
+      query: `
+        query {
+          project(_id: "${zeaburProjectId.data}") {
+            services {
+              _id
+              name
+              marketplaceItem {
+                code
+                iconURL
               }
             }
           }
+        }
       `,
-      }),
-    },
-  );
+    }),
+  });
 
   if (projectData.errors) {
     return NextResponse.json({ error: projectData.errors[0].message });
@@ -92,8 +70,6 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     message: "Success",
-    services: projectData.data.project.services.edges,
-    plugins: projectData.data.project.plugins.edges,
-    volumes: projectData.data.project.volumes.edges,
+    services: projectData.data.project.services,
   });
 }

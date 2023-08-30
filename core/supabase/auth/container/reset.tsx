@@ -22,7 +22,7 @@ const ResetPassword = () => {
       ? window.location.origin
       : "";
 
-  async function resetPassword(formData: any) {
+  const resetPassword = async (formData: any) => {
     const { error } = await supabase.auth.resetPasswordForEmail(
       formData?.email,
       {
@@ -37,7 +37,7 @@ const ResetPassword = () => {
     } else {
       toast.success("Password reset instructions sent", toastStyle);
     }
-  }
+  };
 
   return (
     <Template>

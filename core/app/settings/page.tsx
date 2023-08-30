@@ -29,7 +29,7 @@ const UpdateNameSchema = Yup.object().shape({
 
 const UpdateApiTokensSchema = Yup.object().shape({
   githubApiToken: Yup.string().min(40).max(40),
-  railwayApiToken: Yup.string().min(36).max(36),
+  zeaburApiToken: Yup.string().min(36).max(300),
 });
 
 const Settings = () => {
@@ -59,7 +59,7 @@ const Settings = () => {
     );
   }
 
-  async function updateName(formData: any) {
+  const updateName = async (formData: any) => {
     const { error } = await supabase.auth.updateUser({
       data: { name: formData.name },
     });
@@ -73,9 +73,9 @@ const Settings = () => {
     }
 
     await supabase.auth.refreshSession();
-  }
+  };
 
-  async function updateGHApiTokens(formData: any) {
+  const updateGHApiTokens = async (formData: any) => {
     const githubApiToken = await new EncryptJWT({
       data: formData.githubApiToken,
     })
@@ -102,18 +102,18 @@ const Settings = () => {
     await supabase.auth.refreshSession();
 
     closeModalGH();
-  }
+  };
 
-  async function updateRWApiTokens(formData: any) {
-    const railwayApiToken = await new EncryptJWT({
-      data: formData.railwayApiToken,
+  const updateZBApiTokens = async (formData: any) => {
+    const zeaburApiToken = await new EncryptJWT({
+      data: formData.zeaburApiToken,
     })
       .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
       .encrypt(BW_SECRET_KEY);
 
     const { error } = await supabase.auth.updateUser({
       data: {
-        railwayApiToken,
+        zeaburApiToken,
       },
     });
 
@@ -123,7 +123,7 @@ const Settings = () => {
       console.log(error);
     } else {
       toast.success(
-        "Railway API Token has been updated successfully",
+        "Zeabur API Token has been updated successfully",
         toastStyle,
       );
     }
@@ -131,7 +131,7 @@ const Settings = () => {
     await supabase.auth.refreshSession();
 
     closeModalRW();
-  }
+  };
 
   if (user) {
     return (
@@ -300,13 +300,13 @@ const Settings = () => {
                           <div className="flex space-x-2 items-center">
                             <div className="text-gray-500" aria-hidden="true">
                               <img
-                                src="https://cdn-botway.deno.dev/icons/railway.svg"
+                                src="https://cdn-botway.deno.dev/icons/zeabur.svg"
                                 width={18}
                               />
                             </div>
 
                             <p className="text-sm text-white">
-                              Railway API Token
+                              Zeabur API Token
                             </p>
                           </div>
                         </td>
@@ -315,7 +315,7 @@ const Settings = () => {
                           className="py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap text-gray-500"
                           style={{ minWidth: "64px", maxWidth: "400px" }}
                         >
-                          {user.user_metadata["railwayApiToken"].length != 0 ? (
+                          {user.user_metadata["zeaburApiToken"].length != 0 ? (
                             <>
                               <CheckIcon size={18} className="fill-green-600" />
 
@@ -449,34 +449,34 @@ const Settings = () => {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="w-full bg-[#1f132a] max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all border border-gray-800">
+                  <Dialog.Panel className="w-full bg-[#121212] max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all border border-gray-800">
                     <Dialog.Title
                       as="h3"
                       className="text-lg font-medium pb-2 leading-6 text-white"
                     >
-                      Edit Railway API Token
+                      Edit Zeabur API Token
                     </Dialog.Title>
 
                     <div className="mt-2">
                       <Formik
                         initialValues={{
-                          railwayApiToken: "",
+                          zeaburApiToken: "",
                         }}
                         validationSchema={UpdateApiTokensSchema}
-                        onSubmit={updateRWApiTokens}
+                        onSubmit={updateZBApiTokens}
                       >
                         {({ errors }) => (
                           <Form className="column w-full">
                             <Field
-                              className="transition-all bg-[#13111c] border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-[#853bce] block w-full p-2"
-                              id="railwayApiToken"
-                              name="railwayApiToken"
+                              className="transition-all bg-[#141414] border border-gray-800 placeholder:text-gray-400 text-white sm:text-sm rounded-lg focus:outline-none hover:border-[#853bce] block w-full p-2"
+                              id="zeaburApiToken"
+                              name="zeaburApiToken"
                               type="password"
                             />
 
-                            {errors.railwayApiToken ? (
+                            {errors.zeaburApiToken ? (
                               <div className="text-red-600 text-sm font-semibold pt-2">
-                                {errors.railwayApiToken}
+                                {errors.zeaburApiToken}
                               </div>
                             ) : null}
                           </Form>

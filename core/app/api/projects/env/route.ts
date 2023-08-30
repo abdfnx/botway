@@ -20,14 +20,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: userError });
   }
 
-  const { payload: railwayApiToken } = await jwtDecrypt(
-    user?.user_metadata["railwayApiToken"],
+  const { payload: zeaburApiToken } = await jwtDecrypt(
+    user?.user_metadata["zeaburApiToken"],
     BW_SECRET_KEY,
   );
 
   const { data, error } = await supabase
     .from("projects")
-    .select("railway_project_id, railway_service_id")
+    .select("zeabur_env_id, zeabur_service_id")
     .eq("id", body.projectId)
     .single();
 
@@ -35,62 +35,31 @@ export async function POST(request: Request) {
     return NextResponse.json({ error });
   }
 
-  const { payload: railwayProjectId } = await jwtDecrypt(
-    data.railway_project_id,
+  const { payload: zeaburEnvId } = await jwtDecrypt(
+    data.zeabur_env_id,
     BW_SECRET_KEY,
   );
 
-  const { payload: railwayServiceId } = await jwtDecrypt(
-    data.railway_service_id,
+  const { payload: zeaburServiceId } = await jwtDecrypt(
+    data.zeabur_service_id,
     BW_SECRET_KEY,
   );
 
-  const getEnvId = await fetcher("https://backboard.railway.app/graphql/v2", {
+  const getVars = await fetcher("https://gateway.zeabur.com/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${railwayApiToken.data}`,
+      Authorization: `Bearer ${zeaburApiToken.data}`,
     },
     body: JSON.stringify({
       query: `
         query {
-          project(id: "${railwayProjectId.data}") {
-            environments {
-              edges {
-                node {
-                  name,
-                  id
-                }
-              }
+          service(_id: "${zeaburServiceId.data}") {
+            variables(environmentID: "${zeaburEnvId.data}") {
+              key
+              value
             }
           }
-        }
-      `,
-    }),
-  });
-
-  if (getEnvId.errors) {
-    return NextResponse.json({ error: getEnvId.errors[0].message });
-  }
-
-  const envId = getEnvId.data.project.environments.edges.find(
-    (env: any) => env.node.name === "production",
-  ).node.id;
-
-  const getVars = await fetcher("https://backboard.railway.app/graphql/v2", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${railwayApiToken.data}`,
-    },
-    body: JSON.stringify({
-      query: `
-        query {
-          variables(
-            environmentId: "${envId}"
-            projectId: "${railwayProjectId.data}"
-            serviceId: "${railwayServiceId.data}"
-          )
         }
       `,
     }),
@@ -102,6 +71,6 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     message: "Success",
-    vars: getVars.data.variables,
+    vars: getVars.data.service.variables,
   });
 }

@@ -16,8 +16,6 @@ import {
   ArchiveIcon,
   CheckCircleIcon,
   ClockIcon,
-  FileDirectoryIcon,
-  GitMergeIcon,
   XCircleIcon,
 } from "@primer/octicons-react";
 import { jwtDecrypt } from "jose";
@@ -44,7 +42,7 @@ const Project = ({ user, projectId }: any) => {
     ["project"],
     fetchProject,
     {
-      refetchInterval: 1,
+      refetchInterval: 360,
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: true,
@@ -76,10 +74,11 @@ const Project = ({ user, projectId }: any) => {
       case "CRASHED":
         return "text-red-700";
 
-      case "SUCCESS":
+      case "BUILDING":
+      case "DEPLOYING":
         return "text-green-700";
 
-      case "DEPLOYING":
+      case "RUNNING":
         return "text-blue-700";
     }
 
@@ -87,18 +86,18 @@ const Project = ({ user, projectId }: any) => {
   };
 
   const logsURL = async (deploy: any) => {
-    const { payload: railwayProjectId } = await jwtDecrypt(
-      project?.railway_project_id,
+    const { payload: zeaburProjectId } = await jwtDecrypt(
+      project?.zeabur_project_id,
       BW_SECRET_KEY,
     );
 
-    const { payload: railwayServiceId } = await jwtDecrypt(
-      project?.railway_service_id,
+    const { payload: zeaburServiceId } = await jwtDecrypt(
+      project?.zeabur_service_id,
       BW_SECRET_KEY,
     );
 
     router.push(
-      `https://railway.app/project/${railwayProjectId.data}/service/${railwayServiceId.data}?id=${deploy.node.id}`,
+      `https://dash.zeabur.com/projects/${zeaburProjectId.data}/services/${zeaburServiceId.data}/deployments/${deploy.node._id}`,
     );
   };
 
@@ -111,7 +110,7 @@ const Project = ({ user, projectId }: any) => {
           user={user}
           projectId={projectId}
           projectName={project?.name}
-          projectRWID={project?.railway_project_id}
+          projectRWID={project?.zeabur_project_id}
         >
           <div className="mx-6 my-16 flex items-center space-x-6">
             <h1 className="text-3xl text-white">{project?.name} Deployments</h1>
@@ -126,19 +125,13 @@ const Project = ({ user, projectId }: any) => {
                     <header className="flex gap-3 justify-between mb-4">
                       <hgroup>
                         <h2 className="font-medium text-lg !leading-none text-black">
-                          {deploy.node.url ? (
-                            <Link href={deploy.node.url} target="_blank">
-                              {deploy.node.url}
-                            </Link>
-                          ) : (
-                            <span className={status(deploy.node.status)}>
-                              {deploy.node.status}
-                            </span>
-                          )}
+                          <span className={status(deploy.node.status)}>
+                            {deploy.node.status}
+                          </span>
                         </h2>
 
                         <h3 className="text-gray-500 mt-1 !leading-tight">
-                          {deploy.node.status === "SUCCESS"
+                          {deploy.node.status === "RUNNUNG"
                             ? "The deployment that is live on your production domains."
                             : deploy.node.status === "FAILED"
                             ? "The deployment is failed."
@@ -173,14 +166,14 @@ const Project = ({ user, projectId }: any) => {
 
                     <div className="flex items-center gap-3 mt-2">
                       <span className="w-5 h-5 inline-flex items-center justify-center rounded-full flex-shrink-0 bg-fresh/15">
-                        {deploy.node.status === "SUCCESS" ? (
+                        {deploy.node.status === "RUNNING" ? (
                           <CheckCircleIcon
                             className="fill-green-700"
                             size={16}
                           />
-                        ) : deploy.node.status != "SUCCESS" ? (
+                        ) : deploy.node.status != "RUNNING" ? (
                           deploy.node.status === "REMOVED" ? (
-                            <ArchiveIcon className="fill-red-700" size={16} />
+                            <ArchiveIcon className="fill-gray-400" size={16} />
                           ) : deploy.node.status === "FAILED" ||
                             deploy.node.status === "CRASHED" ? (
                             <XCircleIcon className="fill-red-700" size={16} />
@@ -188,7 +181,7 @@ const Project = ({ user, projectId }: any) => {
                             <ClockIcon className="fill-gray-400" size={16} />
                           )
                         ) : (
-                          <ArchiveIcon className="fill-red-700" size={16} />
+                          <ArchiveIcon className="fill-gray-400" size={16} />
                         )}
                       </span>
 
@@ -200,32 +193,14 @@ const Project = ({ user, projectId }: any) => {
                         />
                       </span>
 
-                      <span className="flex items-center gap-1 font-mono">
-                        <FileDirectoryIcon
-                          size={16}
-                          className="fill-gray-600 mr-1"
-                        />
-                        {deploy.node.meta.rootDirectory}
-                      </span>
-
-                      <span className="hidden md:flex items-center gap-1">
-                        <GitMergeIcon
-                          size={16}
-                          className="fill-gray-600 mr-1"
-                        />
-                        <span className="text-gray-400">
-                          {deploy.node.meta.branch}
-                        </span>
-                      </span>
-
                       <span className="inline-flex items-center gap-2 max-w-100">
                         <Link
                           className="text-gray-400 text-sm hover:text-gray-500 transition-all duration-200 hover:underline truncate"
-                          href={`https://github.com/${deploy.node.meta.repo}/commit/${deploy.node.meta.commitHash}`}
+                          href={`https://github.com/${deploy.node.repoOwner}/${deploy.node.repoName}/commit/${deploy.node.commitSHA}`}
                           target="_blank"
-                          title={deploy.node.meta.commitMessage}
+                          title={deploy.node.commitMessage}
                         >
-                          {deploy.node.meta.commitMessage}
+                          {deploy.node.commitMessage}
                         </Link>
                       </span>
                     </div>

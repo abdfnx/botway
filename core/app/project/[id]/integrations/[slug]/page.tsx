@@ -17,11 +17,9 @@ import {
 } from "@primer/octicons-react";
 import { marked } from "marked";
 import { fetcher } from "@/tools/fetch";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { toastStyle } from "@/tools/toast-style";
-import { Dialog, Transition } from "@headlessui/react";
-import { Field, Form, Formik } from "formik";
 import { Button } from "@/components/Button";
 
 export const revalidate = 0;
@@ -30,7 +28,6 @@ const queryClient = new QueryClient();
 
 const Project = ({ user, projectId, slug }: any) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [open, setOpen] = useState(false);
 
   const fetchProject = async () => {
     const { data: project } = await supabase
@@ -72,36 +69,15 @@ const Project = ({ user, projectId, slug }: any) => {
     },
   );
 
-  async function addIntegration(formData: any) {
+  const addIntegration = async () => {
     try {
       setIsLoading(true);
-
-      let vars = {};
-
-      if (int.variables) {
-        if (int.variables.length === 1) {
-          vars = { v: formData.v1, k: int.variables[0].name };
-        } else {
-          vars = {
-            v1: formData.v1,
-            k1: int.variables[0].name,
-            v2: formData.v2,
-            k2: int.variables[1].name,
-          };
-        }
-      }
 
       const body = {
         name: int.name,
         slug: int.slug,
-        template_repo: int.template_repo,
         is_plugin: int.is_plugin,
-        projectId: project?.railway_project_id,
-        vars,
-        def_vars: int.def_variables,
-        plugin: int.plugin,
-        has_volume: int.has_volume,
-        volume_path: int.volume_path,
+        projectId,
       };
 
       const newInt = await fetcher("/api/integrations/add", {
@@ -115,91 +91,13 @@ const Project = ({ user, projectId, slug }: any) => {
           "You have successfully created a new bot integration",
           toastStyle,
         );
-
-        setOpen(false);
       } else {
         toast.error(newInt.error, toastStyle);
-
-        setOpen(false);
       }
     } catch (e: any) {
       toast.error(e.message, toastStyle);
     } finally {
       setIsLoading(false);
-    }
-  }
-
-  const check = async (int: any) => {
-    if (!int.is_plugin && int.variables.length != 0) {
-      setOpen(true);
-    } else if (!int.is_plugin && int.variables.length === 0) {
-      try {
-        setIsLoading(true);
-
-        const body = {
-          name: int.name,
-          slug: int.slug,
-          template_repo: int.template_repo,
-          is_plugin: int.is_plugin,
-          projectId: project?.railway_project_id,
-          def_vars: int.def_variables,
-          plugin: int.plugin,
-          has_volume: int.has_volume,
-          volume_path: int.volume_path,
-        };
-
-        const newInt = await fetcher("/api/integrations/add", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        });
-
-        if (newInt.message === "Success") {
-          toast.success(
-            "You have successfully created a new bot integration",
-            toastStyle,
-          );
-        } else {
-          toast.error(newInt.error, toastStyle);
-        }
-      } catch (e: any) {
-        toast.error(e.message, toastStyle);
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      try {
-        setIsLoading(true);
-
-        const newInt = await fetcher("/api/integrations/add", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: int.title,
-            slug: int.slug,
-            template_repo: int.template_repo,
-            is_plugin: int.is_plugin,
-            projectId: project?.railway_project_id,
-          }),
-        });
-
-        if (newInt.message === "Success") {
-          toast.success(
-            "You have successfully created a new bot integration",
-            toastStyle,
-          );
-
-          setOpen(false);
-        } else {
-          toast.error(newInt.error, toastStyle);
-
-          setOpen(false);
-        }
-      } catch (e: any) {
-        toast.error(e.message, toastStyle);
-      } finally {
-        setIsLoading(false);
-      }
     }
   };
 
@@ -212,7 +110,7 @@ const Project = ({ user, projectId, slug }: any) => {
           user={user}
           projectId={projectId}
           projectName={project?.name}
-          projectRWID={project?.railway_project_id}
+          projectRWID={project?.zeabur_project_id}
           grid={true}
         >
           <div className="mx-6 my-16 flex items-center space-x-6">
@@ -244,7 +142,7 @@ const Project = ({ user, projectId, slug }: any) => {
                       <Button
                         htmlType="submit"
                         type="success"
-                        onClick={!int?.soon ? () => check(int) : null}
+                        onClick={!int?.soon ? () => addIntegration() : null}
                         loading={isLoading}
                         disabled={int?.soon}
                         className={int?.soon ? "cursor-not-allowed" : ""}
@@ -278,7 +176,7 @@ const Project = ({ user, projectId, slug }: any) => {
                     <Button
                       htmlType="submit"
                       type="success"
-                      onClick={!int?.soon ? () => check(int) : null}
+                      onClick={!int?.soon ? () => addIntegration() : null}
                       loading={isLoading}
                       disabled={int?.soon}
                       className={int?.soon ? "cursor-not-allowed" : ""}
@@ -350,118 +248,6 @@ const Project = ({ user, projectId, slug }: any) => {
               </div>
             </div>
           </div>
-
-          <Transition.Root show={open} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={setOpen}>
-              <Transition.Child
-                as={Fragment}
-                enter="ease-in-out duration-500"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in-out duration-500"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div className="fixed inset-0 bg-bwdefualt bg-opacity-50 transition-opacity" />
-              </Transition.Child>
-
-              <div className="fixed inset-0 overflow-hidden">
-                <div className="absolute inset-0 overflow-hidden">
-                  <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-                    <Transition.Child
-                      as={Fragment}
-                      enter="transform transition ease-in-out duration-500 sm:duration-700"
-                      enterFrom="translate-x-full"
-                      enterTo="translate-x-0"
-                      leave="transform transition ease-in-out duration-500 sm:duration-700"
-                      leaveFrom="translate-x-0"
-                      leaveTo="translate-x-full"
-                    >
-                      <Dialog.Panel className="pointer-events-auto relative w-screen max-w-md">
-                        <Transition.Child
-                          as={Fragment}
-                          enter="ease-in-out duration-200"
-                          enterFrom="opacity-0"
-                          enterTo="opacity-100"
-                          leave="ease-in-out duration-500"
-                          leaveFrom="opacity-100"
-                          leaveTo="opacity-0"
-                        >
-                          <div className="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4"></div>
-                        </Transition.Child>
-
-                        <div className="flex h-full flex-col overflow-y-scroll bg-secondary border-l border-gray-800 py-4 shadow-xl">
-                          <div className="px-4 border-b border-gray-800 sm:px-6">
-                            <Dialog.Title className="text-lg font-semibold text-white leading-6 pb-4">
-                              Add Integration To My Project
-                            </Dialog.Title>
-                          </div>
-
-                          <div className="relative mt-4 flex-1 px-4 sm:px-6">
-                            <div className="my-4 max-w-4xl space-y-8">
-                              <Formik
-                                initialValues={{
-                                  slug: int.slug,
-                                  v1: "",
-                                  v2: "",
-                                }}
-                                onSubmit={addIntegration}
-                              >
-                                {() => (
-                                  <>
-                                    <Form className="column w-full">
-                                      <div>
-                                        {int.variables ? (
-                                          int.variables.map((varx: any) => (
-                                            <>
-                                              <label className="text-white col-span-12 text-base lg:col-span-5">
-                                                {varx.name}
-                                              </label>
-
-                                              <div className="pt-2" />
-
-                                              <Field
-                                                className="input"
-                                                id={`v${varx.index}`}
-                                                name={`v${varx.index}`}
-                                                type={
-                                                  varx.is_hidden
-                                                    ? "password"
-                                                    : "text"
-                                                }
-                                              />
-
-                                              <div className="pb-2" />
-                                            </>
-                                          ))
-                                        ) : (
-                                          <></>
-                                        )}
-                                      </div>
-
-                                      <br />
-
-                                      <Button
-                                        htmlType="submit"
-                                        type="success"
-                                        loading={isLoading}
-                                      >
-                                        Add
-                                      </Button>
-                                    </Form>
-                                  </>
-                                )}
-                              </Formik>
-                            </div>
-                          </div>
-                        </div>
-                      </Dialog.Panel>
-                    </Transition.Child>
-                  </div>
-                </div>
-              </div>
-            </Dialog>
-          </Transition.Root>
         </ProjectLayout>
       )}
     </>

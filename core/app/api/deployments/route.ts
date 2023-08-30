@@ -24,7 +24,7 @@ export async function GET(request: Request) {
 
   const { data, error } = await supabase
     .from("projects")
-    .select("railway_service_id")
+    .select("zeabur_service_id, zeabur_env_id")
     .eq("id", id)
     .single();
 
@@ -32,58 +32,62 @@ export async function GET(request: Request) {
     return NextResponse.json({ error });
   }
 
-  const { payload: railwayApiToken } = await jwtDecrypt(
-    user?.user_metadata["railwayApiToken"],
+  const { payload: zeaburApiToken } = await jwtDecrypt(
+    user?.user_metadata["zeaburApiToken"],
     BW_SECRET_KEY,
   );
 
-  const { payload: railwayServiceId } = await jwtDecrypt(
-    data?.railway_service_id,
+  const { payload: zeaburServiceId } = await jwtDecrypt(
+    data?.zeabur_service_id,
     BW_SECRET_KEY,
   );
 
-  const deployments = await fetcher(
-    "https://backboard.railway.app/graphql/v2",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${railwayApiToken.data}`,
-      },
-      body: JSON.stringify({
-        query: `
-          query {
-            service(id: "${railwayServiceId.data}") {
-              deployments {
-                edges {
-                  node {
-                    id,
-                    createdAt,
-                    status,
-                    url,
-                    meta
-                  }
-                }
+  const { payload: zeaburEnvId } = await jwtDecrypt(
+    data?.zeabur_env_id,
+    BW_SECRET_KEY,
+  );
+
+  const deployments = await fetcher("https://gateway.zeabur.com/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${zeaburApiToken.data}`,
+    },
+    body: JSON.stringify({
+      query: `
+        query {
+          deployments(
+            serviceID: "${zeaburServiceId.data}"
+            environmentID: "${zeaburEnvId.data}"
+            limit: 10
+          ) {
+            edges {
+              node {
+                _id
+                commitMessage
+                commitSHA
+                createdAt
+                repoName
+                repoOwner
+                status
               }
             }
           }
-        `,
-      }),
-    },
-  );
+        }
+      `,
+    }),
+  });
 
   if (deployments.errors) {
     return NextResponse.json({ error: deployments.errors[0].message });
   }
 
-  const dy = deployments.data.service.deployments.edges.sort(
-    (a: any, b: any) => {
-      return (
-        new Date(b.node.createdAt).getTime() -
-        new Date(a.node.createdAt).getTime()
-      );
-    },
-  );
+  const dy = deployments.data.deployments.edges.sort((a: any, b: any) => {
+    return (
+      new Date(b.node.createdAt).getTime() -
+      new Date(a.node.createdAt).getTime()
+    );
+  });
 
   return NextResponse.json(dy);
 }

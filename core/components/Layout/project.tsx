@@ -14,6 +14,7 @@ import clsx from "clsx";
 import { jwtDecrypt } from "jose";
 import { BW_SECRET_KEY } from "@/tools/tokens";
 import { useRouter } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 
 export const ProjectLayout = ({
   user,
@@ -26,17 +27,19 @@ export const ProjectLayout = ({
 }: any) => {
   const router = useRouter();
 
-  const openAtRailway = async () => {
-    const { payload: railwayProjectId } = await jwtDecrypt(
+  const openAtZeabur = async () => {
+    const { payload: zeaburProjectId } = await jwtDecrypt(
       projectRWID,
       BW_SECRET_KEY,
     );
 
-    router.push(`https://railway.app/project/${railwayProjectId.data}`);
+    router.push(`https://dash.zeabur.com/projects/${zeaburProjectId.data}`);
   };
 
   return (
     <>
+      <Toaster />
+
       <div className="min-h-full flex flex-col">
         <div className="flex h-full">
           <div className="hidden md:flex w-14 flex-col bg-secondary justify-between overflow-y-hidden p-2 border-r border-gray-800 h-screen">
@@ -136,17 +139,17 @@ export const ProjectLayout = ({
               <div className="border border-gray-800 h-px w-full"></div>
               <button className="place-content-center">
                 <Tooltip
-                  content="Open at Railway"
+                  content="Open at Zeabur"
                   arrow={false}
                   placement="right"
                 >
                   <a
                     className="transition-colors duration-200 flex items-center justify-center h-10 w-10 rounded hover:bg-bwdefualt"
-                    onClick={openAtRailway}
+                    onClick={openAtZeabur}
                   >
                     <img
-                      src="https://cdn-botway.deno.dev/icons/railway.svg"
-                      width={19}
+                      src="https://cdn-botway.deno.dev/icons/zeabur.svg"
+                      width={17}
                     />
                   </a>
                 </Tooltip>
@@ -209,8 +212,9 @@ export const ProjectLayout = ({
               </a>
             </ul>
           </div>
-          <main className="flex flex-col flex-1 w-full overflow-x-hidden h-screen">
-            <div className="flex h-12 max-h-12 items-center justify-between py-2 px-5 border-b border-gray-800">
+
+          <main className="flex flex-col flex-1 w-full overflow-hidden h-screen">
+            <div className="flex h-12 max-h-12 overflow-hidden items-center justify-between py-2 px-5 border-b border-gray-800">
               <div className="-ml-2 flex items-center text-sm">
                 <span className="flex border-none rounded p-0 outline-none outline-offset-1 transition-all focus:outline-4">
                   <span className="relative inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 text-gray-200 shadow-none text-xs px-2.5 py-1">

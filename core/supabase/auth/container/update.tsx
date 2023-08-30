@@ -14,7 +14,7 @@ const UpdatePasswordSchema = Yup.object().shape({
 });
 
 const UpdatePassword = () => {
-  async function updatePassword(formData: any) {
+  const updatePassword = async (formData: any) => {
     const { error } = await supabase.auth.updateUser({
       password: formData.password,
     });
@@ -24,7 +24,7 @@ const UpdatePassword = () => {
 
       console.log(error);
     }
-  }
+  };
 
   return (
     <Template>

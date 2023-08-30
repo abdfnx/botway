@@ -20,57 +20,46 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: userError });
   }
 
-  const { payload: railwayApiToken } = await jwtDecrypt(
-    user?.user_metadata["railwayApiToken"],
+  const { data, error } = await supabase
+    .from("projects")
+    .select("zeabur_env_id, ce_service_id")
+    .eq("id", body.projectId)
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error });
+  }
+
+  const { payload: zeaburApiToken } = await jwtDecrypt(
+    user?.user_metadata["zeaburApiToken"],
     BW_SECRET_KEY,
   );
 
-  const { payload: railwayProjectId } = await jwtDecrypt(
-    body.railwayProjectId,
+  const { payload: ceServiceId } = await jwtDecrypt(
+    data.ce_service_id,
+    BW_SECRET_KEY,
+  );
+
+  const { payload: zeaburEnvId } = await jwtDecrypt(
+    data.zeabur_env_id,
     BW_SECRET_KEY,
   );
 
   const query = `
     query {
-      project(id: "${railwayProjectId.data}") {
-        services {
-          edges {
-            node {
-              id
-              serviceInstances {
-                edges {
-                  node {
-                    domains {
-                      customDomains {
-                        domain
-                      }
-
-                      serviceDomains {
-                        domain
-                      }
-                    }
-
-                    source {
-                      repo
-                      template {
-                        serviceSource
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
+      service(_id: "${ceServiceId.data}") {
+        domains(environmentID: "${zeaburEnvId.data}") {
+          domain
         }
       }
     }
   `;
 
-  const check = await fetcher("https://backboard.railway.app/graphql/v2", {
+  const check = await fetcher("https://gateway.zeabur.com/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${railwayApiToken.data}`,
+      Authorization: `Bearer ${zeaburApiToken.data}`,
     },
     body: JSON.stringify({
       query,
@@ -78,26 +67,11 @@ export async function POST(request: Request) {
   });
 
   if (check.errors) {
-    console.log(check.errors);
-
     return NextResponse.json({ message: check.errors[0].message });
   }
 
-  const domainNode = check.data.project.services.edges.find((srv: any) =>
-    srv.node.serviceInstances.edges.find(
-      (si: any) =>
-        si.node.source.template?.serviceSource ===
-        "https://github.com/botwayorg/ce",
-    ),
-  ).node.serviceInstances.edges[0].node.domains;
-
-  let domain;
-
-  if (domainNode.customDomains.length != 0) {
-    domain = domainNode.customDomains[0].domain;
-  } else {
-    domain = domainNode.serviceDomains[0].domain;
-  }
-
-  return NextResponse.json({ message: "Success", domain });
+  return NextResponse.json({
+    message: "Success",
+    domain: check.data.service.domains[0].domain,
+  });
 }

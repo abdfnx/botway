@@ -1,4 +1,4 @@
-export default function LogoSection() {
+const LogoSection = () => {
   return (
     <section className="flex items-start w-full px-4 mx-auto md:px-0 md:items-center md:w-1/3">
       <div
@@ -15,4 +15,4 @@ export default function LogoSection() {
       </div>
     </section>
   );
-}
+};

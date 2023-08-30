@@ -2,9 +2,9 @@ import { load } from "js-yaml";
 import { readFileSync } from "fs";
 import { BOTWAY_CONFIG_PATH } from "./constants";
 
-function format(data: string): string {
+const format = (data: string): string => {
   return JSON.stringify(data);
-}
+};
 
 const getBotInfo = (value: string) => {
   try {

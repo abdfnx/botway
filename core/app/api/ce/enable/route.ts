@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { fetcher } from "@/tools/fetch";
-import { jwtDecrypt } from "jose";
+import { EncryptJWT, jwtDecrypt } from "jose";
 import { BW_SECRET_KEY } from "@/tools/tokens";
 import createClient from "@/supabase/server";
-import { Octokit } from "octokit";
 import { faker } from "@faker-js/faker";
 
 export const revalidate = 0;
@@ -27,8 +26,8 @@ export async function POST(request: Request) {
     BW_SECRET_KEY,
   );
 
-  const { payload: railwayApiToken } = await jwtDecrypt(
-    user?.user_metadata["railwayApiToken"],
+  const { payload: zeaburApiToken } = await jwtDecrypt(
+    user?.user_metadata["zeaburApiToken"],
     BW_SECRET_KEY,
   );
 
@@ -36,7 +35,7 @@ export async function POST(request: Request) {
 
   const { data, error: ceError } = await supabase
     .from("projects")
-    .select("railway_project_id, lang")
+    .select("zeabur_project_id, zeabur_env_id, lang, repo")
     .eq("id", body.projectId)
     .single();
 
@@ -44,16 +43,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: ceError });
   }
 
-  const { payload: railwayProjectId } = await jwtDecrypt(
-    data.railway_project_id,
+  const { payload: zeaburProjectId } = await jwtDecrypt(
+    data.zeabur_project_id,
     BW_SECRET_KEY,
   );
 
-  const octokit = new Octokit({
-    auth: githubApiToken.data,
-  });
-
-  const ghu = await (await octokit.request("GET /user", {})).data;
+  const { payload: zeaburEnvId } = await jwtDecrypt(
+    data.zeabur_env_id,
+    BW_SECRET_KEY,
+  );
 
   let pkgs = "cmake ";
 
@@ -120,42 +118,22 @@ export async function POST(request: Request) {
 
   const query = `
     mutation {
-      templateDeploy(input: {
-        services: [
-          {
-            hasDomain: true
-            isPrivate: true
-            owner: "${ghu.login}"
-            name: "bwce-${body.slug}-${faker.number.int({ max: 100 })}"
-            serviceName: "CE"
-            template: "https://github.com/botwayorg/ce"
-            variables: {
-              GIT_REPO: "https://github.com/${body.repo}"
-              GITHUB_TOKEN: "${githubApiToken.data}"
-              PASSWORD: "${password.data}"
-              PKGS: "${pkgs}"
-            }
-            volumes: [
-              {
-                mountPath: "/root"
-                projectId: "${railwayProjectId.data}"
-              }
-            ]
-          }
-        ]
-
-        projectId: "${railwayProjectId.data}"
-      }) {
-        projectId
+      createServiceFromMarketplace(
+        projectID: "${zeaburProjectId.data}"
+        itemCode: "botway-ce"
+        name: "BotwayCE"
+      ) {
+        _id
+        createdAt
       }
     }
   `;
 
-  const enable = await fetcher("https://backboard.railway.app/graphql/v2", {
+  const enable = await fetcher("https://gateway.zeabur.com/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${railwayApiToken.data}`,
+      Authorization: `Bearer ${zeaburApiToken.data}`,
     },
     body: JSON.stringify({
       query,
@@ -163,15 +141,60 @@ export async function POST(request: Request) {
   });
 
   if (enable.errors) {
-    console.log(enable.errors);
-
     return NextResponse.json({ message: enable.errors[0].message });
+  } else {
+    const query = `
+      mutation {
+        updateEnvironmentVariable(
+          serviceID: "${enable.data.createServiceFromMarketplace._id}"
+          environmentID: "${zeaburEnvId.data}"
+          data: {
+            GIT_REPO: "https://github.com/${data.repo}"
+            GH_TOKEN: "${githubApiToken.data}"
+            PASSWORD: "${password.data}"
+            PKGS: "${pkgs}"
+          }
+        )
+
+        addDomain(
+          serviceID: "${enable.data.createServiceFromMarketplace._id}"
+          environmentID: "${zeaburEnvId.data}"
+          domain: "${body.slug + "-" + faker.word.sample()}"
+          isGenerated: true
+        ) {
+          _id
+          domain
+        }
+      }
+    `;
+
+    const update = await fetcher("https://gateway.zeabur.com/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${zeaburApiToken.data}`,
+      },
+      body: JSON.stringify({
+        query,
+      }),
+    });
+
+    if (update.errors) {
+      return NextResponse.json({ message: update.errors[0].message });
+    }
   }
+
+  const ce_service_id = await new EncryptJWT({
+    data: enable.data.createServiceFromMarketplace._id,
+  })
+    .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+    .encrypt(BW_SECRET_KEY);
 
   const { error } = await supabase
     .from("projects")
     .update({
       enable_ce: true,
+      ce_service_id,
     })
     .eq("id", body.projectId);
 

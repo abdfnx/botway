@@ -1,7 +1,7 @@
-import LogoSection from "../components/Logo.tsx";
+import { LogoSection } from "../components/Logo.tsx";
 import { Head } from "$fresh/runtime.ts";
 
-function App() {
+const App = () => {
   return (
     <>
       <Head>
@@ -29,6 +29,6 @@ function App() {
       </main>
     </>
   );
-}
+};
 
 export default App;

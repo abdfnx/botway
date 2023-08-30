@@ -3,7 +3,6 @@ import { fetcher } from "@/tools/fetch";
 import { jwtDecrypt } from "jose";
 import { BW_SECRET_KEY } from "@/tools/tokens";
 import createClient from "@/supabase/server";
-import { Octokit } from "octokit";
 import { faker } from "@faker-js/faker";
 
 export const revalidate = 0;
@@ -22,96 +21,48 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: userError });
   }
 
-  const { payload: githubApiToken } = await jwtDecrypt(
-    user?.user_metadata["githubApiToken"],
+  const { payload: zeaburApiToken } = await jwtDecrypt(
+    user?.user_metadata["zeaburApiToken"],
     BW_SECRET_KEY,
   );
 
-  const { payload: railwayApiToken } = await jwtDecrypt(
-    user?.user_metadata["railwayApiToken"],
-    BW_SECRET_KEY,
-  );
+  const { data, error } = await supabase
+    .from("projects")
+    .select("zeabur_project_id, zeabur_env_id")
+    .eq("id", body.projectId)
+    .single();
 
-  const { payload: projectId } = await jwtDecrypt(
-    body.projectId,
-    BW_SECRET_KEY,
-  );
-
-  const octokit = new Octokit({
-    auth: githubApiToken.data,
-  });
-
-  const ghu = await (await octokit.request("GET /user", {})).data;
-
-  let vars;
-
-  if (body.vars) {
-    if (body.vars.k) {
-      vars = `variables: {${body.vars.k}: "${body.vars.v}" ${body.def_vars}}`;
-    } else {
-      vars = `variables: {${body.vars.k1}: "${body.vars.v1}" ${body.vars.k2}: "${body.vars.v2}" ${body.def_vars}}`;
-    }
-  } else {
-    vars = `variables: {${body.def_vars}}`;
+  if (error) {
+    return NextResponse.json({ error });
   }
 
-  const volumes = body.has_volume
-    ? `
-    volumes: [
-      {
-        mountPath: "${body.volume_path}"
-        projectId: "${projectId.data}"
-      }
-    ]`
-    : "";
+  const { payload: zeaburProjectToken } = await jwtDecrypt(
+    data?.zeabur_project_id,
+    BW_SECRET_KEY,
+  );
 
-  const templateQuery = `
+  const { payload: zeaburEnvToken } = await jwtDecrypt(
+    data?.zeabur_env_id,
+    BW_SECRET_KEY,
+  );
+
+  const query = `
     mutation {
-      templateDeploy(input: {
-        ${body.plugin ? `plugins: ["${body.plugin}"]` : ""}
-
-        services: [
-          {
-            hasDomain: true
-            isPrivate: true
-            owner: "${ghu.login}"
-            name: "${
-              body.slug + "-" + faker.word.sample() + "-" + faker.word.sample()
-            }"
-            serviceName: "${
-              body.slug + "-" + faker.word.sample() + "-" + faker.word.sample()
-            }"
-            template: "https://github.com/${body.template_repo}"
-            ${vars}
-            ${volumes}
-          }
-        ]
-
-        projectId: "${projectId.data}"
-      }) {
-        projectId
+      createServiceFromMarketplace(
+        projectID: "${zeaburProjectToken.data}"
+        itemCode: "${body.slug}"
+        name: "${body.name}"
+      ) {
+        _id
       }
     }
   `;
 
-  const pluginQuery = `
-    mutation {
-      pluginCreate(input: {
-        name: "${body.slug}"
-        projectId: "${projectId.data}"
-      }) {
-        id
-      }
-    }
-  `;
-
-  const query = body.is_plugin ? pluginQuery : templateQuery;
-
-  const deploy = await fetcher("https://backboard.railway.app/graphql/v2", {
+  const deploy = await fetcher("https://gateway.zeabur.com/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${railwayApiToken.data}`,
+      Authorization: `Bearer ${zeaburApiToken.data}`,
     },
     body: JSON.stringify({
       query,
@@ -119,9 +70,40 @@ export async function POST(request: Request) {
   });
 
   if (deploy.errors) {
-    console.log(deploy.errors);
-
     return NextResponse.json({ message: deploy.errors[0].message });
+  }
+
+  if (!body.is_plugin) {
+    const id = deploy.data.createServiceFromMarketplace._id;
+
+    const query = `
+      mutation {
+        addDomain(
+          serviceID: "${id}"
+          environmentID: "${zeaburEnvToken.data}"
+          domain: "${faker.word.sample() + "-" + faker.word.sample()}"
+          isGenerated: true
+        ) {
+          _id
+          domain
+        }
+      }
+    `;
+
+    const addDomain = await fetcher("https://gateway.zeabur.com/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${zeaburApiToken.data}`,
+      },
+      body: JSON.stringify({
+        query,
+      }),
+    });
+
+    if (addDomain.errors) {
+      return NextResponse.json({ message: addDomain.errors[0].message });
+    }
   }
 
   return NextResponse.json({ message: "Success" });

@@ -19,10 +19,10 @@ const SignUpSchema = Yup.object().shape({
 const SignUp = () => {
   const { setView } = useAuth();
 
-  async function signUp(formData: any) {
-    async function signUpFunc(
+  const signUp = async (formData: any) => {
+    const signUpFunc = async (
       params: any,
-    ): Promise<{ auth: any; error: Error | null }> {
+    ): Promise<{ auth: any; error: Error | null }> => {
       const { data, error } = await supabase.auth.signUp({
         email: params.email,
         password: params.password,
@@ -30,7 +30,7 @@ const SignUp = () => {
           data: {
             name: params.name,
             githubApiToken: "",
-            railwayApiToken: "",
+            zeaburApiToken: "",
           },
         },
       });
@@ -54,7 +54,7 @@ const SignUp = () => {
         };
 
       return { auth: data, error: authError };
-    }
+    };
 
     const { error } = await signUpFunc({
       email: formData.email,
@@ -72,7 +72,7 @@ const SignUp = () => {
         toastStyle,
       );
     }
-  }
+  };
 
   return (
     <Template>
