@@ -22,18 +22,36 @@ export const ProjectLayout = ({
   projectName,
   children,
   grid,
-  projectRWID,
+  projectZBID,
+  projectServiceID,
+  latestDeployment,
   noMargin,
 }: any) => {
   const router = useRouter();
 
   const openAtZeabur = async () => {
     const { payload: zeaburProjectId } = await jwtDecrypt(
-      projectRWID,
+      projectZBID,
       BW_SECRET_KEY,
     );
 
     router.push(`https://dash.zeabur.com/projects/${zeaburProjectId.data}`);
+  };
+
+  const openLogs = async () => {
+    const { payload: zeaburProjectId } = await jwtDecrypt(
+      projectZBID,
+      BW_SECRET_KEY,
+    );
+
+    const { payload: zeaburServiceId } = await jwtDecrypt(
+      projectServiceID,
+      BW_SECRET_KEY,
+    );
+
+    router.push(
+      `https://dash.zeabur.com/projects/${zeaburProjectId.data}/services/${zeaburServiceId.data}/deployments/${latestDeployment}`,
+    );
   };
 
   return (
@@ -169,7 +187,7 @@ export const ProjectLayout = ({
                 <Tooltip content="Logs" arrow={false} placement="right">
                   <a
                     className="transition-colors duration-200 flex items-center justify-center h-10 w-10 rounded hover:bg-bwdefualt"
-                    href={`/project/${projectId}/logs`}
+                    onClick={openLogs}
                   >
                     <ListUnorderedIcon className="fill-white" size={18} />
                   </a>

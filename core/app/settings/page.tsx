@@ -35,7 +35,7 @@ const UpdateApiTokensSchema = Yup.object().shape({
 const Settings = () => {
   const { initial, user } = useAuth();
   const [isOpenGH, setIsOpenGH] = useState(false);
-  const [isOpenRW, setIsOpenRW] = useState(false);
+  const [isOpenZB, setIsOpenZB] = useState(false);
 
   const closeModalGH = () => {
     setIsOpenGH(false);
@@ -45,12 +45,12 @@ const Settings = () => {
     setIsOpenGH(true);
   };
 
-  const closeModalRW = () => {
-    setIsOpenRW(false);
+  const closeModalZB = () => {
+    setIsOpenZB(false);
   };
 
-  const openModalRW = () => {
-    setIsOpenRW(true);
+  const openModalZB = () => {
+    setIsOpenZB(true);
   };
 
   if (initial) {
@@ -130,7 +130,7 @@ const Settings = () => {
 
     await supabase.auth.refreshSession();
 
-    closeModalRW();
+    closeModalZB();
   };
 
   if (user) {
@@ -339,7 +339,7 @@ const Settings = () => {
                           style={{ minWidth: "64px", maxWidth: "400px" }}
                         >
                           <button
-                            onClick={openModalRW}
+                            onClick={openModalZB}
                             className="flex items-center justify-center transform transition-transform duration-50 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:outline-none h-[34px] py-1.5 rounded-md text-sm leading-5 space-x-2 w-[34px] px-0"
                           >
                             <div className="!w-4 !h-4" aria-hidden="true">
@@ -424,8 +424,8 @@ const Settings = () => {
           </Dialog>
         </Transition>
 
-        <Transition appear show={isOpenRW} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={closeModalRW}>
+        <Transition appear show={isOpenZB} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeModalZB}>
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"

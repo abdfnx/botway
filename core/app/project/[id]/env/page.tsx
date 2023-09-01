@@ -177,7 +177,7 @@ const Env = ({ user, projectId }: any) => {
           user={user}
           projectId={projectId}
           projectName={project?.name}
-          projectRWID={project?.zeabur_project_id}
+          projectZBID={project?.zeabur_project_id}
           grid={true}
         >
           <div className="mx-6 my-16 flex items-center space-x-6">

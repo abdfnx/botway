@@ -184,11 +184,11 @@ importers:
         specifier: ^4.0.5
         version: 4.0.5
       "@types/node":
-        specifier: ^20.5.0
-        version: 20.5.0
+        specifier: ^20.5.7
+        version: 20.5.7
       typescript:
-        specifier: ^5.1.6
-        version: 5.1.6
+        specifier: ^5.2.2
+        version: 5.2.2
 
 packages:
   /@alloc/quick-lru@5.2.0:
@@ -1118,13 +1118,6 @@ packages:
         integrity: sha512-d6xjC9fJ/nSnfDeU0AMDsaJyb1iHsqCSOdi84w4u+SlN/UgQdY5tRhpMzaFYsI4mnpvgTivEaQd0yOUhAtOnEQ==,
       }
     dev: false
-
-  /@types/node@20.5.0:
-    resolution:
-      {
-        integrity: sha512-Mgq7eCtoTjT89FqNoTzzXg2XvCi5VMhRV6+I2aYanc6kQCBImeNaAYRs/DyoVqk1YEUJK5gN9VO7HRIdz4Wo3Q==,
-      }
-    dev: true
 
   /@types/node@20.5.7:
     resolution:
@@ -3783,15 +3776,6 @@ packages:
     dependencies:
       is-typedarray: 1.0.0
     dev: false
-
-  /typescript@5.1.6:
-    resolution:
-      {
-        integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==,
-      }
-    engines: { node: ">=14.17" }
-    hasBin: true
-    dev: true
 
   /typescript@5.2.2:
     resolution:

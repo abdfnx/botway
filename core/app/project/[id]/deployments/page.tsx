@@ -110,7 +110,7 @@ const Project = ({ user, projectId }: any) => {
           user={user}
           projectId={projectId}
           projectName={project?.name}
-          projectRWID={project?.zeabur_project_id}
+          projectZBID={project?.zeabur_project_id}
         >
           <div className="mx-6 my-16 flex items-center space-x-6">
             <h1 className="text-3xl text-white">{project?.name} Deployments</h1>

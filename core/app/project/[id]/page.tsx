@@ -35,6 +35,14 @@ const Project = ({ user, projectId }: any) => {
 
   const data: { _id: string; name: any; code: any; icon: any }[] = [];
 
+  const fetchLatestDeployment = async () => {
+    const dy = await fetcher(`/api/deployments/latest?id=${projectId}`, {
+      method: "GET",
+    });
+
+    return dy;
+  };
+
   const fetchServices = async () => {
     const services = await fetcher(`/api/projects/services`, {
       method: "POST",
@@ -56,6 +64,12 @@ const Project = ({ user, projectId }: any) => {
       refetchIntervalInBackground: true,
     },
   );
+
+  const { data: dy } = useQuery(["dy"], fetchLatestDeployment, {
+    refetchOnReconnect: true,
+  });
+
+  console.log(dy);
 
   services?.services.map((node: any) => {
     data.push({
@@ -107,7 +121,9 @@ const Project = ({ user, projectId }: any) => {
           user={user}
           projectId={projectId}
           projectName={project?.name}
-          projectRWID={project?.zeabur_project_id}
+          projectZBID={project?.zeabur_project_id}
+          projectServiceID={project?.zeabur_service_id}
+          latestDeployment={dy}
           grid={true}
         >
           <h1 className="mx-6 my-16 text-3xl text-white">My Bot</h1>
