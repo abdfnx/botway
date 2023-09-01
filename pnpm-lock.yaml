@@ -26,8 +26,8 @@ importers:
         specifier: ^1.7.17
         version: 1.7.17(react-dom@18.2.0)(react@18.2.0)
       "@primer/octicons-react":
-        specifier: ^19.6.0
-        version: 19.6.0(react@18.2.0)
+        specifier: ^19.7.0
+        version: 19.7.0(react@18.2.0)
       "@supabase/auth-helpers-nextjs":
         specifier: ^0.7.4
         version: 0.7.4(@supabase/supabase-js@2.33.1)
@@ -38,8 +38,8 @@ importers:
         specifier: ^4.33.0
         version: 4.33.0(react-dom@18.2.0)(react@18.2.0)
       ai:
-        specifier: ^2.2.10
-        version: 2.2.10(encoding@0.1.13)(react@18.2.0)(solid-js@1.7.11)(svelte@4.2.0)(vue@3.3.4)
+        specifier: ^2.2.11
+        version: 2.2.11(encoding@0.1.13)(react@18.2.0)(solid-js@1.7.11)(svelte@4.2.0)(vue@3.3.4)
       ajv:
         specifier: ^8.12.0
         version: 8.12.0
@@ -880,10 +880,10 @@ packages:
       }
     dev: false
 
-  /@primer/octicons-react@19.6.0(react@18.2.0):
+  /@primer/octicons-react@19.7.0(react@18.2.0):
     resolution:
       {
-        integrity: sha512-9uGfpadKUowM2ZhKbFhydgUzpLHzZMeebyCbesRBDvQARdC3zHu0c5mw9iuQ+YXMBcd9fDTfC3E/gJmuPjmbMw==,
+        integrity: sha512-KzB7P+Ew3ud/ua61tQFkTvdS2aIfKUMsT/uHUCvIzfHTcB49xD1MIoQLAwoshiEH4M+aLLGFNCLfBC/xTIH8vw==,
       }
     engines: { node: ">=8" }
     peerDependencies:
@@ -1381,10 +1381,10 @@ packages:
       indent-string: 4.0.0
     dev: false
 
-  /ai@2.2.10(encoding@0.1.13)(react@18.2.0)(solid-js@1.7.11)(svelte@4.2.0)(vue@3.3.4):
+  /ai@2.2.11(encoding@0.1.13)(react@18.2.0)(solid-js@1.7.11)(svelte@4.2.0)(vue@3.3.4):
     resolution:
       {
-        integrity: sha512-3FARCB9X57YxpAJeAUvZHTeeQ549B/kTMQk5Qet1rZNm9EjKXeHUiQfaq+L8v9f75HYasZXJIl//owzdjojTTw==,
+        integrity: sha512-thZxrZCfXpOFVR2zSwuZYvTlKZF6H1z9z45VCPgm+VOWHvqUWgINCHWjklCHhCkVV+Abc9w7zelQAN3lcGmrgw==,
       }
     engines: { node: ">=14.6" }
     peerDependencies:
@@ -1496,8 +1496,8 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.21.10
-      caniuse-lite: 1.0.30001524
-      fraction.js: 4.3.1
+      caniuse-lite: 1.0.30001525
+      fraction.js: 4.3.4
       normalize-range: 0.1.2
       picocolors: 1.0.0
       postcss: 8.4.29
@@ -1587,8 +1587,8 @@ packages:
     engines: { node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7 }
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001524
-      electron-to-chromium: 1.4.505
+      caniuse-lite: 1.0.30001525
+      electron-to-chromium: 1.4.507
       node-releases: 2.0.13
       update-browserslist-db: 1.0.11(browserslist@4.21.10)
     dev: false
@@ -1635,10 +1635,10 @@ packages:
       }
     engines: { node: ">= 6" }
 
-  /caniuse-lite@1.0.30001524:
+  /caniuse-lite@1.0.30001525:
     resolution:
       {
-        integrity: sha512-Jj917pJtYg9HSJBF95HVX3Cdr89JUyLT4IZ8SvM5aDRni95swKgYi3TgYLH5hnGfPE/U1dg6IfZ50UsIlLkwSA==,
+        integrity: sha512-/3z+wB4icFt3r0USMwxujAqRvaD/B7rvGTsKhbhSQErVrJvkZCLhgNLJxU8MevahQVH6hCU9FsHdNUFbiwmE7Q==,
       }
     dev: false
 
@@ -1890,10 +1890,10 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /electron-to-chromium@1.4.505:
+  /electron-to-chromium@1.4.507:
     resolution:
       {
-        integrity: sha512-0A50eL5BCCKdxig2SsCXhpuztnB9PfUgRMojj5tMvt8O54lbwz3t6wNgnpiTRosw5QjlJB7ixhVyeg8daLQwSQ==,
+        integrity: sha512-brvPFnO1lu3UYBpBht2qWw9qqhdG4htTjT90/9oOJmxQ77VvTxL9+ghErFqQzgj7n8268ONAmlebqjBR/S+qgA==,
       }
     dev: false
 
@@ -2132,10 +2132,10 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /fraction.js@4.3.1:
+  /fraction.js@4.3.4:
     resolution:
       {
-        integrity: sha512-nx0cki48JBA6ThPeUpeKCNpdhEl/9bRS+dAEYnRUod+Z1jhFfC3K/mBLorZZntqHM+GTH3/dkkpfoT3QITYe7g==,
+        integrity: sha512-pwiTgt0Q7t+GHZA4yaLjObx4vXmmdcS0iSJ19o8d/goUGgItX9UZWKWNnLHehxviD8wU2IWRsnR8cD5+yOJP2Q==,
       }
     dev: false
 
@@ -2757,7 +2757,7 @@ packages:
       "@next/env": 13.4.19
       "@swc/helpers": 0.5.1
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001524
+      caniuse-lite: 1.0.30001525
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
