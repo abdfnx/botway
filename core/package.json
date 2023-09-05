@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.1",
+    "@apollo/client": "^3.8.2",
     "@faker-js/faker": "^8.0.2",
     "@headlessui/react": "^1.7.17",
     "@primer/octicons-react": "^19.7.0",
@@ -29,8 +29,8 @@
     "formik": "^2.4.3",
     "graphql": "^16.8.0",
     "graphql-ws": "^5.14.0",
-    "jose": "^4.14.4",
-    "marked": "^7.0.5",
+    "jose": "^4.14.6",
+    "marked": "^8.0.0",
     "mini-svg-data-uri": "^1.4.4",
     "next": "13.4.19",
     "octokit": "^3.1.0",
@@ -51,7 +51,7 @@
     "@tailwindcss/typography": "^0.5.9",
     "@types/bcryptjs": "^2.4.3",
     "@types/marked": "^5.0.1",
-    "@types/node": "^20.5.7",
+    "@types/node": "^20.5.9",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "@types/slug": "^5.0.4",

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { jwtDecrypt } from "jose";
+import { EncryptJWT, jwtDecrypt } from "jose";
 import { BW_SECRET_KEY } from "@/tools/tokens";
 import { fetcher } from "@/tools/fetch";
 import createClient from "@/supabase/server";
@@ -69,8 +69,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: getVars.errors[0].message });
   }
 
+  const vars = getVars.data.service.variables.filter(
+    (varx: any) =>
+      !varx.value.includes(`service-`) && !varx.value.includes(`environment-`),
+  );
+
+  const encVars = await new EncryptJWT({
+    data: {
+      vars,
+    },
+  })
+    .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+    .encrypt(BW_SECRET_KEY);
+
   return NextResponse.json({
     message: "Success",
-    vars: getVars.data.service.variables,
+    vars: encVars,
   });
 }

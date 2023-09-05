@@ -11,7 +11,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { fetcher } from "@/tools/fetch";
-import { EncryptJWT } from "jose";
+import { EncryptJWT, jwtDecrypt } from "jose";
 import { BW_SECRET_KEY } from "@/tools/tokens";
 import {
   EyeClosedIcon,
@@ -87,26 +87,28 @@ const Env = ({ user, projectId }: any) => {
   );
 
   const fetchVariables = async () => {
-    const vars = await fetcher(`/api/projects/env`, {
+    const encVars = await fetcher(`/api/projects/env`, {
       method: "POST",
       body: JSON.stringify({
         projectId,
       }),
     });
 
-    return vars;
+    const { payload: vars } = await jwtDecrypt(encVars.vars, BW_SECRET_KEY);
+
+    return vars.data;
   };
 
-  const { data: vars, isLoading: varsIsLoading } = useQuery(
-    ["services"],
-    fetchVariables,
-    {
-      refetchInterval: 1,
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
-      refetchIntervalInBackground: true,
-    },
-  );
+  const {
+    data: vars,
+    isLoading: varsIsLoading,
+    refetch,
+  }: any = useQuery(["services"], fetchVariables, {
+    refetchInterval: 60000,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
+    refetchIntervalInBackground: true,
+  });
 
   const updateVar = async (formData: any) => {
     try {
@@ -118,8 +120,17 @@ const Env = ({ user, projectId }: any) => {
         .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
         .encrypt(BW_SECRET_KEY);
 
+      console.log(vars);
+
+      const vx = await new EncryptJWT({
+        data: vars,
+      })
+        .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
+        .encrypt(BW_SECRET_KEY);
+
       const body = {
         value,
+        vars: vx,
         key: currentVar,
         projectId,
       };
@@ -131,6 +142,8 @@ const Env = ({ user, projectId }: any) => {
       });
 
       closeModalUpdate();
+
+      refetch();
     } catch (e: any) {
       toast.error(e.message, toastStyle);
     } finally {
@@ -154,13 +167,15 @@ const Env = ({ user, projectId }: any) => {
         projectId,
       };
 
-      await fetcher("/api/projects/env/update", {
+      await fetcher("/api/projects/env/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
       closeModalAdd();
+
+      refetch();
     } catch (e: any) {
       toast.error(e.message, toastStyle);
     } finally {
@@ -213,24 +228,22 @@ const Env = ({ user, projectId }: any) => {
               <div className="overflow-x-auto flex-grow rounded-lg border border-gray-800">
                 <table className="w-full border-collapse select-auto bg-secondary">
                   <tbody>
-                    {Object.keys(vars?.vars).map((key: any, index: any) => (
+                    {vars?.vars.map((key: any, index: any) => (
                       <tr className="justify-between">
                         <td
                           className={`py-3 px-4 overflow-hidden overflow-ellipsis whitespace-nowrap border-r border-gray-800 ${
-                            index != Object.keys(vars?.vars).length - 1
-                              ? "border-b"
-                              : ""
+                            index != vars?.vars.length - 1 ? "border-b" : ""
                           }`}
                           style={{ minWidth: "64px", maxWidth: "100px" }}
                         >
                           <div className="flex text-sm font-semibold leading-6 text-white space-x-2 items-center font-mono">
-                            {key}
+                            {key.key}
                           </div>
                         </td>
 
                         <td
                           className={`py-3 px-4 overflow-hidden hidden md:table-cell overflow-ellipsis whitespace-nowrap ${
-                            index != Object.keys(vars?.vars).length - 1
+                            index != vars?.vars.length - 1
                               ? "border-b border-gray-800"
                               : ""
                           } `}
@@ -239,8 +252,8 @@ const Env = ({ user, projectId }: any) => {
                           <div className="flex justify-between">
                             <div className="flex text-sm font-medium leading-6 text-white space-x-2 items-center font-mono">
                               {show && currentVar === key
-                                ? vars?.vars[key]
-                                : "•".repeat(vars?.vars[key].length)}
+                                ? vars?.vars[index].value
+                                : "•".repeat(vars?.vars[index].value.length)}
 
                               {show && currentVar === key ? (
                                 <div

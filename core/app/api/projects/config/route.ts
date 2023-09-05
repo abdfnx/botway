@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { jwtDecrypt } from "jose";
 import { BW_SECRET_KEY } from "@/tools/tokens";
 import { fetcher } from "@/tools/fetch";
-import { Octokit } from "octokit";
 import createClient from "@/supabase/server";
 
 export const revalidate = 0;

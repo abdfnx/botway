@@ -47,20 +47,7 @@ export async function POST(request: Request) {
 
   const { payload: value } = await jwtDecrypt(body.value, BW_SECRET_KEY);
 
-  const { payload: vx } = await jwtDecrypt(body.vars, BW_SECRET_KEY);
-
-  const vars: any[] =
-    vx?.data.vars.filter((varx: any) => varx.key != body.key.key) || [];
-
-  let allVars = "";
-
-  vars.length != 0
-    ? vars.map((v: any) => {
-        allVars += `${v.key}: "${v.value}"\n`;
-      })
-    : null;
-
-  const updateVar = await fetcher("https://gateway.zeabur.com/graphql", {
+  const addVar = await fetcher("https://gateway.zeabur.com/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -69,21 +56,21 @@ export async function POST(request: Request) {
     body: JSON.stringify({
       query: `
         mutation {
-          updateEnvironmentVariable(
+          createEnvironmentVariable(
             environmentID: "${zeaburEnvId.data}"
             serviceID: "${zeaburServiceId.data}"
-            data: {
-              ${allVars}
-              ${body.key.key}: "${value.data}"
-            }
-          )
+            key: "${body.key}"
+            value: "${value.data}"
+          ) {
+            _id
+          }
         }
       `,
     }),
   });
 
-  if (updateVar.errors) {
-    return NextResponse.json({ error: updateVar.errors[0].message });
+  if (addVar.errors) {
+    return NextResponse.json({ error: addVar.errors[0].message });
   }
 
   return NextResponse.json({
