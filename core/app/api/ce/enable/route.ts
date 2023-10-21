@@ -53,7 +53,7 @@ export async function POST(request: Request) {
     BW_SECRET_KEY,
   );
 
-  let pkgs = "cmake ";
+  let pkgs = "go ";
 
   switch (data.lang) {
     case "crystal":
@@ -71,22 +71,8 @@ export async function POST(request: Request) {
 
       break;
 
-    case "deno":
-      pkgs += "deno";
-
-      break;
-
-    case "go":
-      pkgs += "go";
-
-      break;
-
-    case "java":
-      pkgs += "java gradle";
-
-      break;
     case "kotlin":
-      pkgs += "kotlin java gradle";
+      pkgs += "kotlin";
 
       break;
 
@@ -101,12 +87,7 @@ export async function POST(request: Request) {
       break;
 
     case "python":
-      pkgs += "poetry pipenv";
-
-      break;
-
-    case "rust":
-      pkgs += "rust rustup-init";
+      pkgs += "poetry";
 
       break;
 

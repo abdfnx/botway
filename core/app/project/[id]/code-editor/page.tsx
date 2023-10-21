@@ -30,6 +30,7 @@ const queryClient = new QueryClient();
 const CE = ({ user, projectId }: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [ce, setCE] = useState("");
 
   const closeModal = () => {
     setIsOpen(false);
@@ -83,7 +84,7 @@ const CE = ({ user, projectId }: any) => {
           toast.error(ce.error, toastStyle);
         }
 
-        router.push(`https://${ce.domain}`);
+        setCE(`https://${ce.domain}`);
       } else {
         body = {
           password: await new EncryptJWT({
@@ -124,136 +125,152 @@ const CE = ({ user, projectId }: any) => {
           projectId={projectId}
           projectName={project?.name}
           projectZBID={project?.zeabur_project_id}
+          noMargin={ce != ""}
         >
-          <div className="mx-6 my-16 flex items-center space-x-6">
-            <h1 className="text-3xl text-white">Code Editor</h1>
-          </div>
-          <div className="mx-6">
-            <div className="w-full h-60 grid lg:grid-cols-2 lt-md:!grid-cols-1 items-center justify-center gap-4">
-              <img
-                src="https://cdn-botway.deno.dev/images/coder.svg"
-                alt="Botway CE"
+          {ce != "" ? (
+            <div className="border-t h-full">
+              <iframe
+                className="min-w-full min-h-[94.8vh] md:min-h-[94vh] xl:min-h-[94.8vh]"
+                src={ce}
               />
-
-              <div className="pb-4">
-                <h2 className="text-md text-gray-400 text-center">
-                  {project?.enable_ce
-                    ? "Botway CE is enabled 👍"
-                    : "Your project needs to enable Botway CE"}
-                </h2>
-
-                <h2 className="text-sm text-gray-500 text-center">
-                  Botway CE is a code editor that built on top of{" "}
-                  <Link
-                    href="https://coder.com"
-                    target="_blank"
-                    className="text-blue-700"
-                  >
-                    Coder
-                  </Link>
-                  , with a lot of useful packages 🖥️
-                </h2>
-
-                {project?.enable_ce ? (
-                  <Button
-                    htmlType="submit"
-                    onClick={enableCE}
-                    type="success"
-                    loading={isLoading}
-                  >
-                    Open My Editor
-                  </Button>
-                ) : (
-                  <Button htmlType="submit" onClick={openModal} type="success">
-                    Enable & Deploy
-                  </Button>
-                )}
-              </div>
             </div>
-          </div>
+          ) : (
+            <>
+              <div className="mx-6 my-16 flex items-center space-x-6">
+                <h1 className="text-3xl text-white">Code Editor</h1>
+              </div>
+              <div className="mx-6">
+                <div className="w-full h-60 grid lg:grid-cols-2 lt-md:!grid-cols-1 items-center justify-center gap-4">
+                  <img
+                    src="https://cdn-botway.deno.dev/images/coder.svg"
+                    alt="Botway CE"
+                  />
 
-          <Transition appear show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={closeModal}>
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div className="fixed inset-0 bg-bwdefualt bg-opacity-50 transition-opacity" />
-              </Transition.Child>
+                  <div className="pb-4">
+                    <h2 className="text-md text-gray-400 text-center">
+                      {project?.enable_ce
+                        ? "Botway CE is enabled 👍"
+                        : "Your project needs to enable Botway CE"}
+                    </h2>
 
-              <div className="fixed inset-0 overflow-y-auto">
-                <div className="flex min-h-full items-center justify-center p-4 text-center">
+                    <h2 className="text-sm text-gray-500 text-center">
+                      Botway CE is a code editor that built on top of{" "}
+                      <Link
+                        href="https://coder.com"
+                        target="_blank"
+                        className="text-blue-700"
+                      >
+                        Coder
+                      </Link>
+                      , with a lot of useful packages 🖥️
+                    </h2>
+
+                    {project?.enable_ce ? (
+                      <Button
+                        htmlType="submit"
+                        onClick={enableCE}
+                        type="success"
+                        loading={isLoading}
+                      >
+                        Open My Editor
+                      </Button>
+                    ) : (
+                      <Button
+                        htmlType="submit"
+                        onClick={openModal}
+                        type="success"
+                      >
+                        Enable & Deploy
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModal}>
                   <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
-                    enterFrom="opacity-0 scale-95"
-                    enterTo="opacity-100 scale-100"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
                     leave="ease-in duration-200"
-                    leaveFrom="opacity-100 scale-100"
-                    leaveTo="opacity-0 scale-95"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
                   >
-                    <Dialog.Panel className="w-full bg-bwdefualt bg-grid-gray-800/[0.4] max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all border border-gray-800">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-lg font-medium pb-2 leading-6 text-white"
-                      >
-                        Add Password to your Code Editor
-                      </Dialog.Title>
-                      <div className="mt-2">
-                        <Formik
-                          initialValues={{
-                            password: "",
-                          }}
-                          onSubmit={enableCE}
-                        >
-                          {({ errors }) => (
-                            <Form className="column w-full">
-                              <Field
-                                className="input"
-                                id="password"
-                                name="password"
-                                type="password"
-                              />
-
-                              {errors.password ? (
-                                <div className="text-red-600 text-sm font-semibold pt-2">
-                                  {errors.password}
-                                </div>
-                              ) : null}
-
-                              <br />
-
-                              <div className="flex w-full items-center gap-2 justify-end">
-                                <div className="flex items-center gap-2">
-                                  <button
-                                    className="relative text-white cursor-pointer bg-blue-700 inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 shadow-sm text-xs px-2.5 py-1"
-                                    type="submit"
-                                  >
-                                    {isLoading && (
-                                      <LoadingDots
-                                        className={styles.loading}
-                                        children
-                                      />
-                                    )}
-                                    <span className="truncate">Done</span>
-                                  </button>
-                                </div>
-                              </div>
-                            </Form>
-                          )}
-                        </Formik>
-                      </div>
-                    </Dialog.Panel>
+                    <div className="fixed inset-0 bg-bwdefualt bg-opacity-50 transition-opacity" />
                   </Transition.Child>
-                </div>
-              </div>
-            </Dialog>
-          </Transition>
+
+                  <div className="fixed inset-0 overflow-y-auto">
+                    <div className="flex min-h-full items-center justify-center p-4 text-center">
+                      <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0 scale-95"
+                        enterTo="opacity-100 scale-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100 scale-100"
+                        leaveTo="opacity-0 scale-95"
+                      >
+                        <Dialog.Panel className="w-full bg-bwdefualt bg-grid-gray-800/[0.4] max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all border border-gray-800">
+                          <Dialog.Title
+                            as="h3"
+                            className="text-lg font-medium pb-2 leading-6 text-white"
+                          >
+                            Add Password to your Code Editor
+                          </Dialog.Title>
+                          <div className="mt-2">
+                            <Formik
+                              initialValues={{
+                                password: "",
+                              }}
+                              onSubmit={enableCE}
+                            >
+                              {({ errors }) => (
+                                <Form className="column w-full">
+                                  <Field
+                                    className="input"
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                  />
+
+                                  {errors.password ? (
+                                    <div className="text-red-600 text-sm font-semibold pt-2">
+                                      {errors.password}
+                                    </div>
+                                  ) : null}
+
+                                  <br />
+
+                                  <div className="flex w-full items-center gap-2 justify-end">
+                                    <div className="flex items-center gap-2">
+                                      <button
+                                        className="relative text-white cursor-pointer bg-blue-700 inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 shadow-sm text-xs px-2.5 py-1"
+                                        type="submit"
+                                      >
+                                        {isLoading && (
+                                          <LoadingDots
+                                            className={styles.loading}
+                                            children
+                                          />
+                                        )}
+                                        <span className="truncate">Done</span>
+                                      </button>
+                                    </div>
+                                  </div>
+                                </Form>
+                              )}
+                            </Formik>
+                          </div>
+                        </Dialog.Panel>
+                      </Transition.Child>
+                    </div>
+                  </div>
+                </Dialog>
+              </Transition>
+            </>
+          )}
         </ProjectLayout>
       )}
     </>

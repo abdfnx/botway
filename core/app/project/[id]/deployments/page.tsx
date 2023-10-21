@@ -139,21 +139,12 @@ const Project = ({ user, projectId }: any) => {
                         </h3>
                       </hgroup>
 
-                      {deployments.indexOf(deploy) === 0 ? (
-                        <Link
-                          className="h-8 px-3.5 text-white rounded-md inline-flex flex-shrink-0 bg-secondary whitespace-nowrap items-center gap-2 transition-colors duration-150 ease-in-out leading-none border border-gray-800 hover:border-gray-700 cursor-pointer"
-                          href={`/project/${projectId}/logs`}
-                        >
-                          Logs
-                        </Link>
-                      ) : (
-                        <a
-                          className="h-8 px-3.5 text-white rounded-md inline-flex flex-shrink-0 bg-secondary whitespace-nowrap items-center gap-2 transition-colors duration-150 ease-in-out leading-none border border-gray-800 hover:border-gray-700 cursor-pointer"
-                          onClick={() => logsURL(deploy)}
-                        >
-                          Logs
-                        </a>
-                      )}
+                      <a
+                        className="h-8 px-3.5 text-white rounded-md inline-flex flex-shrink-0 bg-secondary whitespace-nowrap items-center gap-2 transition-colors duration-150 ease-in-out leading-none border border-gray-800 hover:border-gray-700 cursor-pointer"
+                        onClick={() => logsURL(deploy)}
+                      >
+                        Logs
+                      </a>
                     </header>
 
                     <label className="flex items-center mt-5 mb-1 text-sm text-gray-400">
