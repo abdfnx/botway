@@ -87,16 +87,14 @@ const Project = ({ user, projectId }: any) => {
     return project;
   };
 
-  const { data: project, isLoading: projectIsLoading } = useQuery(
-    ["project"],
-    fetchProject,
-    {
-      refetchInterval: 1,
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
-      refetchIntervalInBackground: true,
-    },
-  );
+  const { data: project, isLoading: projectIsLoading } = useQuery({
+    queryKey: ["project"],
+    queryFn: fetchProject,
+    refetchInterval: 360,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
+    refetchIntervalInBackground: true,
+  });
 
   const updateProjectName = async (formData: any) => {
     try {

@@ -38,16 +38,14 @@ const Project = ({ user, projectId }: any) => {
     return project;
   };
 
-  const { data: project, isLoading: projectIsLoading } = useQuery(
-    ["project"],
-    fetchProject,
-    {
-      refetchInterval: 360,
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
-      refetchIntervalInBackground: true,
-    },
-  );
+  const { data: project, isLoading: projectIsLoading } = useQuery({
+    queryKey: ["project"],
+    queryFn: fetchProject,
+    refetchInterval: 360,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
+    refetchIntervalInBackground: true,
+  });
 
   const fetchDeployments = async () => {
     const dys = await fetcher(`/api/deployments?id=${projectId}`, {
@@ -57,16 +55,14 @@ const Project = ({ user, projectId }: any) => {
     return dys;
   };
 
-  const { data: deployments, isLoading: dyIsLoading } = useQuery(
-    ["dy"],
-    fetchDeployments,
-    {
-      refetchInterval: 1,
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
-      refetchIntervalInBackground: true,
-    },
-  );
+  const { data: deployments, isLoading: dyIsLoading } = useQuery({
+    queryKey: ["dy"],
+    queryFn: fetchDeployments,
+    refetchInterval: 1,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
+    refetchIntervalInBackground: true,
+  });
 
   const status = (deployStatus: any) => {
     switch (deployStatus) {

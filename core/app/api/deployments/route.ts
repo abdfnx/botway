@@ -59,7 +59,6 @@ export async function GET(request: Request) {
           deployments(
             serviceID: "${zeaburServiceId.data}"
             environmentID: "${zeaburEnvId.data}"
-            limit: 10
           ) {
             edges {
               node {

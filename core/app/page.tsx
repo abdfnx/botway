@@ -65,16 +65,14 @@ const Home = ({ user }: any) => {
     return projects;
   };
 
-  const { data: projects, isLoading: projectIsLoading } = useQuery(
-    ["project"],
-    fetchProjects,
-    {
-      refetchInterval: 1,
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
-      refetchIntervalInBackground: true,
-    },
-  );
+  const { data: projects, isLoading: projectIsLoading } = useQuery({
+    queryKey: ["project"],
+    queryFn: fetchProjects,
+    refetchInterval: 1,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
+    refetchIntervalInBackground: true,
+  });
 
   const [visibilitySelected, setvisibilitySelected]: any = useState(
     visibilityOptions[0],

@@ -39,16 +39,14 @@ const Project = ({ user, projectId, slug }: any) => {
     return project;
   };
 
-  const { data: project, isLoading: projectIsLoading } = useQuery(
-    ["project"],
-    fetchProject,
-    {
-      refetchInterval: 1,
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
-      refetchIntervalInBackground: true,
-    },
-  );
+  const { data: project, isLoading: projectIsLoading } = useQuery({
+    queryKey: ["project"],
+    queryFn: fetchProject,
+    refetchInterval: 360,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
+    refetchIntervalInBackground: true,
+  });
 
   const fetchIntegration = async () => {
     const intx = await fetcher(`/api/integrations/x?slug=${slug}`, {
@@ -58,16 +56,14 @@ const Project = ({ user, projectId, slug }: any) => {
     return intx;
   };
 
-  const { data: int, isLoading: integrationsIsLoading } = useQuery(
-    ["integration"],
-    fetchIntegration,
-    {
-      refetchInterval: 1,
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
-      refetchIntervalInBackground: true,
-    },
-  );
+  const { data: int, isLoading: integrationsIsLoading } = useQuery({
+    queryKey: ["integration"],
+    queryFn: fetchIntegration,
+    refetchInterval: 1,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
+    refetchIntervalInBackground: true,
+  });
 
   const addIntegration = async () => {
     try {

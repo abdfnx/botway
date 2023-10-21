@@ -51,16 +51,14 @@ const CE = ({ user, projectId }: any) => {
     return project;
   };
 
-  const { data: project, isLoading: projectIsLoading } = useQuery(
-    ["project"],
-    fetchProject,
-    {
-      refetchInterval: 1,
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
-      refetchIntervalInBackground: true,
-    },
-  );
+  const { data: project, isLoading: projectIsLoading } = useQuery({
+    queryKey: ["project"],
+    queryFn: fetchProject,
+    refetchInterval: 1,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
+    refetchIntervalInBackground: true,
+  });
 
   const enableCE = async (formData: any) => {
     try {

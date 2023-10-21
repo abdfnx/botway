@@ -54,18 +54,18 @@ const Project = ({ user, projectId }: any) => {
     return services;
   };
 
-  const { data: services, isLoading: servicesIsLoading } = useQuery(
-    ["services"],
-    fetchServices,
-    {
-      refetchInterval: 36000,
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
-      refetchIntervalInBackground: true,
-    },
-  );
+  const { data: services, isLoading: servicesIsLoading } = useQuery({
+    queryKey: ["services"],
+    queryFn: fetchServices,
+    refetchInterval: 36000,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
+    refetchIntervalInBackground: true,
+  });
 
-  const { data: dy } = useQuery(["dy"], fetchLatestDeployment, {
+  const { data: dy } = useQuery({
+    queryKey: ["dy"],
+    queryFn: fetchLatestDeployment,
     refetchOnReconnect: true,
   });
 
@@ -90,16 +90,14 @@ const Project = ({ user, projectId }: any) => {
     return project;
   };
 
-  const { data: project, isLoading: projectIsLoading } = useQuery(
-    ["project"],
-    fetchProject,
-    {
-      refetchInterval: 1,
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
-      refetchIntervalInBackground: true,
-    },
-  );
+  const { data: project, isLoading: projectIsLoading } = useQuery({
+    queryKey: ["project"],
+    queryFn: fetchProject,
+    refetchInterval: 1,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
+    refetchIntervalInBackground: true,
+  });
 
   const openAtZeabur = async (id: any) => {
     const { payload: zeaburProjectId } = await jwtDecrypt(

@@ -20,4 +20,4 @@ COPY --from=bw /root/.botway /root/.botway
 
 COPY . .
 
-ENTRYPOINT ["deno", "run", "--allow-all", "main.ts"]
+ENTRYPOINT ["deno", "task", "run"]

@@ -75,16 +75,14 @@ const Env = ({ user, projectId }: any) => {
     return project;
   };
 
-  const { data: project, isLoading: projectIsLoading } = useQuery(
-    ["project"],
-    fetchProject,
-    {
-      refetchInterval: 1,
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
-      refetchIntervalInBackground: true,
-    },
-  );
+  const { data: project, isLoading: projectIsLoading } = useQuery({
+    queryKey: ["project"],
+    queryFn: fetchProject,
+    refetchInterval: 1,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
+    refetchIntervalInBackground: true,
+  });
 
   const fetchVariables = async () => {
     const encVars = await fetcher(`/api/projects/env`, {
@@ -103,7 +101,9 @@ const Env = ({ user, projectId }: any) => {
     data: vars,
     isLoading: varsIsLoading,
     refetch,
-  }: any = useQuery(["services"], fetchVariables, {
+  }: any = useQuery({
+    queryKey: ["services"],
+    queryFn: fetchVariables,
     refetchInterval: 60000,
     refetchOnReconnect: true,
     refetchOnWindowFocus: true,
