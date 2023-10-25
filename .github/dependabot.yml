@@ -62,3 +62,10 @@ updates:
     reviewers:
       - abdfnx
       - david-tomson
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - abdfnx
