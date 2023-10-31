@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.8",
-    "@types/node": "^20.8.7",
+    "@types/node": "^20.8.10",
     "typescript": "^5.2.2"
   },
   "engines": {
