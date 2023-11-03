@@ -64,7 +64,35 @@ updates:
       - david-tomson
 
   - package-ecosystem: "docker"
-    directory: "/"
+    directory: "/assets"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - abdfnx
+
+  - package-ecosystem: "docker"
+    directory: "/core"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - abdfnx
+
+  - package-ecosystem: "docker"
+    directory: "/docker"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - abdfnx
+
+  - package-ecosystem: "docker"
+    directory: "/dockerfiles"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - abdfnx
+
+  - package-ecosystem: "docker"
+    directory: "/.gitpod"
     schedule:
       interval: "daily"
     reviewers:
