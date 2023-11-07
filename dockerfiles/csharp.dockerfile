@@ -6,7 +6,7 @@ COPY . .
 
 RUN botway docker-init
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
 
 WORKDIR /source
 
