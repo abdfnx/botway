@@ -130,12 +130,12 @@ const Project = ({ user, projectId }: any) => {
                           {deploy.node.status === "RUNNUNG"
                             ? "The deployment that is live on your production domains."
                             : deploy.node.status === "FAILED"
-                            ? "The deployment is failed."
-                            : deploy.node.status === "REMOVED"
-                            ? "The deployment is removed."
-                            : deploy.node.status === "CRASHED"
-                            ? "The deployment is crashed"
-                            : "Waiting..."}
+                              ? "The deployment is failed."
+                              : deploy.node.status === "REMOVED"
+                                ? "The deployment is removed."
+                                : deploy.node.status === "CRASHED"
+                                  ? "The deployment is crashed"
+                                  : "Waiting..."}
                         </h3>
                       </hgroup>
 
