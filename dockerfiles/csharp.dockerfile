@@ -18,7 +18,7 @@ COPY . .
 
 RUN dotnet publish -c release -o /app -r linux-musl-x64 --self-contained false --no-restore
 
-FROM mcr.microsoft.com/dotnet/runtime:7.0-alpine-amd64
+FROM mcr.microsoft.com/dotnet/runtime:8.0-alpine-amd64
 
 ENV \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
