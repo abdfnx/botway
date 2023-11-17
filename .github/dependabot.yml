@@ -1,5 +1,6 @@
 ---
 version: 2
+
 updates:
   - package-ecosystem: "gomod"
     directory: "/"
@@ -62,20 +63,6 @@ updates:
     reviewers:
       - abdfnx
       - david-tomson
-
-  - package-ecosystem: "docker"
-    directory: "/assets"
-    schedule:
-      interval: "daily"
-    reviewers:
-      - abdfnx
-
-  - package-ecosystem: "docker"
-    directory: "/core"
-    schedule:
-      interval: "daily"
-    reviewers:
-      - abdfnx
 
   - package-ecosystem: "docker"
     directory: "/docker"
