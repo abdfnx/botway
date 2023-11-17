@@ -171,11 +171,11 @@ const Home = ({ user }: any) => {
     <DashLayout name={user.user_metadata["name"]} href="Projects">
       <div className="flex-1 flex-grow overflow-auto">
         <div className="py-4 px-5">
-          <div className="my-2">
-            <div className="flex">
-              <h3 className="text-xl text-white font-mono">
-                Welcome to Botway
-              </h3>
+          <div className="border-l flex items-center text-white place-content-center justify-center border-r border-b border-gray-800 p-12 rounded-xl bg-grid-gray-800">
+            <div className="items-center">
+              <h2 className="text-xl font-mono mr-3">
+                <span className="font-bold">Welcome To Botway 👋</span>
+              </h2>
             </div>
           </div>
           <div className="my-8 space-y-8">

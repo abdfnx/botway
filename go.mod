@@ -78,7 +78,7 @@ require (
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
-	github.com/rivo/tview v0.0.0-20231113063814-05d01944a18b // indirect
+	github.com/rivo/tview v0.0.0-20231115183240-7c9e464bac02 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/sagikazarmark/locafero v0.3.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect

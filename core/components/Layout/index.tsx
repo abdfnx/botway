@@ -37,7 +37,7 @@ export const DashLayout = ({ children, name, href }: any) => {
                         <div className="border-b py-5 px-6 border-gray-800">
                           <div className="flex space-x-3 mb-2 font-normal">
                             <span className="text-sm text-gray-200 w-full">
-                              Dashboard
+                              Services
                             </span>
                           </div>
                           <ul className="space-y-1">
@@ -45,10 +45,10 @@ export const DashLayout = ({ children, name, href }: any) => {
                               <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
                                 <ContainerIcon />
                                 <span
-                                  title="My projects"
+                                  title="My Projects"
                                   className="w-full truncate text-sm text-gray-400 hover:text-white transition"
                                 >
-                                  My projects
+                                  My Projects
                                 </span>
                               </button>
                             </a>
