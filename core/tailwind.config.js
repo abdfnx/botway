@@ -10,89 +10,87 @@ module.exports = {
     "./supabase/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}",
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors: {
-      secondary: "#0b1528",
-      white: "#ffffff",
-      bwdefualt: "#13111C",
-      gray: {
-        50: "#f9fafb",
-        100: "#f3f4f6",
-        200: "#e5e7eb",
-        300: "#d1d5db",
-        400: "#9ca3af",
-        500: "#6b7280",
-        600: "#4b5563",
-        700: "#374151",
-        800: "#1f2937",
-      },
-      red: {
-        50: "#fef2f2",
-        100: "#fee2e2",
-        200: "#fecaca",
-        300: "#fca5a5",
-        400: "#f87171",
-        500: "#ef4444",
-        600: "#dc2626",
-        700: "#b91c1c",
-        800: "#991b1b",
-        900: "#7f1d1d",
-      },
-      yellow: {
-        50: "#fefce8",
-        100: "#fef9c3",
-        200: "#fef08a",
-        300: "#fde047",
-        400: "#facc15",
-        500: "#eab308",
-        600: "#ca8a04",
-        700: "#a16207",
-        800: "#854d0e",
-        900: "#713f12",
-      },
-      green: {
-        50: "#f0fdf4",
-        100: "#dcfce7",
-        200: "#bbf7d0",
-        300: "#86efac",
-        400: "#4ade80",
-        500: "#22c55e",
-        600: "#16a34a",
-        700: "#15803d",
-        800: "#166534",
-        900: "#14532d",
-      },
-      cyan: {
-        500: "#06b6d4",
-      },
-      blue: {
-        50: "#eff6ff",
-        100: "#dbeafe",
-        200: "#bfdbfe",
-        300: "#93c5fd",
-        400: "#60a5fa",
-        500: "#3b82f6",
-        600: "#2563eb",
-        700: "#1d4ed8",
-        800: "#1e40af",
-        900: "#1e3a8a",
-      },
-      indigo: {
-        500: "#6366f1",
-        600: "#4f46e5",
-        700: "#4338ca",
-      },
-      orange: {
-        25: "#FFFBF3",
-        600: "#ea580c",
-      },
-    },
     extend: {
+      colors: {
+        tremor: {
+          brand: {
+            faint: "#eff6ff", // blue-50
+            muted: "#bfdbfe", // blue-200
+            subtle: "#60a5fa", // blue-400
+            DEFAULT: "#3b82f6", // blue-500
+            emphasis: "#1d4ed8", // blue-700
+            inverted: "#ffffff", // white
+          },
+          background: {
+            muted: "#f9fafb", // gray-50
+            subtle: "#f3f4f6", // gray-100
+            DEFAULT: "#ffffff", // white
+            emphasis: "#374151", // gray-700
+          },
+          border: {
+            DEFAULT: "#e5e7eb", // gray-200
+          },
+          ring: {
+            DEFAULT: "#e5e7eb", // gray-200
+          },
+          content: {
+            subtle: "#9ca3af", // gray-400
+            DEFAULT: "#6b7280", // gray-500
+            emphasis: "#374151", // gray-700
+            strong: "#111827", // gray-900
+            inverted: "#ffffff", // white
+          },
+        },
+        secondary: "#0b1528",
+        white: "#ffffff",
+        bwdefualt: "#13111C",
+      },
       fontFamily: {
         mono: ["JetBrains Mono"],
         ibm: ["IBM Plex Sans"],
         farray: ["Farray"],
+      },
+      borderRadius: {
+        "tremor-small": "0.375rem",
+        "tremor-default": "0.5rem",
+        "tremor-full": "9999px",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      boxShadow: {
+        // light
+        "tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "tremor-card":
+          "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "tremor-dropdown":
+          "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+        // dark
+        "dark-tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "dark-tremor-card":
+          "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "dark-tremor-dropdown":
+          "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+      },
+      fontSize: {
+        "tremor-label": ["0.75rem"],
+        "tremor-default": ["0.875rem", { lineHeight: "1.25rem" }],
+        "tremor-title": ["1.125rem", { lineHeight: "1.75rem" }],
+        "tremor-metric": ["1.875rem", { lineHeight: "2.25rem" }],
       },
     },
   },
@@ -115,7 +113,18 @@ module.exports = {
         {
           "bg-grid": (value) => ({
             backgroundImage: `url("${svgToDataUri(
-              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`,
+              `<svg width="32" height="31" viewBox="0 0 32 31" fill="none" stroke="${value}" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_3738_40)">
+                  <path d="M0 15.5H31.5" stroke="${value}"/>
+                  <path d="M31.5 0V16" stroke="${value}"/>
+                  <path d="M31.5 15V31" stroke="${value}"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_3738_40">
+                    <rect width="32" height="31" fill="white"/>
+                  </clipPath>
+                </defs>
+              </svg>`,
             )}")`,
           }),
         },

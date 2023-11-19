@@ -1,15 +1,228 @@
 import {
   ArrowUpRightIcon,
-  ContainerIcon,
   GearIcon,
   HomeIcon,
   MarkGithubIcon,
+  NorthStarIcon,
   SparkleFillIcon,
+  StackIcon,
+  TelescopeIcon,
+  ThreeBarsIcon,
 } from "@primer/octicons-react";
 import { Toaster } from "react-hot-toast";
 import { SignOut } from "@/supabase/auth/container/sign-out";
+import { Badge } from "@tremor/react";
+import { UserAvatar } from "../UserAvatar";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
 
-export const DashLayout = ({ children, name, href }: any) => {
+export const DashLayout = ({ children, user, href }: any) => {
+  const [open, setOpen] = useState(false);
+
+  const Sidebar = () => {
+    return (
+      <div className="-mt-1">
+        <nav>
+          <ul>
+            <div className="pt-5 px-4">
+              <div className="border border-gray-800 bg-bwdefualt rounded-xl p-1.5 mb-1 flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <UserAvatar data={user.email} size={36} />
+
+                  <div>
+                    <div className="font-semibold font-mono text-sm mr-2 text-gray-100">
+                      {user.user_metadata["name"]}
+                    </div>
+                    <div className="text-xs mt-0.5 mr-2 text-gray-300">
+                      Botway User 🫡
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-b py-5 px-6 border-gray-800">
+              <div className="flex space-x-3 mb-2 font-normal">
+                <Badge>
+                  <span className="font-mono">Services</span>
+                </Badge>
+              </div>
+              <ul className="space-y-1">
+                <a
+                  className="block focus-visible:outline-none focus-visible:ring-0 focus:ring-0"
+                  target="_self"
+                  href="/"
+                >
+                  <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
+                    <StackIcon size={24} className="fill-white h-5 w-5" />
+                    <span
+                      title="My Projects"
+                      className="w-full truncate text-sm text-gray-400 hover:text-white transition"
+                    >
+                      My Projects
+                    </span>
+                  </button>
+                </a>
+              </ul>
+              <ul className="space-y-1">
+                <a
+                  className="block outline-none ring-0 focus-visible:outline-none focus-visible:ring-0 focus:ring-0"
+                  target="_self"
+                  href="/ai-models"
+                >
+                  <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
+                    <NorthStarIcon
+                      size={24}
+                      className="fill-blue-700 h-5 w-5"
+                    />
+                    <span
+                      title="Explore Bots"
+                      className="w-full truncate text-sm text-gray-400 hover:text-white transition"
+                    >
+                      My AI Models
+                    </span>
+                  </button>
+                </a>
+              </ul>
+              <ul className="space-y-1">
+                <a
+                  className="block focus-visible:outline-none focus-visible:ring-0 focus:ring-0"
+                  target="_self"
+                  href="/explore"
+                >
+                  <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
+                    <TelescopeIcon size={24} className="fill-white h-5 w-5" />
+                    <span
+                      title="Explore Bots"
+                      className="w-full truncate text-sm text-gray-400 hover:text-white transition"
+                    >
+                      Explore
+                    </span>
+                  </button>
+                </a>
+              </ul>
+            </div>
+            <div className="border-b py-5 px-6 border-gray-800">
+              <div className="flex space-x-3 mb-2 font-normal">
+                <Badge color="teal">
+                  <span className="font-mono">Account</span>
+                </Badge>
+              </div>
+              <ul className="space-y-1">
+                <a
+                  className="block focus-visible:outline-none focus-visible:ring-0 focus:ring-0"
+                  target="_self"
+                  href="/settings"
+                >
+                  <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
+                    <GearIcon size={24} className="fill-white h-5 w-5" />
+                    <span
+                      title="Settings"
+                      className="w-full truncate text-sm text-gray-400 hover:text-white transition"
+                    >
+                      Settings
+                    </span>
+                  </button>
+                </a>
+              </ul>
+              {/* <ul className="space-y-1">
+                <a
+                  className="block"
+                  target="_self"
+                  style={{ marginLeft: "0rem" }}
+                  href="/settings/tokens"
+                >
+                  <a
+                    href="https://dash.zeabur.com/account/general"
+                    target="_blank"
+                    className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1"
+                  >
+                    <img
+                      src="https://cdn-botway.deno.dev/icons/zeabur.svg"
+                      width="20px"
+                      height="20px"
+                    />
+                    <span
+                      title="zeabur"
+                      className="w-full truncate text-sm text-gray-400 hover:text-white transition"
+                    >
+                      My Account on Zeabur
+                    </span>
+                  </a>
+                </a>
+              </ul> */}
+            </div>
+            <div className="border-b py-5 px-6 border-gray-800">
+              <div className="flex space-x-3 mb-2 font-normal">
+                <Badge color="gray">
+                  <span className="font-mono">Resources</span>
+                </Badge>
+              </div>
+              <ul className="space-y-1">
+                <a
+                  className="block"
+                  target="_blank"
+                  href="https://botway.deno.dev/docs"
+                >
+                  <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
+                    <ArrowUpRightIcon
+                      size={24}
+                      className="fill-white h-5 w-5"
+                    />
+                    <span
+                      title="Docs"
+                      className="w-full truncate text-sm text-gray-400 hover:text-white transition"
+                    >
+                      Docs
+                    </span>
+                  </button>
+                </a>
+              </ul>
+              <ul className="space-y-1">
+                <a
+                  className="block"
+                  target="_blank"
+                  href="https://botway.deno.dev/changelog"
+                >
+                  <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
+                    <ArrowUpRightIcon
+                      size={24}
+                      className="fill-white h-5 w-5"
+                    />
+                    <span
+                      title="Changelog"
+                      className="w-full truncate text-sm text-gray-400 hover:text-white transition"
+                    >
+                      Changelog
+                    </span>
+                  </button>
+                </a>
+              </ul>
+              <ul className="space-y-1">
+                <a
+                  className="block"
+                  target="_blank"
+                  href="https://github.com/abdfnx/botway"
+                >
+                  <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
+                    <MarkGithubIcon size={24} className="fill-white h-5 w-5" />
+                    <span
+                      title="Botway Repo"
+                      className="w-full truncate text-sm text-gray-400 hover:text-white transition"
+                    >
+                      Botway Repo
+                    </span>
+                  </button>
+                </a>
+              </ul>
+            </div>
+            <SignOut />
+          </ul>
+        </nav>
+      </div>
+    );
+  };
+
   return (
     <>
       <Toaster />
@@ -23,152 +236,19 @@ export const DashLayout = ({ children, name, href }: any) => {
                   <div className="mb-2">
                     <div className="flex h-12 max-h-12 items-center border-b px-6 border-gray-800">
                       <h4
-                        className="mb-0 text-lg truncate"
-                        style={{ fontFamily: "Farray" }}
+                        className="mb-0 text-lg truncate font-farray"
                         title="Botway"
                       >
                         Botway
                       </h4>
                     </div>
                   </div>
-                  <div className="-mt-1">
-                    <nav>
-                      <ul>
-                        <div className="border-b py-5 px-6 border-gray-800">
-                          <div className="flex space-x-3 mb-2 font-normal">
-                            <span className="text-sm text-gray-200 w-full">
-                              Services
-                            </span>
-                          </div>
-                          <ul className="space-y-1">
-                            <a className="block" target="_self" href="/">
-                              <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                                <ContainerIcon />
-                                <span
-                                  title="My Projects"
-                                  className="w-full truncate text-sm text-gray-400 hover:text-white transition"
-                                >
-                                  My Projects
-                                </span>
-                              </button>
-                            </a>
-                          </ul>
-                        </div>
-                        <div className="border-b py-5 px-6 border-gray-800">
-                          <div className="flex space-x-3 mb-2 font-normal">
-                            <span className="text-sm text-gray-200 w-full">
-                              Account
-                            </span>
-                          </div>
-                          <ul className="space-y-1">
-                            <a
-                              className="block"
-                              target="_self"
-                              href="/settings"
-                            >
-                              <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                                <GearIcon />
-                                <span
-                                  title="Settings"
-                                  className="w-full truncate text-sm text-gray-400 hover:text-white transition"
-                                >
-                                  Settings
-                                </span>
-                              </button>
-                            </a>
-                          </ul>
-                          <ul className="space-y-1">
-                            <a
-                              className="block"
-                              target="_self"
-                              style={{ marginLeft: "0rem" }}
-                              href="/settings/tokens"
-                            >
-                              <a
-                                href="https://dash.zeabur.com/account/general"
-                                target="_blank"
-                                className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1"
-                              >
-                                <img
-                                  src="https://cdn-botway.deno.dev/icons/zeabur.svg"
-                                  width={16}
-                                />
-                                <span
-                                  title="zeabur"
-                                  className="w-full truncate text-sm text-gray-400 hover:text-white transition"
-                                >
-                                  My Account on Zeabur
-                                </span>
-                              </a>
-                            </a>
-                          </ul>
-                        </div>
-                        <div className="border-b py-5 px-6 border-gray-800">
-                          <div className="flex space-x-3 mb-2 font-normal">
-                            <span className="text-sm text-gray-200 w-full">
-                              Resources
-                            </span>
-                          </div>
-                          <ul className="space-y-1">
-                            <a
-                              className="block"
-                              target="_blank"
-                              href="https://botway.deno.dev/docs"
-                            >
-                              <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                                <ArrowUpRightIcon />
-                                <span
-                                  title="Docs"
-                                  className="w-full truncate text-sm text-gray-400 hover:text-white transition"
-                                >
-                                  Docs
-                                </span>
-                              </button>
-                            </a>
-                          </ul>
-                          <ul className="space-y-1">
-                            <a
-                              className="block"
-                              target="_blank"
-                              href="https://botway.deno.dev/changelog"
-                            >
-                              <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                                <ArrowUpRightIcon />
-                                <span
-                                  title="Changelog"
-                                  className="w-full truncate text-sm text-gray-400 hover:text-white transition"
-                                >
-                                  Changelog
-                                </span>
-                              </button>
-                            </a>
-                          </ul>
-                          <ul className="space-y-1">
-                            <a
-                              className="block"
-                              target="_blank"
-                              href="https://github.com/abdfnx/botway"
-                            >
-                              <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                                <MarkGithubIcon />
-                                <span
-                                  title="Botway Repo"
-                                  className="w-full truncate text-sm text-gray-400 hover:text-white transition"
-                                >
-                                  Botway Repo
-                                </span>
-                              </button>
-                            </a>
-                          </ul>
-                        </div>
-                        <SignOut />
-                      </ul>
-                    </nav>
-                  </div>
+                  <Sidebar />
                 </div>
+
                 <div className="flex bg-bwdefualt flex-1 flex-col">
                   <div className="flex h-12 max-h-12 items-center justify-between py-2 px-5 border-b border-gray-800">
-                    <div className="-ml-2 flex items-center text-sm">
+                    <div className="hidden md:flex -ml-2 items-center text-sm">
                       <span className="flex border-none rounded p-0 outline-none outline-offset-1 transition-all focus:outline-4">
                         <span className="relative inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 text-gray-200 shadow-none text-xs px-2.5 py-1">
                           <span className="truncate">
@@ -247,7 +327,9 @@ export const DashLayout = ({ children, name, href }: any) => {
                       </span>
                       <span className="flex border-none rounded p-0 outline-none outline-offset-1 transition-all focus:outline-4">
                         <span className="relative inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 text-gray-200 shadow-none text-xs px-2.5 py-1">
-                          <span className="truncate">{name}</span>
+                          <span className="truncate">
+                            {user.user_metadata["name"]}
+                          </span>
                         </span>
                       </span>
                       <span className="text-gray-600">
@@ -274,6 +356,12 @@ export const DashLayout = ({ children, name, href }: any) => {
                       >
                         {href}
                       </a>
+                    </div>
+                    <div
+                      onClick={() => setOpen(true)}
+                      className="block md:hidden"
+                    >
+                      <ThreeBarsIcon className=" fill-white" />
                     </div>
                     <div className="flex items-center space-x-2">
                       <a
@@ -305,6 +393,59 @@ export const DashLayout = ({ children, name, href }: any) => {
           </div>
         </div>
       </body>
+
+      <Transition.Root show={open} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => setOpen(false)}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-in-out duration-500"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in-out duration-500"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-bwdefualt bg-opacity-50 transition-opacity" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-hidden ">
+            <div className="absolute inset-0 overflow-hidden">
+              <div className="fixed inset-y-0 left-0 flex max-w-full pr-[104px]">
+                <Transition.Child
+                  as={Fragment}
+                  enter="transform transition ease-in-out duration-500 sm:duration-700"
+                  enterFrom="-translate-x-full"
+                  enterTo="-translate-x-0"
+                  leave="transform transition ease-in-out duration-500 sm:duration-700"
+                  leaveFrom="-translate-x-0"
+                  leaveTo="-translate-x-full"
+                >
+                  <Dialog.Panel className="relative w-screen max-w-md">
+                    <Transition.Child
+                      as={Fragment}
+                      enter="ease-in-out duration-200"
+                      enterFrom="opacity-0"
+                      enterTo="opacity-100"
+                      leave="ease-in-out duration-500"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <div className="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4" />
+                    </Transition.Child>
+                    <div className="flex h-full flex-col bg-secondary border-r border-gray-800 py-4 shadow-xl">
+                      <Sidebar />
+                    </div>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
     </>
   );
 };

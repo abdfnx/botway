@@ -135,19 +135,17 @@ const Settings = () => {
 
   if (user) {
     return (
-      <DashLayout name={user.user_metadata["name"]} href="Settings">
+      <DashLayout user={user} href="Settings">
         <div className="flex-1 flex-grow overflow-auto">
           <div className="p-4">
             <div className="my-2 pl-1">
               <div className="flex">
-                <h3 className="text-xl text-white">
-                  {user.user_metadata["name"]} Settings
-                </h3>
+                <h3 className="text-xl text-white">Settings</h3>
               </div>
             </div>
 
-            <div className="mb-9 mt-10 ml-1">
-              <div className="my-4 max-w-4xl space-y-8">
+            <div className="mb-9 mt-6 ml-1">
+              <div className="my-4 max-w-full space-y-8">
                 <Formik
                   initialValues={{
                     name: user.user_metadata["name"],
@@ -217,7 +215,7 @@ const Settings = () => {
             </div>
 
             <div className="mb-8 ml-1">
-              <div className="my-4 max-w-4xl space-y-8">
+              <div className="my-4 max-w-full space-y-8">
                 <div className="overflow-x-auto flex-grow border border-gray-800 rounded-lg">
                   <table className="w-full border-collapse select-auto">
                     <thead>

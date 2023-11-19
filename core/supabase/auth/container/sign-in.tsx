@@ -33,12 +33,12 @@ const SignIn = () => {
 
   return (
     <Template>
-      <h2 className="text-lg font-medium md:text-2xl text-white">
+      <h2 className="text-xl font-medium md:text-2xl text-white">
         Welcome to Botway
       </h2>
 
       <p className="text-sm text-gray-500 font-medium pt-2 cursor-pointer">
-        You don't have an Account?{" "}
+        Don't have an Account?{" "}
         <a onClick={() => setView(VIEWS.SIGN_UP)} className="text-blue-700">
           Sign up for an account
         </a>

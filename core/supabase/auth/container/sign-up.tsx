@@ -76,7 +76,7 @@ const SignUp = () => {
 
   return (
     <Template>
-      <h2 className="text-lg font-medium md:text-2xl text-white">
+      <h2 className="text-xl font-medium md:text-2xl text-white">
         Create a new Botway User
       </h2>
 

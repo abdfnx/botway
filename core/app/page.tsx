@@ -11,7 +11,6 @@ import {
   CommandPaletteIcon,
   SparkleFillIcon,
   StackIcon,
-  WorkflowIcon,
   ZapIcon,
 } from "@primer/octicons-react";
 import { Fragment, useRef, useState } from "react";
@@ -168,23 +167,25 @@ const Home = ({ user }: any) => {
   };
 
   return (
-    <DashLayout name={user.user_metadata["name"]} href="Projects">
+    <DashLayout user={user} href="Projects">
       <div className="flex-1 flex-grow overflow-auto">
         <div className="py-4 px-5">
-          <div className="border-l flex items-center text-white place-content-center justify-center border-r border-b border-gray-800 p-12 rounded-xl bg-grid-gray-800">
-            <div className="items-center">
-              <h2 className="text-xl font-mono mr-3">
-                <span className="font-bold">Welcome To Botway 👋</span>
-              </h2>
+          <div className="my-2">
+            <div className="border bg-grid-gray-800 flex items-center text-white place-content-center justify-center border-gray-800 p-12 rounded-xl">
+              <div className="items-center">
+                <h2 className="text-base md:text-xl font-farray mr-3">
+                  <span className="font-bold">Welcome To Botway 👋</span>
+                </h2>
+              </div>
             </div>
           </div>
-          <div className="my-8 space-y-8">
+          <div className="my-5 space-y-8">
             <div className="space-y-3">
               <div className="flex items-center justify-between pb-2 gap-4">
                 <div className="flex-1 gap-2 justify-end flex-shrink-0">
                   <a className="h-9 mt-1 px-4.5 inline-flex flex-shrink-0 whitespace-nowrap items-center gap-2">
-                    <UserAvatar data={user.email} size={30} />
-                    <span className="text-gray-400 text-2xl pl-2">
+                    <UserAvatar data={user.email} size={32} />
+                    <span className="text-white font-semibold font-mono text-2xl">
                       {user.user_metadata["name"]}
                     </span>
                   </a>
@@ -236,21 +237,6 @@ const Home = ({ user }: any) => {
                                   className="fill-blue-700 mr-2"
                                 />
                                 <h1 className="font-mono">Botway AI - Soon</h1>
-                              </button>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {() => (
-                              <button
-                                className={`cursor-context-menu group flex w-full text-white items-center rounded-lg px-2 py-2 text-sm`}
-                              >
-                                <WorkflowIcon
-                                  size={16}
-                                  className="fill-blue-700 mr-2.5"
-                                />
-                                <h1 className="font-mono">
-                                  Botway Visual - Soon
-                                </h1>
                               </button>
                             )}
                           </Menu.Item>
@@ -307,7 +293,7 @@ const Home = ({ user }: any) => {
                   ))}
                 </div>
               ) : (
-                <div className="rounded-lg mt-8 overflow-hidden p-5 cursor-pointer border-2 border-dashed border-gray-800 hover:border-gray-600 shadow-lg transition duration-300 ease-in-out w-full h-60 flex flex-col items-center justify-center gap-4">
+                <div className="rounded-xl mt-8 overflow-hidden p-5 cursor-pointer border-2 border-dashed border-gray-800 hover:border-gray-600 shadow-lg transition duration-300 ease-in-out w-full h-60 flex flex-col items-center justify-center gap-4">
                   <h2 className="text-md text-gray-400 text-center">
                     Create a New Project
                   </h2>

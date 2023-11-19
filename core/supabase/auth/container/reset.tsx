@@ -41,7 +41,7 @@ const ResetPassword = () => {
 
   return (
     <Template>
-      <h2 className="text-lg font-medium md:text-2xl text-white">
+      <h2 className="text-xl font-medium md:text-2xl text-white">
         Reset Password
       </h2>
 
