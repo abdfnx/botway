@@ -53,6 +53,8 @@ export async function POST(request: Request) {
     )} ${stringify(ghu.login)} ${stringify(ghu.email)}`,
   )
     .on("error", (error) => {
+      console.log(error.message);
+
       return NextResponse.json({ error: error.message });
     })
     .on("message", (m) => {
@@ -80,6 +82,9 @@ export async function POST(request: Request) {
   });
 
   if (createProject.errors) {
+    console.log(createProject.errors);
+    console.log(createProject.errors[0].message);
+
     return NextResponse.json({ error: createProject.errors[0].message });
   }
 
@@ -108,6 +113,9 @@ export async function POST(request: Request) {
   });
 
   if (createService.errors) {
+    console.log(createService.errors);
+    console.log(createService.errors[0].message);
+
     return NextResponse.json({ error: createService.errors[0].message });
   }
 
@@ -149,6 +157,8 @@ export async function POST(request: Request) {
   });
 
   if (error) {
+    console.log(error.message);
+
     return NextResponse.json({ error });
   }
 
