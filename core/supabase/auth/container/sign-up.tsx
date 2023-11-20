@@ -76,14 +76,14 @@ const SignUp = () => {
 
   return (
     <Template>
-      <h2 className="text-xl font-medium md:text-2xl text-white">
-        Create a new Botway User
+      <h2 className="text-xl font-farray font-medium md:text-2xl text-white">
+        Create a new Account
       </h2>
 
       <p className="text-sm text-gray-500 font-medium pt-1 cursor-pointer">
         Already have an account?{" "}
-        <a onClick={() => setView(VIEWS.SIGN_IN)} className="text-blue-700">
-          Sign in.
+        <a onClick={() => setView(VIEWS.SIGN_IN)} className="text-blue-700 font-mono">
+          Sign in
         </a>
       </p>
 

@@ -33,22 +33,22 @@ const SignIn = () => {
 
   return (
     <Template>
-      <h2 className="text-xl font-medium md:text-2xl text-white">
+      <h2 className="text-xl font-farray font-medium md:text-2xl text-white">
         Welcome to Botway
       </h2>
 
-      <p className="text-sm text-gray-500 font-medium pt-2 cursor-pointer">
+      <p className="text-[13px] md:text-sm text-gray-500 font-medium pt-2 cursor-pointer">
         Don't have an Account?{" "}
-        <a onClick={() => setView(VIEWS.SIGN_UP)} className="text-blue-700">
+        <a onClick={() => setView(VIEWS.SIGN_UP)} className="text-blue-700 font-mono">
           Sign up for an account
         </a>
       </p>
 
-      <p className="text-sm text-gray-500 font-medium pt-1.5 cursor-pointer">
+      <p className="text-[13px] md:text-sm text-gray-500 font-medium pt-1.5 cursor-pointer">
         Forget Password?{" "}
         <a
           onClick={() => setView(VIEWS.FORGOTTEN_PASSWORD)}
-          className="text-blue-700"
+          className="text-blue-700 font-mono"
         >
           Reset
         </a>

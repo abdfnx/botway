@@ -41,12 +41,12 @@ const ResetPassword = () => {
 
   return (
     <Template>
-      <h2 className="text-xl font-medium md:text-2xl text-white">
+      <h2 className="text-xl font-farray font-medium md:text-2xl text-white">
         Reset Password
       </h2>
 
       <p className="text-sm font-medium pt-1 cursor-pointer">
-        <a onClick={() => setView(VIEWS.SIGN_IN)} className="text-blue-700">
+        <a onClick={() => setView(VIEWS.SIGN_IN)} className="text-blue-700 font-mono">
           Return to Sign In page
         </a>
       </p>

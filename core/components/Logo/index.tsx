@@ -6,7 +6,7 @@ const LogoSection = () => {
           <img
             alt="Botway Logo"
             src="https://cdn-botway.deno.dev/simple/logo-white.svg"
-            className="block w-56"
+            className="block w-72"
           />
         </div>
       </div>
