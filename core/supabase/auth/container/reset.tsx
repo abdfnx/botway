@@ -46,7 +46,10 @@ const ResetPassword = () => {
       </h2>
 
       <p className="text-sm font-medium pt-1 cursor-pointer">
-        <a onClick={() => setView(VIEWS.SIGN_IN)} className="text-blue-700 font-mono">
+        <a
+          onClick={() => setView(VIEWS.SIGN_IN)}
+          className="text-blue-700 font-mono"
+        >
           Return to Sign In page
         </a>
       </p>

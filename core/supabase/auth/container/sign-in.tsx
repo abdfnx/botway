@@ -39,7 +39,10 @@ const SignIn = () => {
 
       <p className="text-[13px] md:text-sm text-gray-500 font-medium pt-2 cursor-pointer">
         Don't have an Account?{" "}
-        <a onClick={() => setView(VIEWS.SIGN_UP)} className="text-blue-700 font-mono">
+        <a
+          onClick={() => setView(VIEWS.SIGN_UP)}
+          className="text-blue-700 font-mono"
+        >
           Sign up for an account
         </a>
       </p>

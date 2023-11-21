@@ -23,7 +23,7 @@
     "prisma.prisma",
     "redhat.vscode-xml",
     "bbenoist.nix",
-    "bungcip.better-toml",
-    "rust-lang.rust-analyzer"
+    "rust-lang.rust-analyzer",
+    "tamasfe.even-better-toml"
   ]
 }
