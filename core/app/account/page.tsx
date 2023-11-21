@@ -156,33 +156,48 @@ const Settings = () => {
                   {({ values }) => (
                     <Form className="column w-full">
                       <div className="border-gray-800 overflow-hidden rounded-2xl border shadow">
-                        <div className="flex flex-col bg-secondary gap-0">
-                          <div className="grid grid-cols-12 gap-6 px-8 py-9 opacity-100">
-                            <label className="text-white col-span-12 text-base lg:col-span-5">
-                              General settings
-                            </label>
+                        <div className="bg-secondary w-full p-6 text-sm leading-4 md:grid gap-2 grid-cols-2">
+                          <div className="w-full pb-2">
+                            <div className="space-x-2 justify-between col-span-12">
+                              <label
+                                className="block text-gray-400 pt-1 pb-2 text-sm leading-4"
+                                htmlFor="name"
+                              >
+                                Name
+                              </label>
+                            </div>
 
-                            <div className="relative col-span-12 flex flex-col gap-6 lg:col-span-7">
-                              <div className="text-sm leading-4 grid gap-2 md:grid md:grid-cols-12">
-                                <div className="flex flex-row space-x-2 justify-between col-span-12">
-                                  <label
-                                    className="block text-gray-400 pt-1 text-sm leading-4"
-                                    htmlFor="name"
-                                  >
-                                    User Name
-                                  </label>
-                                </div>
+                            <div className="col-span-12">
+                              <div className="relative">
+                                <Field
+                                  className="input"
+                                  id="name"
+                                  name="name"
+                                  type="text"
+                                />
+                              </div>
+                            </div>
+                          </div>
 
-                                <div className="col-span-12">
-                                  <div className="relative">
-                                    <Field
-                                      className="input"
-                                      id="name"
-                                      name="name"
-                                      type="text"
-                                    />
-                                  </div>
-                                </div>
+                          <div className="w-full pb-2">
+                            <div className="space-x-2 justify-between col-span-12">
+                              <label
+                                className="block text-gray-400 pt-1 pb-2 text-sm leading-4"
+                                htmlFor="email"
+                              >
+                                Email
+                              </label>
+                            </div>
+
+                            <div className="col-span-12">
+                              <div className="relative">
+                                <Field
+                                  className="input"
+                                  disabled
+                                  name="email"
+                                  type="email"
+                                  value={user?.email}
+                                />
                               </div>
                             </div>
                           </div>
@@ -214,7 +229,7 @@ const Settings = () => {
               </div>
             </div>
 
-            <div className="mb-8 ml-1">
+            {/* <div className="mb-8 ml-1">
               <div className="my-4 max-w-full space-y-8">
                 <div className="overflow-x-auto flex-grow border border-gray-800 rounded-lg">
                   <table className="w-full border-collapse select-auto">
@@ -353,7 +368,7 @@ const Settings = () => {
                   </table>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

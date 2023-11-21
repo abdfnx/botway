@@ -12,7 +12,3 @@ export const middleware = async (req: NextRequest) => {
 
   return res;
 };
-
-// export const config = {
-//   matcher: ["/dash", "/settings"],
-// };

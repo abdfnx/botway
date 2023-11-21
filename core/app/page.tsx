@@ -36,6 +36,7 @@ import {
 import { fetcher } from "@/tools/fetch";
 import { Button } from "@/components/Button";
 import { capitalizeFirstLetter } from "@/tools/text";
+import { Badge } from "@tremor/react";
 
 export const revalidate = 0;
 
@@ -185,9 +186,12 @@ const Home = ({ user }: any) => {
                 <div className="flex-1 gap-2 justify-end flex-shrink-0">
                   <a className="h-9 mt-1 px-4.5 inline-flex flex-shrink-0 whitespace-nowrap items-center gap-2">
                     <UserAvatar data={user.email} size={32} />
-                    <span className="text-white font-semibold font-mono text-2xl">
+                    <span className="text-white font-semibold font-mono text-xl md:text-2xl">
                       {user.user_metadata["name"]}
                     </span>
+                    <Badge color="cyan" className="hidden md:block">
+                      <span className="font-mono">X Mode</span>
+                    </Badge>
                   </a>
                 </div>
                 <div className="flex gap-2 justify-end flex-shrink-0">
@@ -293,7 +297,7 @@ const Home = ({ user }: any) => {
                   ))}
                 </div>
               ) : (
-                <div className="rounded-xl mt-8 overflow-hidden p-5 cursor-pointer border-2 border-dashed border-gray-800 hover:border-gray-600 shadow-lg transition duration-300 ease-in-out w-full h-60 flex flex-col items-center justify-center gap-4">
+                <div className="rounded-xl mt-8 overflow-hidden p-5 cursor-pointer border-2 border-dashed border-gray-800 hover:border-gray-700 transition duration-300 ease-in-out w-full h-80 flex flex-col items-center justify-center gap-4">
                   <h2 className="text-md text-gray-400 text-center">
                     Create a New Project
                   </h2>

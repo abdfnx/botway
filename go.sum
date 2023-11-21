@@ -66,6 +66,8 @@ github.com/aymerick/douceur v0.2.0 h1:Mv+mAeH1Q+n9Fr+oyamOlAkUNPWPlA8PPGR0QAaYuP
 github.com/aymerick/douceur v0.2.0/go.mod h1:wlT5vV2O3h55X9m7iVYN0TBM0NH/MmbLnd30/FjWUq4=
 github.com/botwayorg/get-latest v0.1.61 h1:396dGAfi6p6WBz+Au8UXFbQzFuq2allHwf/YApCQDIU=
 github.com/botwayorg/get-latest v0.1.61/go.mod h1:i/gTs/Iu/wG4Q5dyIyLbRQiZZZkbNcn3D3Rk8hMef8Y=
+github.com/botwayorg/get-latest v0.2.0 h1:swbOaQaFGasl3TzoaOJjBGm0i4uY58RPw0kjyeW3tws=
+github.com/botwayorg/get-latest v0.2.0/go.mod h1:hyRr+n+7E1BpEVTT0HjUjgkwtcNRgE45tk/THkaYwPI=
 github.com/botwayorg/gh v0.1.2 h1:P+GgzKW0k4AaDwNQoIGT6/mqJq/kc9CTdenKMVh78SE=
 github.com/botwayorg/gh v0.1.2/go.mod h1:ETp8JEY4OkZjvDTbTGj0jhw/v0ihrp4H5j8uh4dpvlE=
 github.com/botwayorg/git v0.0.0-20220813023031-a7a261511635 h1:AJLUr0Ef6avA5S2SXua7XG4yXI7vAjsZLBrZD5zCOk4=

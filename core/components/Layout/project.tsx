@@ -217,7 +217,7 @@ export const ProjectLayout = ({
             <ul className="flex flex-col space-y-2">
               <a
                 type="button"
-                href="/settings"
+                href="/account"
                 className="flex border-none place-content-center self-center rounded bg-transparent p-0 outline-none transition-all focus:outline-4 focus:outline-none"
               >
                 <span className="relative place-content-center self-center cursor-pointer inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded-lg outline-none transition-all outline-0 text-gray-400 hover:bg-bwdefualt shadow-none focus-visible:outline-none text-xs px-2.5 py-1">
