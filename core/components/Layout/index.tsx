@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ArrowUpRightIcon,
   CheckIcon,
@@ -21,6 +23,29 @@ import { UserAvatar } from "../UserAvatar";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { Content, Portal, Root, Trigger } from "@radix-ui/react-popover";
+import { useQuery } from "@tanstack/react-query";
+
+// do not cache this layout
+export const revalidate = 0;
+
+export const mode = () => {
+  const fetchMode = async () => {
+    if (!localStorage.getItem("mode")) localStorage.setItem("mode", "Visual");
+
+    return localStorage.getItem("mode");
+  };
+
+  const { data } = useQuery({
+    queryKey: ["mode"],
+    queryFn: fetchMode,
+    refetchInterval: 1,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
+    refetchIntervalInBackground: true,
+  });
+
+  return data;
+};
 
 export const DashLayout = ({ children, user, href }: any) => {
   const [open, setOpen] = useState(false);
@@ -424,7 +449,7 @@ export const DashLayout = ({ children, user, href }: any) => {
                                 <div className="flex flex-col space-y-3 border border-gray-800 items-center justify-center relative bg-bwdefualt pt-7 pb-5 mb-2 rounded-[8px]">
                                   <div className="flex flex-col absolute py-1 px-3 rounded bg-secondary border border-gray-800 top-0 mt-2 left-0 ml-2">
                                     <p className="uppercase text-[10px] mt-[1.5px] font-medium text-blue-700">
-                                      X Mode
+                                      {mode()} Mode
                                     </p>
                                   </div>
                                   <div className="relative">
@@ -481,7 +506,12 @@ export const DashLayout = ({ children, user, href }: any) => {
                               </h3>
                               <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
                                 <div className="flex justify-between items-center w-full">
-                                  <div className="flex space-x-3 items-center w-3/4">
+                                  <div
+                                    className="flex space-x-3 items-center w-3/4"
+                                    onClick={() =>
+                                      localStorage.setItem("mode", "Visual")
+                                    }
+                                  >
                                     <DeviceDesktopIcon
                                       size={24}
                                       className="fill-green-500"
@@ -490,15 +520,24 @@ export const DashLayout = ({ children, user, href }: any) => {
                                       Visual Mode
                                     </p>
                                   </div>
-                                  {/* <CheckIcon
+                                  {mode() === "Visual" ? (
+                                    <CheckIcon
                                       size={24}
                                       className="fill-blue-700"
-                                    /> */}
+                                    />
+                                  ) : (
+                                    <></>
+                                  )}
                                 </div>
                               </div>
                               <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
                                 <div className="flex justify-between items-center w-full">
-                                  <div className="flex space-x-3 items-center w-3/4">
+                                  <div
+                                    className="flex space-x-3 items-center w-3/4"
+                                    onClick={() =>
+                                      localStorage.setItem("mode", "Dev")
+                                    }
+                                  >
                                     <CommandPaletteIcon
                                       size={24}
                                       className="fill-sky-600"
@@ -507,6 +546,14 @@ export const DashLayout = ({ children, user, href }: any) => {
                                       Dev Mode
                                     </p>
                                   </div>
+                                  {mode() === "Dev" ? (
+                                    <CheckIcon
+                                      size={24}
+                                      className="fill-blue-700"
+                                    />
+                                  ) : (
+                                    <></>
+                                  )}
                                 </div>
                               </div>
                               <div className="border border-gray-800 w-full my-2" />

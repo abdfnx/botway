@@ -3,7 +3,7 @@
 import Auth from "@/supabase/auth/container";
 import { useAuth, VIEWS } from "@/supabase/auth/provider";
 import { LoadingDots } from "@/components/LoadingDots";
-import { DashLayout } from "@/components/Layout";
+import { DashLayout, mode } from "@/components/Layout";
 import { UserAvatar } from "@/components/UserAvatar";
 import {
   CheckIcon,
@@ -30,17 +30,15 @@ import clsx from "clsx";
 import * as Yup from "yup";
 import {
   useQuery,
-  QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { fetcher } from "@/tools/fetch";
 import { Button } from "@/components/Button";
 import { capitalizeFirstLetter } from "@/tools/text";
 import { Badge } from "@tremor/react";
+import { queryClient } from "@/tools/qc";
 
 export const revalidate = 0;
-
-const queryClient = new QueryClient();
 
 const AddNewProjectSchema = Yup.object().shape({
   name: Yup.string().min(3),
@@ -190,7 +188,7 @@ const Home = ({ user }: any) => {
                       {user.user_metadata["name"]}
                     </span>
                     <Badge color="cyan" className="hidden md:block">
-                      <span className="font-mono">X Mode</span>
+                      <span className="font-mono">{mode()} Mode</span>
                     </Badge>
                   </a>
                 </div>

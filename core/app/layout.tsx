@@ -1,4 +1,3 @@
-import React from "react";
 import Head from "./head";
 import createClient from "@/supabase/server";
 import { AuthProvider } from "@/supabase/auth/provider";
