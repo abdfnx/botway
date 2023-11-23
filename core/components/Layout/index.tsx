@@ -19,9 +19,9 @@ import { Badge } from "@tremor/react";
 import { UserAvatar } from "../UserAvatar";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { Content, Portal, Root, Trigger } from "@radix-ui/react-popover";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
+import * as HoverCard from "@radix-ui/react-hover-card";
 
 // do not cache this layout
 export const revalidate = 0;
@@ -165,38 +165,100 @@ export const DashLayout = ({ children, user, href }: any) => {
                 <span className="font-mono">Modes</span>
               </Badge>
             </div>
-            <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
-              <div
-                className="flex justify-between items-center w-full"
-                onClick={() => localStorage.setItem("mode", "Visual")}
-              >
-                <div className="flex space-x-3 items-center w-3/4">
-                  <DeviceDesktopIcon size={24} className="fill-green-500" />
-                  <p className="text-sm truncate font-mono">Visual Mode</p>
+
+            <HoverCard.Root openDelay={300}>
+              <HoverCard.Trigger asChild>
+                <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
+                  <div
+                    className="flex justify-between items-center w-full"
+                    onClick={() => localStorage.setItem("mode", "Visual")}
+                  >
+                    <div className="flex space-x-3 items-center w-3/4">
+                      <DeviceDesktopIcon size={24} className="fill-green-500" />
+                      <p className="text-sm truncate font-mono">Visual Mode</p>
+                    </div>
+                    {mode() === "Visual" ? (
+                      <CheckIcon size={24} className="fill-blue-700" />
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
-                {mode() === "Visual" ? (
-                  <CheckIcon size={24} className="fill-blue-700" />
-                ) : (
-                  <></>
-                )}
-              </div>
-            </div>
-            <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
-              <div
-                className="flex justify-between items-center w-full"
-                onClick={() => localStorage.setItem("mode", "Dev")}
-              >
-                <div className="flex space-x-3 items-center w-3/4">
-                  <CommandPaletteIcon size={24} className="fill-sky-600" />
-                  <p className="text-sm truncate font-mono">Dev Mode</p>
+              </HoverCard.Trigger>
+              <HoverCard.Portal>
+                <HoverCard.Content
+                  className="hidden md:block max-w-sm border-2 border-dashed rounded-2xl p-[14px] text-white bg-secondary border-gray-800 animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 transition-all"
+                  sideOffset={5}
+                  side="right"
+                >
+                  <div className="flex flex-col gap-[7px]">
+                    <div className="flex flex-col gap-[15px]">
+                      <div>
+                        <div className="m-0 text-lg font-mono font-medium leading-[1.5]">
+                          Botway Visual Mode
+                        </div>
+                        <div className="m-0 text-xs text-gray-300 font-farray leading-[1.5]">
+                          No-Code Mode
+                        </div>
+                      </div>
+                      <div className="m-0 text-blue-700 text-[15px] leading-[1.5]">
+                        This mode is designed for regular people, you don't need
+                        any programming experience to create your own AI/Non-AI
+                        bots 🖥️
+                      </div>
+                    </div>
+                  </div>
+                </HoverCard.Content>
+              </HoverCard.Portal>
+            </HoverCard.Root>
+
+            <HoverCard.Root openDelay={300}>
+              <HoverCard.Trigger asChild>
+                <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
+                  <div
+                    className="flex justify-between items-center w-full"
+                    onClick={() => localStorage.setItem("mode", "Dev")}
+                  >
+                    <div className="flex space-x-3 items-center w-3/4">
+                      <CommandPaletteIcon size={24} className="fill-sky-600" />
+                      <p className="text-sm truncate font-mono">Dev Mode</p>
+                    </div>
+                    {mode() === "Dev" ? (
+                      <CheckIcon size={24} className="fill-blue-700" />
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
-                {mode() === "Dev" ? (
-                  <CheckIcon size={24} className="fill-blue-700" />
-                ) : (
-                  <></>
-                )}
-              </div>
-            </div>
+              </HoverCard.Trigger>
+              <HoverCard.Portal>
+                <HoverCard.Content
+                  className="hidden md:block max-w-sm border-2 border-dashed rounded-2xl p-[14px] text-white bg-secondary border-gray-800 animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 transition-all"
+                  sideOffset={5}
+                  side="right"
+                >
+                  <div className="flex flex-col gap-[7px]">
+                    <div className="flex flex-col gap-[15px]">
+                      <div>
+                        <div className="m-0 text-lg font-mono font-medium leading-[1.5]">
+                          Botway Developer Mode
+                        </div>
+                        <div className="m-0 text-xs text-gray-300 font-farray leading-[1.5]">
+                          The Suitable Mode For Developer
+                        </div>
+                      </div>
+                      <div className="m-0 text-blue-700 text-[15px] leading-[1.5]">
+                        This mode is designed for developers, you can use your
+                        favorite programming language to build and customize
+                        your own AI/Non-AI Bots 👨‍💻, Also you can build your own
+                        AI Model (thanks to Ollama 🦙)
+                      </div>
+                    </div>
+                  </div>
+                </HoverCard.Content>
+              </HoverCard.Portal>
+            </HoverCard.Root>
+
             <div className="border border-gray-800 w-full my-2" />
             <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
               <SignOut />
