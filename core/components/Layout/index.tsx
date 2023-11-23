@@ -1,14 +1,11 @@
 "use client";
 
 import {
-  ArrowUpRightIcon,
   CheckIcon,
-  ChevronDownIcon,
   CommandPaletteIcon,
   DeviceDesktopIcon,
   GearIcon,
   HomeIcon,
-  MarkGithubIcon,
   NorthStarIcon,
   PaperclipIcon,
   SparkleFillIcon,
@@ -24,6 +21,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { Content, Portal, Root, Trigger } from "@radix-ui/react-popover";
 import { useQuery } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
 
 // do not cache this layout
 export const revalidate = 0;
@@ -49,6 +47,7 @@ export const mode = () => {
 
 export const DashLayout = ({ children, user, href }: any) => {
   const [open, setOpen] = useState(false);
+  const path = usePathname();
 
   const Sidebar = () => {
     return (
@@ -61,228 +60,148 @@ export const DashLayout = ({ children, user, href }: any) => {
             Botway
           </h4>
         </div>
-        <div className="-mt-1">
-          <nav>
-            <ul>
-              <div className="border-b py-5 px-6 border-gray-800">
-                <div className="flex space-x-3 mb-2 font-normal">
-                  <Badge>
-                    <span className="font-mono">Services</span>
-                  </Badge>
+        <div>
+          <div className="z-50 min-w-[130px] outline-none p-3 overflow-y-auto w-[280px]">
+            <div className="flex flex-col space-y-1">
+              <div className="flex flex-col space-y-3 border border-gray-800 items-center justify-center relative bg-bwdefualt pt-7 pb-5 mb-2 rounded-md">
+                <div className="flex flex-col absolute py-1 px-3 rounded-[4px] bg-secondary border border-gray-800 top-0 mt-2 left-0 ml-2">
+                  <p className="uppercase text-[10px] mt-[1.5px] font-medium text-blue-700">
+                    {mode()} Mode
+                  </p>
                 </div>
-                <ul className="space-y-1">
-                  <a
-                    className="block focus-visible:outline-none focus-visible:ring-0 focus:ring-0"
-                    target="_self"
-                    href="/"
+                <div className="relative">
+                  <span
+                    className="inline-block rounded-full overflow-hidden"
+                    title={user.user_metadata["name"]}
                   >
-                    <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-[5px] font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                      <StackIcon size={24} className="fill-white h-6 w-6" />
-                      <span
-                        title="My Projects"
-                        className="w-full truncate text-base text-gray-400 hover:text-white transition"
-                      >
-                        My Projects
-                      </span>
-                    </button>
-                  </a>
-                </ul>
-                <ul className="space-y-1">
-                  <a
-                    className="block focus-visible:outline-none focus-visible:ring-0 focus:ring-0"
-                    target="_self"
-                    href="/ai"
-                  >
-                    <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-[5px] font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                      <SparkleFillIcon
-                        size={24}
-                        className="fill-blue-700 h-6 w-6"
-                      />
-                      <span
-                        title="Botway AI"
-                        className="w-full truncate text-base text-gray-400 hover:text-white transition"
-                      >
-                        Chat with Botway AI
-                      </span>
-                    </button>
-                  </a>
-                </ul>
-                <ul className="space-y-1">
-                  <a
-                    className="block focus-visible:outline-none focus-visible:ring-0 focus:ring-0"
-                    target="_self"
-                    href="/explore"
-                  >
-                    <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-[5px] font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                      <TelescopeIcon size={24} className="fill-white h-6 w-6" />
-                      <span
-                        title="Explore Bots"
-                        className="w-full truncate text-base text-gray-400 hover:text-white transition"
-                      >
-                        Explore
-                      </span>
-                    </button>
-                  </a>
-                </ul>
-                <ul className="space-y-1">
-                  <a
-                    className="block outline-none ring-0 focus-visible:outline-none focus-visible:ring-0 focus:ring-0"
-                    target="_self"
-                    href="/ai-models"
-                  >
-                    <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-[5px] font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                      <NorthStarIcon
-                        size={24}
-                        className="fill-cyan-500 h-6 w-6"
-                      />
-                      <span
-                        title="My AI Models"
-                        className="w-full truncate text-base text-gray-400 hover:text-white transition"
-                      >
-                        My AI Models
-                      </span>
-                    </button>
-                  </a>
-                </ul>
+                    <UserAvatar data={user.email} size={48} />
+                  </span>
+                </div>
+                <div className="flex flex-col items-center justify-center">
+                  <p className="text-base text-gray-100 font-mono font-medium">
+                    {user.user_metadata["name"]}
+                  </p>
+                </div>
               </div>
-              <div className="border-b py-5 px-6 border-gray-800">
-                <div className="flex space-x-3 mb-2 font-normal">
-                  <Badge color="teal">
-                    <span className="font-mono">Settings</span>
-                  </Badge>
-                </div>
-                <ul className="space-y-1">
-                  <a
-                    className="block focus-visible:outline-none focus-visible:ring-0 focus:ring-0"
-                    target="_self"
-                    href="/account"
-                  >
-                    <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-[5px] font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                      <GearIcon size={24} className="fill-white h-6 w-6" />
-                      <span
-                        title="My Account"
-                        className="w-full truncate text-base text-gray-400 hover:text-white transition"
-                      >
-                        My Account
-                      </span>
-                    </button>
-                  </a>
-                </ul>
-                <ul className="space-y-1">
-                  <a
-                    className="block focus-visible:outline-none focus-visible:ring-0 focus:ring-0"
-                    target="_self"
-                    href="/files"
-                  >
-                    <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-[5px] font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                      <PaperclipIcon size={24} className="fill-white h-6 w-6" />
 
-                      <span
-                        title="My Uploaded Data Files"
-                        className="w-full truncate text-base text-gray-400 hover:text-white transition"
-                      >
-                        My Uploaded Files
-                      </span>
-                    </button>
-                  </a>
-                </ul>
-                {/* <ul className="space-y-1">
-                <a
-                  className="block"
-                  target="_self"
-                  style={{ marginLeft: "0rem" }}
-                  href="/settings/tokens"
+              <div className="pb-2 my-2">
+                <Badge>
+                  <span className="font-mono">General</span>
+                </Badge>
+              </div>
+
+              <a className="focus:outline-none" href="/">
+                <div
+                  className={`text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md ${
+                    path === "/" ? "border border-gray-800 bg-bwdefualt" : ""
+                  }`}
                 >
-                  <a
-                    href="https://dash.zeabur.com/account/general"
-                    target="_blank"
-                    className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-[5px] font-normal outline-none focus-visible:z-10 focus-visible:ring-1"
-                  >
-                    <img
-                      src="https://cdn-botway.deno.dev/icons/zeabur.svg"
-                      width="20px"
-                      height="20px"
-                    />
-                    <span
-                      title="zeabur"
-                      className="w-full truncate text-sm text-gray-400 hover:text-white transition"
-                    >
-                      My Account on Zeabur
-                    </span>
-                  </a>
-                </a>
-              </ul> */}
-              </div>
-              <div className="border-b py-5 px-6 border-gray-800">
-                <div className="flex space-x-3 mb-2 font-normal">
-                  <Badge color="gray">
-                    <span className="font-mono">Resources</span>
-                  </Badge>
+                  <StackIcon size={24} className="mr-3 fill-white" />
+                  My Bots
                 </div>
-                <ul className="space-y-1">
-                  <a
-                    className="block"
-                    target="_blank"
-                    href="https://botway.deno.dev/docs"
-                  >
-                    <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-[5px] font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                      <ArrowUpRightIcon
-                        size={24}
-                        className="fill-white h-6 w-6"
-                      />
-                      <span
-                        title="Docs"
-                        className="w-full truncate text-base text-gray-400 hover:text-white transition"
-                      >
-                        Docs
-                      </span>
-                    </button>
-                  </a>
-                </ul>
-                <ul className="space-y-1">
-                  <a
-                    className="block"
-                    target="_blank"
-                    href="https://botway.deno.dev/changelog"
-                  >
-                    <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-[5px] font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                      <ArrowUpRightIcon
-                        size={24}
-                        className="fill-white h-6 w-6"
-                      />
-                      <span
-                        title="Changelog"
-                        className="w-full truncate text-base text-gray-400 hover:text-white transition"
-                      >
-                        Changelog
-                      </span>
-                    </button>
-                  </a>
-                </ul>
-                <ul className="space-y-1">
-                  <a
-                    className="block"
-                    target="_blank"
-                    href="https://github.com/abdfnx/botway"
-                  >
-                    <button className="group flex max-w-full cursor-pointer items-center space-x-2 border-gray-800 py-[5px] font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                      <MarkGithubIcon
-                        size={24}
-                        className="fill-white h-6 w-6"
-                      />
-                      <span
-                        title="Botway Repo"
-                        className="w-full truncate text-base text-gray-400 hover:text-white transition"
-                      >
-                        Botway Repo
-                      </span>
-                    </button>
-                  </a>
-                </ul>
+              </a>
+              <a className="focus:outline-none" href="/ai">
+                <div
+                  className={`text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md ${
+                    path === "/ai" ? "border border-gray-800 bg-bwdefualt" : ""
+                  }`}
+                >
+                  <SparkleFillIcon size={24} className="mr-3 fill-blue-700" />
+                  Chat With Botway AI
+                </div>
+              </a>
+              <a className="focus:outline-none" href="/ai-models">
+                <div
+                  className={`text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md ${
+                    path === "/ai-models"
+                      ? "border border-gray-800 bg-bwdefualt"
+                      : ""
+                  }`}
+                >
+                  <NorthStarIcon size={24} className="mr-3 fill-cyan-500" />
+                  My AI Models
+                </div>
+              </a>
+              <a className="focus:outline-none" href="/explore">
+                <div
+                  className={`text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md ${
+                    path === "/explore"
+                      ? "border border-gray-800 bg-bwdefualt"
+                      : ""
+                  }`}
+                >
+                  <TelescopeIcon size={24} className="mr-3 fill-white" />
+                  Explore
+                </div>
+              </a>
+              <a className="focus:outline-none" href="/account">
+                <div
+                  className={`text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md ${
+                    path === "/account"
+                      ? "border border-gray-800 bg-bwdefualt"
+                      : ""
+                  }`}
+                >
+                  <GearIcon size={24} className="mr-3 fill-white" />
+                  Account Settings
+                </div>
+              </a>
+              <a className="focus:outline-none" href="/files">
+                <div
+                  className={`text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md ${
+                    path === "/files"
+                      ? "border border-gray-800 bg-bwdefualt"
+                      : ""
+                  }`}
+                >
+                  <PaperclipIcon size={24} className="mr-3" />
+                  My Uploaded Data Files
+                </div>
+              </a>
+            </div>
+            <div className="border border-gray-800 w-full my-2" />
+            <div className="my-2">
+              <Badge>
+                <span className="font-mono">Modes</span>
+              </Badge>
+            </div>
+            <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
+              <div
+                className="flex justify-between items-center w-full"
+                onClick={() => localStorage.setItem("mode", "Visual")}
+              >
+                <div className="flex space-x-3 items-center w-3/4">
+                  <DeviceDesktopIcon size={24} className="fill-green-500" />
+                  <p className="text-sm truncate font-mono">Visual Mode</p>
+                </div>
+                {mode() === "Visual" ? (
+                  <CheckIcon size={24} className="fill-blue-700" />
+                ) : (
+                  <></>
+                )}
               </div>
-              {/* <SignOut /> */}
-            </ul>
-          </nav>
+            </div>
+            <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
+              <div
+                className="flex justify-between items-center w-full"
+                onClick={() => localStorage.setItem("mode", "Dev")}
+              >
+                <div className="flex space-x-3 items-center w-3/4">
+                  <CommandPaletteIcon size={24} className="fill-sky-600" />
+                  <p className="text-sm truncate font-mono">Dev Mode</p>
+                </div>
+                {mode() === "Dev" ? (
+                  <CheckIcon size={24} className="fill-blue-700" />
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
+            <div className="border border-gray-800 w-full my-2" />
+            <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
+              <SignOut />
+            </div>
+          </div>
         </div>
       </>
     );
@@ -297,7 +216,7 @@ export const DashLayout = ({ children, user, href }: any) => {
           <div className="flex h-full">
             <main className="min-h-[90vh] md:min-h-screen flex flex-col flex-1 w-full overflow-y-auto">
               <div className="flex min-h-full">
-                <div className="hidden md:block h-screen text-white min-h-[90vh] md:min-h-screen bg-secondary w-64 overflow-auto border-r border-gray-800">
+                <div className="hidden md:block h-screen text-white min-h-[90vh] md:min-h-screen bg-secondary w-[280px] overflow-auto border-r border-gray-800">
                   <Sidebar />
                 </div>
 
@@ -426,153 +345,6 @@ export const DashLayout = ({ children, user, href }: any) => {
                           <HomeIcon size={24} className="h-5 w-5" />
                         </span>
                       </a>
-
-                      <Root>
-                        <Trigger asChild>
-                          <button className="cursor-pointer outline-none">
-                            <div className="flex items-center justify-between">
-                              <UserAvatar data={user.email} size={24} />
-                              <ChevronDownIcon
-                                size={24}
-                                className="fill-gray-300 w-4 h-4 mt-1 ml-1"
-                              />
-                            </div>
-                          </button>
-                        </Trigger>
-                        <Portal>
-                          <Content
-                            className="mr-4 transition-all will-change-[transform,opacity] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
-                            sideOffset={5}
-                          >
-                            <div className="z-50 min-w-[130px] outline-none bg-secondary rounded-xl p-2 overflow-y-auto border border-gray-800 mt-0.5 py-2 w-[280px]">
-                              <div className="flex flex-col space-y-1">
-                                <div className="flex flex-col space-y-3 border border-gray-800 items-center justify-center relative bg-bwdefualt pt-7 pb-5 mb-2 rounded-[8px]">
-                                  <div className="flex flex-col absolute py-1 px-3 rounded bg-secondary border border-gray-800 top-0 mt-2 left-0 ml-2">
-                                    <p className="uppercase text-[10px] mt-[1.5px] font-medium text-blue-700">
-                                      {mode()} Mode
-                                    </p>
-                                  </div>
-                                  <div className="relative">
-                                    <span
-                                      className="inline-block rounded-full overflow-hidden"
-                                      title={user.user_metadata["name"]}
-                                    >
-                                      <UserAvatar data={user.email} size={48} />
-                                    </span>
-                                  </div>
-                                  <div className="flex flex-col items-center justify-center">
-                                    <p className="text-base text-gray-100 font-mono font-medium">
-                                      {user.user_metadata["name"]}
-                                    </p>
-                                  </div>
-                                </div>
-                                <h3 className="px-3 my-1 text-white text-base">
-                                  General
-                                </h3>
-                                <a
-                                  className="focus:outline-none"
-                                  href="/account"
-                                >
-                                  <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
-                                    <GearIcon
-                                      size={24}
-                                      className="mr-3 fill-white"
-                                    />
-                                    Account Settings
-                                  </div>
-                                </a>
-                                <a
-                                  className="focus:outline-none"
-                                  href="/ai-models"
-                                >
-                                  <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
-                                    <NorthStarIcon
-                                      size={24}
-                                      className="mr-3 fill-cyan-500"
-                                    />
-                                    My AI Models
-                                  </div>
-                                </a>
-                                <a className="focus:outline-none" href="/files">
-                                  <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
-                                    <PaperclipIcon size={24} className="mr-3" />
-                                    My Uploaded Data Files
-                                  </div>
-                                </a>
-                              </div>
-                              <div className="border border-gray-800 w-full my-2" />
-                              <h3 className="px-3 my-1 text-white text-base">
-                                Modes
-                              </h3>
-                              <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
-                                <div className="flex justify-between items-center w-full">
-                                  <div
-                                    className="flex space-x-3 items-center w-3/4"
-                                    onClick={() =>
-                                      localStorage.setItem("mode", "Visual")
-                                    }
-                                  >
-                                    <DeviceDesktopIcon
-                                      size={24}
-                                      className="fill-green-500"
-                                    />
-                                    <p className="text-sm truncate font-mono">
-                                      Visual Mode
-                                    </p>
-                                  </div>
-                                  {mode() === "Visual" ? (
-                                    <CheckIcon
-                                      size={24}
-                                      className="fill-blue-700"
-                                    />
-                                  ) : (
-                                    <></>
-                                  )}
-                                </div>
-                              </div>
-                              <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
-                                <div className="flex justify-between items-center w-full">
-                                  <div
-                                    className="flex space-x-3 items-center w-3/4"
-                                    onClick={() =>
-                                      localStorage.setItem("mode", "Dev")
-                                    }
-                                  >
-                                    <CommandPaletteIcon
-                                      size={24}
-                                      className="fill-sky-600"
-                                    />
-                                    <p className="text-sm truncate font-mono">
-                                      Dev Mode
-                                    </p>
-                                  </div>
-                                  {mode() === "Dev" ? (
-                                    <CheckIcon
-                                      size={24}
-                                      className="fill-blue-700"
-                                    />
-                                  ) : (
-                                    <></>
-                                  )}
-                                </div>
-                              </div>
-                              <div className="border border-gray-800 w-full my-2" />
-                              <div className="flex justify-between items-center">
-                                <div className="text-gray-100 font-mono text-xs hover:text-gray-200 group flex items-center space-x-3 px-3 h-9 focus:outline-none">
-                                  <img
-                                    src="https://cdn-botway.deno.dev/simple/icon-white.svg"
-                                    className="w-6 h-6 mr-3"
-                                  />
-                                  v0.2.0
-                                </div>
-                                <div className="text-gray-100 hover:text-gray-200 group flex items-center space-x-3 text-sm px-3 h-9 cursor-pointer hover:bg-bwdefualt focus:bg-bwdefualt transition-all duration-300 focus:outline-none rounded-md">
-                                  <SignOut />
-                                </div>
-                              </div>
-                            </div>
-                          </Content>
-                        </Portal>
-                      </Root>
                     </div>
                   </div>
                   {children}
@@ -603,7 +375,7 @@ export const DashLayout = ({ children, user, href }: any) => {
 
           <div className="fixed inset-0 overflow-hidden ">
             <div className="absolute inset-0 overflow-hidden">
-              <div className="fixed inset-y-0 left-0 flex max-w-full pr-[104px]">
+              <div className="fixed inset-y-0 left-0 flex max-w-[280px] pr-[104px]">
                 <Transition.Child
                   as={Fragment}
                   enter="transform transition ease-in-out duration-500 sm:duration-700"

@@ -28,10 +28,7 @@ import {
 } from "@/tools/new/project-options";
 import clsx from "clsx";
 import * as Yup from "yup";
-import {
-  useQuery,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { useQuery, QueryClientProvider } from "@tanstack/react-query";
 import { fetcher } from "@/tools/fetch";
 import { Button } from "@/components/Button";
 import { capitalizeFirstLetter } from "@/tools/text";
