@@ -28,7 +28,7 @@
     "csstype": "^3.1.2",
     "encoding": "^0.1.13",
     "flowbite": "^2.2.0",
-    "flowbite-react": "^0.6.4",
+    "flowbite-react": "^0.7.2",
     "formik": "^2.4.5",
     "graphql": "^16.8.1",
     "graphql-ws": "^5.14.2",
