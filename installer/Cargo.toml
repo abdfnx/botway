@@ -4,5 +4,5 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-owo-colors = "3.3.0"
+owo-colors = "4.0.0"
 enable-ansi-support = "0.2.1"
