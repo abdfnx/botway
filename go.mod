@@ -17,7 +17,7 @@ require (
 	github.com/briandowns/spinner v1.23.0
 	github.com/charmbracelet/bubbles v0.18.0
 	github.com/charmbracelet/bubbletea v0.25.0
-	github.com/charmbracelet/lipgloss v0.9.1
+	github.com/charmbracelet/lipgloss v0.10.0
 	github.com/elewis787/boa v0.1.2
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
 	github.com/mattn/go-colorable v0.1.13
@@ -89,7 +89,6 @@ require (
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
-	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/objx v0.5.1 // indirect
 	github.com/stretchr/testify v1.8.4 // indirect
@@ -99,7 +98,6 @@ require (
 	github.com/yosssi/gohtml v0.0.0-20201013000340-ee4748c638f4 // indirect
 	github.com/yuin/goldmark v1.7.0 // indirect
 	github.com/yuin/goldmark-emoji v1.0.2 // indirect
-	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/exp v0.0.0-20240222234643-814bf88cf225 // indirect
 	golang.org/x/net v0.21.0 // indirect
