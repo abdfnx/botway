@@ -23,8 +23,8 @@
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.11.17",
-    "typescript": "^5.3.3"
+    "@types/node": "^20.11.25",
+    "typescript": "^5.4.2"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -36,5 +36,5 @@
     "registry": "https://registry.npmjs.org",
     "access": "public"
   },
-  "copyRight": "Copyright (c) 2023 @abdfnx"
+  "copyRight": "Copyright (c) 2024 @abdfnx"
 }
