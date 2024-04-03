@@ -64,7 +64,7 @@ nfpms:
     homepage: https://github.com/abdfnx/botway
     bindir: /usr
     file_name_template: "{{ .ProjectName }}_{{ .Tag }}_{{ .Arch }}"
-    description: "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack, or even Twitch"
+    description: "🤖 Generate, build, handle and deploy your own AI Bot with your favorite language, for Discord, or Telegram, or even Slack"
     formats:
       - apk
       - deb
@@ -76,7 +76,7 @@ brews:
       owner: abdfnx
       name: homebrew-tap
     homepage: "https://github.com/abdfnx/botway"
-    description: "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack, or even Twitch"
+    description: "🤖 Generate, build, handle and deploy your own AI Bot with your favorite language, for Discord, or Telegram, or even Slack"
     license: MIT
 
 scoop:
@@ -85,7 +85,7 @@ scoop:
     owner: abdfnx
     name: botway
   homepage: "https://botway.deno.dev"
-  description: "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack, or even Twitch"
+  description: "🤖 Generate, build, handle and deploy your own AI Bot with your favorite language, for Discord, or Telegram, or even Slack"
   license: MIT
 
 checksum:

@@ -179,7 +179,7 @@ func (b Bubble) homeView() string {
 		PaddingLeft(2)
 
 	return connectVert(
-		style.Render("\n🤖 Generate, build, handle and deploy your own bot with your\nfavorite language, for Discord, or Telegram, or Slack, or even Twitch\n\n"),
+		style.Render("\n🤖 Generate, build, handle and deploy your own AI Bot with your favorite language, for Discord, or Telegram, or even Slack\n\n"),
 		gh_username,
 		docker_id,
 		"\n",

@@ -20,7 +20,7 @@ var opts = options.RootOptions{
 }
 
 func Execute(f *factory.Factory, version string, buildDate string) *cobra.Command {
-	const desc = `🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack, or even Twitch`
+	const desc = `🤖 Generate, build, handle and deploy your own AI Bot with your favorite language, for Discord, or Telegram, or even Slack`
 
 	// Root command
 	var rootCmd = &cobra.Command{

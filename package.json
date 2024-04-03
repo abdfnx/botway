@@ -1,7 +1,7 @@
 {
   "name": "botway",
   "version": "0.2.0",
-  "description": "🤖 Generate, build, handle and deploy your own bot with your favorite language, for Discord, or Telegram, or Slack, or even Twitch.",
+  "description": "🤖 Generate, build, handle and deploy your own AI Bot with your favorite language, for Discord, or Telegram, or even Slack",
   "author": "abdfnx",
   "license": "MIT",
   "homepage": "https://github.com/abdfnx/botway",
@@ -15,9 +15,9 @@
     "start": "pnpm build && turbo run start --parallel",
     "format": "prettier *.json *.yaml *.md ./core ./assets ./create-botway-bot ./packages -w"
   },
-  "packageManager": "pnpm@8.6.5",
+  "packageManager": "pnpm@8.14.1",
   "devDependencies": {
     "prettier": "^3.2.5",
-    "turbo": "^1.13.0"
+    "turbo": "^1.13.2"
   }
 }
