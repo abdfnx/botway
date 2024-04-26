@@ -1,5 +1,5 @@
 FROM botwayorg/botway-cli:core AS core
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 ENV BOTWAY_DIR /botway-dir/
 
