@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@apollo/client": "^3.10.1",
+    "@apollo/client": "^3.10.3",
     "@faker-js/faker": "^8.4.1",
     "@headlessui/react": "^1.7.19",
     "@primer/octicons-react": "^19.9.0",
